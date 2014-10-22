@@ -1,0 +1,2725 @@
+<eighth>
+ <activities>
+  <activity>
+   <aid>792</aid>
+   <name>Latin (A or B not both)  </name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>1</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>1</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>242</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1892</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment>Mythological Pumpkins</comment>
+   <advertisement></advertisement>
+   <member_count>15</member_count>
+   <block_rooms_comma>T 38 </block_rooms_comma>
+   <capacity>32</capacity>
+  </activity>
+  <activity>
+   <aid>2494</aid>
+   <name>8th Period Detention</name>
+   <description>This is an 8th Period detention for students with attendance issues during eighth period.  If you have a question please see your administrator or Mrs. Burch in the 8th period office.</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>1</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1148</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>579</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment>Don't wait to clear your absences!</comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>218-219 (60)</block_rooms_comma>
+   <capacity>60</capacity>
+  </activity>
+  <activity>
+   <aid>653</aid>
+   <name>2016 Junior Class Council</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>863</block_sponsor>
+    <block_sponsor>1128</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>37</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>3</member_count>
+   <block_rooms_comma>125 (25)</block_rooms_comma>
+   <capacity>25</capacity>
+  </activity>
+  <activity>
+   <aid>366</aid>
+   <name>Academic Language</name>
+   <description>Restricted to students nominated by a department chair</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1154</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1737</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>T 35 (1)</block_rooms_comma>
+   <capacity>1</capacity>
+  </activity>
+  <activity>
+   <aid>185</aid>
+   <name>Assistive Technology Club</name>
+   <description>Students use a variety of technology resources to design adaptive materials for  use by FCPS elementary school Special Ed teachers.  The goal is to learn and use new software to help build an individualized library collection for children.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1167</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1851</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>Weyanoke M Lab (28)</block_rooms_comma>
+   <capacity>28</capacity>
+  </activity>
+  <activity>
+   <aid>808</aid>
+   <name>Astronomy Club</name>
+   <description>Come learn about the stars &amp; experience the universe!  </description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>1</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>57</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>130</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment>Choose A or B, not both</comment>
+   <advertisement></advertisement>
+   <member_count>40</member_count>
+   <block_rooms_comma>Planetarium (40)</block_rooms_comma>
+   <capacity>40</capacity>
+  </activity>
+  <activity>
+   <aid>59</aid>
+   <name>Awesome Association</name>
+   <description>Come watch great movies!  Movies start A block and continue through B.</description>
+   <restricted>0</restricted>
+   <presign>1</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>112</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>750</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>T  6 (30)</block_rooms_comma>
+   <capacity>30</capacity>
+   <favorite>1</favorite>
+  </activity>
+  <activity>
+   <aid>711</aid>
+   <name>BSU-(Black Student Union)</name>
+   <description>Purpose is to encourage racial awareness among students &amp; to give students the opportunity to learn more about the history of Black Americans.  BSU also works to encourage better relations among students, learn different cultures &amp; function as a support group, so that Black students will not feel alone when confronted with prejudice.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1096</block_sponsor>
+    <block_sponsor>472</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>47</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>3</member_count>
+   <block_rooms_comma>136</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>392</aid>
+   <name>Band: Jazz II </name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1121</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1710</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>9</member_count>
+   <block_rooms_comma>Band (75)</block_rooms_comma>
+   <capacity>75</capacity>
+  </activity>
+  <activity>
+   <aid>167</aid>
+   <name>Biology Olympiad</name>
+   <description>For students interested in trying out for the Biology Olympiad</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1197</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1738</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>50</member_count>
+   <block_rooms_comma>123 (50)</block_rooms_comma>
+   <capacity>50</capacity>
+  </activity>
+  <activity>
+   <aid>432</aid>
+   <name>Calculus AB Tutoring</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1065</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1724</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>T 29</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>153</aid>
+   <name>Chem. Tutoring/Make-ups (Acio)</name>
+   <description>Acio students ONLY may sign up for this activity.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>7</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1581</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>141 (25)</block_rooms_comma>
+   <capacity>25</capacity>
+  </activity>
+  <activity>
+   <aid>154</aid>
+   <name>Chem. Tutoring/Makeups (Chhabra)</name>
+   <description>Chhabra chem students only</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>29</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1610</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>135</block_rooms_comma>
+   <capacity>35</capacity>
+  </activity>
+  <activity>
+   <aid>158</aid>
+   <name>Chem.Tutoring/Makeups (Jones)</name>
+   <description>Jones Chem students only</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>409</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1867</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>134</block_rooms_comma>
+   <capacity>25</capacity>
+  </activity>
+  <activity>
+   <aid>2705</aid>
+   <name>Chem. tutoring/Makeups (Kauffman)</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>854</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>44</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>133 (28)</block_rooms_comma>
+   <capacity>28</capacity>
+  </activity>
+  <activity>
+   <aid>184</aid>
+   <name>Chemistry Team</name>
+   <description>Discussion of chemistry concepts</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>170</block_sponsor>
+   </block_sponsors>
+   <block_rooms/>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>1</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment>Moved to A block</comment>
+   <advertisement></advertisement>
+   <member_count>7</member_count>
+   <block_rooms_comma></block_rooms_comma>
+   <capacity>-1</capacity>
+  </activity>
+  <activity>
+   <aid>788</aid>
+   <name>Choir: Manchoir &amp; Sirens</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1261</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1503</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>9</member_count>
+   <block_rooms_comma>M - 8 (40)</block_rooms_comma>
+   <capacity>40</capacity>
+  </activity>
+  <activity>
+   <aid>866</aid>
+   <name>Coding Lady Colonials</name>
+   <description>men welcome</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1191</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1909</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>11</member_count>
+   <block_rooms_comma>T 19 &amp; T 20</block_rooms_comma>
+   <capacity>50</capacity>
+  </activity>
+  <activity>
+   <aid>941</aid>
+   <name>College-Career Center</name>
+   <description>Peruse materials relating to summer job opportunities, college choices, or career choices either online or </description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1227</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1618</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>243 (10)</block_rooms_comma>
+   <capacity>10</capacity>
+  </activity>
+  <activity>
+   <aid>623</aid>
+   <name>College Rep (Jr./ Sr.)</name>
+   <description>No description available</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1227</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1547</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment>USC</comment>
+   <advertisement></advertisement>
+   <member_count>6</member_count>
+   <block_rooms_comma>243 (35)</block_rooms_comma>
+   <capacity>35</capacity>
+  </activity>
+  <activity>
+   <aid>622</aid>
+   <name>College Rep (Jr./ Sr.)</name>
+   <description>No description available</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1227</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1618</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment>McGill</comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>243 (10)</block_rooms_comma>
+   <capacity>10</capacity>
+  </activity>
+  <activity>
+   <aid>2934</aid>
+   <name>Computer Security</name>
+   <description>This activity explores aspects of both offensive and defensive hacking. </description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1123</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1604</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>40</member_count>
+   <block_rooms_comma>115 (40)</block_rooms_comma>
+   <capacity>40</capacity>
+   <favorite>1</favorite>
+  </activity>
+  <activity>
+   <aid>49</aid>
+   <name>Conference @Student Services</name>
+   <description>Sign in with Mrs. Moore in student services</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>189</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1858</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>Student Services (20)</block_rooms_comma>
+   <capacity>20</capacity>
+  </activity>
+  <activity>
+   <aid>953</aid>
+   <name>Crew conditioning</name>
+   <description>Crew is a spring sport.  Fall meetings are for planning purposes and conditioning</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1156</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>846</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>7</member_count>
+   <block_rooms_comma>T  8 </block_rooms_comma>
+   <capacity>28</capacity>
+  </activity>
+  <activity>
+   <aid>544</aid>
+   <name>Cross Country Meet</name>
+   <description>No description available</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>60</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>394</block_room>
+    <block_room>144</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>Gym 2 Lobby,  Out of Building</block_rooms_comma>
+   <capacity>29</capacity>
+  </activity>
+  <activity>
+   <aid>365</aid>
+   <name>Curricular Music Open Practice</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>197</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1256</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>M - 4 (20)</block_rooms_comma>
+   <capacity>20</capacity>
+  </activity>
+  <activity>
+   <aid>253</aid>
+   <name>Debate: Lincoln-Douglas</name>
+   <description>Lincoln-Douglas Debate is sometimes also called values debate because it traditionally places a heavy emphasis on logic, ethical values, and philosophy. It is a type of American high school one-on-one debate.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>124</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1701</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>23</member_count>
+   <block_rooms_comma>T 36</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>126</aid>
+   <name>Debate: Policy - Varsity </name>
+   <description>Policy Debate is a form of research-based speech competition in which teams of two advocate for and against a resolution that typically calls for policy change by the United States Federal Government.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1273</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1317</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment>Varsity</comment>
+   <advertisement></advertisement>
+   <member_count>5</member_count>
+   <block_rooms_comma>T 13 </block_rooms_comma>
+   <capacity>28</capacity>
+  </activity>
+  <activity>
+   <aid>402</aid>
+   <name>Design &amp; Tech  Tutoring/Makeups (LaFever)</name>
+   <description>La Fever students only</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>67</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>56</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>148 (30)</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>606</aid>
+   <name>Encouraging Empowerment Through Education </name>
+   <description>Working to empower children through education. </description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>411</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1816</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>9</member_count>
+   <block_rooms_comma>Weyanoke F</block_rooms_comma>
+   <capacity>28</capacity>
+  </activity>
+  <activity>
+   <aid>542</aid>
+   <name>Football - JV &amp; Frosh</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>846</block_sponsor>
+    <block_sponsor>1000</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1655</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>2</member_count>
+   <block_rooms_comma>Locker room (35)</block_rooms_comma>
+   <capacity>35</capacity>
+  </activity>
+  <activity>
+   <aid>97</aid>
+   <name>Forensic Science Society</name>
+   <description>Forensics Science Society (FSS) is an extremely interactive extracurricular activity which explores DNA analysis, fingerprinting, psychology, chemistry, and basic physics. It's fun, stress free, and will definitely help you as you follow your scientific endeavors.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1231</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1890</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>18</member_count>
+   <block_rooms_comma>Weyanoke T</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>302</aid>
+   <name>French Honor Society</name>
+   <description>To provide opportunities for students to enrich their knowledge and appreciation of the French language and culture.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>37</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1894</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment>Officers</comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>T 40</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>828</aid>
+   <name>Future Problem Solving</name>
+   <description>TJ's Future Problem Solving (FPS) club prepares TJ&#13;
+students to compete in the state and international FPS competitions. FPS competitions consist of teams of 4 people or individuals responding to a future scenario by identifying potential problems and solutions to these problems within the space of two hours. Responding to the scenario requires coherent writing, research about the overriding topic of the future scenario, and superior knowledge of the competition format. Join FPS to make new friends and our members will train you for the three major Spring competitions. We are especially interested in recruiting students in grades 9 and 10.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1118</block_sponsor>
+    <block_sponsor>1255</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1743</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>55</member_count>
+   <block_rooms_comma>Library-On-Line Rm242B (100)</block_rooms_comma>
+   <capacity>100</capacity>
+  </activity>
+  <activity>
+   <aid>165</aid>
+   <name>Geosystems Tutoring/Make-up </name>
+   <description>No description available</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1222</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>369</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>143 (30)</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>169</aid>
+   <name>Geosystems Tutoring/Make-up (Woodwell)</name>
+   <description>makeup for Woodwell students</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1027</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1067</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>147 (10)</block_rooms_comma>
+   <capacity>10</capacity>
+  </activity>
+  <activity>
+   <aid>1003</aid>
+   <name>Holmes MS Tutoring</name>
+   <description>Tutor middle schoolers in 6th and 8th grade at Homes MS!  May be used as service hours. Turn in permission forms</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1194</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>144</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>5</member_count>
+   <block_rooms_comma>  Out of Building</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>249</aid>
+   <name>Hope for the Homeless</name>
+   <description>Give aid to homeless shelters and food kitchens in Fairfax County</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>314</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1001</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>145 (25)</block_rooms_comma>
+   <capacity>25</capacity>
+  </activity>
+  <activity>
+   <aid>768</aid>
+   <name>IBET Study Hall: Klein, Rosenblum</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1193</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1521</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>T  3</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>287</aid>
+   <name>Jefferson Collaborative Inquiry and Research Network (JCIRN)</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>877</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1758</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>2</member_count>
+   <block_rooms_comma>  to be determined (15)</block_rooms_comma>
+   <capacity>15</capacity>
+  </activity>
+  <activity>
+   <aid>113</aid>
+   <name>Lab 113: Burnett Makeups</name>
+   <description>Senior research lab- project work/study hall</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1190</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1797</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>203 Bio Tech Lab (25)</block_rooms_comma>
+   <capacity>25</capacity>
+  </activity>
+  <activity>
+   <aid>115</aid>
+   <name>Lab 115 -Computer Systems </name>
+   <description>Research lab restricted to Gabor/Stueben/Torbert students </description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1122</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1554</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>3</member_count>
+   <block_rooms_comma>115 (24)</block_rooms_comma>
+   <capacity>24</capacity>
+   <favorite>1</favorite>
+  </activity>
+  <activity>
+   <aid>112</aid>
+   <name>Lab 115 Torbert call in only</name>
+   <description>Torbert call in by appointment only. Speak to Dr. Torbert in person before coming to the lab</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1160</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1764</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>115 (0)</block_rooms_comma>
+   <capacity>0</capacity>
+  </activity>
+  <activity>
+   <aid>118</aid>
+   <name>Lab 208 - Electronics Sr Research</name>
+   <description>For students taking electronics electives or doing senior research</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>15</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1956</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>118 Elec Lab (24)</block_rooms_comma>
+   <capacity>24</capacity>
+  </activity>
+  <activity>
+   <aid>231</aid>
+   <name>Lab T23 (all CS students )</name>
+   <description>for AP Computer Science students</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>475</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1734</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>T 23 Lab</block_rooms_comma>
+   <capacity>29</capacity>
+  </activity>
+  <activity>
+   <aid>261</aid>
+   <name>Lab T27 (all CS students)</name>
+   <description>limited to CS students</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1155</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1721</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>4</member_count>
+   <block_rooms_comma>T 27 M/CS Lab</block_rooms_comma>
+   <capacity>28</capacity>
+  </activity>
+  <activity>
+   <aid>233</aid>
+   <name>Lab T31 (all CS students)</name>
+   <description>for Computer Science students - all levels</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>97</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1726</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>T 31 Math/CS Lab</block_rooms_comma>
+   <capacity>28</capacity>
+  </activity>
+  <activity>
+   <aid>940</aid>
+   <name>Library Study Hall</name>
+   <description>A OR B block, not both - in room 240, no computers</description>
+   <restricted>0</restricted>
+   <presign>1</presign>
+   <oneaday>1</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1150</block_sponsor>
+    <block_sponsor>1211</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>74</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>Library (50) </block_rooms_comma>
+   <capacity>50</capacity>
+  </activity>
+  <activity>
+   <aid>162</aid>
+   <name>Life in Movement</name>
+   <description>Tai Chi</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1196</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>16</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>Gym 2 - back side (25)</block_rooms_comma>
+   <capacity>25</capacity>
+  </activity>
+  <activity>
+   <aid>241</aid>
+   <name>Math/CS Makeup</name>
+   <description>No description available</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1267</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>931</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>T 21</block_rooms_comma>
+   <capacity>32</capacity>
+  </activity>
+  <activity>
+   <aid>200</aid>
+   <name>Math Teams (V &amp; JV)</name>
+   <description>Purpose is to provide mathematical challenges for problem-solvers, to participate in national math competitions, &amp; to continue our nationally renown tradition of excellence in mathematics. Also hosts two annual competitions at TJ in order to promote interest in mathematics in our community.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1152</block_sponsor>
+    <block_sponsor>1259</block_sponsor>
+    <block_sponsor>1257</block_sponsor>
+    <block_sponsor>1204</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1906</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>53</member_count>
+   <block_rooms_comma>T  9,10,11,12</block_rooms_comma>
+   <capacity>120</capacity>
+  </activity>
+  <activity>
+   <aid>641</aid>
+   <name>Mentorship  - First Semester</name>
+   <description>No description available</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1256</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>144</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>43</member_count>
+   <block_rooms_comma>  Out of Building</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>409</aid>
+   <name>Mind Body Medicine Society</name>
+   <description>Learn about a new type of complementary medicine, developed by Harvard and Mass General, to help combat stress using relaxation techniques.  </description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1188</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1830</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>2</member_count>
+   <block_rooms_comma>Weyanoke L</block_rooms_comma>
+   <capacity>25</capacity>
+  </activity>
+  <activity>
+   <aid>398</aid>
+   <name>Mock Trial Club</name>
+   <description>Purpose: To give students the ability to explore the legal profession.  We hold mock trials on current topics like Napster, the Minute of Silence, Boy Scouts, etc.  Format: We have all types of trials that people participate in as lawyers, justices, and witnesses.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1153</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1914</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>2</member_count>
+   <block_rooms_comma>Weyanoke E (35)</block_rooms_comma>
+   <capacity>35</capacity>
+  </activity>
+  <activity>
+   <aid>2480</aid>
+   <name>Multivar/Linear Algebra/AMT</name>
+   <description>Multivariable Calculus (fall)&#13;
+Linear Algebra (spring)</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>860</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1729</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>2</member_count>
+   <block_rooms_comma>T 32</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>187</aid>
+   <name>Mural Club</name>
+   <description>painting murals around the school</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1230</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>114</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>4</member_count>
+   <block_rooms_comma>236</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>2634</aid>
+   <name>Music Theory (AP)</name>
+   <description></description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1261</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>73</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>M - 8</block_rooms_comma>
+   <capacity>25</capacity>
+  </activity>
+  <activity>
+   <aid>53</aid>
+   <name>Neuroscience-Fall</name>
+   <description>For Neuroscience Students in Periods 6,7 and 8 only</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1124</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1952</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>13</member_count>
+   <block_rooms_comma> 5 Neuro Lab (28)</block_rooms_comma>
+   <capacity>28</capacity>
+  </activity>
+  <activity>
+   <aid>30</aid>
+   <name>Ocean Bowl</name>
+   <description>The National Ocean Science Bowl, an academic competition, provides a forum for students who excel in math and science to receive national recognition for the diligence and talent while broadening their awareness and understanding of the oceans.  The Blue Crab Bowl is the regional competition for high schools in Virginia.  </description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>120</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>986</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>7</member_count>
+   <block_rooms_comma> 2 Ocean Lab (30)</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>65</aid>
+   <name>Physics  (Forbes)</name>
+   <description>Restricted to those placed by the department chair</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>1</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>306</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>5</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>6</member_count>
+   <block_rooms_comma>232A </block_rooms_comma>
+   <capacity>29</capacity>
+  </activity>
+  <activity>
+   <aid>2696</aid>
+   <name>Physics Tutoring/Makeups (Smith)</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1126</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>14</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>2</member_count>
+   <block_rooms_comma>233</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>109</aid>
+   <name>Physics tutoring/makeup (Walker)</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>117</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>6</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>232B</block_rooms_comma>
+   <capacity>29</capacity>
+  </activity>
+  <activity>
+   <aid>780</aid>
+   <name>Piano Reservation</name>
+   <description>limit 4 students</description>
+   <restricted>0</restricted>
+   <presign>1</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>197</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>585</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>Rehearsal Rooms (3)</block_rooms_comma>
+   <capacity>3</capacity>
+  </activity>
+  <activity>
+   <aid>229</aid>
+   <name>Pre-Calc  (Gabor)</name>
+   <description>limited to gabor pre calc students</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1122</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1681</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>115 (10)</block_rooms_comma>
+   <capacity>10</capacity>
+  </activity>
+  <activity>
+   <aid>838</aid>
+   <name>Quizbowl (It's Academic)</name>
+   <description>same as It's Academic (like the TV Show) or Scholastic Bowl- competition</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1195</block_sponsor>
+    <block_sponsor>1260</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1866</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>21</member_count>
+   <block_rooms_comma>Weyanoke O (oh)(35)</block_rooms_comma>
+   <capacity>35</capacity>
+  </activity>
+  <activity>
+   <aid>225</aid>
+   <name>Research Statistics /Algebra 2(Donohue)</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>477</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1725</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>T 30</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>120</aid>
+   <name>Rotary Interact</name>
+   <description>A service club that  does both local and International projects to help the community to the best of our abilities.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1254</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1842</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>8</member_count>
+   <block_rooms_comma>Weyanoke P</block_rooms_comma>
+   <capacity>28</capacity>
+  </activity>
+  <activity>
+   <aid>981</aid>
+   <name>SGA</name>
+   <description>Student government.All blocks are open to the entire school</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>853</block_sponsor>
+    <block_sponsor>1066</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1888</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>Weyanoke R</block_rooms_comma>
+   <capacity>28</capacity>
+  </activity>
+  <activity>
+   <aid>281</aid>
+   <name>Shakespeare Troupe</name>
+   <description>Purpose is to experiment with performance and interpretation of the works of William Shakespeare.  Desire to boldly act what no student has acted before.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>91</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1817</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>2</member_count>
+   <block_rooms_comma>Weyanoke H</block_rooms_comma>
+   <capacity>25</capacity>
+  </activity>
+  <activity>
+   <aid>345</aid>
+   <name>Spanish 3 4 AP Tutoring &amp; Study Hall (Mateo)</name>
+   <description>No description available</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>857</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1524</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>T 14 </block_rooms_comma>
+   <capacity>28</capacity>
+  </activity>
+  <activity>
+   <aid>58</aid>
+   <name>Speech (Slifka)</name>
+   <description></description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1238</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1921</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>Wrestling Room D (3)</block_rooms_comma>
+   <capacity>3</capacity>
+  </activity>
+  <activity>
+   <aid>395</aid>
+   <name>Startup TJ (INVENTeam)</name>
+   <description>connects the innovative minds of TJHSST with the business world! Learn how to turn ideas into business opportunities from successful &#13;
+entrepreneurs, venture capitalists, CEOs, and businessmen.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>159</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1913</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>29</member_count>
+   <block_rooms_comma>Weyanoke A (35)</block_rooms_comma>
+   <capacity>35</capacity>
+  </activity>
+  <activity>
+   <aid>235</aid>
+   <name>Statistics (AP) Tutoring</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1223</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1693</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>T 24 </block_rooms_comma>
+   <capacity>27</capacity>
+  </activity>
+  <activity>
+   <aid>2556</aid>
+   <name>Student Diversity Initiative (SDI)</name>
+   <description>Calling all tutors, seekers of service hours&#13;
+SDI (Student Diversity Initiative) is an engaging club dedicated to promoting diversity within the TJ community. Members participate in various outreach programs, such as middle school visits and TJ Prep Tutoring. In addition, SDI will be working on a brand new website showcasing the tight-knit community found at TJ. </description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1201</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1731</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>5</member_count>
+   <block_rooms_comma>T 34</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>426</aid>
+   <name>Study Hall  (Brown) Quiet</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>865</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1730</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>T 33</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>902</aid>
+   <name>Study Hall (Sandstrom) QUIET</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>98</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1896</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>T 42</block_rooms_comma>
+   <capacity>28</capacity>
+  </activity>
+  <activity>
+   <aid>447</aid>
+   <name>Study Hall (Spoden) </name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>107</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1722</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>T 26</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>425</aid>
+   <name>Study Hall (Struck) </name>
+   <description>No description available</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>111</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1839</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>Weyanoke G</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>1081</aid>
+   <name>Study Hall (Zupancic)</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1189</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1840</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>Weyanoke K</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>927</aid>
+   <name>Study Hall QUIET (Rudwick)</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1266</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1723</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>T 28</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>925</aid>
+   <name>Sys Op. Administrators</name>
+   <description>No description available</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1123</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1681</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>3</member_count>
+   <block_rooms_comma>115 (10)</block_rooms_comma>
+   <capacity>10</capacity>
+  </activity>
+  <activity>
+   <aid>296</aid>
+   <name>TJ Media</name>
+   <description></description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1063</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1538</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>10</member_count>
+   <block_rooms_comma>T  4 (35)</block_rooms_comma>
+   <capacity>35</capacity>
+  </activity>
+  <activity>
+   <aid>82</aid>
+   <name>TJ Rocketry Club</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1027</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>823</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>20</member_count>
+   <block_rooms_comma>147 (20)</block_rooms_comma>
+   <capacity>20</capacity>
+  </activity>
+  <activity>
+   <aid>415</aid>
+   <name>TJ Runway Club</name>
+   <description>Hands on experience in fashion design. Students can design and make their own garments for a fashion showcase at the end of the year.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>855</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1521</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>5</member_count>
+   <block_rooms_comma>T  3</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>757</aid>
+   <name>TSA - Technology Student Association</name>
+   <description>This club helps students work on technological projects throughout the year and enters them in a national competition.</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1203</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>726</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment>Officer's meeting</comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>150 (13)</block_rooms_comma>
+   <capacity>13</capacity>
+   <favorite>1</favorite>
+  </activity>
+  <activity>
+   <aid>188</aid>
+   <name>TWIST</name>
+   <description>Tomorrow's Women in Science and Technology. Come for fun hands on STEM activities and help us put together Techstravaganza!</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1061</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1379</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>25</member_count>
+   <block_rooms_comma>131 (25)</block_rooms_comma>
+   <capacity>25</capacity>
+  </activity>
+  <activity>
+   <aid>990</aid>
+   <name>Threshold</name>
+   <description>Literary magazine </description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>310</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>863</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>8</member_count>
+   <block_rooms_comma>T  5 </block_rooms_comma>
+   <capacity>28</capacity>
+  </activity>
+  <activity>
+   <aid>628</aid>
+   <name>Writing Center</name>
+   <description>Come get one on one help from other students on any writing assignments.  </description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1146</block_sponsor>
+    <block_sponsor>1154</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1756</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>T 35 (12)</block_rooms_comma>
+   <capacity>12</capacity>
+  </activity>
+  <activity>
+   <aid>226</aid>
+   <name>Writing Center tutors</name>
+   <description>requires departmental nomination</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1146</block_sponsor>
+    <block_sponsor>1154</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1756</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>2</member_count>
+   <block_rooms_comma>T 35 (12)</block_rooms_comma>
+   <capacity>12</capacity>
+  </activity>
+  <activity>
+   <aid>614</aid>
+   <name>Writing Conference (Orser)</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>310</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1905</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>T  5 (2)</block_rooms_comma>
+   <capacity>2</capacity>
+  </activity>
+  <activity>
+   <aid>723</aid>
+   <name>Writing Conference (Zupancic)</name>
+   <description></description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1189</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1947</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>Weyanoke K (5)</block_rooms_comma>
+   <capacity>5</capacity>
+  </activity>
+  <activity>
+   <aid>996</aid>
+   <name>Z - 8th PERIOD PASS Not Received</name>
+   <description>Pass received from the 8th period office was not turned in.</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>1</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1148</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1051</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>   8th Office (Wrestling room)</block_rooms_comma>
+   <capacity>0</capacity>
+  </activity>
+  <activity>
+   <aid>998</aid>
+   <name>Z- EXCUSED ABSENCE</name>
+   <description>No description available</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1139</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1051</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>   8th Office (Wrestling room)</block_rooms_comma>
+   <capacity>0</capacity>
+  </activity>
+  <activity>
+   <aid>999</aid>
+   <name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+   <description>No description available</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors/>
+   <block_rooms/>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1185</member_count>
+   <block_rooms_comma></block_rooms_comma>
+   <capacity>-1</capacity>
+  </activity>
+  <activity>
+   <aid>955</aid>
+   <name>Z - Withdrawn from TJ</name>
+   <description>No description available</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>1</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1139</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1051</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>1</member_count>
+   <block_rooms_comma>   8th Office (Wrestling room)</block_rooms_comma>
+   <capacity>0</capacity>
+  </activity>
+  <activity>
+   <aid>764</aid>
+   <name>tjSTAR </name>
+   <description>Research Symposium Committee</description>
+   <restricted>0</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>861</block_sponsor>
+    <block_sponsor>1221</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1942</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>6</member_count>
+   <block_rooms_comma>T 44 (20)</block_rooms_comma>
+   <capacity>20</capacity>
+  </activity>
+  <activity>
+   <aid>984</aid>
+   <name>z - Administrative Study Hall</name>
+   <description>For those who forgot to sign up by 12:30 pm</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>1</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>492</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1897</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>T 43</block_rooms_comma>
+   <capacity>28</capacity>
+  </activity>
+  <activity>
+   <aid>66</aid>
+   <name>z-Early Release Waiver</name>
+   <description></description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors/>
+   <block_rooms>
+    <block_room>144</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>14</member_count>
+   <block_rooms_comma>  Out of Building</block_rooms_comma>
+   <capacity>30</capacity>
+  </activity>
+  <activity>
+   <aid>971</aid>
+   <name>z2 - for room use only</name>
+   <description>No description available</description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1139</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1814</block_room>
+    <block_room>1871</block_room>
+    <block_room>901</block_room>
+    <block_room>1404</block_room>
+    <block_room>1893</block_room>
+    <block_room>1891</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>Weyanoke C HUM wk,Weyanoke D HUM wk,T 17 Math/CS workroom,T 18  Math/CS workroom,T 39,T 37</block_rooms_comma>
+   <capacity>80</capacity>
+  </activity>
+  <activity>
+   <aid>973</aid>
+   <name>z4 - rooms taken for CONSTRUCTION</name>
+   <description></description>
+   <restricted>1</restricted>
+   <presign>0</presign>
+   <oneaday>0</oneaday>
+   <bothblocks>0</bothblocks>
+   <sticky>0</sticky>
+   <special>0</special>
+   <calendar>0</calendar>
+   <bid>2829</bid>
+   <block_sponsors>
+    <block_sponsor>1139</block_sponsor>
+   </block_sponsors>
+   <block_rooms>
+    <block_room>1926</block_room>
+   </block_rooms>
+   <attendancetaken>0</attendancetaken>
+   <cancelled>0</cancelled>
+   <roomchanged>0</roomchanged>
+   <comment></comment>
+   <advertisement></advertisement>
+   <member_count>0</member_count>
+   <block_rooms_comma>132 (0)</block_rooms_comma>
+   <capacity>0</capacity>
+  </activity>
+ </activities>
+ <error></error>
+ <debug></debug>
+</eighth>
