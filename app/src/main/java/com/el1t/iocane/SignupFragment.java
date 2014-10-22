@@ -22,7 +22,6 @@ public class SignupFragment extends Fragment
 
 	public interface OnFragmentInteractionListener {
 		public void submit(int AID, int BID);
-		public void finish();
 	}
 
 	public SignupFragment() {

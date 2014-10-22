@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 import org.apache.http.client.CookieStore;
-import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.BasicCookieStore;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.HttpCookie;
 import java.util.ArrayList;
 
 /**
@@ -36,6 +34,7 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 		}
 
 		Intent intent = getIntent();
+		mCookieStore = new BasicCookieStore();
 		ArrayList<SerializedCookie> cookieArray = (ArrayList<SerializedCookie>) intent.getSerializableExtra("cookies");
 		for(SerializedCookie c : cookieArray) {
 			mCookieStore.addCookie(c.toCookie());

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 /**
  * Created by El1t on 10/20/14.
@@ -21,7 +20,6 @@ public class LoginFragment extends Fragment {
 
 	public interface OnFragmentInteractionListener {
 		public void submit(String username, String password);
-		public void finish();
 	}
 
 	public LoginFragment() {
@@ -58,5 +56,9 @@ public class LoginFragment extends Fragment {
 			throw new ClassCastException(activity.toString()
 					+ " must implement OnFragmentInteractionListener");
 		}
+	}
+
+	public void clearPassword() {
+		password.setText("");
 	}
 }

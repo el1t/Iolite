@@ -1,24 +1,17 @@
 package com.el1t.iocane;
 
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.CookieStore;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.ClientPNames;
@@ -31,14 +24,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +34,6 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 	private LoginFragment mLoginFragment;
 	private String login_username;
 	private String login_password;
-	private CookieStore mCookieStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,15 +67,15 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
     }
 
 	public void submit(String username, String pass) {
-		login_username = username;
+		login_username = username.trim();
 		login_password = pass;
 		new WebConnection().execute("https://iodine.tjhsst.edu");
 	}
 
-	public void next() {
+	public void next(List<Cookie> cookies) {
 		Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_SHORT).show();
 		ArrayList<SerializedCookie> list = new ArrayList<SerializedCookie>();
-		for(Cookie c : mCookieStore.getCookies()) {
+		for(Cookie c : cookies) {
 			list.add(new SerializedCookie(c));
 		}
 		Intent intent = new Intent(this, SignupActivity.class);
@@ -100,6 +85,7 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 
 	public void failed() {
 		Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_SHORT).show();
+		mLoginFragment.clearPassword();
 	}
 
 	// AsyncTask to handle contacting the server
@@ -113,16 +99,20 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 			DefaultHttpClient client = new DefaultHttpClient();
 			try {
 				client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
+
+				// Create local HTTP context
+				HttpContext context = new BasicHttpContext();
+				CookieStore temp = new BasicCookieStore();
+				// Bind custom cookie store to the local context
+				context.setAttribute(ClientContext.COOKIE_STORE, temp);
+
 				HttpPost post = new HttpPost(new URI(urls[0]));
 				List<NameValuePair> data = new ArrayList<NameValuePair>(2);
 				data.add(new BasicNameValuePair("login_username", login_username));
 				data.add(new BasicNameValuePair("login_password", login_password));
 				post.setEntity(new UrlEncodedFormEntity(data));
 
-				// Create local HTTP context
-				HttpContext context = new BasicHttpContext();
-				// Bind custom cookie store to the local context
-				context.setAttribute(ClientContext.COOKIE_STORE, mCookieStore);
+				HttpResponse response = client.execute(post);
 			} catch (Exception e) {
 				Log.e(TAG, "Connection error.", e);
 			}
@@ -135,8 +125,7 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 			List<Cookie> cookies = result.getCookies();
 			System.out.println(cookies);
 			if (cookies.size() >= 2) {
-				mCookieStore = result;
-				next();
+				next(cookies);
 			} else {
 				failed();
 			}
