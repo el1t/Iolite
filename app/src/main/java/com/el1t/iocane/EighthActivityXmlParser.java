@@ -28,8 +28,8 @@ public class EighthActivityXmlParser
 
 	private ArrayList<EighthActivityItem> readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
 		ArrayList<EighthActivityItem> entries = new ArrayList<EighthActivityItem>();
-
-		parser.require(XmlPullParser.START_TAG, null, "feed");
+		parser.require(XmlPullParser.START_TAG, null, "eighth");
+		parser.require(XmlPullParser.START_TAG, null, "activities");
 		while (parser.next() != XmlPullParser.END_TAG) {
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;

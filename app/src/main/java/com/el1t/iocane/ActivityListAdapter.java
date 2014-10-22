@@ -15,23 +15,19 @@ import java.util.ArrayList;
  */
 public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem>
 {
-	private final Context context;
-
 	public ActivityListAdapter(Context context, ArrayList<EighthActivityItem> values) {
-		super(context, R.layout.fragment_signup, values);
-		this.context = context;
-		if (values != null) {
-			this.addAll(values);
-		}
+		super(context, 0, values);
+		System.out.println("values: " + values);
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View rowView = inflater.inflate(R.layout.row_signup, parent, false);
-		TextView activityName = (TextView) rowView.findViewById(R.id.activityName);
-		TextView activityDescription = (TextView) rowView.findViewById(R.id.activityDescription);
-		ProgressBar capacity = (ProgressBar) rowView.findViewById(R.id.capacity);
+		if (convertView == null) {
+			convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_signup, parent, false);
+		}
+		TextView activityName = (TextView) convertView.findViewById(R.id.activityName);
+		TextView activityDescription = (TextView) convertView.findViewById(R.id.activityDescription);
+		ProgressBar capacity = (ProgressBar) convertView.findViewById(R.id.capacity);
 
 		EighthActivityItem item = this.getItem(position);
 		activityName.setText(item.getName());
@@ -39,6 +35,6 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem>
 
 		capacity.setMax(item.getCapacity());
 		capacity.setProgress(item.getMemberCount());
-		return rowView;
+		return convertView;
 	}
 }

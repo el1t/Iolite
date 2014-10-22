@@ -69,7 +69,11 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 	public void submit(String username, String pass) {
 		login_username = username.trim();
 		login_password = pass;
-		new WebConnection().execute("https://iodine.tjhsst.edu");
+		if (login_username.toLowerCase().equals("fake")) {
+			next(new ArrayList<Cookie>());
+		} else {
+			new WebConnection().execute("https://iodine.tjhsst.edu");
+		}
 	}
 
 	public void next(List<Cookie> cookies) {

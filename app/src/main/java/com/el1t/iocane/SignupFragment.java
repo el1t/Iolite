@@ -33,8 +33,9 @@ public class SignupFragment extends Fragment
 		View rootView = inflater.inflate(R.layout.fragment_signup,
 				container, false);
 
-		mActivityListAdapter = new ActivityListAdapter(getActivity(), null);
-//		Bundle args = getArguments();
+		Bundle args = getArguments();
+		mActivityListAdapter = new ActivityListAdapter(getActivity(), (ArrayList<EighthActivityItem>) args.getSerializable("list"));
+		System.out.println(mActivityListAdapter.getCount());
 		activityList = (ListView) rootView.findViewById(R.id.activityList);
 		activityList.setAdapter(mActivityListAdapter);
 

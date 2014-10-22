@@ -1,11 +1,12 @@
 package com.el1t.iocane;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by El1t on 10/21/14.
  */
-public class EighthActivityItem
+public class EighthActivityItem implements Serializable
 {
 	private int AID;
 	private String name;
