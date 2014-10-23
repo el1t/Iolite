@@ -84,6 +84,7 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 		}
 		Intent intent = new Intent(this, SignupActivity.class);
 		intent.putExtra("cookies", list);
+		intent.putExtra("username", login_username);
 		startActivity(intent);
 	}
 
@@ -98,7 +99,7 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 
 		@Override
 		protected CookieStore doInBackground(String... urls) {
-			System.out.println("sending");
+			System.out.println("Logging in...");
 			assert(urls.length == 1);
 			DefaultHttpClient client = new DefaultHttpClient();
 			try {
@@ -127,7 +128,6 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 		protected void onPostExecute(CookieStore result) {
 			super.onPostExecute(result);
 			List<Cookie> cookies = result.getCookies();
-			System.out.println(cookies);
 			if (cookies.size() >= 2) {
 				next(cookies);
 			} else {

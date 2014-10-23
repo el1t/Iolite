@@ -33,9 +33,13 @@ public class SignupFragment extends Fragment
 		View rootView = inflater.inflate(R.layout.fragment_signup,
 				container, false);
 
+		// If list was provided for fake login
 		Bundle args = getArguments();
-		mActivityListAdapter = new ActivityListAdapter(getActivity(), (ArrayList<EighthActivityItem>) args.getSerializable("list"));
-		System.out.println(mActivityListAdapter.getCount());
+		if (args != null && args.getSerializable("list") != null) {
+			mActivityListAdapter = new ActivityListAdapter(getActivity(), (ArrayList<EighthActivityItem>) args.getSerializable("list"));
+		}
+
+		mActivityListAdapter = new ActivityListAdapter(getActivity(), new ArrayList<EighthActivityItem>());
 		activityList = (ListView) rootView.findViewById(R.id.activityList);
 		activityList.setAdapter(mActivityListAdapter);
 

@@ -20,22 +20,64 @@ public class EighthActivityXmlParser
 			parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
 			parser.setInput(in, null);
 			parser.nextTag();
-			return readFeed(parser);
+			return readEighth(parser);
 		} finally {
 			in.close();
 		}
 	}
 
-	private ArrayList<EighthActivityItem> readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
-		ArrayList<EighthActivityItem> entries = new ArrayList<EighthActivityItem>();
+	public boolean parseSuccess(InputStream in) throws XmlPullParserException, IOException {
+		try {
+			XmlPullParser parser = Xml.newPullParser();
+			parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+			parser.setInput(in, null);
+			parser.nextTag();
+			return readResponse(parser);
+		} finally {
+			in.close();
+		}
+	}
+
+	private boolean readResponse(XmlPullParser parser) throws XmlPullParserException, IOException {
+		boolean response = false;
 		parser.require(XmlPullParser.START_TAG, null, "eighth");
-		parser.require(XmlPullParser.START_TAG, null, "activities");
+		// Consume the eighth AND signup tags
+		parser.next();
+		while(parser.next() != XmlPullParser.START_TAG) {
+			parser.next();
+		}
 		while (parser.next() != XmlPullParser.END_TAG) {
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
 			String name = parser.getName();
-			// Starts by looking for the entry tag
+			System.out.println(name);
+			// Look for success tag
+			if (name.equals("success")) {
+				if (parser.next() == XmlPullParser.TEXT) {
+					return parser.getText().equals("1");
+				}
+			} else {
+				skip(parser);
+			}
+		}
+		return response;
+	}
+
+	private ArrayList<EighthActivityItem> readEighth(XmlPullParser parser) throws XmlPullParserException, IOException {
+		ArrayList<EighthActivityItem> entries = new ArrayList<EighthActivityItem>();
+		parser.require(XmlPullParser.START_TAG, null, "eighth");
+		// Consume the eighth AND activities tags
+		parser.next();
+		while(parser.next() != XmlPullParser.START_TAG) {
+			parser.next();
+		}
+		while (parser.next() != XmlPullParser.END_TAG) {
+			if (parser.getEventType() != XmlPullParser.START_TAG) {
+				continue;
+			}
+			String name = parser.getName();
+			// Starts by looking for the activity tag
 			if (name.equals("activity")) {
 				entries.add(readActivity(parser));
 			} else {

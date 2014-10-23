@@ -17,7 +17,6 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem>
 {
 	public ActivityListAdapter(Context context, ArrayList<EighthActivityItem> values) {
 		super(context, 0, values);
-		System.out.println("values: " + values);
 	}
 
 	@Override
