@@ -2,34 +2,17 @@ package com.el1t.iocane;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.CookieStore;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.client.params.CookiePolicy;
-import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
 import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,33 +31,41 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_signup);
+		Intent intent = getIntent();
 
 		mSignupFragment = new SignupFragment();
-//		Bundle args = new Bundle();
-//		args.putSerializable("list", getList());
-//		mSignupFragment.setArguments(args);
-
+		// Check if fake information should be used
+		if(intent.getBooleanExtra("fake", false)) {
+			Bundle args = new Bundle();
+			args.putSerializable("list", getList());
+			mSignupFragment.setArguments(args);
+		}
+		// Set fragment
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, mSignupFragment)
 					.commit();
 		}
 
-		Intent intent = getIntent();
+		// Retrieve cookies from previous activity
 		mCookieStore = new BasicCookieStore();
 		ArrayList<SerializedCookie> cookieArray = (ArrayList<SerializedCookie>) intent.getSerializableExtra("cookies");
 		for(SerializedCookie c : cookieArray) {
 			mCookieStore.addCookie(c.toCookie());
 		}
-		new WebConnection().execute("https://iodine.tjhsst.edu/api/eighth/list_activities/2829");
+
+		// Retrieve list for bid using cookies
+		new ActivityListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_activities/2829");
 	}
 
+	// Try signing up for an activity
 	public void submit(int AID, int BID) {
 		this.BID = Integer.toString(BID);
 		this.AID = Integer.toString(AID);
 		new SignupRequest().execute("https://iodine.tjhsst.edu/api/eighth/signup_activity");
 	}
 
+	// Notify the user after submission
 	public void postSubmit(boolean result) {
 		if(result) {
 			Toast.makeText(getApplicationContext(), "Signed up!", Toast.LENGTH_SHORT).show();
@@ -83,6 +74,7 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 		}
 	}
 
+	// Get a fake list of activities for debugging
 	private ArrayList<EighthActivityItem> getList() {
 		try {
 			return new EighthActivityXmlParser().parse(getAssets().open("testActivityList.xml"));
@@ -93,7 +85,7 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 	}
 
 	// AsyncTask to handle contacting the server
-	private class WebConnection extends AsyncTask<String, Void, ArrayList<EighthActivityItem>> {
+	private class ActivityListRequest extends AsyncTask<String, Void, ArrayList<EighthActivityItem>> {
 		private static final String TAG = "CONNECTION";
 
 		@Override
@@ -104,12 +96,16 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 			List<Cookie> cookies = mCookieStore.getCookies();
 			try {
 				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
+				// Add cookies to header
 				for(Cookie cookie : cookies) {
 					System.out.println(cookie.getName() + "=" + cookie.getValue());
 					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
 				}
+				// Begin connection
 				urlConnection.connect();
+				// Parse xml from server
 				response = new EighthActivityXmlParser().parse(urlConnection.getInputStream());
+				// Close connection
 				urlConnection.disconnect();
 			} catch (XmlPullParserException e) {
 				Log.e(TAG, "XML error.", e);
@@ -122,6 +118,7 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 		@Override
 		protected void onPostExecute(ArrayList<EighthActivityItem> result) {
 			super.onPostExecute(result);
+			// Add ArrayList to the ListView in SignupFragment
 			mSignupFragment.addAll(result);
 		}
 	}
@@ -145,8 +142,8 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 				}
 				// Add parameters
 				urlConnection.addRequestProperty("Content-Type", "xml");
-				urlConnection.setRequestProperty("bid", BID);
 				urlConnection.setRequestProperty("aid", AID);
+				urlConnection.setRequestProperty("bid", BID);
 
 				urlConnection.connect();
 				response = new EighthActivityXmlParser().parseSuccess(urlConnection.getInputStream());

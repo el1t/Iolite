@@ -31,6 +31,8 @@ import java.util.List;
 
 public class LoginActivity extends Activity implements LoginFragment.OnFragmentInteractionListener
 {
+	private final String FAKE_LOGIN = "fake";
+
 	private LoginFragment mLoginFragment;
 	private String login_username;
 	private String login_password;
@@ -66,17 +68,19 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
         return super.onOptionsItemSelected(item);
     }
 
+	// Submit the login request
 	public void submit(String username, String pass) {
 		login_username = username.trim();
 		login_password = pass;
-		if (login_username.toLowerCase().equals("fake")) {
-			next(new ArrayList<Cookie>());
+		if (isFakeLogin()) {
+			postSubmit(new ArrayList<Cookie>());
 		} else {
-			new WebConnection().execute("https://iodine.tjhsst.edu");
+			new LoginRequest().execute("https://iodine.tjhsst.edu");
 		}
 	}
 
-	public void next(List<Cookie> cookies) {
+	// Do after submission
+	public void postSubmit(List<Cookie> cookies) {
 		Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_SHORT).show();
 		ArrayList<SerializedCookie> list = new ArrayList<SerializedCookie>();
 		for(Cookie c : cookies) {
@@ -84,7 +88,7 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 		}
 		Intent intent = new Intent(this, SignupActivity.class);
 		intent.putExtra("cookies", list);
-		intent.putExtra("username", login_username);
+		intent.putExtra("fake", isFakeLogin());
 		startActivity(intent);
 	}
 
@@ -93,8 +97,13 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 		mLoginFragment.clearPassword();
 	}
 
-	// AsyncTask to handle contacting the server
-	private class WebConnection extends AsyncTask<String, Void, CookieStore> {
+	// Checks if fake offline cache should be used
+	private boolean isFakeLogin() {
+		return login_username.toLowerCase().equals(FAKE_LOGIN);
+	}
+
+	// AsyncTask to handle login POST request
+	private class LoginRequest extends AsyncTask<String, Void, CookieStore> {
 		private static final String TAG = "CONNECTION";
 
 		@Override
@@ -129,7 +138,7 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 			super.onPostExecute(result);
 			List<Cookie> cookies = result.getCookies();
 			if (cookies.size() >= 2) {
-				next(cookies);
+				postSubmit(cookies);
 			} else {
 				failed();
 			}

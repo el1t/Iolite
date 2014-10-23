@@ -12,7 +12,8 @@ import android.widget.EditText;
 /**
  * Created by El1t on 10/20/14.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment
+{
 	private OnFragmentInteractionListener mListener;
 	private EditText username;
 	private EditText password;
@@ -22,18 +23,19 @@ public class LoginFragment extends Fragment {
 		public void submit(String username, String password);
 	}
 
-	public LoginFragment() {
-	}
+	public LoginFragment() { }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_login
 				, container, false);
 
+		// Get fields
 		username	= (EditText)rootView.findViewById(R.id.username);
 		password	= (EditText)rootView.findViewById(R.id.password);
 		login		= (Button)	rootView.findViewById(R.id.login);
 
+		// Submit button
 		login.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

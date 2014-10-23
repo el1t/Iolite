@@ -14,19 +14,8 @@ import java.util.ArrayList;
  */
 public class EighthActivityXmlParser
 {
-	public ArrayList<EighthActivityItem> parse(InputStream in) throws XmlPullParserException, IOException {
-		try {
-			XmlPullParser parser = Xml.newPullParser();
-			parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-			parser.setInput(in, null);
-			parser.nextTag();
-			return readEighth(parser);
-		} finally {
-			in.close();
-		}
-	}
-
 	public boolean parseSuccess(InputStream in) throws XmlPullParserException, IOException {
+		// Initialize parser and jump to first tag
 		try {
 			XmlPullParser parser = Xml.newPullParser();
 			parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -62,6 +51,21 @@ public class EighthActivityXmlParser
 			}
 		}
 		return response;
+	}
+
+// ============ Parse activity list =============
+
+	public ArrayList<EighthActivityItem> parse(InputStream in) throws XmlPullParserException, IOException {
+		// Initialize parser and jump to first tag
+		try {
+			XmlPullParser parser = Xml.newPullParser();
+			parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+			parser.setInput(in, null);
+			parser.nextTag();
+			return readEighth(parser);
+		} finally {
+			in.close();
+		}
 	}
 
 	private ArrayList<EighthActivityItem> readEighth(XmlPullParser parser) throws XmlPullParserException, IOException {
@@ -206,10 +210,12 @@ public class EighthActivityXmlParser
 		return result;
 	}
 
+	// Read integers inside another tag
 	private ArrayList<Integer> readNestedInts(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		parser.require(XmlPullParser.START_TAG, null, tagName);
 		while(parser.next() != XmlPullParser.END_TAG) {
+			// Eliminates the plural 's' (e.g. sponsors --> sponsor)
 			if (parser.getName().equals(tagName.substring(0, tagName.length() - 1))) {
 				result.add(Integer.parseInt(parser.getText()));
 			}

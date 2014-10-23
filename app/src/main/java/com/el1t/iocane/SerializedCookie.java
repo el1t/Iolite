@@ -51,6 +51,7 @@ public class SerializedCookie implements Serializable
 		return version;
 	}
 
+	// Converts this object to a BasicClientCookie, preserving all attributes
 	public BasicClientCookie toCookie() {
 		BasicClientCookie out = new BasicClientCookie(name, value);
 		out.setDomain(domain);

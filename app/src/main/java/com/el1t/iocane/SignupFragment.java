@@ -24,8 +24,7 @@ public class SignupFragment extends Fragment
 		public void submit(int AID, int BID);
 	}
 
-	public SignupFragment() {
-	}
+	public SignupFragment() { }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,16 +32,18 @@ public class SignupFragment extends Fragment
 		View rootView = inflater.inflate(R.layout.fragment_signup,
 				container, false);
 
-		// If list was provided for fake login
+		// Check if list was provided for fake login
 		Bundle args = getArguments();
 		if (args != null && args.getSerializable("list") != null) {
 			mActivityListAdapter = new ActivityListAdapter(getActivity(), (ArrayList<EighthActivityItem>) args.getSerializable("list"));
 		}
 
+		// Setup custom ListAdapter
 		mActivityListAdapter = new ActivityListAdapter(getActivity(), new ArrayList<EighthActivityItem>());
 		activityList = (ListView) rootView.findViewById(R.id.activityList);
 		activityList.setAdapter(mActivityListAdapter);
 
+		// Submit activity selection on click
 		activityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
@@ -69,6 +70,7 @@ public class SignupFragment extends Fragment
 	}
 
 	public void addAll(ArrayList<EighthActivityItem> items) {
+		// Add items to the ListView
 		mActivityListAdapter.addAll(items);
 	}
 }
