@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -32,6 +31,7 @@ import java.util.List;
 public class LoginActivity extends Activity implements LoginFragment.OnFragmentInteractionListener
 {
 	private final String FAKE_LOGIN = "fake";
+	private final String TAG = "Login Activity";
 
 	private LoginFragment mLoginFragment;
 	private String login_username;
@@ -81,7 +81,11 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 
 	// Do after submission
 	public void postSubmit(List<Cookie> cookies) {
-		Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_SHORT).show();
+		if (isFakeLogin()) {
+			Toast.makeText(getApplicationContext(), "Loading faked data", Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_SHORT).show();
+		}
 		ArrayList<SerializedCookie> list = new ArrayList<SerializedCookie>();
 		for(Cookie c : cookies) {
 			list.add(new SerializedCookie(c));
@@ -95,6 +99,7 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 	public void failed() {
 		Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_SHORT).show();
 		mLoginFragment.clearPassword();
+		Log.d(TAG, "Login failed");
 	}
 
 	// Checks if fake offline cache should be used
@@ -104,11 +109,11 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 
 	// AsyncTask to handle login POST request
 	private class LoginRequest extends AsyncTask<String, Void, CookieStore> {
-		private static final String TAG = "CONNECTION";
+		private static final String TAG = "Login Connection";
 
 		@Override
 		protected CookieStore doInBackground(String... urls) {
-			System.out.println("Logging in...");
+			Log.d(TAG, "Logging in...");
 			assert(urls.length == 1);
 			DefaultHttpClient client = new DefaultHttpClient();
 			try {
@@ -126,7 +131,7 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 				data.add(new BasicNameValuePair("login_password", login_password));
 				post.setEntity(new UrlEncodedFormEntity(data));
 
-				HttpResponse response = client.execute(post);
+				client.execute(post);
 			} catch (Exception e) {
 				Log.e(TAG, "Connection error.", e);
 			}

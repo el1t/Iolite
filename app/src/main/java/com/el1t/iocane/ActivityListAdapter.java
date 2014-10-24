@@ -47,7 +47,12 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem>
 		// Set fields
 		EighthActivityItem item = getItem(position);
 		viewHolder.activityName.setText(item.getName());
-		viewHolder.activityDescription.setText(item.getDescription());
+		if (item.hasDescription()) {
+			viewHolder.activityDescription.setVisibility(View.GONE);
+		} else {
+			viewHolder.activityDescription.setVisibility(View.VISIBLE);
+			viewHolder.activityDescription.setText(item.getDescription());
+		}
 		viewHolder.capacity.setMax(item.getCapacity());
 		viewHolder.capacity.setProgress(item.getMemberCount());
 

@@ -146,4 +146,8 @@ public class EighthActivityItem implements Serializable
 	public int getCapacity() {
 		return capacity;
 	}
+
+	public boolean hasDescription() {
+		return description.equals("") || description.trim().toLowerCase().equals("no description available");
+	}
 }

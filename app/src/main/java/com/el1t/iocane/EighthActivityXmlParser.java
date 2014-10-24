@@ -1,5 +1,6 @@
 package com.el1t.iocane;
 
+import android.util.Log;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
  */
 public class EighthActivityXmlParser
 {
+	private final String TAG = "Activity List XML Parser";
+
 	public boolean parseSuccess(InputStream in) throws XmlPullParserException, IOException {
 		// Initialize parser and jump to first tag
 		try {
@@ -32,19 +35,26 @@ public class EighthActivityXmlParser
 		parser.require(XmlPullParser.START_TAG, null, "eighth");
 		// Consume the eighth AND signup tags
 		parser.next();
-		while(parser.next() != XmlPullParser.START_TAG) {
-			parser.next();
-		}
 		while (parser.next() != XmlPullParser.END_TAG) {
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
 			String name = parser.getName();
-			System.out.println(name);
 			// Look for success tag
-			if (name.equals("success")) {
+			if (name.equals("signup")) {
+				while (parser.getEventType() != XmlPullParser.END_TAG) {
+					if (parser.getEventType() != XmlPullParser.START_TAG) {
+						continue;
+					}
+					if (parser.getName().equals("success")) {
+						if (parser.next() == XmlPullParser.TEXT) {
+							response = parser.getText().equals("1");
+						}
+					}
+				}
+			} else if (name.equals("error")) {
 				if (parser.next() == XmlPullParser.TEXT) {
-					return parser.getText().equals("1");
+					Log.e(TAG, parser.getText());
 				}
 			} else {
 				skip(parser);
@@ -108,7 +118,7 @@ public class EighthActivityXmlParser
 		ArrayList<Integer> blockSponsors = null;
 		ArrayList<Integer> blockRooms = null;
 		String blockRoomString = null;
-		int bid = 0;
+		int BID = 0;
 		boolean cancelled = false;
 		String comment = null;
 		String advertisement = null;
@@ -122,8 +132,8 @@ public class EighthActivityXmlParser
 				continue;
 			}
 			String tagName = parser.getName();
-			if (tagName.equals("AID")) {
-				AID = readInt(parser, "AID");
+			if (tagName.equals("aid")) {
+				AID = readInt(parser, "aid");
 			} else if (tagName.equals("name")) {
 				name = readString(parser, "name");
 			} else if (tagName.equals("description")) {
@@ -151,7 +161,7 @@ public class EighthActivityXmlParser
 			} else if (tagName.equals("block_rooms_comma")) {
 				blockRoomString = readString(parser, "block_rooms_comma");
 			} else if (tagName.equals("bid")) {
-				bid = readInt(parser, "bid");
+				BID = readInt(parser, "bid");
 			} else if (tagName.equals("cancelled")) {
 				cancelled = readBool(parser, "cancelled");
 			} else if (tagName.equals("comment")) {
@@ -170,9 +180,12 @@ public class EighthActivityXmlParser
 				skip(parser);
 			}
 		}
+		if (AID * BID * memberCount * capacity == 0) {
+			Log.e(TAG, "Malformed integer in fields for activity " + name);
+		}
 		return new EighthActivityItem(AID, name, description, restricted, presign, oneaday,
 				bothblocks, sticky, special, calendar, roomChanged, blockSponsors,
-				blockRooms, blockRoomString, bid, cancelled, comment,
+				blockRooms, blockRoomString, BID, cancelled, comment,
 				advertisement, attendanceTaken, favorite, memberCount,
 				capacity);
 	}

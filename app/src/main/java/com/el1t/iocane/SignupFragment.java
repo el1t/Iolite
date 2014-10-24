@@ -3,6 +3,7 @@ package com.el1t.iocane;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
  */
 public class SignupFragment extends Fragment
 {
+	private final String TAG = "Signup Fragment";
+
 	private OnFragmentInteractionListener mListener;
 	private ListView activityList;
 	private ActivityListAdapter mActivityListAdapter;
@@ -33,13 +36,15 @@ public class SignupFragment extends Fragment
 				container, false);
 
 		// Check if list was provided for fake login
+		// to setup custom ListAdapter
 		Bundle args = getArguments();
 		if (args != null && args.getSerializable("list") != null) {
+			Log.d(TAG, "Fake activity list received");
 			mActivityListAdapter = new ActivityListAdapter(getActivity(), (ArrayList<EighthActivityItem>) args.getSerializable("list"));
+		} else {
+			mActivityListAdapter = new ActivityListAdapter(getActivity(), new ArrayList<EighthActivityItem>());
 		}
 
-		// Setup custom ListAdapter
-		mActivityListAdapter = new ActivityListAdapter(getActivity(), new ArrayList<EighthActivityItem>());
 		activityList = (ListView) rootView.findViewById(R.id.activityList);
 		activityList.setAdapter(mActivityListAdapter);
 
