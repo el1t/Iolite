@@ -90,7 +90,7 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 		for(Cookie c : cookies) {
 			list.add(new SerializedCookie(c));
 		}
-		Intent intent = new Intent(this, SignupActivity.class);
+		Intent intent = new Intent(this, BlockActivity.class);
 		intent.putExtra("cookies", list);
 		intent.putExtra("fake", isFakeLogin());
 		startActivity(intent);

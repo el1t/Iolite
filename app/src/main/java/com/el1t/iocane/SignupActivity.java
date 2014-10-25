@@ -37,7 +37,7 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 	private SignupFragment mSignupFragment;
 	private String AID;
 	private String BID;
-	private CookieStore mCookieStore;
+	private ArrayList<SerializedCookie> mCookies;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +61,11 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 		}
 
 		// Retrieve cookies from previous activity
-		mCookieStore = new BasicCookieStore();
-		ArrayList<SerializedCookie> cookieArray = (ArrayList<SerializedCookie>) intent.getSerializableExtra("cookies");
-		for(SerializedCookie c : cookieArray) {
-			mCookieStore.addCookie(c.toCookie());
-		}
+		mCookies = (ArrayList<SerializedCookie>) intent.getSerializableExtra("cookies");
 
 		// Retrieve list for bid using cookies
 		if (!intent.getBooleanExtra("fake", false)) {
-			new ActivityListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_activities/2829");
+			new ActivityListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_activities/" + intent.getStringExtra("BID"));
 		}
 	}
 
@@ -87,21 +83,21 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 			Log.d(TAG, "Sign up success");
 		} else {
 			Toast.makeText(getApplicationContext(), "Something went wrong...", Toast.LENGTH_SHORT).show();
-			Log.w(TAG, "Sing up failure");
+			Log.w(TAG, "Sign up failure");
 		}
 	}
 
 	// Get a fake list of activities for debugging
 	private ArrayList<EighthActivityItem> getList() {
 		try {
-			return new EighthActivityXmlParser().parse(getAssets().open("testActivityList.xml"));
+			return EighthActivityXmlParser.parse(getAssets().open("testActivityList.xml"));
 		} catch(Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 		return null;
 	}
 
-	// AsyncTask to handle contacting the server
+	// Retrieve activity list for BID from server
 	private class ActivityListRequest extends AsyncTask<String, Void, ArrayList<EighthActivityItem>> {
 		private static final String TAG = "Activity List Connection";
 
@@ -110,17 +106,16 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 			assert(urls.length == 1);
 			HttpURLConnection urlConnection;
 			ArrayList<EighthActivityItem> response = null;
-			List<Cookie> cookies = mCookieStore.getCookies();
 			try {
 				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
 				// Add cookies to header
-				for(Cookie cookie : cookies) {
+				for(SerializedCookie cookie : mCookies) {
 					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
 				}
 				// Begin connection
 				urlConnection.connect();
 				// Parse xml from server
-				response = new EighthActivityXmlParser().parse(urlConnection.getInputStream());
+				response = EighthActivityXmlParser.parse(urlConnection.getInputStream());
 				// Close connection
 				urlConnection.disconnect();
 			} catch (XmlPullParserException e) {
@@ -146,14 +141,13 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 		@Override
 		protected Boolean doInBackground(String... urls) {
 			assert(urls.length == 1);
-			List<Cookie> cookies = mCookieStore.getCookies();
 			DefaultHttpClient client = new DefaultHttpClient();
 			try {
 				// Setup client
 				client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
 				HttpPost post = new HttpPost(new URI(urls[0]));
 				// Add cookies
-				for(Cookie cookie : cookies) {
+				for(SerializedCookie cookie : mCookies) {
 					post.setHeader("Cookie", cookie.getName() + "=" + cookie.getValue());
 				}
 				// Add parameters
@@ -168,7 +162,7 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 
 				// Parse response
 				HttpEntity entity = response.getEntity();
-				return new EighthActivityXmlParser().parseSuccess(entity.getContent());
+				return EighthActivityXmlParser.parseSuccess(entity.getContent());
 			} catch (XmlPullParserException e) {
 				Log.e(TAG, "XML error.", e);
 			} catch (Exception e) {

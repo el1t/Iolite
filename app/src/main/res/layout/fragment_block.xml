@@ -3,10 +3,10 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context=".SignupFragment">
+              tools:context=".BlockFragment">
 
 	<ListView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/activityList"/>
+		android:id="@+id/blockList"/>
 </LinearLayout>

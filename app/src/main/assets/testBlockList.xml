@@ -1,0 +1,1894 @@
+<eighth>
+	<blocks>
+		<block>
+			<bid>2823</bid>
+			<date>
+				<str>2014-10-24</str>
+				<iso>2014-10-24T00:00:00-04:00</iso>
+				<disp>October 24, 2014</disp>
+			</date>
+			<disp>Friday October 24th, 2014 Block A</disp>
+			<type>A</type>
+			<locked>1</locked>
+			<activity>
+				<aid>149</aid>
+				<name>Ballroom Dance Club</name>
+				<sponsors/>
+				<rooms/>
+				<description>
+					Learn ballroom dance styles such as waltz, foxtrot, tango, cha cha, and more! All are welcome, no partner required.
+				</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2823</bid>
+					<date>2014-10-24</date>
+					<block>A</block>
+					<locked>1</locked>
+				</block>
+				<bid>2823</bid>
+				<block_sponsors>
+					<block_sponsor>1122</block_sponsor>
+					<block_sponsor>851</block_sponsor>
+				</block_sponsors>
+				<block_rooms>
+					<block_room>929</block_room>
+				</block_rooms>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>1</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2824</bid>
+			<date>
+				<str>2014-10-24</str>
+				<iso>2014-10-24T00:00:00-04:00</iso>
+				<disp>October 24, 2014</disp>
+			</date>
+			<disp>Friday October 24th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>1</locked>
+			<activity>
+				<aid>118</aid>
+				<name>Lab 208 - Electronics Sr Research</name>
+				<sponsors/>
+				<rooms/>
+				<description>
+					For students taking electronics electives or doing senior research
+				</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2824</bid>
+					<date>2014-10-24</date>
+					<block>B</block>
+					<locked>1</locked>
+				</block>
+				<bid>2824</bid>
+				<block_sponsors>
+					<block_sponsor>15</block_sponsor>
+				</block_sponsors>
+				<block_rooms>
+					<block_room>1956</block_room>
+				</block_rooms>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>1</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2825</bid>
+			<date>
+				<str>2014-10-27</str>
+				<iso>2014-10-27T00:00:00-04:00</iso>
+				<disp>October 27, 2014</disp>
+			</date>
+			<disp>Monday October 27th, 2014 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>149</aid>
+				<name>Ballroom Dance Club</name>
+				<sponsors/>
+				<rooms/>
+				<description>
+					Learn ballroom dance styles such as waltz, foxtrot, tango, cha cha, and more! All are welcome, no partner required.
+					</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2825</bid>
+					<date>2014-10-27</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2825</bid>
+				<block_sponsors>
+					<block_sponsor>1122</block_sponsor>
+					<block_sponsor>851</block_sponsor>
+				</block_sponsors>
+				<block_rooms>
+					<block_room>929</block_room>
+				</block_rooms>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2826</bid>
+			<date>
+				<str>2014-10-27</str>
+				<iso>2014-10-27T00:00:00-04:00</iso>
+				<disp>October 27, 2014</disp>
+			</date>
+			<disp>Monday October 27th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>900</aid>
+				<name>Fall Sports Pep Rally</name>
+				<sponsors/>
+				<rooms>
+					<room>1</room>
+				</rooms>
+				<description>School wide pep rally!!</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>1</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2826</bid>
+					<date>2014-10-27</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2826</bid>
+				<block_sponsors>
+					<block_sponsor>853</block_sponsor>
+					<block_sponsor>1066</block_sponsor>
+					<block_sponsor>98</block_sponsor>
+					<block_sponsor>1204</block_sponsor>
+					<block_sponsor>861</block_sponsor>
+					<block_sponsor>37</block_sponsor>
+					<block_sponsor>855</block_sponsor>
+					<block_sponsor>310</block_sponsor>
+					<block_sponsor>1255</block_sponsor>
+					<block_sponsor>1126</block_sponsor>
+					<block_sponsor>484</block_sponsor>
+					<block_sponsor>1267</block_sponsor>
+					<block_sponsor>1009</block_sponsor>
+					<block_sponsor>1013</block_sponsor>
+					<block_sponsor>428</block_sponsor>
+					<block_sponsor>1254</block_sponsor>
+					<block_sponsor>1266</block_sponsor>
+					<block_sponsor>197</block_sponsor>
+					<block_sponsor>1118</block_sponsor>
+				</block_sponsors>
+				<block_rooms>
+					<block_room>142</block_room>
+				</block_rooms>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2828</bid>
+			<date>
+				<str>2014-10-29</str>
+				<iso>2014-10-29T00:00:00-04:00</iso>
+				<disp>October 29, 2014</disp>
+			</date>
+			<disp>Wednesday October 29th, 2014 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>757</aid>
+				<name>TSA - Technology Student Association</name>
+				<sponsors/>
+				<rooms/>
+				<description>
+This club helps students work on technological projects throughout the year and enters them in a national competition.
+</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2828</bid>
+					<date>2014-10-29</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2828</bid>
+				<block_sponsors>
+					<block_sponsor>1203</block_sponsor>
+				</block_sponsors>
+				<block_rooms>
+					<block_room>58</block_room>
+				</block_rooms>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2829</bid>
+			<date>
+				<str>2014-10-29</str>
+				<iso>2014-10-29T00:00:00-04:00</iso>
+				<disp>October 29, 2014</disp>
+			</date>
+			<disp>Wednesday October 29th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2829</bid>
+					<date>2014-10-29</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2829</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2835</bid>
+			<date>
+				<str>2014-11-05</str>
+				<iso>2014-11-05T00:00:00-05:00</iso>
+				<disp>November 5, 2014</disp>
+			</date>
+			<disp>Wednesday November 5th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2835</bid>
+					<date>2014-11-05</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2835</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2836</bid>
+			<date>
+				<str>2014-11-07</str>
+				<iso>2014-11-07T00:00:00-05:00</iso>
+				<disp>November 7, 2014</disp>
+			</date>
+			<disp>Friday November 7th, 2014 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2836</bid>
+					<date>2014-11-07</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2836</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2837</bid>
+			<date>
+				<str>2014-11-07</str>
+				<iso>2014-11-07T00:00:00-05:00</iso>
+				<disp>November 7, 2014</disp>
+			</date>
+			<disp>Friday November 7th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2837</bid>
+					<date>2014-11-07</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2837</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2838</bid>
+			<date>
+				<str>2014-11-10</str>
+				<iso>2014-11-10T00:00:00-05:00</iso>
+				<disp>November 10, 2014</disp>
+			</date>
+			<disp>Monday November 10th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2838</bid>
+					<date>2014-11-10</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2838</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2839</bid>
+			<date>
+				<str>2014-11-12</str>
+				<iso>2014-11-12T00:00:00-05:00</iso>
+				<disp>November 12, 2014</disp>
+			</date>
+			<disp>Wednesday November 12th, 2014 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2839</bid>
+					<date>2014-11-12</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2839</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2840</bid>
+			<date>
+				<str>2014-11-12</str>
+				<iso>2014-11-12T00:00:00-05:00</iso>
+				<disp>November 12, 2014</disp>
+			</date>
+			<disp>Wednesday November 12th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2840</bid>
+					<date>2014-11-12</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2840</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2841</bid>
+			<date>
+				<str>2014-11-14</str>
+				<iso>2014-11-14T00:00:00-05:00</iso>
+				<disp>November 14, 2014</disp>
+			</date>
+			<disp>Friday November 14th, 2014 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2841</bid>
+					<date>2014-11-14</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2841</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2842</bid>
+			<date>
+				<str>2014-11-14</str>
+				<iso>2014-11-14T00:00:00-05:00</iso>
+				<disp>November 14, 2014</disp>
+			</date>
+			<disp>Friday November 14th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2842</bid>
+					<date>2014-11-14</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2842</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2843</bid>
+			<date>
+				<str>2014-11-17</str>
+				<iso>2014-11-17T00:00:00-05:00</iso>
+				<disp>November 17, 2014</disp>
+			</date>
+			<disp>Monday November 17th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2843</bid>
+					<date>2014-11-17</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2843</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2844</bid>
+			<date>
+				<str>2014-11-19</str>
+				<iso>2014-11-19T00:00:00-05:00</iso>
+				<disp>November 19, 2014</disp>
+			</date>
+			<disp>Wednesday November 19th, 2014 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2844</bid>
+					<date>2014-11-19</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2844</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2845</bid>
+			<date>
+				<str>2014-11-19</str>
+				<iso>2014-11-19T00:00:00-05:00</iso>
+				<disp>November 19, 2014</disp>
+			</date>
+			<disp>Wednesday November 19th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2845</bid>
+					<date>2014-11-19</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2845</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2846</bid>
+			<date>
+				<str>2014-11-21</str>
+				<iso>2014-11-21T00:00:00-05:00</iso>
+				<disp>November 21, 2014</disp>
+			</date>
+			<disp>Friday November 21st, 2014 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2846</bid>
+					<date>2014-11-21</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2846</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2847</bid>
+			<date>
+				<str>2014-11-21</str>
+				<iso>2014-11-21T00:00:00-05:00</iso>
+				<disp>November 21, 2014</disp>
+			</date>
+			<disp>Friday November 21st, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2847</bid>
+					<date>2014-11-21</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2847</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2848</bid>
+			<date>
+				<str>2014-11-24</str>
+				<iso>2014-11-24T00:00:00-05:00</iso>
+				<disp>November 24, 2014</disp>
+			</date>
+			<disp>Monday November 24th, 2014 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2848</bid>
+					<date>2014-11-24</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2848</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2849</bid>
+			<date>
+				<str>2014-11-24</str>
+				<iso>2014-11-24T00:00:00-05:00</iso>
+				<disp>November 24, 2014</disp>
+			</date>
+			<disp>Monday November 24th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2849</bid>
+					<date>2014-11-24</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2849</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2850</bid>
+			<date>
+				<str>2014-12-01</str>
+				<iso>2014-12-01T00:00:00-05:00</iso>
+				<disp>December 1, 2014</disp>
+			</date>
+			<disp>Monday December 1st, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2850</bid>
+					<date>2014-12-01</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2850</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2851</bid>
+			<date>
+				<str>2014-12-03</str>
+				<iso>2014-12-03T00:00:00-05:00</iso>
+				<disp>December 3, 2014</disp>
+			</date>
+			<disp>Wednesday December 3rd, 2014 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2851</bid>
+					<date>2014-12-03</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2851</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2852</bid>
+			<date>
+				<str>2014-12-03</str>
+				<iso>2014-12-03T00:00:00-05:00</iso>
+				<disp>December 3, 2014</disp>
+			</date>
+			<disp>Wednesday December 3rd, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2852</bid>
+					<date>2014-12-03</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2852</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2869</bid>
+			<date>
+				<str>2014-12-03</str>
+				<iso>2014-12-03T00:00:00-05:00</iso>
+				<disp>December 3, 2014</disp>
+			</date>
+			<disp>Wednesday December 3rd, 2014 Block C</disp>
+			<type>C</type>
+			<locked>0</locked>
+			<activity>
+				<aid>20</aid>
+				<name>z- Tech Lab Visits for Juniors only</name>
+				<sponsors/>
+				<rooms/>
+				<description>
+Juniors must select 4 labs to visit. (Choose C & D but not A) or (Choose E & F but not a B block activity) or get it all over with in one day and go to CDE&F. If you visit a tech lab during the A time frame do not select an A block activity. If you visit a techlab during the B time frame do not select a B activity
+</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2869</bid>
+					<date>2014-12-03</date>
+					<block>C</block>
+					<locked>0</locked>
+				</block>
+				<bid>2869</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2870</bid>
+			<date>
+				<str>2014-12-03</str>
+				<iso>2014-12-03T00:00:00-05:00</iso>
+				<disp>December 3, 2014</disp>
+			</date>
+			<disp>Wednesday December 3rd, 2014 Block D</disp>
+			<type>D</type>
+			<locked>0</locked>
+			<activity>
+				<aid>20</aid>
+				<name>z- Tech Lab Visits for Juniors only</name>
+				<sponsors/>
+				<rooms/>
+				<description>
+Juniors must select 4 labs to visit. (Choose C & D but not A) or (Choose E & F but not a B block activity) or get it all over with in one day and go to CDE&F. If you visit a tech lab during the A time frame do not select an A block activity. If you visit a techlab during the B time frame do not select a B activity
+</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2870</bid>
+					<date>2014-12-03</date>
+					<block>D</block>
+					<locked>0</locked>
+				</block>
+				<bid>2870</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2871</bid>
+			<date>
+				<str>2014-12-03</str>
+				<iso>2014-12-03T00:00:00-05:00</iso>
+				<disp>December 3, 2014</disp>
+			</date>
+			<disp>Wednesday December 3rd, 2014 Block E</disp>
+			<type>E</type>
+			<locked>0</locked>
+			<activity>
+				<aid>20</aid>
+				<name>z- Tech Lab Visits for Juniors only</name>
+				<sponsors/>
+				<rooms/>
+				<description>
+Juniors must select 4 labs to visit. (Choose C & D but not A) or (Choose E & F but not a B block activity) or get it all over with in one day and go to CDE&F. If you visit a tech lab during the A time frame do not select an A block activity. If you visit a techlab during the B time frame do not select a B activity
+</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2871</bid>
+					<date>2014-12-03</date>
+					<block>E</block>
+					<locked>0</locked>
+				</block>
+				<bid>2871</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2872</bid>
+			<date>
+				<str>2014-12-03</str>
+				<iso>2014-12-03T00:00:00-05:00</iso>
+				<disp>December 3, 2014</disp>
+			</date>
+			<disp>Wednesday December 3rd, 2014 Block F</disp>
+			<type>F</type>
+			<locked>0</locked>
+			<activity>
+				<aid>20</aid>
+				<name>z- Tech Lab Visits for Juniors only</name>
+				<sponsors/>
+				<rooms/>
+				<description>
+Juniors must select 4 labs to visit. (Choose C & D but not A) or (Choose E & F but not a B block activity) or get it all over with in one day and go to CDE&F. If you visit a tech lab during the A time frame do not select an A block activity. If you visit a techlab during the B time frame do not select a B activity
+</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2872</bid>
+					<date>2014-12-03</date>
+					<block>F</block>
+					<locked>0</locked>
+				</block>
+				<bid>2872</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2853</bid>
+			<date>
+				<str>2014-12-05</str>
+				<iso>2014-12-05T00:00:00-05:00</iso>
+				<disp>December 5, 2014</disp>
+			</date>
+			<disp>Friday December 5th, 2014 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2853</bid>
+					<date>2014-12-05</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2853</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2854</bid>
+			<date>
+				<str>2014-12-05</str>
+				<iso>2014-12-05T00:00:00-05:00</iso>
+				<disp>December 5, 2014</disp>
+			</date>
+			<disp>Friday December 5th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2854</bid>
+					<date>2014-12-05</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2854</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2873</bid>
+			<date>
+				<str>2014-12-05</str>
+				<iso>2014-12-05T00:00:00-05:00</iso>
+				<disp>December 5, 2014</disp>
+			</date>
+			<disp>Friday December 5th, 2014 Block C</disp>
+			<type>C</type>
+			<locked>0</locked>
+			<activity>
+				<aid>20</aid>
+				<name>z- Tech Lab Visits for Juniors only</name>
+				<sponsors/>
+				<rooms/>
+				<description>
+Juniors must select 4 labs to visit. (Choose C & D but not A) or (Choose E & F but not a B block activity) or get it all over with in one day and go to CDE&F. If you visit a tech lab during the A time frame do not select an A block activity. If you visit a techlab during the B time frame do not select a B activity
+</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2873</bid>
+					<date>2014-12-05</date>
+					<block>C</block>
+					<locked>0</locked>
+				</block>
+				<bid>2873</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2874</bid>
+			<date>
+				<str>2014-12-05</str>
+				<iso>2014-12-05T00:00:00-05:00</iso>
+				<disp>December 5, 2014</disp>
+			</date>
+			<disp>Friday December 5th, 2014 Block D</disp>
+			<type>D</type>
+			<locked>0</locked>
+			<activity>
+				<aid>20</aid>
+				<name>z- Tech Lab Visits for Juniors only</name>
+				<sponsors/>
+				<rooms/>
+				<description>
+Juniors must select 4 labs to visit. (Choose C & D but not A) or (Choose E & F but not a B block activity) or get it all over with in one day and go to CDE&F. If you visit a tech lab during the A time frame do not select an A block activity. If you visit a techlab during the B time frame do not select a B activity
+</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2874</bid>
+					<date>2014-12-05</date>
+					<block>D</block>
+					<locked>0</locked>
+				</block>
+				<bid>2874</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2875</bid>
+			<date>
+				<str>2014-12-05</str>
+				<iso>2014-12-05T00:00:00-05:00</iso>
+				<disp>December 5, 2014</disp>
+			</date>
+			<disp>Friday December 5th, 2014 Block E</disp>
+			<type>E</type>
+			<locked>0</locked>
+			<activity>
+				<aid>20</aid>
+				<name>z- Tech Lab Visits for Juniors only</name>
+				<sponsors/>
+				<rooms/>
+				<description>
+Juniors must select 4 labs to visit. (Choose C & D but not A) or (Choose E & F but not a B block activity) or get it all over with in one day and go to CDE&F. If you visit a tech lab during the A time frame do not select an A block activity. If you visit a techlab during the B time frame do not select a B activity
+</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2875</bid>
+					<date>2014-12-05</date>
+					<block>E</block>
+					<locked>0</locked>
+				</block>
+				<bid>2875</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2876</bid>
+			<date>
+				<str>2014-12-05</str>
+				<iso>2014-12-05T00:00:00-05:00</iso>
+				<disp>December 5, 2014</disp>
+			</date>
+			<disp>Friday December 5th, 2014 Block F</disp>
+			<type>F</type>
+			<locked>0</locked>
+			<activity>
+				<aid>20</aid>
+				<name>z- Tech Lab Visits for Juniors only</name>
+				<sponsors/>
+				<rooms/>
+				<description>
+Juniors must select 4 labs to visit. (Choose C & D but not A) or (Choose E & F but not a B block activity) or get it all over with in one day and go to CDE&F. If you visit a tech lab during the A time frame do not select an A block activity. If you visit a techlab during the B time frame do not select a B activity
+</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2876</bid>
+					<date>2014-12-05</date>
+					<block>F</block>
+					<locked>0</locked>
+				</block>
+				<bid>2876</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2855</bid>
+			<date>
+				<str>2014-12-08</str>
+				<iso>2014-12-08T00:00:00-05:00</iso>
+				<disp>December 8, 2014</disp>
+			</date>
+			<disp>Monday December 8th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2855</bid>
+					<date>2014-12-08</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2855</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2856</bid>
+			<date>
+				<str>2014-12-10</str>
+				<iso>2014-12-10T00:00:00-05:00</iso>
+				<disp>December 10, 2014</disp>
+			</date>
+			<disp>Wednesday December 10th, 2014 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2856</bid>
+					<date>2014-12-10</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2856</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2857</bid>
+			<date>
+				<str>2014-12-10</str>
+				<iso>2014-12-10T00:00:00-05:00</iso>
+				<disp>December 10, 2014</disp>
+			</date>
+			<disp>Wednesday December 10th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2857</bid>
+					<date>2014-12-10</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2857</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2858</bid>
+			<date>
+				<str>2014-12-12</str>
+				<iso>2014-12-12T00:00:00-05:00</iso>
+				<disp>December 12, 2014</disp>
+			</date>
+			<disp>Friday December 12th, 2014 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2858</bid>
+					<date>2014-12-12</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2858</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2859</bid>
+			<date>
+				<str>2014-12-12</str>
+				<iso>2014-12-12T00:00:00-05:00</iso>
+				<disp>December 12, 2014</disp>
+			</date>
+			<disp>Friday December 12th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2859</bid>
+					<date>2014-12-12</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2859</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2860</bid>
+			<date>
+				<str>2014-12-15</str>
+				<iso>2014-12-15T00:00:00-05:00</iso>
+				<disp>December 15, 2014</disp>
+			</date>
+			<disp>Monday December 15th, 2014 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2860</bid>
+					<date>2014-12-15</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2860</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2861</bid>
+			<date>
+				<str>2014-12-15</str>
+				<iso>2014-12-15T00:00:00-05:00</iso>
+				<disp>December 15, 2014</disp>
+			</date>
+			<disp>Monday December 15th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2861</bid>
+					<date>2014-12-15</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2861</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2862</bid>
+			<date>
+				<str>2014-12-17</str>
+				<iso>2014-12-17T00:00:00-05:00</iso>
+				<disp>December 17, 2014</disp>
+			</date>
+			<disp>Wednesday December 17th, 2014 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2862</bid>
+					<date>2014-12-17</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2862</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2863</bid>
+			<date>
+				<str>2014-12-17</str>
+				<iso>2014-12-17T00:00:00-05:00</iso>
+				<disp>December 17, 2014</disp>
+			</date>
+			<disp>Wednesday December 17th, 2014 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2863</bid>
+					<date>2014-12-17</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2863</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2864</bid>
+			<date>
+				<str>2015-01-05</str>
+				<iso>2015-01-05T00:00:00-05:00</iso>
+				<disp>January 5, 2015</disp>
+			</date>
+			<disp>Monday January 5th, 2015 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2864</bid>
+					<date>2015-01-05</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2864</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2865</bid>
+			<date>
+				<str>2015-01-07</str>
+				<iso>2015-01-07T00:00:00-05:00</iso>
+				<disp>January 7, 2015</disp>
+			</date>
+			<disp>Wednesday January 7th, 2015 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2865</bid>
+					<date>2015-01-07</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2865</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2866</bid>
+			<date>
+				<str>2015-01-07</str>
+				<iso>2015-01-07T00:00:00-05:00</iso>
+				<disp>January 7, 2015</disp>
+			</date>
+			<disp>Wednesday January 7th, 2015 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2866</bid>
+					<date>2015-01-07</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2866</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2867</bid>
+			<date>
+				<str>2015-01-09</str>
+				<iso>2015-01-09T00:00:00-05:00</iso>
+				<disp>January 9, 2015</disp>
+			</date>
+			<disp>Friday January 9th, 2015 Block A</disp>
+			<type>A</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2867</bid>
+					<date>2015-01-09</date>
+					<block>A</block>
+					<locked>0</locked>
+				</block>
+				<bid>2867</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+		<block>
+			<bid>2868</bid>
+			<date>
+				<str>2015-01-09</str>
+				<iso>2015-01-09T00:00:00-05:00</iso>
+				<disp>January 9, 2015</disp>
+			</date>
+			<disp>Friday January 9th, 2015 Block B</disp>
+			<type>B</type>
+			<locked>0</locked>
+			<activity>
+				<aid>999</aid>
+				<name>Z-HAS NOT SELECTED AN ACTIVITY</name>
+				<sponsors/>
+				<rooms/>
+				<description>No description available</description>
+				<restricted>0</restricted>
+				<presign>0</presign>
+				<oneaday>0</oneaday>
+				<bothblocks>0</bothblocks>
+				<sticky>0</sticky>
+				<special>0</special>
+				<calendar>0</calendar>
+				<block>
+					<bid>2868</bid>
+					<date>2015-01-09</date>
+					<block>B</block>
+					<locked>0</locked>
+				</block>
+				<bid>2868</bid>
+				<block_sponsors/>
+				<block_rooms/>
+				<cancelled>0</cancelled>
+				<comment/>
+				<advertisement/>
+				<attendancetaken>0</attendancetaken>
+			</activity>
+		</block>
+	</blocks>
+</eighth>

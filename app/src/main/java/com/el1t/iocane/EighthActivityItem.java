@@ -36,8 +36,8 @@ public class EighthActivityItem implements Serializable
 	                          ArrayList<Integer> blockRooms, String blockRoomString, int bid, boolean cancelled, String comment, String advertisement,
 	                          boolean attendanceTaken, boolean favorite, int memberCount, int capacity) {
 		this.AID = AID;
-		this.name = name;
-		this.description = description;
+		this.name = name.trim();
+		this.description = description.trim();
 		this.restricted = restricted;
 		this.presign = presign;
 		this.oneaday = oneaday;
@@ -48,15 +48,38 @@ public class EighthActivityItem implements Serializable
 		this.roomChanged = roomChanged;
 		this.blockSponsors = blockSponsors;
 		this.blockRooms = blockRooms;
-		this.blockRoomString = blockRoomString;
+		this.blockRoomString = blockRoomString.trim();
 		this.bid = bid;
 		this.cancelled = cancelled;
-		this.comment = comment;
-		this.advertisement = advertisement;
+		this.comment = comment.trim();
+		this.advertisement = advertisement.trim();
 		this.attendanceTaken = attendanceTaken;
 		this.favorite = favorite;
 		this.memberCount = memberCount;
 		this.capacity = capacity;
+	}
+
+	public EighthActivityItem(int AID, String name, String description, boolean restricted, boolean presign, boolean oneaday,
+	                          boolean bothblocks, boolean sticky, boolean special, boolean calendar, ArrayList<Integer> blockSponsors,
+	                          ArrayList<Integer> blockRooms, int bid, boolean cancelled, String comment, String advertisement,
+	                          boolean attendanceTaken) {
+		this.AID = AID;
+		this.name = name.trim();
+		this.description = description.trim();
+		this.restricted = restricted;
+		this.presign = presign;
+		this.oneaday = oneaday;
+		this.bothblocks = bothblocks;
+		this.sticky = sticky;
+		this.special = special;
+		this.calendar = calendar;
+		this.blockSponsors = blockSponsors;
+		this.blockRooms = blockRooms;
+		this.bid = bid;
+		this.cancelled = cancelled;
+		this.comment = comment.trim();
+		this.advertisement = advertisement.trim();
+		this.attendanceTaken = attendanceTaken;
 	}
 
 	public int getAID() {

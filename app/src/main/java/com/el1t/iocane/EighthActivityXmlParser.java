@@ -15,9 +15,9 @@ import java.util.ArrayList;
  */
 public class EighthActivityXmlParser
 {
-	private final String TAG = "Activity List XML Parser";
+	private static final String TAG = "Activity List XML Parser";
 
-	public boolean parseSuccess(InputStream in) throws XmlPullParserException, IOException {
+	public static boolean parseSuccess(InputStream in) throws XmlPullParserException, IOException {
 		// Initialize parser and jump to first tag
 		try {
 			XmlPullParser parser = Xml.newPullParser();
@@ -30,7 +30,7 @@ public class EighthActivityXmlParser
 		}
 	}
 
-	private boolean readResponse(XmlPullParser parser) throws XmlPullParserException, IOException {
+	private static boolean readResponse(XmlPullParser parser) throws XmlPullParserException, IOException {
 		boolean response = false;
 		parser.require(XmlPullParser.START_TAG, null, "eighth");
 		// Consume the eighth AND signup tags
@@ -65,7 +65,7 @@ public class EighthActivityXmlParser
 
 // ============ Parse activity list =============
 
-	public ArrayList<EighthActivityItem> parse(InputStream in) throws XmlPullParserException, IOException {
+	public static ArrayList<EighthActivityItem> parse(InputStream in) throws XmlPullParserException, IOException {
 		// Initialize parser and jump to first tag
 		try {
 			XmlPullParser parser = Xml.newPullParser();
@@ -78,7 +78,7 @@ public class EighthActivityXmlParser
 		}
 	}
 
-	private ArrayList<EighthActivityItem> readEighth(XmlPullParser parser) throws XmlPullParserException, IOException {
+	private static ArrayList<EighthActivityItem> readEighth(XmlPullParser parser) throws XmlPullParserException, IOException {
 		ArrayList<EighthActivityItem> entries = new ArrayList<EighthActivityItem>();
 		parser.require(XmlPullParser.START_TAG, null, "eighth");
 		// Consume the eighth AND activities tags
@@ -101,7 +101,7 @@ public class EighthActivityXmlParser
 		return entries;
 	}
 
-	private EighthActivityItem readActivity(XmlPullParser parser) throws XmlPullParserException, IOException {
+	public static EighthActivityItem readActivity(XmlPullParser parser) throws XmlPullParserException, IOException {
 		parser.require(XmlPullParser.START_TAG, null, "activity");
 
 		int AID = 0;
@@ -128,10 +128,12 @@ public class EighthActivityXmlParser
 		int capacity = 0;
 
 		while (parser.next() != XmlPullParser.END_TAG) {
+			// Skip whitespace until a tag is reached
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
 			String tagName = parser.getName();
+
 			if (tagName.equals("aid")) {
 				AID = readInt(parser, "aid");
 			} else if (tagName.equals("name")) {
@@ -180,9 +182,11 @@ public class EighthActivityXmlParser
 				skip(parser);
 			}
 		}
-		if (AID * BID * memberCount * capacity == 0) {
+		if (AID * BID * capacity == 0) {
 			Log.e(TAG, "Malformed integer in fields for activity " + name);
 		}
+		parser.require(XmlPullParser.END_TAG, null, "activity");
+
 		return new EighthActivityItem(AID, name, description, restricted, presign, oneaday,
 				bothblocks, sticky, special, calendar, roomChanged, blockSponsors,
 				blockRooms, blockRoomString, BID, cancelled, comment,
@@ -190,9 +194,9 @@ public class EighthActivityXmlParser
 				capacity);
 	}
 
-	private String readString(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
+	protected static String readString(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
 		parser.require(XmlPullParser.START_TAG, null, tagName);
-		String result = "";
+		String result = null;
 		if (parser.next() == XmlPullParser.TEXT) {
 			result = parser.getText();
 			parser.nextTag();
@@ -201,7 +205,7 @@ public class EighthActivityXmlParser
 		return result;
 	}
 
-	private int readInt(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
+	protected static int readInt(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
 		parser.require(XmlPullParser.START_TAG, null, tagName);
 		int result = 0;
 		if (parser.next() == XmlPullParser.TEXT) {
@@ -212,7 +216,7 @@ public class EighthActivityXmlParser
 		return result;
 	}
 
-	private boolean readBool(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
+	protected static boolean readBool(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
 		parser.require(XmlPullParser.START_TAG, null, tagName);
 		boolean result = false;
 		if (parser.next() == XmlPullParser.TEXT) {
@@ -224,20 +228,27 @@ public class EighthActivityXmlParser
 	}
 
 	// Read integers inside another tag
-	private ArrayList<Integer> readNestedInts(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
+	protected static ArrayList<Integer> readNestedInts(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		parser.require(XmlPullParser.START_TAG, null, tagName);
 		while(parser.next() != XmlPullParser.END_TAG) {
+			if (parser.getEventType() != XmlPullParser.START_TAG) {
+				continue;
+			}
 			// Eliminates the plural 's' (e.g. sponsors --> sponsor)
 			if (parser.getName().equals(tagName.substring(0, tagName.length() - 1))) {
-				result.add(Integer.parseInt(parser.getText()));
+				if (parser.next() == XmlPullParser.TEXT) {
+					result.add(Integer.parseInt(parser.getText()));
+
+					parser.nextTag();
+				}
 			}
 		}
 		parser.require(XmlPullParser.END_TAG, null, tagName);
 		return result;
 	}
 
-	private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
+	protected static void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
 		if (parser.getEventType() != XmlPullParser.START_TAG) {
 			throw new IllegalStateException();
 		}
