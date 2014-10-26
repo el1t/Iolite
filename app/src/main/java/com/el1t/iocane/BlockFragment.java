@@ -72,9 +72,4 @@ public class BlockFragment extends Fragment {
 					+ " must implement OnFragmentInteractionListener");
 		}
 	}
-
-	public void addAll(ArrayList<EighthBlockItem> items) {
-		// Add items to the ListView
-		mBlockListAdapter.addAll(items);
-	}
 }

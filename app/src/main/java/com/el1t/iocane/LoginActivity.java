@@ -1,6 +1,8 @@
 package com.el1t.iocane;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +39,7 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 	private LoginFragment mLoginFragment;
 	private String login_username;
 	private String login_password;
+	private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,11 +114,26 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 	// AsyncTask to handle login POST request
 	private class LoginRequest extends AsyncTask<String, Void, CookieStore> {
 		private static final String TAG = "Login Connection";
+		private HttpPost mPost;
 
 		@Override
 		protected CookieStore doInBackground(String... urls) {
 			Log.d(TAG, "Logging in...");
 			assert(urls.length == 1);
+			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
+				mProgressDialog = new ProgressDialog(getApplicationContext());
+				mProgressDialog.setTitle("Logging in");
+				mProgressDialog.setMessage("Please wait...");
+				mProgressDialog.setCancelable(true);
+				mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener(){
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						cancel(true);
+						finish();
+					}
+				});
+				mProgressDialog.show();
+			}
 			DefaultHttpClient client = new DefaultHttpClient();
 			try {
 				client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
@@ -125,15 +144,17 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 				// Bind custom cookie store to the local context
 				context.setAttribute(ClientContext.COOKIE_STORE, temp);
 
-				HttpPost post = new HttpPost(new URI(urls[0]));
+				mPost = new HttpPost(new URI(urls[0]));
 				List<NameValuePair> data = new ArrayList<NameValuePair>(2);
 				data.add(new BasicNameValuePair("login_username", login_username));
 				data.add(new BasicNameValuePair("login_password", login_password));
-				post.setEntity(new UrlEncodedFormEntity(data));
+				mPost.setEntity(new UrlEncodedFormEntity(data));
 
-				client.execute(post);
+				client.execute(mPost);
+			} catch (IOException e) {
+				Log.e(TAG, "Connection error, aborted?", e);
 			} catch (Exception e) {
-				Log.e(TAG, "Connection error.", e);
+				Log.e(TAG, "URL error.", e);
 			}
 			return client.getCookieStore();
 		}
@@ -142,11 +163,18 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 		protected void onPostExecute(CookieStore result) {
 			super.onPostExecute(result);
 			List<Cookie> cookies = result.getCookies();
+			mProgressDialog.dismiss();
 			if (cookies.size() >= 2) {
 				postSubmit(cookies);
 			} else {
 				failed();
 			}
+		}
+
+		@Override
+		protected void onCancelled() {
+			Log.d(TAG, "Connection aborted!");
+			mPost.abort();
 		}
 	}
 }

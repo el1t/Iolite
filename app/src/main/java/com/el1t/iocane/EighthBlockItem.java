@@ -1,6 +1,7 @@
 package com.el1t.iocane;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by El1t on 10/24/14.
@@ -8,13 +9,13 @@ import java.io.Serializable;
 public class EighthBlockItem implements Serializable
 {
 	private EighthActivityItem activity;
-	private String date;
+	private Date date;
 	private int BID;
 	private String type;
 	private boolean locked;
 	private String disp;
 
-	public EighthBlockItem(EighthActivityItem activity, String date, int BID, String type, boolean locked, String disp) {
+	public EighthBlockItem(EighthActivityItem activity, Date date, int BID, String type, boolean locked, String disp) {
 		this.activity = activity;
 		this.date = date;
 		this.BID = BID;
@@ -27,7 +28,7 @@ public class EighthBlockItem implements Serializable
 		return activity;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
@@ -35,7 +36,7 @@ public class EighthBlockItem implements Serializable
 		return BID;
 	}
 
-	public String getType() {
+	public String getBlock() {
 		return type;
 	}
 

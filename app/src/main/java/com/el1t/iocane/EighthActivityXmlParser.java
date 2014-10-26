@@ -196,7 +196,8 @@ public class EighthActivityXmlParser
 
 	protected static String readString(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
 		parser.require(XmlPullParser.START_TAG, null, tagName);
-		String result = null;
+		// Note: this cannot be null, because some fields are empty! (empty fields would have to be set to "", anyways)
+		String result = "";
 		if (parser.next() == XmlPullParser.TEXT) {
 			result = parser.getText();
 			parser.nextTag();

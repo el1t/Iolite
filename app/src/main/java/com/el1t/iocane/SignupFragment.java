@@ -73,9 +73,4 @@ public class SignupFragment extends Fragment
 					+ " must implement OnFragmentInteractionListener");
 		}
 	}
-
-	public void addAll(ArrayList<EighthActivityItem> items) {
-		// Add items to the ListView
-		mActivityListAdapter.addAll(items);
-	}
 }

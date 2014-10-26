@@ -10,13 +10,10 @@ import android.widget.Toast;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.params.CookiePolicy;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.xmlpull.v1.XmlPullParserException;
@@ -25,6 +22,8 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -45,19 +44,19 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 		setContentView(R.layout.activity_signup);
 		Intent intent = getIntent();
 
-		mSignupFragment = new SignupFragment();
-		// Check if fake information should be used
-		if (intent.getBooleanExtra("fake", false)) {
-			Log.d(TAG, "Loading fake info");
-			Bundle args = new Bundle();
-			args.putSerializable("list", getList());
-			mSignupFragment.setArguments(args);
-		}
-		// Set fragment
+		// Check if restoring from previously destroyed instance
 		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, mSignupFragment)
-					.commit();
+			// Check if fake information should be used
+			if (intent.getBooleanExtra("fake", false)) {
+				Log.d(TAG, "Loading fake info");
+				// Pretend fake list was received
+				postRequest(getList());
+			} else {
+				// Set loading fragment
+				getFragmentManager().beginTransaction()
+						.add(R.id.container, new LoadingFragment())
+						.commit();
+			}
 		}
 
 		// Retrieve cookies from previous activity
@@ -77,7 +76,7 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 	}
 
 	// Notify the user after submission
-	public void postSubmit(boolean result) {
+	protected void postSubmit(boolean result) {
 		if(result) {
 			Toast.makeText(getApplicationContext(), "Signed up!", Toast.LENGTH_SHORT).show();
 			Log.d(TAG, "Sign up success");
@@ -87,12 +86,27 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 		}
 	}
 
+	protected void postRequest(ArrayList<EighthActivityItem> result) {
+		// Sort the array
+		Collections.sort(result, new DefaultSortComp());
+		// Create the content view
+		mSignupFragment = new SignupFragment();
+		// Add ArrayList to the ListView in BlockFragment
+		Bundle args = new Bundle();
+		args.putSerializable("list", result);
+		mSignupFragment.setArguments(args);
+		// Switch to BlockFragment view, removing LoadingFragment
+		getFragmentManager().beginTransaction()
+				.replace(R.id.container, mSignupFragment)
+				.commit();
+	}
+
 	// Get a fake list of activities for debugging
 	private ArrayList<EighthActivityItem> getList() {
 		try {
 			return EighthActivityXmlParser.parse(getAssets().open("testActivityList.xml"));
 		} catch(Exception e) {
-			Log.e(TAG, e.toString());
+			Log.e(TAG, "Error parsing activity xml", e);
 		}
 		return null;
 	}
@@ -130,7 +144,7 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 		protected void onPostExecute(ArrayList<EighthActivityItem> result) {
 			super.onPostExecute(result);
 			// Add ArrayList to the ListView in SignupFragment
-			mSignupFragment.addAll(result);
+			postRequest(result);
 		}
 	}
 
@@ -175,6 +189,26 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 		protected void onPostExecute(Boolean result) {
 			super.onPostExecute(result);
 			postSubmit(result);
+		}
+	}
+}
+
+// Sort by favorites, alphabetically
+class DefaultSortComp implements Comparator<EighthActivityItem>
+{
+	@Override
+	public int compare(EighthActivityItem e1, EighthActivityItem e2) {
+		// Compare by name if both or neither are favorites, or return the favorite
+		if (e1.isFavorite()) {
+			if (e2.isFavorite()) {
+				return e1.getName().compareTo(e2.getName());
+			}
+			return -1;
+		}
+		if (e2.isFavorite()) {
+			return 1;
+		} else {
+			return e1.getName().compareTo(e2.getName());
 		}
 	}
 }

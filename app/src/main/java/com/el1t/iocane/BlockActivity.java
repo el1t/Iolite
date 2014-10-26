@@ -5,27 +5,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.CookieStore;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.client.params.CookiePolicy;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by El1t on 10/24/14.
@@ -45,19 +32,18 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 		setContentView(R.layout.activity_block);
 		Intent intent = getIntent();
 
-		mBlockFragment = new BlockFragment();
-		// Check if fake information should be used
-		if (fake = intent.getBooleanExtra("fake", false)) {
-			Log.d(TAG, "Loading fake info");
-			Bundle args = new Bundle();
-			args.putSerializable("list", getList());
-			mBlockFragment.setArguments(args);
-		}
-		// Set fragment
+		// Check if restoring from previously destroyed instance
 		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, mBlockFragment)
-					.commit();
+			// Check if fake information should be used
+			if (fake = intent.getBooleanExtra("fake", false)) {
+				Log.d(TAG, "Loading fake info");
+				// Pretend fake list was received
+				postRequest(getList());
+			} else {
+				// Set loading fragment
+				getFragmentManager().beginTransaction()
+						.add(R.id.container, new LoadingFragment());
+			}
 		}
 
 		// Retrieve cookies from previous activity
@@ -84,9 +70,24 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 		try {
 			return EighthBlockXmlParser.parse(getAssets().open("testBlockList.xml"));
 		} catch(Exception e) {
-			Log.e(TAG + " (getList)", e.toString());
+			Log.e(TAG, "Error parsing block xml", e);
 		}
 		return null;
+	}
+
+	private void postRequest(ArrayList<EighthBlockItem> result) {
+		// Sort the array by date (for now)
+		Collections.sort(result, new DateSortComp());
+		// Create the content view
+		mBlockFragment = new BlockFragment();
+		// Add ArrayList to the ListView in BlockFragment
+		Bundle args = new Bundle();
+		args.putSerializable("list", result);
+		mBlockFragment.setArguments(args);
+		// Switch to BlockFragment view, removing LoadingFragment
+		getFragmentManager().beginTransaction()
+				.replace(R.id.container, mBlockFragment)
+				.commit();
 	}
 
 	// Get list of blocks
@@ -96,6 +97,7 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 		@Override
 		protected ArrayList<EighthBlockItem> doInBackground(String... urls) {
 			assert(urls.length == 1);
+
 			HttpURLConnection urlConnection;
 			ArrayList<EighthBlockItem> response = null;
 			try {
@@ -121,8 +123,21 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 		@Override
 		protected void onPostExecute(ArrayList<EighthBlockItem> result) {
 			super.onPostExecute(result);
-			// Add ArrayList to the ListView in BlockFragment
-			mBlockFragment.addAll(result);
+			postRequest(result);
+		}
+	}
+}
+
+// Sort by date
+class DateSortComp implements Comparator<EighthBlockItem>
+{
+	@Override
+	public int compare(EighthBlockItem e1, EighthBlockItem e2) {
+		// Sort by block if dates are concurrent
+		if (e1.getDate().equals(e2.getDate())) {
+			return e1.getBlock().compareTo(e2.getBlock());
+		} else {
+			return e1.getDate().compareTo(e2.getDate());
 		}
 	}
 }

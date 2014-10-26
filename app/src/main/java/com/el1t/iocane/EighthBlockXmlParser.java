@@ -8,7 +8,10 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by El1t on 10/24/14.
@@ -17,7 +20,7 @@ public class EighthBlockXmlParser
 {
 	private static final String TAG = "Block List XML Parser";
 
-	public static ArrayList<EighthBlockItem> parse(InputStream in) throws XmlPullParserException, IOException {
+	public static ArrayList<EighthBlockItem> parse(InputStream in) throws XmlPullParserException, IOException, ParseException {
 		// Initialize parser and jump to first tag
 		try {
 			XmlPullParser parser = Xml.newPullParser();
@@ -30,7 +33,7 @@ public class EighthBlockXmlParser
 		}
 	}
 
-	private static ArrayList<EighthBlockItem> readEighth(XmlPullParser parser) throws XmlPullParserException, IOException {
+	private static ArrayList<EighthBlockItem> readEighth(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
 		ArrayList<EighthBlockItem> entries = new ArrayList<EighthBlockItem>();
 		parser.require(XmlPullParser.START_TAG, null, "eighth");
 		// Consume the "eighth" AND "blocks" tags
@@ -53,11 +56,11 @@ public class EighthBlockXmlParser
 		return entries;
 	}
 
-	private static EighthBlockItem readBlock(XmlPullParser parser) throws XmlPullParserException, IOException {
+	private static EighthBlockItem readBlock(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
 		parser.require(XmlPullParser.START_TAG, null, "block");
 
 		EighthActivityItem activity = null;
-		String date = null;
+		Date date = null;
 		int BID = 0;
 		String type = null;
 		boolean locked = false;
@@ -93,6 +96,7 @@ public class EighthBlockXmlParser
 
 	private static String readString(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
 		parser.require(XmlPullParser.START_TAG, null, tagName);
+		// Note: this cannot be null, because some fields are empty! (empty fields would have to be set to "", anyways)
 		String result = "";
 		if (parser.next() == XmlPullParser.TEXT) {
 			result = parser.getText();
@@ -124,17 +128,17 @@ public class EighthBlockXmlParser
 		return result;
 	}
 
-	// Read the <disp> tag under <date>
-	private static String readDate(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
-		String result = null;
+	// Read the <str> tag under <date>
+	private static Date readDate(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException, ParseException {
+		Date result = null;
 		parser.require(XmlPullParser.START_TAG, null, tagName);
 		while(parser.next() != XmlPullParser.END_TAG) {
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
-			if (parser.getName().equals("disp")) {
+			if (parser.getName().equals("str")) {
 				if (parser.next() == XmlPullParser.TEXT) {
-					result = parser.getText();
+					result = new SimpleDateFormat("yyyy-MM-dd").parse(parser.getText());
 					parser.nextTag();
 				}
 			} else {
@@ -145,6 +149,7 @@ public class EighthBlockXmlParser
 		return result;
 	}
 
+	// A different method for parsing the inexplicably different tags inside the block xml
 	public static EighthActivityItem readActivity(XmlPullParser parser) throws XmlPullParserException, IOException {
 		parser.require(XmlPullParser.START_TAG, null, "activity");
 
