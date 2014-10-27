@@ -1,4 +1,4 @@
-package com.el1t.iocane;
+package com.el1t.iolite;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -94,16 +94,24 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 		for(Cookie c : cookies) {
 			list.add(new SerializedCookie(c));
 		}
+		clearPassword();
 		Intent intent = new Intent(this, BlockActivity.class);
 		intent.putExtra("cookies", list);
 		intent.putExtra("fake", isFakeLogin());
 		startActivity(intent);
 	}
 
-	public void failed() {
-		Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_SHORT).show();
+	public void failed(boolean isAborted) {
+		if (!isAborted) {
+			Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_SHORT).show();
+			Log.d(TAG, "Login failed");
+		}
+		clearPassword();
+	}
+
+	private void clearPassword() {
+		login_password = "";
 		mLoginFragment.clearPassword();
-		Log.d(TAG, "Login failed");
 	}
 
 	// Checks if fake offline cache should be used
@@ -117,23 +125,26 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 		private HttpPost mPost;
 
 		@Override
-		protected CookieStore doInBackground(String... urls) {
-			Log.d(TAG, "Logging in...");
-			assert(urls.length == 1);
+		protected void onPreExecute() {
 			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-				mProgressDialog = new ProgressDialog(getApplicationContext());
+				mProgressDialog = new ProgressDialog(LoginActivity.this);
 				mProgressDialog.setTitle("Logging in");
 				mProgressDialog.setMessage("Please wait...");
 				mProgressDialog.setCancelable(true);
-				mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener(){
+				mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 					@Override
 					public void onCancel(DialogInterface dialog) {
-						cancel(true);
-						finish();
+						Log.d(TAG, "Connection aborted!");
+						mPost.abort();
 					}
 				});
 				mProgressDialog.show();
 			}
+		}
+		@Override
+		protected CookieStore doInBackground(String... urls) {
+			Log.d(TAG, "Logging in...");
+			assert(urls.length == 1);
 			DefaultHttpClient client = new DefaultHttpClient();
 			try {
 				client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
@@ -152,7 +163,9 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 
 				client.execute(mPost);
 			} catch (IOException e) {
-				Log.e(TAG, "Connection error, aborted?", e);
+				if (!mPost.isAborted()) {
+					Log.e(TAG, "Connection error.", e);
+				}
 			} catch (Exception e) {
 				Log.e(TAG, "URL error.", e);
 			}
@@ -167,14 +180,8 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 			if (cookies.size() >= 2) {
 				postSubmit(cookies);
 			} else {
-				failed();
+				failed(mPost.isAborted());
 			}
-		}
-
-		@Override
-		protected void onCancelled() {
-			Log.d(TAG, "Connection aborted!");
-			mPost.abort();
 		}
 	}
 }

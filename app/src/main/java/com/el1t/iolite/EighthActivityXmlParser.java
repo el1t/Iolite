@@ -1,4 +1,4 @@
-package com.el1t.iocane;
+package com.el1t.iolite;
 
 import android.util.Log;
 import android.util.Xml;
@@ -182,7 +182,7 @@ public class EighthActivityXmlParser
 				skip(parser);
 			}
 		}
-		if (AID * BID * capacity == 0) {
+		if (AID * BID == 0) {
 			Log.e(TAG, "Malformed integer in fields for activity " + name);
 		}
 		parser.require(XmlPullParser.END_TAG, null, "activity");

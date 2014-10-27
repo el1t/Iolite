@@ -1,4 +1,4 @@
-package com.el1t.iocane;
+package com.el1t.iolite;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -84,7 +84,7 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 		Bundle args = new Bundle();
 		args.putSerializable("list", result);
 		mBlockFragment.setArguments(args);
-		// Switch to BlockFragment view, removing LoadingFragment
+		// Switch to BlockFragment view, remove LoadingFragment
 		getFragmentManager().beginTransaction()
 				.replace(R.id.container, mBlockFragment)
 				.commit();

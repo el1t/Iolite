@@ -1,4 +1,4 @@
-package com.el1t.iocane;
+package com.el1t.iolite;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -39,10 +39,10 @@ public class SignupFragment extends Fragment
 		// to setup custom ListAdapter
 		Bundle args = getArguments();
 		if (args != null && args.getSerializable("list") != null) {
-			Log.d(TAG, "Fake activity list received");
+			Log.d(TAG, "Activity list received");
 			mActivityListAdapter = new ActivityListAdapter(getActivity(), (ArrayList<EighthActivityItem>) args.getSerializable("list"));
 		} else {
-			mActivityListAdapter = new ActivityListAdapter(getActivity(), new ArrayList<EighthActivityItem>());
+			throw new IllegalArgumentException();
 		}
 
 		activityList = (ListView) rootView.findViewById(R.id.activityList);

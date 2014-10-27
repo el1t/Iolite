@@ -1,4 +1,4 @@
-package com.el1t.iocane;
+package com.el1t.iolite;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -38,10 +38,10 @@ public class BlockFragment extends Fragment {
 		// to setup custom ListAdapter
 		Bundle args = getArguments();
 		if (args != null && args.getSerializable("list") != null) {
-			Log.d(TAG, "Fake block list received");
+			Log.d(TAG, "Block list received");
 			mBlockListAdapter = new BlockListAdapter(getActivity(), (ArrayList<EighthBlockItem>) args.getSerializable("list"));
 		} else {
-			mBlockListAdapter = new BlockListAdapter(getActivity(), new ArrayList<EighthBlockItem>());
+			throw new IllegalArgumentException();
 		}
 
 		blockList = (ListView) rootView.findViewById(R.id.blockList);

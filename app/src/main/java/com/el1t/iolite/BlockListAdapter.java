@@ -1,4 +1,4 @@
-package com.el1t.iocane;
+package com.el1t.iolite;
 
 import android.content.Context;
 import android.view.LayoutInflater;

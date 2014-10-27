@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.el1t.iocane" >
+	package="com.el1t.iolite" >
 
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,7 +11,7 @@
 		android:label="@string/app_name"
 		android:theme="@android:style/Theme.Holo" >
 		<activity
-	        android:name=".LoginActivity"
+	        android:name="com.el1t.iolite.LoginActivity"
 	        android:label="@string/app_name" >
 	        <intent-filter>
 	            <action android:name="android.intent.action.MAIN" />
@@ -20,19 +20,19 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".BlockActivity"
+			android:name="com.el1t.iolite.BlockActivity"
 			android:label="@string/app_name"
 			android:theme="@android:style/Theme.Holo"
-			android:parentActivityName=".LoginActivity" >
+			android:parentActivityName="com.el1t.iolite.LoginActivity" >
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.el1t.LoginActivity" />
 		</activity>
 		<activity
-			android:name=".SignupActivity"
+			android:name="com.el1t.iolite.SignupActivity"
 			android:label="@string/app_name"
 			android:theme="@android:style/Theme.Holo"
-			android:parentActivityName=".BlockActivity" >
+			android:parentActivityName="com.el1t.iolite.BlockActivity" >
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.el1t.BlockActivity" />

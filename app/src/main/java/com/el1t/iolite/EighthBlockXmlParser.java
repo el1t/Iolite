@@ -1,4 +1,4 @@
-package com.el1t.iocane;
+package com.el1t.iolite;
 
 import android.util.Log;
 import android.util.Xml;
@@ -20,7 +20,7 @@ public class EighthBlockXmlParser
 {
 	private static final String TAG = "Block List XML Parser";
 
-	public static ArrayList<EighthBlockItem> parse(InputStream in) throws XmlPullParserException, IOException, ParseException {
+	public static ArrayList<EighthBlockItem> parse(InputStream in) throws XmlPullParserException, IOException {
 		// Initialize parser and jump to first tag
 		try {
 			XmlPullParser parser = Xml.newPullParser();
@@ -33,7 +33,7 @@ public class EighthBlockXmlParser
 		}
 	}
 
-	private static ArrayList<EighthBlockItem> readEighth(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
+	private static ArrayList<EighthBlockItem> readEighth(XmlPullParser parser) throws XmlPullParserException, IOException {
 		ArrayList<EighthBlockItem> entries = new ArrayList<EighthBlockItem>();
 		parser.require(XmlPullParser.START_TAG, null, "eighth");
 		// Consume the "eighth" AND "blocks" tags
@@ -41,17 +41,21 @@ public class EighthBlockXmlParser
 		while(parser.next() != XmlPullParser.START_TAG) {
 			parser.next();
 		}
-		while (parser.next() != XmlPullParser.END_TAG) {
-			if (parser.getEventType() != XmlPullParser.START_TAG) {
-				continue;
+		try {
+			while (parser.next() != XmlPullParser.END_TAG) {
+				if (parser.getEventType() != XmlPullParser.START_TAG) {
+					continue;
+				}
+				String name = parser.getName();
+				// Starts by looking for the block tag
+				if (name.equals("block")) {
+					entries.add(readBlock(parser));
+				} else {
+					skip(parser);
+				}
 			}
-			String name = parser.getName();
-			// Starts by looking for the block tag
-			if (name.equals("block")) {
-				entries.add(readBlock(parser));
-			} else {
-				skip(parser);
-			}
+		} catch (ParseException e) {
+			Log.e(TAG, "Block parser", e);
 		}
 		return entries;
 	}

@@ -1,4 +1,4 @@
-package com.el1t.iocane;
+package com.el1t.iolite;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -50,11 +50,16 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem>
 		if (item.hasDescription()) {
 			viewHolder.activityDescription.setVisibility(View.GONE);
 		} else {
-			viewHolder.activityDescription.setVisibility(View.VISIBLE);
 			viewHolder.activityDescription.setText(item.getDescription());
+			viewHolder.activityDescription.setVisibility(View.VISIBLE);
 		}
-		viewHolder.capacity.setMax(item.getCapacity());
-		viewHolder.capacity.setProgress(item.getMemberCount());
+		if (item.getCapacity() > 0) {
+			viewHolder.capacity.setMax(item.getCapacity());
+			viewHolder.capacity.setProgress(item.getMemberCount());
+			viewHolder.capacity.setVisibility(View.VISIBLE);
+		} else {
+			viewHolder.capacity.setVisibility(View.GONE);
+		}
 
 		return convertView;
 	}
