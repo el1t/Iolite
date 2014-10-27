@@ -72,4 +72,8 @@ public class BlockFragment extends Fragment {
 					+ " must implement OnFragmentInteractionListener");
 		}
 	}
+
+	protected void updateContent(ArrayList<EighthBlockItem> items) {
+		mBlockListAdapter.updateContent(items);
+	}
 }

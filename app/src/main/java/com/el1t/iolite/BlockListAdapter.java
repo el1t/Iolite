@@ -48,4 +48,9 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 
 		return convertView;
 	}
+
+	protected void updateContent(ArrayList<EighthBlockItem> items) {
+		clear();
+		addAll(items);
+	}
 }

@@ -34,24 +34,24 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 
 		// Check if restoring from previously destroyed instance
 		if (savedInstanceState == null) {
+			// Retrieve cookies from previous activity
+			mCookies = (ArrayList<SerializedCookie>) intent.getSerializableExtra("cookies");
+
 			// Check if fake information should be used
 			if (fake = intent.getBooleanExtra("fake", false)) {
 				Log.d(TAG, "Loading fake info");
 				// Pretend fake list was received
 				postRequest(getList());
-			} else {
-				// Set loading fragment
-				getFragmentManager().beginTransaction()
-						.add(R.id.container, new LoadingFragment());
 			}
 		}
+	}
 
-		// Retrieve cookies from previous activity
-		mCookies = (ArrayList<SerializedCookie>) intent.getSerializableExtra("cookies");
-
-		// Retrieve list of bids using cookies
-		if (!intent.getBooleanExtra("fake", false)) {
-			new BlockListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_blocks");
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (!fake) {
+			// Load list of blocks from web
+			refresh();
 		}
 	}
 
@@ -75,15 +75,35 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 		return null;
 	}
 
+	protected void refresh() {
+		// This should not be called if items are fake
+		assert(!fake);
+
+		// Set loading fragment
+		getFragmentManager().beginTransaction()
+				.replace(R.id.container, new LoadingFragment())
+				.commit();
+
+		// Retrieve list of bids using cookies
+		new BlockListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_blocks");
+	}
+
 	private void postRequest(ArrayList<EighthBlockItem> result) {
 		// Sort the array by date (for now)
 		Collections.sort(result, new DateSortComp());
-		// Create the content view
-		mBlockFragment = new BlockFragment();
-		// Add ArrayList to the ListView in BlockFragment
-		Bundle args = new Bundle();
-		args.putSerializable("list", result);
-		mBlockFragment.setArguments(args);
+		// Check if creating a new fragment is necessary
+		// This should probably be done in onCreate, without a bundle
+		if (mBlockFragment == null) {
+			// Create the content view
+			mBlockFragment = new BlockFragment();
+			// Add ArrayList to the ListView in BlockFragment
+			Bundle args = new Bundle();
+			args.putSerializable("list", result);
+			mBlockFragment.setArguments(args);
+		} else {
+			mBlockFragment.updateContent(result);
+		}
+
 		// Switch to BlockFragment view, remove LoadingFragment
 		getFragmentManager().beginTransaction()
 				.replace(R.id.container, mBlockFragment)

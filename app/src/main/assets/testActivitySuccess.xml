@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE eighth [
+ <!ELEMENT eighth (body,error,debug)>
+ <!ELEMENT body (#PCDATA)>
+ <!ELEMENT error (#PCDATA)>
+ <!ELEMENT debug (#PCDATA)>
+]>
+<eighth>
+ <signup>
+  <bid>2843</bid>
+  <aid>115</aid>
+  <uid>14342</uid>
+  <success>1</success>
+  <result>0</result>
+ </signup>
+ <error></error>
+ <debug></debug>
+</eighth>

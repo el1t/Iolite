@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -13,8 +15,11 @@ import java.util.ArrayList;
 /**
  * Created by El1t on 10/21/14.
  */
-public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem>
+public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implements Filterable
 {
+	// This is to hold all items without filtering
+	private ArrayList<EighthActivityItem> mItems;
+
 	// View lookup cache
 	private static class ViewHolder {
 		TextView activityName;
@@ -22,8 +27,9 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem>
 		ProgressBar capacity;
 	}
 
-	public ActivityListAdapter(Context context, ArrayList<EighthActivityItem> values) {
-		super(context, 0, values);
+	public ActivityListAdapter(Context context, ArrayList<EighthActivityItem> items) {
+		super(context, 0, items);
+		mItems = items;
 	}
 
 	@Override
@@ -62,5 +68,48 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem>
 		}
 
 		return convertView;
+	}
+
+	@Override
+	public Filter getFilter() {
+
+		return new Filter() {
+			@SuppressWarnings("unchecked")
+			@Override
+			protected void publishResults(CharSequence constraint, FilterResults results) {
+				if (results.count == 0) {
+					notifyDataSetInvalidated();
+				} else {
+					ActivityListAdapter.this.clear();
+					ActivityListAdapter.this.addAll((ArrayList<EighthActivityItem>) results.values);
+					notifyDataSetChanged();
+				}
+			}
+
+			@Override
+			protected FilterResults performFiltering(CharSequence constraint) {
+				FilterResults results = new FilterResults();
+
+				// Empty constraints display all items
+				if(constraint == null || constraint.toString().trim().length() == 0){
+					results.values = mItems;
+					results.count = mItems.size();
+				} else {
+					ArrayList<EighthActivityItem> FilteredArrayNames = new ArrayList<EighthActivityItem>();
+					constraint = constraint.toString().toLowerCase();
+					// This should preserve the sort of the items
+					for (EighthActivityItem item : mItems) {
+						// Match activity name, and room number todo: match sponsors
+						if (item.getName().toLowerCase().contains(constraint) ||
+								item.getBlockRoomString().replace(" ", "").contains(constraint.toString().replace(" ", ""))) {
+							FilteredArrayNames.add(item);
+						}
+					}
+					results.values = FilteredArrayNames;
+					results.count = FilteredArrayNames.size();
+				}
+				return results;
+			}
+		};
 	}
 }

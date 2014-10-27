@@ -77,9 +77,10 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 
 	// Notify the user after submission
 	protected void postSubmit(boolean result) {
-		if(result) {
+		if (result) {
 			Toast.makeText(getApplicationContext(), "Signed up!", Toast.LENGTH_SHORT).show();
 			Log.d(TAG, "Sign up success");
+			finish();
 		} else {
 			Toast.makeText(getApplicationContext(), "Something went wrong...", Toast.LENGTH_SHORT).show();
 			Log.w(TAG, "Sign up failure");
@@ -156,6 +157,7 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 		protected Boolean doInBackground(String... urls) {
 			assert(urls.length == 1);
 			DefaultHttpClient client = new DefaultHttpClient();
+			boolean result = false;
 			try {
 				// Setup client
 				client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
@@ -166,7 +168,6 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 				}
 				// Add parameters
 				List<NameValuePair> data = new ArrayList<NameValuePair>(2);
-				System.out.println(AID + BID);
 				data.add(new BasicNameValuePair("aid", AID));
 				data.add(new BasicNameValuePair("bid", BID));
 				post.setEntity(new UrlEncodedFormEntity(data));
@@ -175,14 +176,13 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 				HttpResponse response = client.execute(post);
 
 				// Parse response
-				HttpEntity entity = response.getEntity();
-				return EighthActivityXmlParser.parseSuccess(entity.getContent());
+				result = EighthActivityXmlParser.parseSuccess(response.getEntity().getContent());
 			} catch (XmlPullParserException e) {
 				Log.e(TAG, "XML error.", e);
 			} catch (Exception e) {
 				Log.e(TAG, "Connection error.", e);
 			}
-			return false;
+			return result;
 		}
 
 		@Override
