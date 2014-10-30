@@ -44,6 +44,9 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 				postRequest(getList());
 			}
 		}
+
+		// Remove up button
+		getActionBar().setDisplayHomeAsUpEnabled(false);
 	}
 
 	@Override
@@ -89,8 +92,8 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 	}
 
 	private void postRequest(ArrayList<EighthBlockItem> result) {
-		// Sort the array by date (for now)
-		Collections.sort(result, new DateSortComp());
+		// Sort the array by BID, same as date (for now)
+		Collections.sort(result, new BIDSortComp());
 		// Check if creating a new fragment is necessary
 		// This should probably be done in onCreate, without a bundle
 		if (mBlockFragment == null) {
@@ -148,16 +151,12 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 	}
 }
 
-// Sort by date
-class DateSortComp implements Comparator<EighthBlockItem>
+// Sort by BID (which also happens to sort by date)
+class BIDSortComp implements Comparator<EighthBlockItem>
 {
 	@Override
 	public int compare(EighthBlockItem e1, EighthBlockItem e2) {
-		// Sort by block if dates are concurrent
-		if (e1.getDate().equals(e2.getDate())) {
-			return e1.getBlock().compareTo(e2.getBlock());
-		} else {
-			return e1.getDate().compareTo(e2.getDate());
-		}
+		// Double, because Integer does not have compare prior to Java 7
+		return Double.compare(e1.getBID(), e2.getBID());
 	}
 }

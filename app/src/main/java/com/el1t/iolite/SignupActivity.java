@@ -200,15 +200,18 @@ class DefaultSortComp implements Comparator<EighthActivityItem>
 	public int compare(EighthActivityItem e1, EighthActivityItem e2) {
 		// Compare by name if both or neither are favorites, or return the favorite
 		if (e1.isFavorite()) {
-			if (e2.isFavorite()) {
+			if (e2.isFavorite())
 				return e1.getName().compareTo(e2.getName());
-			}
 			return -1;
 		}
-		if (e2.isFavorite()) {
+		if (e2.isFavorite())
 			return 1;
-		} else {
+
+		// Check for special
+		if (!(e1.isSpecial() ^ e2.isSpecial()))
 			return e1.getName().compareTo(e2.getName());
-		}
+		if (e1.isSpecial())
+			return -1;
+		return 1;
 	}
 }

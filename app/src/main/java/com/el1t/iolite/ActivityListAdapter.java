@@ -1,12 +1,16 @@
 package com.el1t.iolite;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -24,6 +28,7 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 	private static class ViewHolder {
 		TextView activityName;
 		TextView activityDescription;
+		ImageView circle;
 		ProgressBar capacity;
 	}
 
@@ -45,6 +50,7 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 			viewHolder.activityName = (TextView) convertView.findViewById(R.id.activityName);
 			viewHolder.activityDescription = (TextView) convertView.findViewById(R.id.activityDescription);
 			viewHolder.capacity = (ProgressBar) convertView.findViewById(R.id.capacity);
+			viewHolder.circle = (ImageView) convertView.findViewById(R.id.circle);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -59,6 +65,8 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 			viewHolder.activityDescription.setText(item.getDescription());
 			viewHolder.activityDescription.setVisibility(View.VISIBLE);
 		}
+
+		// Capacity bar
 		if (item.getCapacity() > 0) {
 			viewHolder.capacity.setMax(item.getCapacity());
 			viewHolder.capacity.setProgress(item.getMemberCount());
@@ -66,6 +74,22 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 		} else {
 			viewHolder.capacity.setVisibility(View.GONE);
 		}
+
+		// Set color
+		int color = Color.parseColor("#259b24");			// Green
+		if (item.isCancelled()) {
+			color = Color.parseColor("#e51c23");			// Red
+		} else {
+			if (item.isRestricted()) {
+				color = Color.parseColor("#ffc107");		// Amber
+			} else {
+				if (item.isFavorite()) {
+					color = Color.parseColor("#f48fb1");	// Pink
+				}
+			}
+		}
+		viewHolder.circle.setColorFilter(new
+				PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
 
 		return convertView;
 	}

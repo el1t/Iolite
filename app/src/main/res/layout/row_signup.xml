@@ -3,37 +3,46 @@
               android:id="@+id/container"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:paddingTop="2dp"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingBottom="2dp"
+              android:paddingTop="16dp"
               android:orientation="vertical"
               tools:context=".SignupFragment">
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal">
+		android:paddingLeft="@dimen/activity_horizontal_margin"
+		android:paddingRight="@dimen/activity_horizontal_margin"
+		android:orientation="horizontal"
+		android:paddingBottom="12dp">
 
 		<ImageView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:id="@+id/imageView"/>
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:id="@+id/circle"
+			android:layout_gravity="center"
+			android:src="@drawable/activity_letter"/>
 
 		<LinearLayout
 			android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
-		    android:orientation="vertical">
+		    android:orientation="vertical"
+			android:paddingLeft="16dp"
+			android:layout_gravity="center_vertical">
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text=""
 				android:textSize="20dp"
+				android:singleLine="true"
+				android:ellipsize="end"
 				android:id="@+id/activityName"/>
 
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:textSize="14dp"
 				android:text=""
+				android:ellipsize="end"
+				android:singleLine="true"
 				android:id="@+id/activityDescription"/>
 		</LinearLayout>
 
@@ -42,6 +51,6 @@
 	<ProgressBar
 		style="?android:attr/progressBarStyleHorizontal"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="4dp"
 		android:id="@+id/capacity"/>
 </LinearLayout>
