@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 		TextView activityName;
 		TextView activityDescription;
 		ImageView circle;
+		ImageView icon;
 		ProgressBar capacity;
 	}
 
@@ -51,6 +53,7 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 			viewHolder.activityDescription = (TextView) convertView.findViewById(R.id.activityDescription);
 			viewHolder.capacity = (ProgressBar) convertView.findViewById(R.id.capacity);
 			viewHolder.circle = (ImageView) convertView.findViewById(R.id.circle);
+			viewHolder.icon = (ImageView) convertView.findViewById(R.id.icon);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -77,19 +80,24 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 
 		// Set color
 		int color = Color.parseColor("#259b24");			// Green
+		int icon  = R.drawable.ic_info_white_48dp;
 		if (item.isCancelled()) {
 			color = Color.parseColor("#e51c23");			// Red
+			icon = R.drawable.ic_remove_circle_white_48dp;
 		} else {
 			if (item.isRestricted()) {
 				color = Color.parseColor("#ffc107");		// Amber
+				icon = R.drawable.ic_lock_circle_white_48dp;
 			} else {
 				if (item.isFavorite()) {
 					color = Color.parseColor("#f48fb1");	// Pink
+					icon = R.drawable.ic_stars_white_48dp;
 				}
 			}
 		}
-		viewHolder.circle.setColorFilter(new
+		viewHolder.icon.setColorFilter(new
 				PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
+		viewHolder.icon.setImageResource(icon);
 
 		return convertView;
 	}
