@@ -71,7 +71,7 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 	// Get a fake list of blocks for debugging
 	private ArrayList<EighthBlockItem> getList() {
 		try {
-			return EighthBlockXmlParser.parse(getAssets().open("testBlockList.xml"));
+			return EighthBlockXmlParser.parse(getAssets().open("testBlockList.xml"), getApplicationContext());
 		} catch(Exception e) {
 			Log.e(TAG, "Error parsing block xml", e);
 		}
@@ -132,7 +132,7 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 				// Begin connection
 				urlConnection.connect();
 				// Parse xml from server
-				response = EighthBlockXmlParser.parse(urlConnection.getInputStream());
+				response = EighthBlockXmlParser.parse(urlConnection.getInputStream(), getApplicationContext());
 				// Close connection
 				urlConnection.disconnect();
 			} catch (XmlPullParserException e) {

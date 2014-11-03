@@ -1,10 +1,14 @@
 package com.el1t.iolite;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,10 +18,16 @@ import java.util.ArrayList;
  */
 public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 {
+	public enum Block {
+		A, B, C, D, E, F
+	}
+
 	// View lookup cache
 	private static class ViewHolder {
 		TextView blockDate;
 		TextView blockActivityName;
+		ImageView circle;
+		TextView letter;
 	}
 
 	public BlockListAdapter(Context context, ArrayList<EighthBlockItem> values) {
@@ -36,6 +46,8 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 			// Save IDs inside ViewHolder and attach the ViewHolder to convertView
 			viewHolder.blockDate = (TextView) convertView.findViewById(R.id.blockDate);
 			viewHolder.blockActivityName = (TextView) convertView.findViewById(R.id.blockActivityName);
+			viewHolder.circle = (ImageView) convertView.findViewById(R.id.circle);
+			viewHolder.letter = (TextView) convertView.findViewById(R.id.letter);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -43,8 +55,34 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 
 		// Set fields
 		EighthBlockItem item = getItem(position);
-		viewHolder.blockDate.setText(item.getDisp());
+		viewHolder.blockDate.setText(item.getShortenedDisp());
 		viewHolder.blockActivityName.setText(item.getEighth().getName());
+
+		// Set color
+		int color = Color.parseColor("#9e9e9e");			// Gray
+		String letter = item.getBlock();
+		if(item.isLocked()) {
+			color = Color.parseColor("#e51c23");
+		} else {
+			switch (Block.valueOf(letter)) {
+				case A:
+					color = Color.parseColor("#00bcd4");        // Cyan
+					break;
+				case B:
+					color = Color.parseColor("#5677fc");        // Blue
+					break;
+				case C:
+				case D:
+				case E:
+				case F:
+					color = Color.parseColor("#9e9e9e");        // Gray
+					break;
+			}
+		}
+
+		viewHolder.circle.setColorFilter(new
+				PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
+		viewHolder.letter.setText(letter);
 
 		return convertView;
 	}

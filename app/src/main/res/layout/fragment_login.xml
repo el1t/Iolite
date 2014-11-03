@@ -12,18 +12,22 @@
 	<EditText
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginBottom="7dp"
+		android:hint="Username"
 		android:id="@+id/username"/>
 
 	<EditText
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginBottom="14dp"
 		android:inputType="textPassword"
+		android:hint="Password"
 		android:ems="10"
 		android:id="@+id/password"/>
 
 	<Button
-		android:layout_width="wrap_content"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:text="Login"
+		android:text="@string/login"
 		android:id="@+id/login"/>
 </LinearLayout>

@@ -1,6 +1,8 @@
 package com.el1t.iolite;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -14,6 +16,7 @@ public class EighthBlockItem implements Serializable
 	private String type;
 	private boolean locked;
 	private String disp;
+	private DateFormat mDateFormat = new SimpleDateFormat("EEEE, MMMM d'th'");
 
 	public EighthBlockItem(EighthActivityItem activity, Date date, int BID, String type, boolean locked, String disp) {
 		this.activity = activity;
@@ -46,5 +49,9 @@ public class EighthBlockItem implements Serializable
 
 	public String getDisp() {
 		return disp;
+	}
+
+	public String getShortenedDisp() {
+		return mDateFormat.format(date);
 	}
 }

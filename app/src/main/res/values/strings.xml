@@ -2,6 +2,7 @@
 <resources>
 
 	<string name="app_name">Iolite</string>
+	<string name="login">Login</string>
 	<string name="block_view">Blocks</string>
 	<string name="activity_view">Activities</string>
 	<string name="action_settings">Settings</string>

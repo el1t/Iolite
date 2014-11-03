@@ -1,7 +1,9 @@
 package com.el1t.iolite;
 
+import android.content.Context;
 import android.util.Log;
 import android.util.Xml;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -19,8 +21,10 @@ import java.util.Date;
 public class EighthBlockXmlParser
 {
 	private static final String TAG = "Block List XML Parser";
+	private static Context mContext;
 
-	public static ArrayList<EighthBlockItem> parse(InputStream in) throws XmlPullParserException, IOException {
+	public static ArrayList<EighthBlockItem> parse(InputStream in, Context context) throws XmlPullParserException, IOException {
+		mContext = context;
 		// Initialize parser and jump to first tag
 		try {
 			XmlPullParser parser = Xml.newPullParser();
@@ -56,6 +60,7 @@ public class EighthBlockXmlParser
 			}
 		} catch (ParseException e) {
 			Log.e(TAG, "Block parser", e);
+			Toast.makeText(mContext, "Some blocks failed to load.", Toast.LENGTH_SHORT).show();
 		}
 		return entries;
 	}
