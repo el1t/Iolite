@@ -1,9 +1,12 @@
 package com.el1t.iolite;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,10 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 {
 	// This is to hold all items without filtering
 	private ArrayList<EighthActivityItem> mItems;
+	private Bitmap ICON_INFO;
+	private Bitmap ICON_DASH;
+	private Bitmap ICON_LOCK;
+	private Bitmap ICON_STAR;
 
 	// View lookup cache
 	private static class ViewHolder {
@@ -36,6 +43,10 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 	public ActivityListAdapter(Context context, ArrayList<EighthActivityItem> items) {
 		super(context, 0, items);
 		mItems = items;
+		ICON_INFO = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_info_white_48dp);
+		ICON_DASH = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_remove_circle_white_48dp);
+		ICON_LOCK = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_lock_circle_white_48dp);
+		ICON_STAR = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_stars_white_48dp);
 	}
 
 	@Override
@@ -79,24 +90,22 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 
 		// Set color
 		int color = Color.parseColor("#259b24");			// Green
-		int icon  = R.drawable.ic_info_white_48dp;
+//		int icon  = R.drawable.ic_info_white_48dp;
 		if (item.isCancelled()) {
 			color = Color.parseColor("#e51c23");			// Red
-			icon = R.drawable.ic_remove_circle_white_48dp;
+			viewHolder.icon.setImageBitmap(ICON_DASH);
+		} else if (item.isRestricted()) {
+			color = Color.parseColor("#ffc107");		// Amber
+			viewHolder.icon.setImageBitmap(ICON_LOCK);
+		} else if (item.isFavorite()) {
+			color = Color.parseColor("#f48fb1");	// Pink
+			viewHolder.icon.setImageBitmap(ICON_STAR);
 		} else {
-			if (item.isRestricted()) {
-				color = Color.parseColor("#ffc107");		// Amber
-				icon = R.drawable.ic_lock_circle_white_48dp;
-			} else {
-				if (item.isFavorite()) {
-					color = Color.parseColor("#f48fb1");	// Pink
-					icon = R.drawable.ic_stars_white_48dp;
-				}
-			}
+			viewHolder.icon.setImageBitmap(ICON_INFO);
 		}
 		viewHolder.icon.setColorFilter(new
 				PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
-		viewHolder.icon.setImageResource(icon);
+//		viewHolder.icon.setImageResource(icon);
 
 		return convertView;
 	}

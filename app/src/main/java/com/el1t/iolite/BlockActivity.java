@@ -82,10 +82,12 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 		// This should not be called if items are fake
 		assert(!fake);
 
-		// Set loading fragment
-		getFragmentManager().beginTransaction()
-				.replace(R.id.container, new LoadingFragment())
-				.commit();
+		// Set loading fragment, if necessary
+		if(mBlockFragment == null) {
+			getFragmentManager().beginTransaction()
+					.replace(R.id.container, new LoadingFragment())
+					.commit();
+		}
 
 		// Retrieve list of bids using cookies
 		new BlockListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_blocks");
@@ -103,14 +105,13 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 			Bundle args = new Bundle();
 			args.putSerializable("list", result);
 			mBlockFragment.setArguments(args);
+			// Switch to BlockFragment view, remove LoadingFragment
+			getFragmentManager().beginTransaction()
+					.replace(R.id.container, mBlockFragment)
+					.commit();
 		} else {
 			mBlockFragment.updateContent(result);
 		}
-
-		// Switch to BlockFragment view, remove LoadingFragment
-		getFragmentManager().beginTransaction()
-				.replace(R.id.container, mBlockFragment)
-				.commit();
 	}
 
 	// Get list of blocks
