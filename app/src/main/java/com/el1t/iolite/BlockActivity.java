@@ -75,7 +75,8 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 		} catch(Exception e) {
 			Log.e(TAG, "Error parsing block xml", e);
 		}
-		return null;
+		// Don't die?
+		return new ArrayList<EighthBlockItem>();
 	}
 
 	protected void refresh() {
@@ -110,7 +111,7 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 					.replace(R.id.container, mBlockFragment)
 					.commit();
 		} else {
-			mBlockFragment.updateContent(result);
+			mBlockFragment.setListItems(result);
 		}
 	}
 
@@ -150,14 +151,14 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 			postRequest(result);
 		}
 	}
-}
 
-// Sort by BID (which also happens to sort by date)
-class BIDSortComp implements Comparator<EighthBlockItem>
-{
-	@Override
-	public int compare(EighthBlockItem e1, EighthBlockItem e2) {
-		// Double, because Integer does not have compare prior to Java 7
-		return Double.compare(e1.getBID(), e2.getBID());
+	// Sort by BID (which also happens to sort by date)
+	private class BIDSortComp implements Comparator<EighthBlockItem>
+	{
+		@Override
+		public int compare(EighthBlockItem e1, EighthBlockItem e2) {
+			// Double, because Integer does not have compare prior to Java 7
+			return Double.compare(e1.getBID(), e2.getBID());
+		}
 	}
 }

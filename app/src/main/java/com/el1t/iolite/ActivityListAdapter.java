@@ -42,7 +42,7 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 
 	public ActivityListAdapter(Context context, ArrayList<EighthActivityItem> items) {
 		super(context, 0, items);
-		mItems = items;
+		mItems = new ArrayList<EighthActivityItem>(items);
 		ICON_INFO = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_info_white_48dp);
 		ICON_DASH = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_remove_circle_white_48dp);
 		ICON_LOCK = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_lock_circle_white_48dp);
@@ -108,6 +108,18 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 //		viewHolder.icon.setImageResource(icon);
 
 		return convertView;
+	}
+
+	protected void setListItems(ArrayList<EighthActivityItem> items) {
+		mItems = items;
+		notifyDataSetChanged();
+	}
+
+	protected void restore() {
+		if(getCount() == 0 && mItems != null) {
+			addAll(mItems);
+			notifyDataSetChanged();
+		}
 	}
 
 	@Override

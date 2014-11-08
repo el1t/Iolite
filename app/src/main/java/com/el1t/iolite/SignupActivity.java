@@ -33,8 +33,6 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 	private final String TAG = "Signup Activity";
 
 	private SignupFragment mSignupFragment;
-	private String AID;
-	private String BID;
 	private ArrayList<SerializedCookie> mCookies;
 
 	@Override
@@ -55,23 +53,17 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 				getFragmentManager().beginTransaction()
 						.add(R.id.container, new LoadingFragment())
 						.commit();
+				// Retrieve cookies from previous activity
+				mCookies = (ArrayList<SerializedCookie>) intent.getSerializableExtra("cookies");
+				// Retrieve list for bid using cookies
+				new ActivityListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_activities/" + intent.getStringExtra("BID"));
 			}
-		}
-
-		// Retrieve cookies from previous activity
-		mCookies = (ArrayList<SerializedCookie>) intent.getSerializableExtra("cookies");
-
-		// Retrieve list for bid using cookies
-		if (!intent.getBooleanExtra("fake", false)) {
-			new ActivityListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_activities/" + intent.getStringExtra("BID"));
 		}
 	}
 
 	// Try signing up for an activity
 	public void submit(int AID, int BID) {
-		this.BID = Integer.toString(BID);
-		this.AID = Integer.toString(AID);
-		new SignupRequest().execute("https://iodine.tjhsst.edu/api/eighth/signup_activity");
+		new SignupRequest(AID, BID).execute("https://iodine.tjhsst.edu/api/eighth/signup_activity");
 	}
 
 	// Notify the user after submission
@@ -81,12 +73,13 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 			Log.d(TAG, "Sign up success");
 			finish();
 		} else {
+			// TODO: Make this error message reflect the actual error
 			Toast.makeText(getApplicationContext(), "Something went wrong...", Toast.LENGTH_SHORT).show();
 			Log.w(TAG, "Sign up failure");
 		}
 	}
 
-	protected void postRequest(ArrayList<EighthActivityItem> result) {
+	private void postRequest(ArrayList<EighthActivityItem> result) {
 		// Sort the array
 		Collections.sort(result, new DefaultSortComp());
 		// Create the content view
@@ -108,10 +101,11 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 		} catch(Exception e) {
 			Log.e(TAG, "Error parsing activity xml", e);
 		}
-		return null;
+		// Don't die?
+		return new ArrayList<EighthActivityItem>();
 	}
 
-	// Retrieve activity list for BID from server
+	// Retrieve activity list for BID from server using HttpURLConnection
 	private class ActivityListRequest extends AsyncTask<String, Void, ArrayList<EighthActivityItem>> {
 		private static final String TAG = "Activity List Connection";
 
@@ -151,6 +145,13 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 	// Web request for activity signup using HttpClient
 	private class SignupRequest extends AsyncTask<String, Void, Boolean> {
 		private static final String TAG = "Signup Connection";
+		private String AID;
+		private String BID;
+
+		public SignupRequest(int AID, int BID) {
+			this.AID = Integer.toString(AID);
+			this.BID = Integer.toString(BID);
+		}
 
 		@Override
 		protected Boolean doInBackground(String... urls) {
@@ -190,27 +191,27 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 			postSubmit(result);
 		}
 	}
-}
 
-// Sort by favorites, alphabetically
-class DefaultSortComp implements Comparator<EighthActivityItem>
-{
-	@Override
-	public int compare(EighthActivityItem e1, EighthActivityItem e2) {
-		// Compare by name if both or neither are favorites, or return the favorite
-		if (e1.isFavorite()) {
+	// Sort by favorites, alphabetically
+	private class DefaultSortComp implements Comparator<EighthActivityItem>
+	{
+		@Override
+		public int compare(EighthActivityItem e1, EighthActivityItem e2) {
+			// Compare by name if both or neither are favorites, or return the favorite
+			if (e1.isFavorite()) {
+				if (e2.isFavorite())
+					return e1.getName().compareTo(e2.getName());
+				return -1;
+			}
 			if (e2.isFavorite())
-				return e1.getName().compareTo(e2.getName());
-			return -1;
-		}
-		if (e2.isFavorite())
-			return 1;
+				return 1;
 
-		// Check for special
-		if (!(e1.isSpecial() ^ e2.isSpecial()))
-			return e1.getName().compareTo(e2.getName());
-		if (e1.isSpecial())
-			return -1;
-		return 1;
+			// Check for special
+			if (!(e1.isSpecial() ^ e2.isSpecial()))
+				return e1.getName().compareTo(e2.getName());
+			if (e1.isSpecial())
+				return -1;
+			return 1;
+		}
 	}
 }

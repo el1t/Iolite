@@ -20,7 +20,6 @@ public class SignupFragment extends Fragment
 	private final String TAG = "Signup Fragment";
 
 	private OnFragmentInteractionListener mListener;
-	private ListView activityList;
 	private ActivityListAdapter mActivityListAdapter;
 
 	public interface OnFragmentInteractionListener {
@@ -35,9 +34,8 @@ public class SignupFragment extends Fragment
 		View rootView = inflater.inflate(R.layout.fragment_signup,
 				container, false);
 
-		// Check if list was provided for fake login
-		// to setup custom ListAdapter
-		Bundle args = getArguments();
+		// Check if list was provided to setup custom ListAdapter
+		final Bundle args = getArguments();
 		if (args != null && args.getSerializable("list") != null) {
 			Log.d(TAG, "Activity list received");
 			mActivityListAdapter = new ActivityListAdapter(getActivity(), (ArrayList<EighthActivityItem>) args.getSerializable("list"));
@@ -45,7 +43,7 @@ public class SignupFragment extends Fragment
 			throw new IllegalArgumentException();
 		}
 
-		activityList = (ListView) rootView.findViewById(R.id.activityList);
+		final ListView activityList = (ListView) rootView.findViewById(R.id.activityList);
 		activityList.setAdapter(mActivityListAdapter);
 
 		// Submit activity selection on click
@@ -72,5 +70,18 @@ public class SignupFragment extends Fragment
 			throw new ClassCastException(activity.toString()
 					+ " must implement OnFragmentInteractionListener");
 		}
+	}
+
+	@Override
+	public void onStop() {
+		super.onPause();
+		// This garbage-collects for Android to prevent frame skips
+		mActivityListAdapter.clear();
+	}
+
+	@Override
+	public void onStart() {
+		super.onResume();
+		mActivityListAdapter.restore();
 	}
 }

@@ -19,8 +19,9 @@ public class BlockFragment extends Fragment {
 	private final String TAG = "Block Fragment";
 
 	private OnFragmentInteractionListener mListener;
-	private ListView blockList;
 	private BlockListAdapter mBlockListAdapter;
+	private ListView blockList;
+	private ArrayList<EighthBlockItem> mItems;
 
 	public interface OnFragmentInteractionListener {
 		public void select(int BID);
@@ -34,12 +35,12 @@ public class BlockFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_block,
 				container, false);
 
-		// Check if list was provided for fake login
-		// to setup custom ListAdapter
-		Bundle args = getArguments();
+		// Check if list was provided from login activity to setup custom ListAdapter
+		final Bundle args = getArguments();
 		if (args != null && args.getSerializable("list") != null) {
 			Log.d(TAG, "Block list received");
-			mBlockListAdapter = new BlockListAdapter(getActivity(), (ArrayList<EighthBlockItem>) args.getSerializable("list"));
+			mItems = (ArrayList<EighthBlockItem>) args.getSerializable("list");
+			mBlockListAdapter = new BlockListAdapter(getActivity(), mItems);
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -73,7 +74,20 @@ public class BlockFragment extends Fragment {
 		}
 	}
 
-	protected void updateContent(ArrayList<EighthBlockItem> items) {
-		mBlockListAdapter.updateContent(items);
+	protected void setListItems(ArrayList<EighthBlockItem> items) {
+		mBlockListAdapter.setListItems(items);
+	}
+
+	@Override
+	public void onStop() {
+		super.onPause();
+		// This garbage-collects for Android to prevent frame skips
+		mBlockListAdapter.clear();
+	}
+
+	@Override
+	public void onStart() {
+		super.onResume();
+		mBlockListAdapter.restore();
 	}
 }

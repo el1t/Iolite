@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
  */
 public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 {
+	private ArrayList<EighthBlockItem> mItems;
+
 	public enum Block {
 		A, B, C, D, E, F
 	}
@@ -30,8 +33,9 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 		TextView letter;
 	}
 
-	public BlockListAdapter(Context context, ArrayList<EighthBlockItem> values) {
-		super(context, 0, values);
+	public BlockListAdapter(Context context, ArrayList<EighthBlockItem> items) {
+		super(context, 0, items);
+		mItems = new ArrayList<EighthBlockItem>(items);
 	}
 
 	@Override
@@ -87,8 +91,17 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 		return convertView;
 	}
 
-	protected void updateContent(ArrayList<EighthBlockItem> items) {
+	protected void setListItems(ArrayList<EighthBlockItem> items) {
 		clear();
 		addAll(items);
+		mItems = items;
+		notifyDataSetChanged();
+	}
+
+	protected void restore() {
+		if(getCount() == 0 && mItems != null) {
+			addAll(mItems);
+			notifyDataSetChanged();
+		}
 	}
 }
