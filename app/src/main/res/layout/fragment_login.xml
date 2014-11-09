@@ -23,7 +23,8 @@
 		android:inputType="textPassword"
 		android:hint="Password"
 		android:ems="10"
-		android:id="@+id/password"/>
+		android:id="@+id/password"
+        android:fontFamily="sans_serif"/>
 
 	<Button
 		android:layout_width="match_parent"

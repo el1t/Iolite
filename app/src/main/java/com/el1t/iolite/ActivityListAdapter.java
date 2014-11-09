@@ -35,7 +35,6 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 	private static class ViewHolder {
 		TextView activityName;
 		TextView activityDescription;
-		ImageView circle;
 		ImageView icon;
 		ProgressBar capacity;
 	}
@@ -62,7 +61,6 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 			viewHolder.activityName = (TextView) convertView.findViewById(R.id.activityName);
 			viewHolder.activityDescription = (TextView) convertView.findViewById(R.id.activityDescription);
 			viewHolder.capacity = (ProgressBar) convertView.findViewById(R.id.capacity);
-			viewHolder.circle = (ImageView) convertView.findViewById(R.id.circle);
 			viewHolder.icon = (ImageView) convertView.findViewById(R.id.icon);
 			convertView.setTag(viewHolder);
 		} else {
@@ -90,7 +88,6 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 
 		// Set color
 		int color = Color.parseColor("#259b24");			// Green
-//		int icon  = R.drawable.ic_info_white_48dp;
 		if (item.isCancelled()) {
 			color = Color.parseColor("#e51c23");			// Red
 			viewHolder.icon.setImageBitmap(ICON_DASH);
@@ -105,7 +102,6 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 		}
 		viewHolder.icon.setColorFilter(new
 				PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
-//		viewHolder.icon.setImageResource(icon);
 
 		return convertView;
 	}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item android:state_pressed="true">
+		<clip android:id="@android:id/progress">
+			<shape>
+				<solid
+					android:color="@color/primary_100" />
+			</shape>
+		</clip>
+	</item>
+	<item android:state_selected="true">
+		<clip android:id="@android:id/progress">
+			<shape>
+				<solid
+					android:color="@color/primary_100" />
+			</shape>
+		</clip>
+	</item>
+	<item android:state_activated="true">
+		<clip android:id="@android:id/progress">
+			<shape>
+				<solid
+					android:color="@color/primary_100" />
+			</shape>
+		</clip>
+	</item>
+	<item android:state_focused="true">
+		<clip android:id="@android:id/progress">
+			<shape>
+				<solid
+					android:color="@color/primary_100" />
+			</shape>
+		</clip>
+	</item>
+	<item>
+		<clip android:id="@android:id/progress">
+			<shape>
+				<solid
+					android:color="@color/primary_50" />
+			</shape>
+		</clip>
+	</item>
+
+</selector>

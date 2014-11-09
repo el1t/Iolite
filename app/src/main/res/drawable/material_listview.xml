@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+	<!-- Active -->
+	<item android:state_selected="true" android:state_focused="false"
+	      android:state_pressed="false">
+		<shape android:shape="rectangle">
+			<solid android:color="@color/primary_50" />
+		</shape>
+	</item>
+	<!-- Pressed -->
+	<item android:state_pressed="true">
+		<shape android:shape="rectangle">
+			<solid android:color="@color/primary_50" />
+		</shape>
+	</item>
+	<!-- Activated -->
+	<item android:state_activated="true">
+		<shape android:shape="rectangle">
+			<solid android:color="@color/primary_50" />
+		</shape>
+	</item>
+	<!-- Selected -->
+	<item android:state_focused="true">
+		<shape android:shape="rectangle">
+			<solid android:color="@color/primary_50" />
+		</shape>
+	</item>
+	<!-- Inactive -->
+	<item>
+		<shape android:shape="rectangle">
+			<solid android:color="@color/background" />
+		</shape>
+	</item>
+</selector>
