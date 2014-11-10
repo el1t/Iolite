@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+	xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.el1t.iolite" >
 
 	<uses-permission android:name="android.permission.INTERNET" />
@@ -15,7 +16,6 @@
 	        android:name="com.el1t.iolite.LoginActivity">
 	        <intent-filter>
 	            <action android:name="android.intent.action.MAIN" />
-
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
@@ -24,9 +24,6 @@
 			android:label="@string/block_view"
 			android:parentActivityName="com.el1t.iolite.LoginActivity"
 			android:launchMode="singleTop">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.el1t.LoginActivity" />
 		</activity>
 		<activity
 			android:name="com.el1t.iolite.SignupActivity"

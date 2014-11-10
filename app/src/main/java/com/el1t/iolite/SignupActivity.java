@@ -1,9 +1,10 @@
 package com.el1t.iolite;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ import java.util.List;
 /**
  * Created by El1t on 10/21/14.
  */
-public class SignupActivity extends Activity implements SignupFragment.OnFragmentInteractionListener
+public class SignupActivity extends ActionBarActivity implements SignupFragment.OnFragmentInteractionListener
 {
 	private final String TAG = "Signup Activity";
 
@@ -59,6 +60,13 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 				new ActivityListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_activities/" + intent.getStringExtra("BID"));
 			}
 		}
+
+		// Use material design toolbar
+		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		if(toolbar != null) {
+			setSupportActionBar(toolbar);
+		}
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	// Try signing up for an activity
@@ -200,7 +208,7 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 			// Compare by name if both or neither are favorites, or return the favorite
 			if (e1.isFavorite()) {
 				if (e2.isFavorite())
-					return e1.getName().compareTo(e2.getName());
+					return e1.getName().compareToIgnoreCase(e2.getName());
 				return -1;
 			}
 			if (e2.isFavorite())
@@ -208,7 +216,7 @@ public class SignupActivity extends Activity implements SignupFragment.OnFragmen
 
 			// Check for special
 			if (!(e1.isSpecial() ^ e2.isSpecial()))
-				return e1.getName().compareTo(e2.getName());
+				return e1.getName().compareToIgnoreCase(e2.getName());
 			if (e1.isSpecial())
 				return -1;
 			return 1;

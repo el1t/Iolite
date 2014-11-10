@@ -1,26 +1,27 @@
 <resources>
 
 	<!-- Base application theme. -->
-	<style name="AppTheme" parent="android:Theme.Holo.Light">
-		<!--   app bar color -->
-		<item name="android:actionBarStyle">@style/MaterialActionBar</item>
-		<!--   light background color -->
-		<item name="android:windowBackground">@color/background</item>
+	<style name="AppTheme" parent="Theme.AppCompat.Light">
+		<item name="colorPrimary">@color/primary</item>
+		<item name="colorPrimaryDark">@color/primary_dark</item>
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowActionModeOverlay">true</item>
+		<item name="windowActionBar">false</item>
 	</style>
 
 	<!-- Dark application theme. -->
-	<style name="AppThemeDark" parent="android:Theme.Holo">
-		<!--   app bar color -->
-		<item name="android:actionBarStyle">@style/MaterialActionBar</item>
-		<!--   dark background color -->
-		<item name="android:windowBackground">@color/background_dark</item>
+	<style name="AppThemeDark" parent="Theme.AppCompat">
+		<item name="colorPrimary">@color/primary</item>
+		<item name="colorPrimaryDark">@color/primary_dark</item>
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowActionModeOverlay">true</item>
+		<item name="windowActionBar">false</item>
 	</style>
 
-	<style name="MaterialActionBar"
-	       parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-		<item name="android:background">@color/primary</item>
-		<item name="android:backgroundStacked">@color/primary_dark</item>
-		<item name="android:backgroundSplit">@color/primary_dark</item>
+	<style name="Widget.App.EditText" parent="Widget.AppCompat.EditText">
+		<item name="colorControlNormal">@color/primary</item>
+		<item name="colorControlActivated">@color/accent</item>
+		<item name="colorControlHighlight">@color/accent</item>
 	</style>
 
 </resources>

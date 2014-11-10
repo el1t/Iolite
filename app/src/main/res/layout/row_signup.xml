@@ -28,8 +28,8 @@
 		             android:layout_height="40dp"
 		             android:layout_gravity="center_vertical">
 			<ImageView
-				android:layout_width="40dp"
-				android:layout_height="40dp"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
 				android:id="@+id/circle"
 				android:layout_gravity="center"
 				android:src="@drawable/activity_letter"/>
@@ -40,6 +40,17 @@
 				android:id="@+id/icon"
 				android:layout_gravity="center"
 				android:src="@drawable/activity_letter"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:id="@+id/letter"
+				android:gravity="center"
+				android:fontFamily="sans-serif-light"
+				android:includeFontPadding="false"
+				android:textColor="@android:color/white"
+				android:textSize="25dp"
+				tools:ignore="SpUsage" />
 		</FrameLayout>
 
 		<LinearLayout
@@ -52,8 +63,8 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:alpha=".87"
 				android:textSize="20dp"
+				android:includeFontPadding="false"
 				android:singleLine="true"
 				android:ellipsize="end"
 				android:id="@+id/activityName"/>
@@ -61,8 +72,10 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:alpha=".54"
+				android:layout_marginTop="2dp"
+				android:alpha=".87"
 				android:textSize="14dp"
+				android:includeFontPadding="false"
 				android:ellipsize="end"
 				android:singleLine="true"
 				android:id="@+id/activityDescription"/>

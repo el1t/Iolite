@@ -30,6 +30,7 @@ public class EighthActivityItem implements Serializable
 	private boolean favorite;
 	private int memberCount;
 	private int capacity;
+	private String firstChar;
 
 	public EighthActivityItem(int AID, String name, String description, boolean restricted, boolean presign, boolean oneaday,
 	                          boolean bothblocks, boolean sticky, boolean special, boolean calendar, boolean roomChanged, ArrayList<Integer> blockSponsors,
@@ -57,6 +58,7 @@ public class EighthActivityItem implements Serializable
 		this.favorite = favorite;
 		this.memberCount = memberCount;
 		this.capacity = capacity;
+		firstCharHelper();
 	}
 
 	public EighthActivityItem(int AID, String name, String description, boolean restricted, boolean presign, boolean oneaday,
@@ -80,6 +82,19 @@ public class EighthActivityItem implements Serializable
 		this.comment = comment.trim();
 		this.advertisement = advertisement.trim();
 		this.attendanceTaken = attendanceTaken;
+		firstCharHelper();
+	}
+
+	// Get the first letter to display
+	// Is this slower than incrementing an int through substrings?
+	private void firstCharHelper() {
+		for(char c : name.toCharArray()) {
+			if(Character.isLetter(c)) {
+				firstChar = String.valueOf(Character.toUpperCase(c));
+				return;
+			}
+		}
+		firstChar = name.substring(0, 1).toUpperCase();
 	}
 
 	public int getAID() {
@@ -172,5 +187,9 @@ public class EighthActivityItem implements Serializable
 
 	public boolean hasDescription() {
 		return description.equals("") || description.trim().toLowerCase().equals("no description available");
+	}
+
+	public String getFirstChar() {
+		return firstChar;
 	}
 }

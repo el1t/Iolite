@@ -1,5 +1,10 @@
 package com.el1t.iolite;
 
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.SuperscriptSpan;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,7 +21,7 @@ public class EighthBlockItem implements Serializable
 	private String type;
 	private boolean locked;
 	private String disp;
-	private DateFormat mDateFormat = new SimpleDateFormat("EEEE, MMMM d'th'");
+	private DateFormat mDateFormat = new SimpleDateFormat("EEEE, MMMM d");
 
 	public EighthBlockItem(EighthActivityItem activity, Date date, int BID, String type, boolean locked, String disp) {
 		this.activity = activity;
@@ -51,7 +56,27 @@ public class EighthBlockItem implements Serializable
 		return disp;
 	}
 
-	public String getShortenedDisp() {
-		return mDateFormat.format(date);
+	public Spannable getShortenedDisp() {
+		// Add postfix
+		String str = mDateFormat.format(date);
+		switch(str.charAt(str.length() - 1)) {
+			case '1':
+				str += "st";
+				break;
+			case '2':
+				str += "nd";
+				break;
+			case '3':
+				str += "rd";
+				break;
+			default:
+				str += "th";
+		}
+		// Format postfix into superscript
+		Spannable sp = new SpannableString(str);
+		sp.setSpan(new SuperscriptSpan(), sp.length() - 2, sp.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		sp.setSpan(new RelativeSizeSpan(.75f), sp.length() - 2, sp.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+		return sp;
 	}
 }

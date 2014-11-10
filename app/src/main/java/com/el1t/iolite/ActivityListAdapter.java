@@ -4,9 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +32,9 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 	private static class ViewHolder {
 		TextView activityName;
 		TextView activityDescription;
+		ImageView circle;
 		ImageView icon;
+		TextView letter;
 		ProgressBar capacity;
 	}
 
@@ -61,7 +60,9 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 			viewHolder.activityName = (TextView) convertView.findViewById(R.id.activityName);
 			viewHolder.activityDescription = (TextView) convertView.findViewById(R.id.activityDescription);
 			viewHolder.capacity = (ProgressBar) convertView.findViewById(R.id.capacity);
+			viewHolder.circle = (ImageView) convertView.findViewById(R.id.circle);
 			viewHolder.icon = (ImageView) convertView.findViewById(R.id.icon);
+			viewHolder.letter = (TextView) convertView.findViewById(R.id.letter);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -87,21 +88,30 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 		}
 
 		// Set color
-		int color = Color.parseColor("#259b24");			// Green
+		int color = -1;
 		if (item.isCancelled()) {
-			color = Color.parseColor("#e51c23");			// Red
+			color = Color.parseColor("#F44336");			// Red
 			viewHolder.icon.setImageBitmap(ICON_DASH);
 		} else if (item.isRestricted()) {
-			color = Color.parseColor("#ffc107");		// Amber
+			color = Color.parseColor("#FF5722");			// Deep orange
 			viewHolder.icon.setImageBitmap(ICON_LOCK);
 		} else if (item.isFavorite()) {
-			color = Color.parseColor("#f48fb1");	// Pink
+			color = Color.parseColor("#FF9800");			// Orange
 			viewHolder.icon.setImageBitmap(ICON_STAR);
 		} else {
-			viewHolder.icon.setImageBitmap(ICON_INFO);
+			// Tint background to green when letter is used
+			viewHolder.circle.setColorFilter(Color.parseColor("#4CAF50"));
+			viewHolder.icon.setVisibility(View.INVISIBLE);
+			viewHolder.letter.setText(item.getFirstChar());
+			viewHolder.letter.setVisibility(View.VISIBLE);
 		}
-		viewHolder.icon.setColorFilter(new
-				PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
+		// Tint icon if icon is used
+		if (color != -1) {
+			viewHolder.circle.setColorFilter(Color.parseColor("white"));
+			viewHolder.icon.setColorFilter(color);
+			viewHolder.icon.setVisibility(View.VISIBLE);
+			viewHolder.letter.setVisibility(View.INVISIBLE);
+		}
 
 		return convertView;
 	}

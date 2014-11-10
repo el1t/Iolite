@@ -12,25 +12,27 @@
 	android:background="@drawable/material_listview"
 	android:orientation="horizontal">
 
-	<FrameLayout android:layout_width="40dp"
-	             android:layout_height="40dp">
+	<FrameLayout
+		android:layout_width="40dp"
+	    android:layout_height="40dp">
 
 		<ImageView
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:id="@+id/circle"
-			android:layout_gravity="center"
 			android:src="@drawable/activity_letter"/>
 
 		<TextView
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:id="@+id/letter"
-			android:textSize="30sp"
+			android:textSize="25dp"
 			android:textColor="@android:color/white"
 			android:gravity="center"
-			android:layout_gravity="center"
-			android:src="@drawable/activity_letter"/>
+			android:src="@drawable/activity_letter"
+			android:includeFontPadding="false"
+			android:fontFamily="sans-serif-light"
+			tools:ignore="SpUsage"/>
 	</FrameLayout>
 
 	<LinearLayout
@@ -43,18 +45,21 @@
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:alpha=".87"
 			android:ellipsize="end"
 			android:singleLine="true"
 			android:textSize="20sp"
+			android:includeFontPadding="false"
 			android:id="@+id/blockDate"/>
 
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:alpha=".54"
+			android:paddingTop="2dp"
+			android:alpha=".87"
 			android:ellipsize="end"
 			android:singleLine="true"
+			android:includeFontPadding="false"
+			android:fontFamily="sans-serif-light"
 			android:id="@+id/blockActivityName"/>
 	</LinearLayout>
 </LinearLayout>

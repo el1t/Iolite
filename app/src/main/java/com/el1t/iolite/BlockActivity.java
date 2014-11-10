@@ -1,9 +1,10 @@
 package com.el1t.iolite;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -18,7 +19,7 @@ import java.util.Comparator;
  * Created by El1t on 10/24/14.
  */
 
-public class BlockActivity extends Activity implements BlockFragment.OnFragmentInteractionListener
+public class BlockActivity extends ActionBarActivity implements BlockFragment.OnFragmentInteractionListener
 {
 	private final String TAG = "Block Activity";
 
@@ -30,10 +31,10 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_block);
-		Intent intent = getIntent();
 
 		// Check if restoring from previously destroyed instance
 		if (savedInstanceState == null) {
+			Intent intent = getIntent();
 			// Retrieve cookies from previous activity
 			mCookies = (ArrayList<SerializedCookie>) intent.getSerializableExtra("cookies");
 
@@ -45,8 +46,11 @@ public class BlockActivity extends Activity implements BlockFragment.OnFragmentI
 			}
 		}
 
-		// Remove up button
-		getActionBar().setDisplayHomeAsUpEnabled(false);
+		// Use material design toolbar
+		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		if(toolbar != null) {
+			setSupportActionBar(toolbar);
+		}
 	}
 
 	@Override

@@ -2,9 +2,6 @@ package com.el1t.iolite;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +60,7 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 		viewHolder.blockActivityName.setText(item.getEighth().getName());
 
 		// Set color
-		int color = Color.parseColor("#9e9e9e");			// Gray
+		int color = -1;
 		String letter = item.getBlock();
 		if(item.isLocked()) {
 			color = Color.parseColor("#e51c23");
@@ -84,8 +81,7 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 			}
 		}
 
-		viewHolder.circle.setColorFilter(new
-				PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
+		viewHolder.circle.setColorFilter(color);
 		viewHolder.letter.setText(letter);
 
 		return convertView;

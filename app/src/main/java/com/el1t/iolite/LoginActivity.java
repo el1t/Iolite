@@ -1,11 +1,12 @@
 package com.el1t.iolite;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class LoginActivity extends Activity implements LoginFragment.OnFragmentInteractionListener
+public class LoginActivity extends ActionBarActivity implements LoginFragment.OnFragmentInteractionListener
 {
 	private final String FAKE_LOGIN = "fake";
 	private final String TAG = "Login Activity";
@@ -41,36 +42,43 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 	private String login_password;
 	private ProgressDialog mProgressDialog;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-	    mLoginFragment = new LoginFragment();
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, mLoginFragment)
-                    .commit();
-        }
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_login);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.login, menu);
-        return true;
-    }
+		if (savedInstanceState == null) {
+			mLoginFragment = new LoginFragment();
+		    getFragmentManager().beginTransaction()
+		            .add(R.id.container, mLoginFragment)
+		            .commit();
+		}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+		// Use material design toolbar
+		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		if(toolbar != null) {
+			setSupportActionBar(toolbar);
+		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu; this adds items to the action bar if it is present.
+	    getMenuInflater().inflate(R.menu.login, menu);
+	    return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+		    return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 	// Submit the login request
 	public void submit(String username, String pass) {
@@ -99,6 +107,7 @@ public class LoginActivity extends Activity implements LoginFragment.OnFragmentI
 		intent.putExtra("cookies", list);
 		intent.putExtra("fake", isFakeLogin());
 		startActivity(intent);
+		finish();
 	}
 
 	public void failed(boolean isAborted) {
