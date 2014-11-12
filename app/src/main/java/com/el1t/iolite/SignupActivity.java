@@ -18,8 +18,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +37,10 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 	private SignupFragment mSignupFragment;
 	private ArrayList<SerializedCookie> mCookies;
+
+	public enum Response {
+		SUCCESS, CAPACITY, RESTRICTED, CANCELLED, PRESIGN, ATTENDANCE_TAKEN, FAIL
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,24 +75,66 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
-	// Try signing up for an activity
-	public void submit(int AID, int BID) {
-		new SignupRequest(AID, BID).execute("https://iodine.tjhsst.edu/api/eighth/signup_activity");
-	}
+//	@Override
+//	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//		inflater.inflate(R.menu.login, menu);
+////		super.onCreateOptionsMenu(menu, inflater);
+//	}
 
-	// Notify the user after submission
-	protected void postSubmit(boolean result) {
-		if (result) {
-			Toast.makeText(getApplicationContext(), "Signed up!", Toast.LENGTH_SHORT).show();
-			Log.d(TAG, "Sign up success");
-			finish();
+	// Try signing up for an activity
+	public void submit(EighthActivityItem item) {
+		// Perform checks before submission
+		// Note that server performs checks as well
+		 if (item.isCancelled()) {
+			postSubmit(Response.CANCELLED);
+		} else if (item.isFull()) {
+			postSubmit(Response.CAPACITY);
+//		} else if (item.isRestricted()) {
+//			postSubmit(Response.RESTRICTED);
+		} else if (item.isAttendanceTaken()) {
+			postSubmit(Response.ATTENDANCE_TAKEN);
 		} else {
-			// TODO: Make this error message reflect the actual error
-			Toast.makeText(getApplicationContext(), "Something went wrong...", Toast.LENGTH_SHORT).show();
-			Log.w(TAG, "Sign up failure");
+			new SignupRequest(item.getAID(), item.getBid()).execute("https://iodine.tjhsst.edu/api/eighth/signup_activity");
 		}
 	}
 
+	// Notify the user after submission
+	public void postSubmit(Response result) {
+		switch(result) {
+			case SUCCESS:
+				Toast.makeText(getApplicationContext(), "Signed up!", Toast.LENGTH_SHORT).show();
+				Log.d(TAG, "Sign up success");
+				finish();
+				break;
+			case CAPACITY:
+				Toast.makeText(getApplicationContext(), "Capacity exceeded", Toast.LENGTH_SHORT).show();
+				Log.d(TAG, "Capacity exceeded");
+				break;
+			case RESTRICTED:
+				Toast.makeText(getApplicationContext(), "Activity restricted", Toast.LENGTH_SHORT).show();
+				Log.d(TAG, "Restricted activity");
+				break;
+			case CANCELLED:
+				Toast.makeText(getApplicationContext(), "Activity cancelled", Toast.LENGTH_SHORT).show();
+				Log.d(TAG, "Cancelled activity");
+				break;
+			case PRESIGN:
+				Toast.makeText(getApplicationContext(), "Too early!", Toast.LENGTH_SHORT).show();
+				Log.d(TAG, "Presign activity");
+				break;
+			case ATTENDANCE_TAKEN:
+				Toast.makeText(getApplicationContext(), "Signup closed", Toast.LENGTH_SHORT).show();
+				Log.d(TAG, "Attendance taken");
+				break;
+			case FAIL:
+				// TODO: Make this error message reflect the actual error
+				Toast.makeText(getApplicationContext(), "Something went wrong...", Toast.LENGTH_SHORT).show();
+				Log.w(TAG, "Sign up failure");
+				break;
+		}
+	}
+
+	// Do after getting list of activities
 	private void postRequest(ArrayList<EighthActivityItem> result) {
 		// Sort the array
 		Collections.sort(result, new DefaultSortComp());
@@ -100,6 +148,13 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		getFragmentManager().beginTransaction()
 				.replace(R.id.container, mSignupFragment)
 				.commit();
+	}
+
+	// Favorite an activity
+	public void favorite(int AID, int BID) {
+		// Note: the server uses the UID field as the AID in its API
+		// Sending the BID is useless, but it is required by the server
+		new ServerRequest().execute("https://iodine.tjhsst.edu/eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID);
 	}
 
 	// Get a fake list of activities for debugging
@@ -136,7 +191,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 				urlConnection.disconnect();
 			} catch (XmlPullParserException e) {
 				Log.e(TAG, "XML error.", e);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				Log.e(TAG, "Connection error.", e);
 			}
 			return response;
@@ -187,7 +242,9 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 				result = EighthActivityXmlParser.parseSuccess(response.getEntity().getContent());
 			} catch (XmlPullParserException e) {
 				Log.e(TAG, "XML error.", e);
-			} catch (Exception e) {
+			} catch (URISyntaxException e) {
+				Log.e(TAG, "URL -> URI error");
+			} catch (IOException e) {
 				Log.e(TAG, "Connection error.", e);
 			}
 			return result;
@@ -196,7 +253,37 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		@Override
 		protected void onPostExecute(Boolean result) {
 			super.onPostExecute(result);
-			postSubmit(result);
+			if(result) {
+				postSubmit(Response.SUCCESS);
+			} else {
+				postSubmit(Response.FAIL);
+			}
+		}
+	}
+
+	// Ping the server, discard response and do nothing afterwards
+	private class ServerRequest extends AsyncTask<String, Void, Boolean> {
+		private static final String TAG = "Server Ping";
+
+		@Override
+		protected Boolean doInBackground(String... urls) {
+			assert(urls.length == 1);
+			HttpURLConnection urlConnection;
+			try {
+				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
+				// Add cookies to header
+				for (SerializedCookie cookie : mCookies) {
+					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
+				}
+				// Begin connection
+				urlConnection.connect();
+				// Close connection
+				urlConnection.disconnect();
+				return true;
+			} catch (IOException e) {
+				Log.e(TAG, "Connection error.", e);
+			}
+			return false;
 		}
 	}
 

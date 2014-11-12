@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+	<item android:id="@+id/context_signup"
+	      android:title="Sign up"
+	      android:orderInCategory="100"
+	      android:showAsAction="never" />
+
+	<item android:id="@+id/context_info"
+	      android:title="Info"
+	      android:orderInCategory="100"
+	      android:showAsAction="never" />
+
+	<item android:id="@+id/context_favorite"
+	      android:title="Favorite"
+	      android:orderInCategory="100"
+	      android:showAsAction="never" />
+</menu>

@@ -22,11 +22,11 @@ import java.util.ArrayList;
 public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implements Filterable
 {
 	// This is to hold all items without filtering
-	private ArrayList<EighthActivityItem> mItems;
-	private Bitmap ICON_INFO;
+	protected ArrayList<EighthActivityItem> mItems;
 	private Bitmap ICON_DASH;
 	private Bitmap ICON_LOCK;
 	private Bitmap ICON_STAR;
+	private Bitmap ICON_FAVE;
 
 	// View lookup cache
 	private static class ViewHolder {
@@ -41,10 +41,10 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 	public ActivityListAdapter(Context context, ArrayList<EighthActivityItem> items) {
 		super(context, 0, items);
 		mItems = new ArrayList<EighthActivityItem>(items);
-		ICON_INFO = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_info_white_48dp);
 		ICON_DASH = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_remove_circle_white_48dp);
 		ICON_LOCK = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_lock_circle_white_48dp);
 		ICON_STAR = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_stars_white_48dp);
+		ICON_FAVE = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_favorite_circle_white_48dp);
 	}
 
 	@Override
@@ -96,6 +96,9 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 			color = Color.parseColor("#FF5722");			// Deep orange
 			viewHolder.icon.setImageBitmap(ICON_LOCK);
 		} else if (item.isFavorite()) {
+			color = Color.parseColor("#E91E63");			// Pink
+			viewHolder.icon.setImageBitmap(ICON_FAVE);
+		} else if (item.isSpecial()) {
 			color = Color.parseColor("#FF9800");			// Orange
 			viewHolder.icon.setImageBitmap(ICON_STAR);
 		} else {
@@ -116,7 +119,10 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 		return convertView;
 	}
 
+	// Items are expected to be sorted - this may change later
 	protected void setListItems(ArrayList<EighthActivityItem> items) {
+		clear();
+		addAll(items);
 		mItems = items;
 		notifyDataSetChanged();
 	}

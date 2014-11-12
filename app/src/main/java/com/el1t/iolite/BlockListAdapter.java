@@ -25,6 +25,7 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 	// View lookup cache
 	private static class ViewHolder {
 		TextView blockDate;
+		TextView room;
 		TextView blockActivityName;
 		ImageView circle;
 		TextView letter;
@@ -46,6 +47,7 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 
 			// Save IDs inside ViewHolder and attach the ViewHolder to convertView
 			viewHolder.blockDate = (TextView) convertView.findViewById(R.id.blockDate);
+			viewHolder.room = (TextView) convertView.findViewById(R.id.room);
 			viewHolder.blockActivityName = (TextView) convertView.findViewById(R.id.blockActivityName);
 			viewHolder.circle = (ImageView) convertView.findViewById(R.id.circle);
 			viewHolder.letter = (TextView) convertView.findViewById(R.id.letter);
@@ -56,7 +58,13 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 
 		// Set fields
 		EighthBlockItem item = getItem(position);
+		ArrayList<Integer> rooms = item.getEighth().getBlockRooms();
 		viewHolder.blockDate.setText(item.getShortenedDisp());
+		// This is temporary
+		if(!rooms.isEmpty())
+			viewHolder.room.setText(String.valueOf(rooms.get(0)));
+		else
+			viewHolder.room.setText("");
 		viewHolder.blockActivityName.setText(item.getEighth().getName());
 
 		// Set color

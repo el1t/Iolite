@@ -39,7 +39,7 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 			mCookies = (ArrayList<SerializedCookie>) intent.getSerializableExtra("cookies");
 
 			// Check if fake information should be used
-			if (fake = intent.getBooleanExtra("fake", false)) {
+			if ((fake = intent.getBooleanExtra("fake", false)) || mCookies == null) {
 				Log.d(TAG, "Loading fake info");
 				// Pretend fake list was received
 				postRequest(getList());

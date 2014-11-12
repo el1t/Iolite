@@ -32,14 +32,16 @@
 				android:layout_height="match_parent"
 				android:id="@+id/circle"
 				android:layout_gravity="center"
-				android:src="@drawable/activity_letter"/>
+				android:src="@drawable/activity_letter"
+				tools:ignore="ContentDescription"/>
 
 			<ImageView
 				android:layout_width="48dp"
 				android:layout_height="48dp"
 				android:id="@+id/icon"
 				android:layout_gravity="center"
-				android:src="@drawable/activity_letter"/>
+				android:src="@drawable/activity_letter"
+				tools:ignore="ContentDescription"/>
 
 			<TextView
 				android:layout_width="match_parent"
@@ -58,12 +60,13 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"
 			android:orientation="vertical"
-			android:paddingLeft="16dp">
+			android:paddingLeft="@dimen/activity_horizontal_margin"
+			android:paddingStart="@dimen/activity_horizontal_margin">
 
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:textSize="20dp"
+				android:textSize="20sp"
 				android:includeFontPadding="false"
 				android:singleLine="true"
 				android:ellipsize="end"
@@ -74,7 +77,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginTop="2dp"
 				android:alpha=".87"
-				android:textSize="14dp"
+				android:textSize="14sp"
 				android:includeFontPadding="false"
 				android:ellipsize="end"
 				android:singleLine="true"

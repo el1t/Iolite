@@ -4,11 +4,17 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
+
+import com.el1t.iolite.SignupActivity.Response;
 
 import java.util.ArrayList;
 
@@ -20,10 +26,11 @@ public class SignupFragment extends Fragment
 	private final String TAG = "Signup Fragment";
 
 	private OnFragmentInteractionListener mListener;
-	private ActivityListAdapter mActivityListAdapter;
+	private ActivityListAdapter mAdapter;
 
 	public interface OnFragmentInteractionListener {
-		public void submit(int AID, int BID);
+		public void submit(EighthActivityItem item);
+		public void favorite(int AID, int BID);
 	}
 
 	public SignupFragment() { }
@@ -38,24 +45,64 @@ public class SignupFragment extends Fragment
 		final Bundle args = getArguments();
 		if (args != null && args.getSerializable("list") != null) {
 			Log.d(TAG, "Activity list received");
-			mActivityListAdapter = new ActivityListAdapter(getActivity(), (ArrayList<EighthActivityItem>) args.getSerializable("list"));
+			mAdapter = new ActivityListAdapter(getActivity(), (ArrayList<EighthActivityItem>) args.getSerializable("list"));
 		} else {
 			throw new IllegalArgumentException();
 		}
 
 		final ListView activityList = (ListView) rootView.findViewById(R.id.activityList);
-		activityList.setAdapter(mActivityListAdapter);
+		activityList.setAdapter(mAdapter);
 
 		// Submit activity selection on click
 		activityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
 				final EighthActivityItem item = (EighthActivityItem) parent.getItemAtPosition(position);
-				mListener.submit(item.getAID(), item.getBid());
+				mListener.submit(item);
 			}
 		});
 
+		// Display menu on long click
+		registerForContextMenu(activityList);
+
 		return rootView;
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+	                                ContextMenuInfo menuInfo) {
+		getActivity().getMenuInflater().inflate(R.menu.context_menu_signup, menu);
+		AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) menuInfo;
+		EighthActivityItem item = (EighthActivityItem) ((ListView) v).getItemAtPosition(acmi.position);
+		if(item.isFavorite()) {
+			menu.findItem(R.id.context_favorite).setTitle("Unfavorite");
+		}
+		if(item.isRestricted() || item.isCancelled() || item.isFull()) {
+			menu.findItem(R.id.context_signup).setEnabled(false);
+		}
+		super.onCreateContextMenu(menu, v, menuInfo);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		final EighthActivityItem activityItem = mAdapter.getItem(info.position);
+		switch (item.getItemId()) {
+			case R.id.context_signup:
+				mListener.submit(activityItem);
+				return true;
+			case R.id.context_info:
+				return true;
+			case R.id.context_favorite:
+				mListener.favorite(activityItem.getAID(), activityItem.getBid());
+				// Broken, doesn't sort
+//				activityItem.changeFavorite();
+//				mAdapter.mItems.get(info.position).changeFavorite();
+//				mAdapter.notifyDataSetChanged();
+				return true;
+			default:
+				return super.onContextItemSelected(item);
+		}
 	}
 
 	@Override
@@ -76,12 +123,12 @@ public class SignupFragment extends Fragment
 	public void onStop() {
 		super.onPause();
 		// This garbage-collects for Android to prevent frame skips
-		mActivityListAdapter.clear();
+		mAdapter.clear();
 	}
 
 	@Override
 	public void onStart() {
 		super.onResume();
-		mActivityListAdapter.restore();
+		mAdapter.restore();
 	}
 }

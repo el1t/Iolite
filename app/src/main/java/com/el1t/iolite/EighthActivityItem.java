@@ -192,4 +192,12 @@ public class EighthActivityItem implements Serializable
 	public String getFirstChar() {
 		return firstChar;
 	}
+
+	public boolean isFull() {
+		return memberCount >= capacity;
+	}
+
+	public void changeFavorite() {
+		favorite = !favorite;
+	}
 }
