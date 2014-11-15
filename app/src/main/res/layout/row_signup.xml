@@ -70,7 +70,7 @@
 				android:includeFontPadding="false"
 				android:singleLine="true"
 				android:ellipsize="end"
-				android:id="@+id/activityName"/>
+				android:id="@+id/title"/>
 
 			<TextView
 				android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
 				android:includeFontPadding="false"
 				android:ellipsize="end"
 				android:singleLine="true"
-				android:id="@+id/activityDescription"/>
+				android:id="@+id/description"/>
 		</LinearLayout>
 	</LinearLayout>
 </FrameLayout>

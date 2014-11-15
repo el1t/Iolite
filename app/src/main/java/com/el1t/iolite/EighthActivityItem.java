@@ -32,6 +32,8 @@ public class EighthActivityItem implements Serializable
 	private int capacity;
 	private String firstChar;
 
+	private boolean header;
+
 	public EighthActivityItem(int AID, String name, String description, boolean restricted, boolean presign, boolean oneaday,
 	                          boolean bothblocks, boolean sticky, boolean special, boolean calendar, boolean roomChanged, ArrayList<Integer> blockSponsors,
 	                          ArrayList<Integer> blockRooms, String blockRoomString, int bid, boolean cancelled, String comment, String advertisement,
@@ -83,6 +85,22 @@ public class EighthActivityItem implements Serializable
 		this.advertisement = advertisement.trim();
 		this.attendanceTaken = attendanceTaken;
 		firstCharHelper();
+	}
+
+	public EighthActivityItem(String name, ActivityListAdapter.ActivityHeaderType headerType) {
+		this.header = true;
+		this.name = name;
+		switch(headerType) {
+			case FAVORITE:
+				favorite = true;
+				break;
+			case SPECIAL:
+				special = true;
+				break;
+			case GENERAL:
+			default:
+				break;
+		}
 	}
 
 	// Get the first letter to display
@@ -197,7 +215,11 @@ public class EighthActivityItem implements Serializable
 		return memberCount >= capacity;
 	}
 
-	public void changeFavorite() {
-		favorite = !favorite;
+	public boolean isHeader() {
+		return header;
+	}
+
+	public boolean changeFavorite() {
+		return favorite = !favorite;
 	}
 }

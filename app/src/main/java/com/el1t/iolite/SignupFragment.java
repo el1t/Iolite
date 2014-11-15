@@ -30,7 +30,7 @@ public class SignupFragment extends Fragment
 
 	public interface OnFragmentInteractionListener {
 		public void submit(EighthActivityItem item);
-		public void favorite(int AID, int BID);
+		public void favorite(int AID, int BID, boolean status);
 	}
 
 	public SignupFragment() { }
@@ -58,7 +58,9 @@ public class SignupFragment extends Fragment
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
 				final EighthActivityItem item = (EighthActivityItem) parent.getItemAtPosition(position);
-				mListener.submit(item);
+				if (!item.isHeader()) {
+					mListener.submit(item);
+				}
 			}
 		});
 
@@ -71,16 +73,18 @@ public class SignupFragment extends Fragment
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 	                                ContextMenuInfo menuInfo) {
-		getActivity().getMenuInflater().inflate(R.menu.context_menu_signup, menu);
 		AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) menuInfo;
 		EighthActivityItem item = (EighthActivityItem) ((ListView) v).getItemAtPosition(acmi.position);
-		if(item.isFavorite()) {
-			menu.findItem(R.id.context_favorite).setTitle("Unfavorite");
+		if (!item.isHeader()) {
+			getActivity().getMenuInflater().inflate(R.menu.context_menu_signup, menu);
+			if (item.isFavorite()) {
+				menu.findItem(R.id.context_favorite).setTitle("Unfavorite");
+			}
+			if (item.isRestricted() || item.isCancelled() || item.isFull() || item.isAttendanceTaken()) {
+				menu.findItem(R.id.context_signup).setEnabled(false);
+			}
+			super.onCreateContextMenu(menu, v, menuInfo);
 		}
-		if(item.isRestricted() || item.isCancelled() || item.isFull()) {
-			menu.findItem(R.id.context_signup).setEnabled(false);
-		}
-		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 
 	@Override
@@ -94,11 +98,8 @@ public class SignupFragment extends Fragment
 			case R.id.context_info:
 				return true;
 			case R.id.context_favorite:
-				mListener.favorite(activityItem.getAID(), activityItem.getBid());
-				// Broken, doesn't sort
-//				activityItem.changeFavorite();
-//				mAdapter.mItems.get(info.position).changeFavorite();
-//				mAdapter.notifyDataSetChanged();
+				mListener.favorite(activityItem.getAID(), activityItem.getBid(), mAdapter.mItems.get(info.position).changeFavorite());
+				mAdapter.sort();
 				return true;
 			default:
 				return super.onContextItemSelected(item);

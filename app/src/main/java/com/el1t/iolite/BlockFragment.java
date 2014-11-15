@@ -20,7 +20,6 @@ public class BlockFragment extends Fragment {
 
 	private OnFragmentInteractionListener mListener;
 	private BlockListAdapter mBlockListAdapter;
-	private ListView blockList;
 	private ArrayList<EighthBlockItem> mItems;
 
 	public interface OnFragmentInteractionListener {
@@ -45,7 +44,7 @@ public class BlockFragment extends Fragment {
 			throw new IllegalArgumentException();
 		}
 
-		blockList = (ListView) rootView.findViewById(R.id.blockList);
+		final ListView blockList = (ListView) rootView.findViewById(R.id.blockList);
 		blockList.setAdapter(mBlockListAdapter);
 
 		// Select block selection on click
@@ -53,7 +52,9 @@ public class BlockFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
 				final EighthBlockItem item = (EighthBlockItem) parent.getItemAtPosition(position);
-				mListener.select(item.getBID());
+				if (!item.isHeader()) {
+					mListener.select(item.getBID());
+				}
 			}
 		});
 

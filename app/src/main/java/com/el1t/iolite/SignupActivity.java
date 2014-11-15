@@ -37,6 +37,8 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 	private SignupFragment mSignupFragment;
 	private ArrayList<SerializedCookie> mCookies;
+	private int BID;
+	private ArrayList<AsyncTask> mTasks;
 
 	public enum Response {
 		SUCCESS, CAPACITY, RESTRICTED, CANCELLED, PRESIGN, ATTENDANCE_TAKEN, FAIL
@@ -47,9 +49,11 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_signup);
 		Intent intent = getIntent();
+		BID = intent.getIntExtra("BID", -1);
 
-		// Check if restoring from previously destroyed instance
-		if (savedInstanceState == null) {
+		// Check if restoring from previously destroyed instance that matches the BID
+		if (savedInstanceState == null || BID != savedInstanceState.getInt("BID")) {
+			mTasks = new ArrayList<AsyncTask>();
 			// Check if fake information should be used
 			if (intent.getBooleanExtra("fake", false)) {
 				Log.d(TAG, "Loading fake info");
@@ -63,8 +67,12 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 				// Retrieve cookies from previous activity
 				mCookies = (ArrayList<SerializedCookie>) intent.getSerializableExtra("cookies");
 				// Retrieve list for bid using cookies
-				new ActivityListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_activities/" + intent.getStringExtra("BID"));
+				mTasks.add(new ActivityListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_activities/" + BID));
 			}
+		} else {
+			mCookies = (ArrayList<SerializedCookie>) savedInstanceState.getSerializable("cookies");
+			mSignupFragment = (SignupFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
+//			postRequest((ArrayList<EighthActivityItem>) savedInstanceState.getSerializable("activities"));
 		}
 
 		// Use material design toolbar
@@ -73,6 +81,24 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 			setSupportActionBar(toolbar);
 		}
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putSerializable("cookies", mCookies);
+//		savedInstanceState.putSerializable("activities", mSignupFragment.getList());
+		savedInstanceState.putInt("BID", BID);
+		getFragmentManager().putFragment(savedInstanceState, "fragment", mSignupFragment);
+	}
+
+	@Override
+	public void onDestroy() {
+		// Try to cancel tasks when destroying
+		for (AsyncTask a : mTasks) {
+			a.cancel(true);
+		}
+		super.onDestroy();
 	}
 
 //	@Override
@@ -94,7 +120,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		} else if (item.isAttendanceTaken()) {
 			postSubmit(Response.ATTENDANCE_TAKEN);
 		} else {
-			new SignupRequest(item.getAID(), item.getBid()).execute("https://iodine.tjhsst.edu/api/eighth/signup_activity");
+			mTasks.add(new SignupRequest(item.getAID(), item.getBid()).execute("https://iodine.tjhsst.edu/api/eighth/signup_activity"));
 		}
 	}
 
@@ -136,8 +162,6 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 	// Do after getting list of activities
 	private void postRequest(ArrayList<EighthActivityItem> result) {
-		// Sort the array
-		Collections.sort(result, new DefaultSortComp());
 		// Create the content view
 		mSignupFragment = new SignupFragment();
 		// Add ArrayList to the ListView in BlockFragment
@@ -151,10 +175,16 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 	}
 
 	// Favorite an activity
-	public void favorite(int AID, int BID) {
+	public void favorite(int AID, int BID, boolean status) {
 		// Note: the server uses the UID field as the AID in its API
 		// Sending the BID is useless, but it is required by the server
-		new ServerRequest().execute("https://iodine.tjhsst.edu/eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID);
+		mTasks.add(new ServerRequest().execute("https://iodine.tjhsst.edu/eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID));
+		if (status) {
+			Toast.makeText(getApplicationContext(), "Favorited", Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(getApplicationContext(), "Unfavorited", Toast.LENGTH_SHORT).show();
+		}
+		Log.d(TAG, "Favorited AID " + AID);
 	}
 
 	// Get a fake list of activities for debugging
@@ -174,7 +204,6 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 		@Override
 		protected ArrayList<EighthActivityItem> doInBackground(String... urls) {
-			assert(urls.length == 1);
 			HttpURLConnection urlConnection;
 			ArrayList<EighthActivityItem> response = null;
 			try {
@@ -200,6 +229,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		@Override
 		protected void onPostExecute(ArrayList<EighthActivityItem> result) {
 			super.onPostExecute(result);
+			mTasks.remove(this);
 			// Add ArrayList to the ListView in SignupFragment
 			postRequest(result);
 		}
@@ -218,7 +248,6 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 		@Override
 		protected Boolean doInBackground(String... urls) {
-			assert(urls.length == 1);
 			DefaultHttpClient client = new DefaultHttpClient();
 			boolean result = false;
 			try {
@@ -253,6 +282,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		@Override
 		protected void onPostExecute(Boolean result) {
 			super.onPostExecute(result);
+			mTasks.remove(this);
 			if(result) {
 				postSubmit(Response.SUCCESS);
 			} else {
@@ -267,7 +297,6 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 		@Override
 		protected Boolean doInBackground(String... urls) {
-			assert(urls.length == 1);
 			HttpURLConnection urlConnection;
 			try {
 				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
@@ -277,6 +306,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 				}
 				// Begin connection
 				urlConnection.connect();
+				urlConnection.getInputStream();
 				// Close connection
 				urlConnection.disconnect();
 				return true;
@@ -285,28 +315,10 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 			}
 			return false;
 		}
-	}
 
-	// Sort by favorites, alphabetically
-	private class DefaultSortComp implements Comparator<EighthActivityItem>
-	{
 		@Override
-		public int compare(EighthActivityItem e1, EighthActivityItem e2) {
-			// Compare by name if both or neither are favorites, or return the favorite
-			if (e1.isFavorite()) {
-				if (e2.isFavorite())
-					return e1.getName().compareToIgnoreCase(e2.getName());
-				return -1;
-			}
-			if (e2.isFavorite())
-				return 1;
-
-			// Check for special
-			if (!(e1.isSpecial() ^ e2.isSpecial()))
-				return e1.getName().compareToIgnoreCase(e2.getName());
-			if (e1.isSpecial())
-				return -1;
-			return 1;
+		protected void onPostExecute(Boolean result) {
+			mTasks.remove(this);
 		}
 	}
 }

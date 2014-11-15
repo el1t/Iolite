@@ -53,7 +53,7 @@
 				android:singleLine="true"
 				android:textSize="20sp"
 				android:includeFontPadding="false"
-				android:id="@+id/blockDate"
+				android:id="@+id/title"
 				android:layout_weight="1"/>
 			<TextView
 				android:layout_width="wrap_content"
@@ -72,6 +72,6 @@
 			android:singleLine="true"
 			android:includeFontPadding="false"
 			android:fontFamily="sans-serif-light"
-			android:id="@+id/blockActivityName"/>
+			android:id="@+id/description"/>
 	</LinearLayout>
 </LinearLayout>

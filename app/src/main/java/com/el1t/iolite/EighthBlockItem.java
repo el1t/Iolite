@@ -22,6 +22,7 @@ public class EighthBlockItem implements Serializable
 	private boolean locked;
 	private String disp;
 	private DateFormat mDateFormat = new SimpleDateFormat("EEEE, MMMM d");
+	private boolean header;
 
 	public EighthBlockItem(EighthActivityItem activity, Date date, int BID, String type, boolean locked, String disp) {
 		this.activity = activity;
@@ -30,6 +31,12 @@ public class EighthBlockItem implements Serializable
 		this.type = type;
 		this.locked = locked;
 		this.disp = disp;
+	}
+
+	// Constructor for a header item
+	public EighthBlockItem(Date date) {
+		header = true;
+		this.date = date;
 	}
 
 	public EighthActivityItem getEighth() {
@@ -54,6 +61,10 @@ public class EighthBlockItem implements Serializable
 
 	public String getDisp() {
 		return disp;
+	}
+
+	public boolean isHeader() {
+		return header;
 	}
 
 	public Spannable getShortenedDisp() {

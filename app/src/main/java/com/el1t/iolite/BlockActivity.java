@@ -44,6 +44,10 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 				// Pretend fake list was received
 				postRequest(getList());
 			}
+		} else {
+			fake = savedInstanceState.getBoolean("fake");
+			mCookies = (ArrayList<SerializedCookie>) savedInstanceState.getSerializable("cookies");
+			mBlockFragment = (BlockFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
 		}
 
 		// Use material design toolbar
@@ -62,11 +66,19 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 		}
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putSerializable("cookies", mCookies);
+		savedInstanceState.putSerializable("fake", fake);
+		getFragmentManager().putFragment(savedInstanceState, "fragment", mBlockFragment);
+	}
+
 	// Select a BID to display activities for
 	public void select(int BID) {
 		// Send data to SignupActivity
 		Intent intent = new Intent(this, SignupActivity.class);
-		intent.putExtra("BID", Integer.toString(BID));
+		intent.putExtra("BID", BID);
 		intent.putExtra("cookies", mCookies);
 		intent.putExtra("fake", fake);
 		startActivity(intent);
@@ -83,10 +95,8 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 		return new ArrayList<EighthBlockItem>();
 	}
 
+	// This should not be called if items are fake
 	protected void refresh() {
-		// This should not be called if items are fake
-		assert(!fake);
-
 		// Set loading fragment, if necessary
 		if(mBlockFragment == null) {
 			getFragmentManager().beginTransaction()
@@ -99,8 +109,6 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 	}
 
 	private void postRequest(ArrayList<EighthBlockItem> result) {
-		// Sort the array by BID, same as date (for now)
-		Collections.sort(result, new BIDSortComp());
 		// Check if creating a new fragment is necessary
 		// This should probably be done in onCreate, without a bundle
 		if (mBlockFragment == null) {
@@ -125,7 +133,6 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 
 		@Override
 		protected ArrayList<EighthBlockItem> doInBackground(String... urls) {
-			assert(urls.length == 1);
 
 			HttpURLConnection urlConnection;
 			ArrayList<EighthBlockItem> response = null;
@@ -153,16 +160,6 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 		protected void onPostExecute(ArrayList<EighthBlockItem> result) {
 			super.onPostExecute(result);
 			postRequest(result);
-		}
-	}
-
-	// Sort by BID (which also happens to sort by date)
-	private class BIDSortComp implements Comparator<EighthBlockItem>
-	{
-		@Override
-		public int compare(EighthBlockItem e1, EighthBlockItem e2) {
-			// Double, because Integer does not have compare prior to Java 7
-			return Double.compare(e1.getBID(), e2.getBID());
 		}
 	}
 }
