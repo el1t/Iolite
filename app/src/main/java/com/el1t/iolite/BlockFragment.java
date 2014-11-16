@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by El1t on 10/24/14.
  */
 public class BlockFragment extends Fragment {
-	private final String TAG = "Block Fragment";
+	private static final String TAG = "Block Fragment";
 
 	private OnFragmentInteractionListener mListener;
 	private BlockListAdapter mBlockListAdapter;
@@ -77,18 +77,5 @@ public class BlockFragment extends Fragment {
 
 	protected void setListItems(ArrayList<EighthBlockItem> items) {
 		mBlockListAdapter.setListItems(items);
-	}
-
-	@Override
-	public void onStop() {
-		super.onPause();
-		// This garbage-collects for Android to prevent frame skips
-		mBlockListAdapter.clear();
-	}
-
-	@Override
-	public void onStart() {
-		super.onResume();
-		mBlockListAdapter.restore();
 	}
 }

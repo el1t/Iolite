@@ -21,7 +21,7 @@ import java.util.Comparator;
 
 public class BlockActivity extends ActionBarActivity implements BlockFragment.OnFragmentInteractionListener
 {
-	private final String TAG = "Block Activity";
+	private static final String TAG = "Block Activity";
 
 	private BlockFragment mBlockFragment;
 	private ArrayList<SerializedCookie> mCookies;

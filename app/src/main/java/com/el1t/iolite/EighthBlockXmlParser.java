@@ -68,12 +68,7 @@ public class EighthBlockXmlParser
 	private static EighthBlockItem readBlock(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
 		parser.require(XmlPullParser.START_TAG, null, "block");
 
-		EighthActivityItem activity = null;
-		Date date = null;
-		int BID = 0;
-		String type = null;
-		boolean locked = false;
-		String disp = null;
+		final EighthBlockItem temp = new EighthBlockItem();
 
 		while (parser.next() != XmlPullParser.END_TAG) {
 			// Skip whitespace until a tag is reached
@@ -82,25 +77,20 @@ public class EighthBlockXmlParser
 			}
 			String tagName = parser.getName();
 			if (tagName.equals("activity")) {
-				activity = readActivity(parser);
+				readActivity(parser, temp.getEighth());
 			} else if (tagName.equals("date")) {
-				date = readDate(parser, "date");
+				temp.setDate(readDate(parser, "date"));
 			} else if (tagName.equals("bid")) {
-				BID = readInt(parser, "bid");
+				temp.setBID(readInt(parser, "bid"));
 			} else if (tagName.equals("type")) {
-				type = readString(parser, "type");
+				temp.setBlock(readString(parser, "type"));
 			} else if (tagName.equals("locked")) {
-				locked = readBool(parser, "locked");
-			} else if (tagName.equals("disp")) {
-				disp = readString(parser, "disp");
+				temp.setLocked(readBool(parser, "locked"));
 			} else {
 				skip(parser);
 			}
 		}
-		if (activity == null) {
-			throw new NullPointerException();
-		}
-		return new EighthBlockItem(activity, date, BID, type, locked, disp);
+		return temp;
 	}
 
 	private static String readString(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
@@ -159,26 +149,9 @@ public class EighthBlockXmlParser
 	}
 
 	// A different method for parsing the inexplicably different tags inside the block xml
-	public static EighthActivityItem readActivity(XmlPullParser parser) throws XmlPullParserException, IOException {
+	public static EighthActivityItem readActivity(
+			XmlPullParser parser, EighthActivityItem temp) throws XmlPullParserException, IOException {
 		parser.require(XmlPullParser.START_TAG, null, "activity");
-
-		int AID = 0;
-		String name = null;
-		String description = null;
-		boolean restricted = false;
-		boolean presign = false;
-		boolean oneaday = false;
-		boolean bothblocks = false;
-		boolean sticky = false;
-		boolean special = false;
-		boolean calendar = false;
-		ArrayList<Integer> blockSponsors = null;
-		ArrayList<Integer> blockRooms = null;
-		int BID = 0;
-		boolean cancelled = false;
-		String comment = null;
-		String advertisement = null;
-		boolean attendanceTaken = false;
 
 		while (parser.next() != XmlPullParser.END_TAG) {
 			// Skip whitespace until a tag is reached
@@ -187,51 +160,38 @@ public class EighthBlockXmlParser
 			}
 			String tagName = parser.getName();
 			if (tagName.equals("aid")) {
-				AID = readInt(parser, "aid");
+				temp.setAID(readInt(parser, "aid"));
 			} else if (tagName.equals("name")) {
-				name = readString(parser, "name");
+				temp.setName(readString(parser, "name"));
 			} else if (tagName.equals("description")) {
-				description = readString(parser, "description");
+				temp.setDescription(readString(parser, "description"));
 			} else if (tagName.equals("restricted")) {
-				restricted = readBool(parser, "restricted");
+				temp.setRestricted(readBool(parser, "restricted"));
 			} else if (tagName.equals("presign")) {
-				presign = readBool(parser, "presign");
+				temp.setPresign(readBool(parser, "presign"));
 			} else if (tagName.equals("oneaday")) {
-				oneaday = readBool(parser, "oneaday");
+				temp.setOneaday(readBool(parser, "oneaday"));
 			} else if (tagName.equals("bothblocks")) {
-				bothblocks = readBool(parser, "bothblocks");
+				temp.setBothblocks(readBool(parser, "bothblocks"));
 			} else if (tagName.equals("sticky")) {
-				sticky = readBool(parser, "sticky");
+				temp.setSticky(readBool(parser, "sticky"));
 			} else if (tagName.equals("special")) {
-				special = readBool(parser, "special");
+				temp.setSpecial(readBool(parser, "special"));
 			} else if (tagName.equals("calendar")) {
-				calendar = readBool(parser, "calendar");
-			} else if (tagName.equals("block_sponsors")) {
-				blockSponsors = EighthActivityXmlParser.readNestedInts(parser, "block_sponsors");
-			} else if (tagName.equals("block_rooms")) {
-				blockRooms = EighthActivityXmlParser.readNestedInts(parser, "block_rooms");
+				temp.setCalendar(readBool(parser, "calendar"));
 			} else if (tagName.equals("bid")) {
-				BID = readInt(parser, "bid");
+				temp.setBID(readInt(parser, "bid"));
 			} else if (tagName.equals("cancelled")) {
-				cancelled = readBool(parser, "cancelled");
-			} else if (tagName.equals("comment")) {
-				comment = readString(parser, "comment");
-			} else if (tagName.equals("advertisement")) {
-				advertisement = readString(parser, "advertisement");
+				temp.setCancelled(readBool(parser, "cancelled"));
 			} else if (tagName.equals("attendancetaken")) {
-				attendanceTaken = readBool(parser, "attendancetaken");
+				temp.setAttendanceTaken(readBool(parser, "attendancetaken"));
 			} else {
 				skip(parser);
 			}
 		}
-		if (AID * BID == 0) {
-			Log.e(TAG, "Malformed integer in fields for activity " + name);
-		}
 		parser.require(XmlPullParser.END_TAG, null, "activity");
 
-		return new EighthActivityItem(AID, name, description, restricted, presign, oneaday,
-				bothblocks, sticky, special, calendar, blockSponsors, blockRooms, BID, cancelled, comment,
-				advertisement, attendanceTaken);
+		return temp;
 	}
 
 	private static void skip(XmlPullParser parser) throws XmlPullParserException, IOException {

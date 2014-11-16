@@ -115,28 +115,7 @@ public class EighthActivityXmlParser
 	public static EighthActivityItem readActivity(XmlPullParser parser) throws XmlPullParserException, IOException {
 		parser.require(XmlPullParser.START_TAG, null, "activity");
 
-		int AID = 0;
-		String name = null;
-		String description = null;
-		boolean restricted = false;
-		boolean presign = false;
-		boolean oneaday = false;
-		boolean bothblocks = false;
-		boolean sticky = false;
-		boolean special = false;
-		boolean calendar = false;
-		boolean roomChanged = false;
-		ArrayList<Integer> blockSponsors = null;
-		ArrayList<Integer> blockRooms = null;
-		String blockRoomString = null;
-		int BID = 0;
-		boolean cancelled = false;
-		String comment = null;
-		String advertisement = null;
-		boolean attendanceTaken = false;
-		boolean favorite = false;
-		int memberCount = 0;
-		int capacity = 0;
+		final EighthActivityItem temp = new EighthActivityItem();
 
 		while (parser.next() != XmlPullParser.END_TAG) {
 			// Skip whitespace until a tag is reached
@@ -146,63 +125,48 @@ public class EighthActivityXmlParser
 			String tagName = parser.getName();
 
 			if (tagName.equals("aid")) {
-				AID = readInt(parser, "aid");
+				temp.setAID(readInt(parser, "aid"));
 			} else if (tagName.equals("name")) {
-				name = readString(parser, "name");
+				temp.setName(readString(parser, "name"));
 			} else if (tagName.equals("description")) {
-				description = readString(parser, "description");
+				temp.setDescription(readString(parser, "description"));
 			} else if (tagName.equals("restricted")) {
-				restricted = readBool(parser, "restricted");
+				temp.setRestricted(readBool(parser, "restricted"));
 			} else if (tagName.equals("presign")) {
-				presign = readBool(parser, "presign");
+				temp.setPresign(readBool(parser, "presign"));
 			} else if (tagName.equals("oneaday")) {
-				oneaday = readBool(parser, "oneaday");
+				temp.setOneaday(readBool(parser, "oneaday"));
 			} else if (tagName.equals("bothblocks")) {
-				bothblocks = readBool(parser, "bothblocks");
+				temp.setBothblocks(readBool(parser, "bothblocks"));
 			} else if (tagName.equals("sticky")) {
-				sticky = readBool(parser, "sticky");
+				temp.setSticky(readBool(parser, "sticky"));
 			} else if (tagName.equals("special")) {
-				special = readBool(parser, "special");
+				temp.setSpecial(readBool(parser, "special"));
 			} else if (tagName.equals("calendar")) {
-				calendar = readBool(parser, "calendar");
+				temp.setCalendar(readBool(parser, "calendar"));
 			} else if (tagName.equals("room_changed")) {
-				roomChanged = readBool(parser, "room_changed");
-			} else if (tagName.equals("block_sponsor")) {
-				blockSponsors = readNestedInts(parser, "block_sponsor");
-			} else if (tagName.equals("block_room")) {
-				blockRooms = readNestedInts(parser, "block_room");
+				temp.setRoomChanged(readBool(parser, "room_changed"));
 			} else if (tagName.equals("block_rooms_comma")) {
-				blockRoomString = readString(parser, "block_rooms_comma");
+				temp.setBlockRoomString(readString(parser, "block_rooms_comma"));
 			} else if (tagName.equals("bid")) {
-				BID = readInt(parser, "bid");
+				temp.setBID(readInt(parser, "bid"));
 			} else if (tagName.equals("cancelled")) {
-				cancelled = readBool(parser, "cancelled");
-			} else if (tagName.equals("comment")) {
-				comment = readString(parser, "comment");
-			} else if (tagName.equals("advertisement")) {
-				advertisement = readString(parser, "advertisement");
+				temp.setCancelled(readBool(parser, "cancelled"));
 			} else if (tagName.equals("attendancetaken")) {
-				attendanceTaken = readBool(parser, "attendancetaken");
+				temp.setAttendanceTaken(readBool(parser, "attendancetaken"));
 			} else if (tagName.equals("favorite")) {
-				favorite = readBool(parser, "favorite");
+				temp.setFavorite(readBool(parser, "favorite"));
 			} else if (tagName.equals("member_count")) {
-				memberCount = readInt(parser, "member_count");
+				temp.setMemberCount(readInt(parser, "member_count"));
 			} else if (tagName.equals("capacity")) {
-				capacity = readInt(parser, "capacity");
+				temp.setCapacity(readInt(parser, "capacity"));
 			} else {
 				skip(parser);
 			}
 		}
-		if (AID * BID == 0) {
-			Log.e(TAG, "Malformed integer in fields for activity " + name);
-		}
 		parser.require(XmlPullParser.END_TAG, null, "activity");
 
-		return new EighthActivityItem(AID, name, description, restricted, presign, oneaday,
-				bothblocks, sticky, special, calendar, roomChanged, blockSponsors,
-				blockRooms, blockRoomString, BID, cancelled, comment,
-				advertisement, attendanceTaken, favorite, memberCount,
-				capacity);
+		return temp;
 	}
 
 	protected static String readString(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {

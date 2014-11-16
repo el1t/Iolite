@@ -14,8 +14,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 
-import com.el1t.iolite.SignupActivity.Response;
-
 import java.util.ArrayList;
 
 /**
@@ -23,7 +21,7 @@ import java.util.ArrayList;
  */
 public class SignupFragment extends Fragment
 {
-	private final String TAG = "Signup Fragment";
+	private static final String TAG = "Signup Fragment";
 
 	private OnFragmentInteractionListener mListener;
 	private ActivityListAdapter mAdapter;
@@ -98,7 +96,7 @@ public class SignupFragment extends Fragment
 			case R.id.context_info:
 				return true;
 			case R.id.context_favorite:
-				mListener.favorite(activityItem.getAID(), activityItem.getBid(), mAdapter.mItems.get(info.position).changeFavorite());
+				mListener.favorite(activityItem.getAID(), activityItem.getBID(), mAdapter.mItems.get(info.position).changeFavorite());
 				mAdapter.sort();
 				return true;
 			default:

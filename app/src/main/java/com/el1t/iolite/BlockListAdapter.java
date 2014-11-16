@@ -75,12 +75,8 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 			viewHolder.title.setText(item.getShortenedDisp());
 		} else {
 			viewHolder.title.setText(item.getEighth().getName());
-			final ArrayList<Integer> rooms = item.getEighth().getBlockRooms();
 			// TODO: replace with useful room number
-			if (!rooms.isEmpty())
-				viewHolder.room.setText(String.valueOf(rooms.get(0)));
-			else
-				viewHolder.room.setText("");
+			// viewHolder.room.setText();
 			viewHolder.description.setText(item.getEighth().getDescription());
 
 			// Set color
@@ -136,7 +132,8 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 		if (getCount() > 0) {
 			Date date = getItem(0).getDate();
 			insert(new EighthBlockItem(date), 0);
-			for (int i = 1; i < getCount(); i++) {
+			int count = getCount();
+			for (int i = 1; i < count; i++) {
 				item = getItem(i);
 				if (!item.getDate().equals(date)) {
 					date = item.getDate();
@@ -147,18 +144,8 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 	}
 
 	protected void setListItems(ArrayList<EighthBlockItem> items) {
-		clear();
-		addAll(items);
 		mItems = items;
-		notifyDataSetChanged();
-	}
-
-	protected void restore() {
-		if(getCount() == 0 && mItems != null) {
-			addAll(mItems);
-			addHeaders();
-			notifyDataSetChanged();
-		}
+		sort();
 	}
 
 	// Sort by BID (which also happens to sort by date)

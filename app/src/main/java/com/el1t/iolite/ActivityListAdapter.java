@@ -173,7 +173,8 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 	private void addHeaders() {
 		ActivityHeaderType index = ActivityHeaderType.FAVORITE;
 		EighthActivityItem item;
-		for (int i = 0; i < this.getCount(); i++) {
+		int count = getCount();
+		for (int i = 0; i < count; i++) {
 			item = getItem(i);
 			switch (index) {
 				case FAVORITE:
@@ -181,12 +182,19 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 						insert(headers.get(index.ordinal()), i);
 						index = ActivityHeaderType.SPECIAL;
 						continue;
+					} else {
+						index = ActivityHeaderType.SPECIAL;
 					}
 					break;
 				case SPECIAL:
-					if (item.isSpecial() && !item.isFavorite()) {
-						insert(headers.get(index.ordinal()), i);
-						index = ActivityHeaderType.GENERAL;
+					if (!item.isFavorite()) {
+						if (item.isSpecial()) {
+							insert(headers.get(index.ordinal()), i);
+							index = ActivityHeaderType.GENERAL;
+						} else {
+							// Skip if no special activities
+							index = ActivityHeaderType.GENERAL;
+						}
 						continue;
 					}
 					break;

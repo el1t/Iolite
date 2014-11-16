@@ -15,52 +15,63 @@ import java.util.Date;
  */
 public class EighthBlockItem implements Serializable
 {
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEEE, MMMM d");
 	private EighthActivityItem activity;
 	private Date date;
 	private int BID;
 	private String type;
 	private boolean locked;
-	private String disp;
-	private DateFormat mDateFormat = new SimpleDateFormat("EEEE, MMMM d");
 	private boolean header;
 
-	public EighthBlockItem(EighthActivityItem activity, Date date, int BID, String type, boolean locked, String disp) {
-		this.activity = activity;
-		this.date = date;
-		this.BID = BID;
-		this.type = type;
-		this.locked = locked;
-		this.disp = disp;
+	public EighthBlockItem() {
+		activity = new EighthActivityItem();
+		date = new Date();
+		type = "";
 	}
 
 	// Constructor for a header item
 	public EighthBlockItem(Date date) {
 		header = true;
 		this.date = date;
+		type = "";
 	}
 
 	public EighthActivityItem getEighth() {
 		return activity;
 	}
 
+	// No setter for ActivityItem - use setters for inner item
+
 	public Date getDate() {
 		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public int getBID() {
 		return BID;
 	}
 
+	public void setBID(int BID) {
+		this.BID = BID;
+	}
+
 	public String getBlock() {
 		return type;
+	}
+
+	public void setBlock(String type) {
+		this.type = type;
 	}
 
 	public boolean isLocked() {
 		return locked;
 	}
 
-	public String getDisp() {
-		return disp;
+	public void setLocked(boolean locked) {
+		this.locked = locked;
 	}
 
 	public boolean isHeader() {
@@ -69,7 +80,7 @@ public class EighthBlockItem implements Serializable
 
 	public Spannable getShortenedDisp() {
 		// Add postfix
-		String str = mDateFormat.format(date);
+		String str = DATE_FORMAT.format(date);
 		switch(str.charAt(str.length() - 1)) {
 			case '1':
 				str += "st";

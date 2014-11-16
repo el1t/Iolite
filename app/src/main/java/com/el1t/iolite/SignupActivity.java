@@ -24,8 +24,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -33,7 +31,7 @@ import java.util.List;
  */
 public class SignupActivity extends ActionBarActivity implements SignupFragment.OnFragmentInteractionListener
 {
-	private final String TAG = "Signup Activity";
+	private static final String TAG = "Signup Activity";
 
 	private SignupFragment mSignupFragment;
 	private ArrayList<SerializedCookie> mCookies;
@@ -120,7 +118,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		} else if (item.isAttendanceTaken()) {
 			postSubmit(Response.ATTENDANCE_TAKEN);
 		} else {
-			mTasks.add(new SignupRequest(item.getAID(), item.getBid()).execute("https://iodine.tjhsst.edu/api/eighth/signup_activity"));
+			mTasks.add(new SignupRequest(item.getAID(), item.getBID()).execute("https://iodine.tjhsst.edu/api/eighth/signup_activity"));
 		}
 	}
 

@@ -34,8 +34,8 @@ import java.util.List;
 
 public class LoginActivity extends ActionBarActivity implements LoginFragment.OnFragmentInteractionListener
 {
-	private final String FAKE_LOGIN = "fake";
-	private final String TAG = "Login Activity";
+	private static final String FAKE_LOGIN = "fake";
+	private static final String TAG = "Login Activity";
 
 	private LoginFragment mLoginFragment;
 	private String login_username;
