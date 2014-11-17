@@ -20,7 +20,7 @@ public class EighthActivityItem implements Serializable, Parcelable
 	private boolean sticky;
 	private boolean special;
 	private boolean calendar;
-	private boolean roomChanged;;
+	private boolean roomChanged;
 	private String blockRoomString;
 	private int BID;
 	private boolean cancelled;

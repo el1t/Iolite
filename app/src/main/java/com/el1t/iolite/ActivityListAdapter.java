@@ -24,15 +24,15 @@ import java.util.Comparator;
 public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implements Filterable
 {
 	// This is to hold all items without filtering
-	protected ArrayList<EighthActivityItem> mItems;
-	private ArrayList<EighthActivityItem> headers;
-	private DefaultSortComp mComp;
-	private LayoutInflater mLayoutInflater;
-	private int[] mColors;
-	private Bitmap ICON_DASH;
-	private Bitmap ICON_LOCK;
-	private Bitmap ICON_STAR;
-	private Bitmap ICON_FAVE;
+	ArrayList<EighthActivityItem> mItems;
+	private final ArrayList<EighthActivityItem> headers;
+	private final DefaultSortComp mComp;
+	private final LayoutInflater mLayoutInflater;
+	private final int[] mColors;
+	private final Bitmap ICON_DASH;
+	private final Bitmap ICON_LOCK;
+	private final Bitmap ICON_STAR;
+	private final Bitmap ICON_FAVE;
 
 	// View lookup cache
 	private static class ViewHolder {
@@ -180,7 +180,7 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 	}
 
 	// Sort items and add to both lists
-	protected void setListItems(ArrayList<EighthActivityItem> items) {
+	void setListItems(ArrayList<EighthActivityItem> items) {
 		mItems = items;
 		sort();
 	}
@@ -198,6 +198,8 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 						index = ActivityHeaderType.SPECIAL;
 						continue;
 					} else {
+						// Skip if no favorites
+						i--;
 						index = ActivityHeaderType.SPECIAL;
 					}
 					break;
@@ -208,6 +210,7 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 							index = ActivityHeaderType.GENERAL;
 						} else {
 							// Skip if no special activities
+							i--;
 							index = ActivityHeaderType.GENERAL;
 						}
 						continue;
@@ -216,7 +219,6 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 				case GENERAL:
 					if (!(item.isFavorite() || item.isSpecial())) {
 						insert(headers.get(index.ordinal()), i);
-						index = ActivityHeaderType.SPECIAL;
 						return;
 					}
 					break;
@@ -225,7 +227,7 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 	}
 
 	// Assumes mItems is already sorted
-	protected void restore() {
+	void restore() {
 		if(getCount() == 0 && mItems != null) {
 			addAll(mItems);
 			notifyDataSetChanged();

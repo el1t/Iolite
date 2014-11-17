@@ -2,6 +2,7 @@ package com.el1t.iolite;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +21,16 @@ import java.util.Date;
 public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 {
 	private ArrayList<EighthBlockItem> mItems;
-	private BIDSortComp mComp;
-	private LayoutInflater mLayoutInflater;
-	private int[] mColors;
+	private final BIDSortComp mComp;
+	private final LayoutInflater mLayoutInflater;
+	private final int[] mColors;
 
 	public enum Block {
 		A, B, C, D, E, F
 	}
 
 	public enum Colors {
-		INDIGO, LIGHT_BLUE, GREY, GREY1, GREY2, RED
+		INDIGO, LIGHT_BLUE, GREY, GREY1, GREY2, RED, DARK_RED, BLACK, TEXT
 	}
 
 	// View lookup cache
@@ -49,13 +50,16 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 
 		// Cache colors
 		Resources resources = context.getResources();
-		mColors = new int[7];
-		mColors[Colors.INDIGO.ordinal()] = resources.getColor(R.color.primary_400);       // Indigo
-		mColors[Colors.LIGHT_BLUE.ordinal()] = resources.getColor(R.color.light_blue_400);    // Blue
+		mColors = new int[10];
+		mColors[Colors.INDIGO.ordinal()] = resources.getColor(R.color.primary_400);
+		mColors[Colors.LIGHT_BLUE.ordinal()] = resources.getColor(R.color.light_blue_400);
 		for (int i = 2; i < 6; i++) {
-			mColors[i] = resources.getColor(R.color.grey);          // Grey
+			mColors[i] = resources.getColor(R.color.grey);
 		}
-		mColors[Colors.RED.ordinal()] = resources.getColor(R.color.accent_400);        // Red
+		mColors[Colors.RED.ordinal()] = resources.getColor(R.color.accent_400);
+		mColors[Colors.DARK_RED.ordinal()] = resources.getColor(R.color.accent_600);
+		mColors[Colors.BLACK.ordinal()] = resources.getColor(R.color.primary_text_default_material_light);
+		mColors[Colors.TEXT.ordinal()] = resources.getColor(R.color.secondary_text_default_material_light);
 
 		mLayoutInflater = LayoutInflater.from(context);
 	}
@@ -64,13 +68,14 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// Cache the views for faster performance
 		ViewHolder viewHolder;
-		EighthBlockItem item = getItem(position);
+		final EighthBlockItem blockItem = getItem(position);
+		final EighthActivityItem activityItem = blockItem.getEighth();
 
 		if (convertView == null) {
 			// Initialize viewHolder and convertView
 			viewHolder = new ViewHolder();
 			// Save IDs inside ViewHolder and attach the ViewHolder to convertView
-			if (item.isHeader()) {
+			if (blockItem.isHeader()) {
 				convertView = mLayoutInflater.inflate(R.layout.row_header, parent, false);
 				viewHolder.title = (TextView) convertView.findViewById(R.id.headerName);
 			} else {
@@ -87,19 +92,33 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 		}
 
 		// Set fields
-		if (item.isHeader()) {
+		if (blockItem.isHeader()) {
 			// Note: superscript does not work in header
-			viewHolder.title.setText(item.getDisp());
+			viewHolder.title.setText(blockItem.getDisp());
 		} else {
-			viewHolder.title.setText(item.getEighth().getName());
+			viewHolder.title.setText(blockItem.getEighth().getName());
+
+			// Format title
+			Colors color;
+			if (activityItem.getAID() == 999) {
+				viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+				color = Colors.BLACK;
+			} else if (activityItem.isCancelled()) {
+				viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD_ITALIC);
+				color = Colors.DARK_RED;
+			} else {
+				viewHolder.title.setTypeface(Typeface.SANS_SERIF);
+				color = Colors.TEXT;
+			}
+			viewHolder.title.setTextColor(mColors[color.ordinal()]);
+
 			// TODO: replace with useful room number
 			// viewHolder.room.setText();
-			viewHolder.description.setText(item.getEighth().getDescription());
+			viewHolder.description.setText(blockItem.getEighth().getDescription());
 
 			// Set color
-			Colors color;
-			String letter = item.getBlock();
-			if (item.isLocked()) {
+			String letter = blockItem.getBlock();
+			if (blockItem.isLocked()) {
 				color = Colors.RED;
 			} else {
 				switch(Block.valueOf(letter)) {
@@ -131,7 +150,7 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 		return 2;
 	}
 
-	public void sort() {
+	void sort() {
 		Collections.sort(mItems, mComp);
 		clear();
 		addAll(mItems);
@@ -156,7 +175,7 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 		}
 	}
 
-	protected void setListItems(ArrayList<EighthBlockItem> items) {
+	void setListItems(ArrayList<EighthBlockItem> items) {
 		mItems = items;
 		sort();
 	}

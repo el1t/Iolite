@@ -17,7 +17,6 @@ public class LoginFragment extends Fragment
 	private OnFragmentInteractionListener mListener;
 	private EditText username;
 	private EditText password;
-	private Button login;
 
 	public interface OnFragmentInteractionListener {
 		public void submit(String username, String password);
@@ -31,11 +30,11 @@ public class LoginFragment extends Fragment
 				, container, false);
 
 		// Get fields
-		username	= (EditText)rootView.findViewById(R.id.username);
-		password	= (EditText)rootView.findViewById(R.id.password);
-		login		= (Button)	rootView.findViewById(R.id.login);
+		username	= (EditText) rootView.findViewById(R.id.username);
+		password	= (EditText) rootView.findViewById(R.id.password);
 
 		// Submit button
+		final Button login = (Button) rootView.findViewById(R.id.login);
 		login.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

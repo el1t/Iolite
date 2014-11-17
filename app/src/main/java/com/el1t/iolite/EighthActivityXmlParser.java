@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by El1t on 10/21/14.
  */
-public class EighthActivityXmlParser
+class EighthActivityXmlParser
 {
 	private static final String TAG = "Activity List XML Parser";
 
@@ -112,7 +112,7 @@ public class EighthActivityXmlParser
 		return entries;
 	}
 
-	public static EighthActivityItem readActivity(XmlPullParser parser) throws XmlPullParserException, IOException {
+	private static EighthActivityItem readActivity(XmlPullParser parser) throws XmlPullParserException, IOException {
 		parser.require(XmlPullParser.START_TAG, null, "activity");
 
 		final EighthActivityItem temp = new EighthActivityItem();
@@ -169,7 +169,7 @@ public class EighthActivityXmlParser
 		return temp;
 	}
 
-	protected static String readString(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
+	private static String readString(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
 		parser.require(XmlPullParser.START_TAG, null, tagName);
 		// Note: this cannot be null, because some fields are empty! (empty fields would have to be set to "", anyways)
 		String result = "";
@@ -181,7 +181,7 @@ public class EighthActivityXmlParser
 		return result;
 	}
 
-	protected static int readInt(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
+	private static int readInt(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
 		parser.require(XmlPullParser.START_TAG, null, tagName);
 		int result = 0;
 		if (parser.next() == XmlPullParser.TEXT) {
@@ -192,7 +192,7 @@ public class EighthActivityXmlParser
 		return result;
 	}
 
-	protected static boolean readBool(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
+	private static boolean readBool(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
 		parser.require(XmlPullParser.START_TAG, null, tagName);
 		boolean result = false;
 		if (parser.next() == XmlPullParser.TEXT) {
@@ -225,7 +225,7 @@ public class EighthActivityXmlParser
 		return result;
 	}
 
-	protected static void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
+	private static void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
 		if (parser.getEventType() != XmlPullParser.START_TAG) {
 			throw new IllegalStateException();
 		}

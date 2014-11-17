@@ -132,7 +132,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		}
 	}
 
-	protected void logout() {
+	void logout() {
 		mCookies = null;
 		// Start login activity
 		Intent intent = new Intent(this, LoginActivity.class);
@@ -158,7 +158,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 	}
 
 	// Notify the user after submission
-	public void postSubmit(Response result) {
+	void postSubmit(Response result) {
 		switch(result) {
 			case SUCCESS:
 				Toast.makeText(getApplicationContext(), "Signed up!", Toast.LENGTH_SHORT).show();
@@ -275,8 +275,8 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 	// Web request for activity signup using HttpClient
 	private class SignupRequest extends AsyncTask<String, Void, Boolean> {
 		private static final String TAG = "Signup Connection";
-		private String AID;
-		private String BID;
+		private final String AID;
+		private final String BID;
 
 		public SignupRequest(int AID, int BID) {
 			this.AID = Integer.toString(AID);

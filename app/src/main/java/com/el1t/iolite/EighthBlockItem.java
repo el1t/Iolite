@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * Created by El1t on 10/24/14.
  */
-public class EighthBlockItem implements Serializable
+class EighthBlockItem implements Serializable
 {
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEEE, MMMM d");
 	private EighthActivityItem activity;

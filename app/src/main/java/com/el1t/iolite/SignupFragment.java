@@ -144,7 +144,7 @@ public class SignupFragment extends Fragment
 		mAdapter.restore();
 	}
 
-	protected void setListItems(ArrayList<EighthActivityItem> items) {
+	void setListItems(ArrayList<EighthActivityItem> items) {
 		mAdapter.setListItems(items);
 		mSwipeRefreshLayout.setRefreshing(false);
 	}

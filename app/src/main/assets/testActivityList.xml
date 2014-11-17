@@ -11,7 +11,7 @@
 		<activity>
 			<aid>792</aid>
 			<name>Latin (A or B not both)  </name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>1</oneaday>
@@ -30,7 +30,7 @@
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
 			<comment>Mythological Pumpkins</comment>
-			<advertisement></advertisement>
+			<advertisement/>
 			<member_count>15</member_count>
 			<block_rooms_comma>T 38 </block_rooms_comma>
 			<capacity>32</capacity>
@@ -57,7 +57,7 @@
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
 			<comment>Don't wait to clear your absences!</comment>
-			<advertisement></advertisement>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>218-219 (60)</block_rooms_comma>
 			<capacity>60</capacity>
@@ -65,7 +65,7 @@
 		<activity>
 			<aid>653</aid>
 			<name>2016 Junior Class Council</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -84,8 +84,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>3</member_count>
 			<block_rooms_comma>125 (25)</block_rooms_comma>
 			<capacity>25</capacity>
@@ -111,8 +111,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>T 35 (1)</block_rooms_comma>
 			<capacity>1</capacity>
@@ -138,8 +138,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>Weyanoke M Lab (28)</block_rooms_comma>
 			<capacity>28</capacity>
@@ -166,7 +166,7 @@
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
 			<comment>Choose A or B, not both</comment>
-			<advertisement></advertisement>
+			<advertisement/>
 			<member_count>40</member_count>
 			<block_rooms_comma>Planetarium (40)</block_rooms_comma>
 			<capacity>40</capacity>
@@ -192,8 +192,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>T  6 (30)</block_rooms_comma>
 			<capacity>30</capacity>
@@ -221,8 +221,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>3</member_count>
 			<block_rooms_comma>136</block_rooms_comma>
 			<capacity>30</capacity>
@@ -230,7 +230,7 @@
 		<activity>
 			<aid>392</aid>
 			<name>Band: Jazz II </name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -248,8 +248,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>9</member_count>
 			<block_rooms_comma>Band (75)</block_rooms_comma>
 			<capacity>75</capacity>
@@ -275,8 +275,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>50</member_count>
 			<block_rooms_comma>123 (50)</block_rooms_comma>
 			<capacity>50</capacity>
@@ -284,7 +284,7 @@
 		<activity>
 			<aid>432</aid>
 			<name>Calculus AB Tutoring</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -302,8 +302,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>T 29</block_rooms_comma>
 			<capacity>30</capacity>
@@ -329,8 +329,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>141 (25)</block_rooms_comma>
 			<capacity>25</capacity>
@@ -356,8 +356,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>135</block_rooms_comma>
 			<capacity>35</capacity>
@@ -383,8 +383,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>134</block_rooms_comma>
 			<capacity>25</capacity>
@@ -392,7 +392,7 @@
 		<activity>
 			<aid>2705</aid>
 			<name>Chem. tutoring/Makeups (Kauffman)</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -410,8 +410,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>133 (28)</block_rooms_comma>
 			<capacity>28</capacity>
@@ -436,15 +436,15 @@
 			<cancelled>1</cancelled>
 			<roomchanged>0</roomchanged>
 			<comment>Moved to A block</comment>
-			<advertisement></advertisement>
+			<advertisement/>
 			<member_count>7</member_count>
-			<block_rooms_comma></block_rooms_comma>
+			<block_rooms_comma/>
 			<capacity>-1</capacity>
 		</activity>
 		<activity>
 			<aid>788</aid>
 			<name>Choir: Manchoir &amp; Sirens</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -462,8 +462,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>9</member_count>
 			<block_rooms_comma>M - 8 (40)</block_rooms_comma>
 			<capacity>40</capacity>
@@ -489,8 +489,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>11</member_count>
 			<block_rooms_comma>T 19 &amp; T 20</block_rooms_comma>
 			<capacity>50</capacity>
@@ -516,8 +516,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>243 (10)</block_rooms_comma>
 			<capacity>10</capacity>
@@ -544,7 +544,7 @@
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
 			<comment>USC</comment>
-			<advertisement></advertisement>
+			<advertisement/>
 			<member_count>6</member_count>
 			<block_rooms_comma>243 (35)</block_rooms_comma>
 			<capacity>35</capacity>
@@ -571,7 +571,7 @@
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
 			<comment>McGill</comment>
-			<advertisement></advertisement>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>243 (10)</block_rooms_comma>
 			<capacity>10</capacity>
@@ -597,8 +597,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>40</member_count>
 			<block_rooms_comma>115 (40)</block_rooms_comma>
 			<capacity>40</capacity>
@@ -625,8 +625,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>Student Services (20)</block_rooms_comma>
 			<capacity>20</capacity>
@@ -652,8 +652,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>7</member_count>
 			<block_rooms_comma>T  8 </block_rooms_comma>
 			<capacity>28</capacity>
@@ -680,8 +680,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>Gym 2 Lobby,  Out of Building</block_rooms_comma>
 			<capacity>29</capacity>
@@ -689,7 +689,7 @@
 		<activity>
 			<aid>365</aid>
 			<name>Curricular Music Open Practice</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -707,8 +707,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>M - 4 (20)</block_rooms_comma>
 			<capacity>20</capacity>
@@ -734,8 +734,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>23</member_count>
 			<block_rooms_comma>T 36</block_rooms_comma>
 			<capacity>30</capacity>
@@ -762,7 +762,7 @@
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
 			<comment>Varsity</comment>
-			<advertisement></advertisement>
+			<advertisement/>
 			<member_count>5</member_count>
 			<block_rooms_comma>T 13 </block_rooms_comma>
 			<capacity>28</capacity>
@@ -788,8 +788,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>148 (30)</block_rooms_comma>
 			<capacity>30</capacity>
@@ -815,8 +815,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>9</member_count>
 			<block_rooms_comma>Weyanoke F</block_rooms_comma>
 			<capacity>28</capacity>
@@ -824,7 +824,7 @@
 		<activity>
 			<aid>542</aid>
 			<name>Football - JV &amp; Frosh</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -843,8 +843,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>2</member_count>
 			<block_rooms_comma>Locker room (35)</block_rooms_comma>
 			<capacity>35</capacity>
@@ -870,8 +870,8 @@
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>18</member_count>
 			<block_rooms_comma>Weyanoke T</block_rooms_comma>
 			<capacity>30</capacity>
@@ -898,7 +898,7 @@
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
 			<comment>Officers</comment>
-			<advertisement></advertisement>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>T 40</block_rooms_comma>
 			<capacity>30</capacity>
@@ -926,8 +926,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>55</member_count>
 			<block_rooms_comma>Library-On-Line Rm242B (100)</block_rooms_comma>
 			<capacity>100</capacity>
@@ -953,8 +953,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>143 (30)</block_rooms_comma>
 			<capacity>30</capacity>
@@ -980,8 +980,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>147 (10)</block_rooms_comma>
 			<capacity>10</capacity>
@@ -1007,8 +1007,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>5</member_count>
 			<block_rooms_comma>  Out of Building</block_rooms_comma>
 			<capacity>30</capacity>
@@ -1034,8 +1034,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>145 (25)</block_rooms_comma>
 			<capacity>25</capacity>
@@ -1043,7 +1043,7 @@ students to compete in the state and international FPS competitions. FPS competi
 		<activity>
 			<aid>768</aid>
 			<name>IBET Study Hall: Klein, Rosenblum</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -1061,8 +1061,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>T  3</block_rooms_comma>
 			<capacity>30</capacity>
@@ -1070,7 +1070,7 @@ students to compete in the state and international FPS competitions. FPS competi
 		<activity>
 			<aid>287</aid>
 			<name>Jefferson Collaborative Inquiry and Research Network (JCIRN)</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -1088,8 +1088,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>2</member_count>
 			<block_rooms_comma>  to be determined (15)</block_rooms_comma>
 			<capacity>15</capacity>
@@ -1115,8 +1115,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>203 Bio Tech Lab (25)</block_rooms_comma>
 			<capacity>25</capacity>
@@ -1142,8 +1142,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>3</member_count>
 			<block_rooms_comma>115 (24)</block_rooms_comma>
 			<capacity>24</capacity>
@@ -1170,8 +1170,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>115 (0)</block_rooms_comma>
 			<capacity>0</capacity>
@@ -1197,8 +1197,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>118 Elec Lab (24)</block_rooms_comma>
 			<capacity>24</capacity>
@@ -1224,8 +1224,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>T 23 Lab</block_rooms_comma>
 			<capacity>29</capacity>
@@ -1251,8 +1251,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>4</member_count>
 			<block_rooms_comma>T 27 M/CS Lab</block_rooms_comma>
 			<capacity>28</capacity>
@@ -1278,8 +1278,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>T 31 Math/CS Lab</block_rooms_comma>
 			<capacity>28</capacity>
@@ -1306,8 +1306,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>Library (50) </block_rooms_comma>
 			<capacity>50</capacity>
@@ -1333,8 +1333,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>Gym 2 - back side (25)</block_rooms_comma>
 			<capacity>25</capacity>
@@ -1360,8 +1360,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>T 21</block_rooms_comma>
 			<capacity>32</capacity>
@@ -1390,8 +1390,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>53</member_count>
 			<block_rooms_comma>T  9,10,11,12</block_rooms_comma>
 			<capacity>120</capacity>
@@ -1417,8 +1417,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>43</member_count>
 			<block_rooms_comma>  Out of Building</block_rooms_comma>
 			<capacity>30</capacity>
@@ -1444,8 +1444,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>2</member_count>
 			<block_rooms_comma>Weyanoke L</block_rooms_comma>
 			<capacity>25</capacity>
@@ -1471,8 +1471,8 @@ students to compete in the state and international FPS competitions. FPS competi
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>2</member_count>
 			<block_rooms_comma>Weyanoke E (35)</block_rooms_comma>
 			<capacity>35</capacity>
@@ -1499,8 +1499,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>2</member_count>
 			<block_rooms_comma>T 32</block_rooms_comma>
 			<capacity>30</capacity>
@@ -1526,8 +1526,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>4</member_count>
 			<block_rooms_comma>236</block_rooms_comma>
 			<capacity>30</capacity>
@@ -1535,7 +1535,7 @@ Linear Algebra (spring)</description>
 		<activity>
 			<aid>2634</aid>
 			<name>Music Theory (AP)</name>
-			<description></description>
+			<description/>
 			<restricted>1</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -1553,8 +1553,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>M - 8</block_rooms_comma>
 			<capacity>25</capacity>
@@ -1580,8 +1580,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>13</member_count>
 			<block_rooms_comma> 5 Neuro Lab (28)</block_rooms_comma>
 			<capacity>28</capacity>
@@ -1607,8 +1607,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>7</member_count>
 			<block_rooms_comma> 2 Ocean Lab (30)</block_rooms_comma>
 			<capacity>30</capacity>
@@ -1634,8 +1634,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>6</member_count>
 			<block_rooms_comma>232A </block_rooms_comma>
 			<capacity>29</capacity>
@@ -1643,7 +1643,7 @@ Linear Algebra (spring)</description>
 		<activity>
 			<aid>2696</aid>
 			<name>Physics Tutoring/Makeups (Smith)</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -1661,8 +1661,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>2</member_count>
 			<block_rooms_comma>233</block_rooms_comma>
 			<capacity>30</capacity>
@@ -1670,7 +1670,7 @@ Linear Algebra (spring)</description>
 		<activity>
 			<aid>109</aid>
 			<name>Physics tutoring/makeup (Walker)</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -1688,8 +1688,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>232B</block_rooms_comma>
 			<capacity>29</capacity>
@@ -1715,8 +1715,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>Rehearsal Rooms (3)</block_rooms_comma>
 			<capacity>3</capacity>
@@ -1742,8 +1742,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>115 (10)</block_rooms_comma>
 			<capacity>10</capacity>
@@ -1770,8 +1770,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>21</member_count>
 			<block_rooms_comma>Weyanoke O (oh)(35)</block_rooms_comma>
 			<capacity>35</capacity>
@@ -1779,7 +1779,7 @@ Linear Algebra (spring)</description>
 		<activity>
 			<aid>225</aid>
 			<name>Research Statistics /Algebra 2(Donohue)</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -1797,8 +1797,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>T 30</block_rooms_comma>
 			<capacity>30</capacity>
@@ -1824,8 +1824,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>8</member_count>
 			<block_rooms_comma>Weyanoke P</block_rooms_comma>
 			<capacity>28</capacity>
@@ -1852,8 +1852,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>Weyanoke R</block_rooms_comma>
 			<capacity>28</capacity>
@@ -1879,8 +1879,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>2</member_count>
 			<block_rooms_comma>Weyanoke H</block_rooms_comma>
 			<capacity>25</capacity>
@@ -1906,8 +1906,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>T 14 </block_rooms_comma>
 			<capacity>28</capacity>
@@ -1915,7 +1915,7 @@ Linear Algebra (spring)</description>
 		<activity>
 			<aid>58</aid>
 			<name>Speech (Slifka)</name>
-			<description></description>
+			<description/>
 			<restricted>1</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -1933,8 +1933,8 @@ Linear Algebra (spring)</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>Wrestling Room D (3)</block_rooms_comma>
 			<capacity>3</capacity>
@@ -1961,8 +1961,8 @@ entrepreneurs, venture capitalists, CEOs, and businessmen.</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>29</member_count>
 			<block_rooms_comma>Weyanoke A (35)</block_rooms_comma>
 			<capacity>35</capacity>
@@ -1970,7 +1970,7 @@ entrepreneurs, venture capitalists, CEOs, and businessmen.</description>
 		<activity>
 			<aid>235</aid>
 			<name>Statistics (AP) Tutoring</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -1988,8 +1988,8 @@ entrepreneurs, venture capitalists, CEOs, and businessmen.</description>
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>T 24 </block_rooms_comma>
 			<capacity>27</capacity>
@@ -2016,8 +2016,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>5</member_count>
 			<block_rooms_comma>T 34</block_rooms_comma>
 			<capacity>30</capacity>
@@ -2025,7 +2025,7 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 		<activity>
 			<aid>426</aid>
 			<name>Study Hall  (Brown) Quiet</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -2043,8 +2043,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>T 33</block_rooms_comma>
 			<capacity>30</capacity>
@@ -2052,7 +2052,7 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 		<activity>
 			<aid>902</aid>
 			<name>Study Hall (Sandstrom) QUIET</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -2070,8 +2070,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>T 42</block_rooms_comma>
 			<capacity>28</capacity>
@@ -2079,7 +2079,7 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 		<activity>
 			<aid>447</aid>
 			<name>Study Hall (Spoden) </name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -2097,8 +2097,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>T 26</block_rooms_comma>
 			<capacity>30</capacity>
@@ -2124,8 +2124,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>Weyanoke G</block_rooms_comma>
 			<capacity>30</capacity>
@@ -2133,7 +2133,7 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 		<activity>
 			<aid>1081</aid>
 			<name>Study Hall (Zupancic)</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -2151,8 +2151,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>Weyanoke K</block_rooms_comma>
 			<capacity>30</capacity>
@@ -2160,7 +2160,7 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 		<activity>
 			<aid>927</aid>
 			<name>Study Hall QUIET (Rudwick)</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -2178,8 +2178,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>T 28</block_rooms_comma>
 			<capacity>30</capacity>
@@ -2205,8 +2205,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>3</member_count>
 			<block_rooms_comma>115 (10)</block_rooms_comma>
 			<capacity>10</capacity>
@@ -2214,7 +2214,7 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 		<activity>
 			<aid>296</aid>
 			<name>TJ Media</name>
-			<description></description>
+			<description/>
 			<restricted>1</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -2232,8 +2232,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>10</member_count>
 			<block_rooms_comma>T  4 (35)</block_rooms_comma>
 			<capacity>35</capacity>
@@ -2241,7 +2241,7 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 		<activity>
 			<aid>82</aid>
 			<name>TJ Rocketry Club</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -2259,8 +2259,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>20</member_count>
 			<block_rooms_comma>147 (20)</block_rooms_comma>
 			<capacity>20</capacity>
@@ -2286,8 +2286,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>5</member_count>
 			<block_rooms_comma>T  3</block_rooms_comma>
 			<capacity>30</capacity>
@@ -2314,7 +2314,7 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
 			<comment>Officer's meeting</comment>
-			<advertisement></advertisement>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>150 (13)</block_rooms_comma>
 			<capacity>13</capacity>
@@ -2341,8 +2341,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>25</member_count>
 			<block_rooms_comma>131 (25)</block_rooms_comma>
 			<capacity>25</capacity>
@@ -2368,8 +2368,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>8</member_count>
 			<block_rooms_comma>T  5 </block_rooms_comma>
 			<capacity>28</capacity>
@@ -2396,8 +2396,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>T 35 (12)</block_rooms_comma>
 			<capacity>12</capacity>
@@ -2424,8 +2424,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>2</member_count>
 			<block_rooms_comma>T 35 (12)</block_rooms_comma>
 			<capacity>12</capacity>
@@ -2433,7 +2433,7 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 		<activity>
 			<aid>614</aid>
 			<name>Writing Conference (Orser)</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -2451,8 +2451,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>T  5 (2)</block_rooms_comma>
 			<capacity>2</capacity>
@@ -2460,7 +2460,7 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 		<activity>
 			<aid>723</aid>
 			<name>Writing Conference (Zupancic)</name>
-			<description></description>
+			<description/>
 			<restricted>0</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -2478,8 +2478,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>Weyanoke K (5)</block_rooms_comma>
 			<capacity>5</capacity>
@@ -2505,8 +2505,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>   8th Office (Wrestling room)</block_rooms_comma>
 			<capacity>0</capacity>
@@ -2532,8 +2532,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>   8th Office (Wrestling room)</block_rooms_comma>
 			<capacity>0</capacity>
@@ -2555,10 +2555,10 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1185</member_count>
-			<block_rooms_comma></block_rooms_comma>
+			<block_rooms_comma/>
 			<capacity>-1</capacity>
 		</activity>
 		<activity>
@@ -2582,8 +2582,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>1</member_count>
 			<block_rooms_comma>   8th Office (Wrestling room)</block_rooms_comma>
 			<capacity>0</capacity>
@@ -2610,8 +2610,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>6</member_count>
 			<block_rooms_comma>T 44 (20)</block_rooms_comma>
 			<capacity>20</capacity>
@@ -2637,8 +2637,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>T 43</block_rooms_comma>
 			<capacity>28</capacity>
@@ -2646,7 +2646,7 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 		<activity>
 			<aid>66</aid>
 			<name>z-Early Release Waiver</name>
-			<description></description>
+			<description/>
 			<restricted>1</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -2662,8 +2662,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>14</member_count>
 			<block_rooms_comma>  Out of Building</block_rooms_comma>
 			<capacity>30</capacity>
@@ -2694,8 +2694,8 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>Weyanoke C HUM wk,Weyanoke D HUM wk,T 17 Math/CS workroom,T 18  Math/CS workroom,T 39,T 37</block_rooms_comma>
 			<capacity>80</capacity>
@@ -2703,7 +2703,7 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 		<activity>
 			<aid>973</aid>
 			<name>z4 - rooms taken for CONSTRUCTION</name>
-			<description></description>
+			<description/>
 			<restricted>1</restricted>
 			<presign>0</presign>
 			<oneaday>0</oneaday>
@@ -2721,13 +2721,13 @@ SDI (Student Diversity Initiative) is an engaging club dedicated to promoting di
 			<attendancetaken>0</attendancetaken>
 			<cancelled>0</cancelled>
 			<roomchanged>0</roomchanged>
-			<comment></comment>
-			<advertisement></advertisement>
+			<comment/>
+			<advertisement/>
 			<member_count>0</member_count>
 			<block_rooms_comma>132 (0)</block_rooms_comma>
 			<capacity>0</capacity>
 		</activity>
 	</activities>
-	<error></error>
-	<debug></debug>
+	<error/>
+	<debug/>
 </eighth>

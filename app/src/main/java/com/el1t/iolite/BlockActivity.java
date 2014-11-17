@@ -133,10 +133,11 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 		}
 	}
 
-	protected void logout() {
+	void logout() {
 		mCookies = null;
 		// Start login activity
 		Intent intent = new Intent(this, LoginActivity.class);
+		intent.putExtra("logout", true);
 		startActivity(intent);
 		finish();
 	}

@@ -67,7 +67,14 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		final Cookie[] cookies = getCookies(preferences);
 		if (cookies != null) {
-			new Authentication(cookies).execute("https://iodine.tjhsst.edu/api");
+			final Intent intent = getIntent();
+			if (intent.getBooleanExtra("logout", false)) {
+				// Send logout request
+				logout(cookies);
+			} else {
+				// Check authentication
+				new Authentication(cookies).execute("https://iodine.tjhsst.edu/api");
+			}
 		}
 
 		// Use material design toolbar
@@ -137,7 +144,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 	}
 
 	// Do after submission
-	public void postSubmit() {
+	void postSubmit() {
 		if (isFakeLogin()) {
 			Toast.makeText(getApplicationContext(), "Loading faked data", Toast.LENGTH_SHORT).show();
 		} else {
@@ -151,7 +158,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 	}
 
 	// Do after authentication request
-	public void postRequest(boolean result) {
+	void postRequest(boolean result) {
 		if (result) {
 			postSubmit();
 		} else {
@@ -161,7 +168,12 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		}
 	}
 
-	public void failed(boolean isAborted) {
+	private void logout(Cookie[] cookies) {
+		new LogoutRequest(cookies).execute("https://iodine.tjhsst.edu/logout");
+		Toast.makeText(getApplicationContext(), "Logged Out", Toast.LENGTH_SHORT).show();
+	}
+
+	void failed(boolean isAborted) {
 		if (!isAborted) {
 			Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_SHORT).show();
 			Log.d(TAG, "Login failed");
@@ -175,7 +187,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 	}
 
 	// Check without parsing XML, can be optimized but unnecessary
-	public static boolean checkResponse(InputStream inputStream) throws IOException{
+	private static boolean checkResponse(InputStream inputStream) throws IOException{
 		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 		StringBuilder out = new StringBuilder();
 		String line;
@@ -191,7 +203,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		return login_username != null && login_username.toLowerCase().equals(FAKE_LOGIN);
 	}
 
-	// AsyncTask to handle login POST request
+	// Login request using HttpPost
 	private class LoginRequest extends AsyncTask<String, Void, CookieStore> {
 		private static final String TAG = "Login Connection";
 		private HttpPost mPost;
@@ -261,7 +273,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 	private class Authentication extends AsyncTask<String, Void, Boolean> {
 		private static final String TAG = "Authentication Test Connection";
 		private HttpURLConnection mConnection;
-		private Cookie[] mCookies;
+		private final Cookie[] mCookies;
 
 		public Authentication (Cookie[] cookies) {
 			mCookies = cookies;
@@ -313,6 +325,43 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 			super.onPostExecute(result);
 			mProgressDialog.dismiss();
 			postRequest(result);
+		}
+	}
+
+	// Logs the user out
+	private class LogoutRequest extends AsyncTask<String, Void, Void> {
+		private static final String TAG = "Logout Request";
+		private final Cookie[] mCookies;
+
+		public LogoutRequest (Cookie[] cookies) {
+			mCookies = cookies;
+		}
+
+		@Override
+		protected Void doInBackground(String... urls) {
+			HttpURLConnection urlConnection;
+			try {
+				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
+				// Add cookies to header
+				for(Cookie cookie : mCookies) {
+					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
+				}
+				// Begin connection
+				urlConnection.connect();
+				// Get response
+				urlConnection.getInputStream();
+				// Close connection
+				urlConnection.disconnect();
+			} catch (Exception e) {
+				Log.e(TAG, "Connection error.", e);
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void v) {
+			super.onPostExecute(v);
+			clearCookies();
 		}
 	}
 }

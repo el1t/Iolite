@@ -86,7 +86,7 @@ public class BlockFragment extends Fragment {
 		}
 	}
 
-	protected void setListItems(ArrayList<EighthBlockItem> items) {
+	void setListItems(ArrayList<EighthBlockItem> items) {
 		mBlockListAdapter.setListItems(items);
 		mSwipeRefreshLayout.setRefreshing(false);
 	}

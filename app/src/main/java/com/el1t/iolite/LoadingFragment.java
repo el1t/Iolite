@@ -1,6 +1,5 @@
 package com.el1t.iolite;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,14 +15,6 @@ public class LoadingFragment extends Fragment
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_loading
-				, container, false);
-
-		return rootView;
-	}
-
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+		return inflater.inflate(R.layout.fragment_loading, container, false);
 	}
 }

@@ -18,7 +18,7 @@ import java.util.Date;
 /**
  * Created by El1t on 10/24/14.
  */
-public class EighthBlockXmlParser
+class EighthBlockXmlParser
 {
 	private static final String TAG = "Block List XML Parser";
 	private static Context mContext;
@@ -79,7 +79,7 @@ public class EighthBlockXmlParser
 			if (tagName.equals("activity")) {
 				readActivity(parser, temp.getEighth());
 			} else if (tagName.equals("date")) {
-				temp.setDate(readDate(parser, "date"));
+				temp.setDate(readDate(parser));
 			} else if (tagName.equals("bid")) {
 				temp.setBID(readInt(parser, "bid"));
 			} else if (tagName.equals("type")) {
@@ -128,9 +128,9 @@ public class EighthBlockXmlParser
 	}
 
 	// Read the <str> tag under <date>
-	private static Date readDate(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException, ParseException {
+	private static Date readDate(XmlPullParser parser) throws IOException, XmlPullParserException, ParseException {
 		Date result = null;
-		parser.require(XmlPullParser.START_TAG, null, tagName);
+		parser.require(XmlPullParser.START_TAG, null, "date");
 		while(parser.next() != XmlPullParser.END_TAG) {
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
@@ -144,13 +144,12 @@ public class EighthBlockXmlParser
 				skip(parser);
 			}
 		}
-		parser.require(XmlPullParser.END_TAG, null, tagName);
+		parser.require(XmlPullParser.END_TAG, null, "date");
 		return result;
 	}
 
 	// A different method for parsing the inexplicably different tags inside the block xml
-	public static EighthActivityItem readActivity(
-			XmlPullParser parser, EighthActivityItem temp) throws XmlPullParserException, IOException {
+	private static void readActivity(XmlPullParser parser, EighthActivityItem temp) throws XmlPullParserException, IOException {
 		parser.require(XmlPullParser.START_TAG, null, "activity");
 
 		while (parser.next() != XmlPullParser.END_TAG) {
@@ -182,8 +181,6 @@ public class EighthBlockXmlParser
 			}
 		}
 		parser.require(XmlPullParser.END_TAG, null, "activity");
-
-		return temp;
 	}
 
 	private static void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
