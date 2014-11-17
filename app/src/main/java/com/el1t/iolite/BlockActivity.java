@@ -1,19 +1,21 @@
 package com.el1t.iolite;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import org.apache.http.cookie.Cookie;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * Created by El1t on 10/24/14.
@@ -24,7 +26,7 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 	private static final String TAG = "Block Activity";
 
 	private BlockFragment mBlockFragment;
-	private ArrayList<SerializedCookie> mCookies;
+	private Cookie[] mCookies;
 	private boolean fake;
 
 	@Override
@@ -34,20 +36,23 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 
 		// Check if restoring from previously destroyed instance
 		if (savedInstanceState == null) {
-			Intent intent = getIntent();
-			// Retrieve cookies from previous activity
-			mCookies = (ArrayList<SerializedCookie>) intent.getSerializableExtra("cookies");
+			final Intent intent = getIntent();
 
 			// Check if fake information should be used
-			if ((fake = intent.getBooleanExtra("fake", false)) || mCookies == null) {
+			if ((fake = intent.getBooleanExtra("fake", false))) {
 				Log.d(TAG, "Loading fake info");
 				// Pretend fake list was received
 				postRequest(getList());
 			}
 		} else {
 			fake = savedInstanceState.getBoolean("fake");
-			mCookies = (ArrayList<SerializedCookie>) savedInstanceState.getSerializable("cookies");
 			mBlockFragment = (BlockFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
+		}
+
+		if (!fake) {
+			// Retrieve cookies from shared preferences
+			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
+			mCookies = LoginActivity.getCookies(preferences);
 		}
 
 		// Use material design toolbar
@@ -60,18 +65,31 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (!fake) {
-			// Load list of blocks from web
-			refresh();
-		}
+		// Load list of blocks from web
+		refresh();
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putSerializable("cookies", mCookies);
 		savedInstanceState.putSerializable("fake", fake);
 		getFragmentManager().putFragment(savedInstanceState, "fragment", mBlockFragment);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.eighth_block, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+			case R.id.action_logout:
+				logout();
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	// Select a BID to display activities for
@@ -79,7 +97,6 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 		// Send data to SignupActivity
 		Intent intent = new Intent(this, SignupActivity.class);
 		intent.putExtra("BID", BID);
-		intent.putExtra("cookies", mCookies);
 		intent.putExtra("fake", fake);
 		startActivity(intent);
 	}
@@ -95,17 +112,33 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 		return new ArrayList<EighthBlockItem>();
 	}
 
-	// This should not be called if items are fake
-	protected void refresh() {
-		// Set loading fragment, if necessary
-		if(mBlockFragment == null) {
-			getFragmentManager().beginTransaction()
-					.replace(R.id.container, new LoadingFragment())
-					.commit();
-		}
+	public void refresh() {
+		if (!fake) {
+			if (mCookies == null) {
+				logout();
+			} else {
+				// Set loading fragment, if necessary
+				if(mBlockFragment == null) {
+					getFragmentManager().beginTransaction()
+							.replace(R.id.container, new LoadingFragment())
+							.commit();
+				}
 
-		// Retrieve list of bids using cookies
-		new BlockListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_blocks");
+				// Retrieve list of bids using cookies
+				new BlockListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_blocks");
+			}
+		} else {
+			// Reload offline list
+			postRequest(getList());
+		}
+	}
+
+	protected void logout() {
+		mCookies = null;
+		// Start login activity
+		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);
+		finish();
 	}
 
 	private void postRequest(ArrayList<EighthBlockItem> result) {
@@ -139,7 +172,7 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 			try {
 				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
 				// Add cookies to header
-				for(SerializedCookie cookie : mCookies) {
+				for(Cookie cookie : mCookies) {
 					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
 				}
 				// Begin connection
@@ -159,7 +192,11 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 		@Override
 		protected void onPostExecute(ArrayList<EighthBlockItem> result) {
 			super.onPostExecute(result);
-			postRequest(result);
+			if (result == null) {
+				logout();
+			} else {
+				postRequest(result);
+			}
 		}
 	}
 }

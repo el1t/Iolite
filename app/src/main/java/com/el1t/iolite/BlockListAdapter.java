@@ -1,7 +1,7 @@
 package com.el1t.iolite;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +22,14 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 	private ArrayList<EighthBlockItem> mItems;
 	private BIDSortComp mComp;
 	private LayoutInflater mLayoutInflater;
+	private int[] mColors;
 
 	public enum Block {
 		A, B, C, D, E, F
+	}
+
+	public enum Colors {
+		INDIGO, LIGHT_BLUE, GREY, GREY1, GREY2, RED
 	}
 
 	// View lookup cache
@@ -41,6 +46,17 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 		mComp = new BIDSortComp();
 		mItems = items;
 		sort();
+
+		// Cache colors
+		Resources resources = context.getResources();
+		mColors = new int[7];
+		mColors[Colors.INDIGO.ordinal()] = resources.getColor(R.color.primary_400);       // Indigo
+		mColors[Colors.LIGHT_BLUE.ordinal()] = resources.getColor(R.color.light_blue_400);    // Blue
+		for (int i = 2; i < 6; i++) {
+			mColors[i] = resources.getColor(R.color.grey);          // Grey
+		}
+		mColors[Colors.RED.ordinal()] = resources.getColor(R.color.accent_400);        // Red
+
 		mLayoutInflater = LayoutInflater.from(context);
 	}
 
@@ -72,7 +88,8 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 
 		// Set fields
 		if (item.isHeader()) {
-			viewHolder.title.setText(item.getShortenedDisp());
+			// Note: superscript does not work in header
+			viewHolder.title.setText(item.getDisp());
 		} else {
 			viewHolder.title.setText(item.getEighth().getName());
 			// TODO: replace with useful room number
@@ -80,28 +97,24 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 			viewHolder.description.setText(item.getEighth().getDescription());
 
 			// Set color
-			int color = -1;
+			Colors color;
 			String letter = item.getBlock();
 			if (item.isLocked()) {
-				color = Color.parseColor("#e51c23");
+				color = Colors.RED;
 			} else {
-				switch (Block.valueOf(letter)) {
+				switch(Block.valueOf(letter)) {
 					case A:
-						color = Color.parseColor("#00bcd4");        // Cyan
+						color = Colors.INDIGO;
 						break;
 					case B:
-						color = Color.parseColor("#5677fc");        // Blue
+						color = Colors.LIGHT_BLUE;
 						break;
-					case C:
-					case D:
-					case E:
-					case F:
-						color = Color.parseColor("#9e9e9e");        // Gray
-						break;
+					default:
+						color = Colors.GREY;
 				}
 			}
 			// Tint icon
-			viewHolder.circle.setColorFilter(color);
+			viewHolder.circle.setColorFilter(mColors[color.ordinal()]);
 			viewHolder.letter.setText(letter);
 		}
 

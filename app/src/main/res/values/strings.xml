@@ -3,8 +3,12 @@
 
 	<string name="app_name">Iolite</string>
 	<string name="login">LOGIN</string>
+
 	<string name="block_view">Blocks</string>
 	<string name="activity_view">Activities</string>
+
+	<string name="action_refresh">Refresh</string>
 	<string name="action_settings">Settings</string>
+	<string name="action_logout">Logout</string>
 
 </resources>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE eighth [
+<!--<!DOCTYPE eighth [
  <!ELEMENT eighth (body,error,debug)>
  <!ELEMENT body (#PCDATA)>
  <!ELEMENT error (#PCDATA)>
  <!ELEMENT debug (#PCDATA)>
-]>
+]>-->
 <eighth>
  <signup>
   <bid>2843</bid>

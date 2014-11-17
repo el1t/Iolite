@@ -3,6 +3,7 @@ package com.el1t.iolite;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -25,10 +26,12 @@ public class SignupFragment extends Fragment
 
 	private OnFragmentInteractionListener mListener;
 	private ActivityListAdapter mAdapter;
+	private SwipeRefreshLayout mSwipeRefreshLayout;
 
 	public interface OnFragmentInteractionListener {
 		public void submit(EighthActivityItem item);
 		public void favorite(int AID, int BID, boolean status);
+		public void refresh();
 	}
 
 	public SignupFragment() { }
@@ -64,6 +67,16 @@ public class SignupFragment extends Fragment
 
 		// Display menu on long click
 		registerForContextMenu(activityList);
+
+		mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
+		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				mSwipeRefreshLayout.setRefreshing(true);
+				mListener.refresh();
+			}
+		});
+		mSwipeRefreshLayout.setColorSchemeResources(R.color.accent_600, R.color.blue, R.color.amber, R.color.green_600);
 
 		return rootView;
 	}
@@ -129,5 +142,10 @@ public class SignupFragment extends Fragment
 	public void onStart() {
 		super.onResume();
 		mAdapter.restore();
+	}
+
+	protected void setListItems(ArrayList<EighthActivityItem> items) {
+		mAdapter.setListItems(items);
+		mSwipeRefreshLayout.setRefreshing(false);
 	}
 }

@@ -1,6 +1,7 @@
 package com.el1t.iolite;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -14,6 +15,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.params.CookiePolicy;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.xmlpull.v1.XmlPullParserException;
@@ -34,8 +36,9 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 	private static final String TAG = "Signup Activity";
 
 	private SignupFragment mSignupFragment;
-	private ArrayList<SerializedCookie> mCookies;
+	private Cookie[] mCookies;
 	private int BID;
+	private boolean fake;
 	private ArrayList<AsyncTask> mTasks;
 
 	public enum Response {
@@ -46,31 +49,27 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_signup);
-		Intent intent = getIntent();
+		final Intent intent = getIntent();
 		BID = intent.getIntExtra("BID", -1);
 
 		// Check if restoring from previously destroyed instance that matches the BID
 		if (savedInstanceState == null || BID != savedInstanceState.getInt("BID")) {
 			mTasks = new ArrayList<AsyncTask>();
 			// Check if fake information should be used
-			if (intent.getBooleanExtra("fake", false)) {
+			if (fake = intent.getBooleanExtra("fake", false)) {
 				Log.d(TAG, "Loading fake info");
 				// Pretend fake list was received
 				postRequest(getList());
-			} else {
-				// Set loading fragment
-				getFragmentManager().beginTransaction()
-						.add(R.id.container, new LoadingFragment())
-						.commit();
-				// Retrieve cookies from previous activity
-				mCookies = (ArrayList<SerializedCookie>) intent.getSerializableExtra("cookies");
-				// Retrieve list for bid using cookies
-				mTasks.add(new ActivityListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_activities/" + BID));
 			}
 		} else {
-			mCookies = (ArrayList<SerializedCookie>) savedInstanceState.getSerializable("cookies");
+			fake = savedInstanceState.getBoolean("fake");
 			mSignupFragment = (SignupFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
-//			postRequest((ArrayList<EighthActivityItem>) savedInstanceState.getSerializable("activities"));
+		}
+
+		if (!fake) {
+			// Retrieve cookies from shared preferences
+			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
+			mCookies = LoginActivity.getCookies(preferences);
 		}
 
 		// Use material design toolbar
@@ -82,11 +81,17 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		// Load list of blocks from web
+		refresh();
+	}
+
+	@Override
 	protected void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putSerializable("cookies", mCookies);
-//		savedInstanceState.putSerializable("activities", mSignupFragment.getList());
 		savedInstanceState.putInt("BID", BID);
+		savedInstanceState.putBoolean("fake", fake);
 		getFragmentManager().putFragment(savedInstanceState, "fragment", mSignupFragment);
 	}
 
@@ -99,11 +104,41 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		super.onDestroy();
 	}
 
-//	@Override
+	//	@Override
 //	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 //		inflater.inflate(R.menu.login, menu);
 ////		super.onCreateOptionsMenu(menu, inflater);
 //	}
+
+	public void refresh() {
+		if (!fake) {
+			if (mCookies == null) {
+				logout();
+			} else {
+				// Set loading fragment, if necessary
+				if (mSignupFragment == null) {
+					// Set loading fragment
+					getFragmentManager().beginTransaction()
+							.add(R.id.container, new LoadingFragment())
+							.commit();
+				}
+
+				// Retrieve list for bid using cookies
+				mTasks.add(new ActivityListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_activities/" + BID));
+			}
+		} else {
+			// Reload offline list
+			postRequest(getList());
+		}
+	}
+
+	protected void logout() {
+		mCookies = null;
+		// Start login activity
+		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);
+		finish();
+	}
 
 	// Try signing up for an activity
 	public void submit(EighthActivityItem item) {
@@ -160,16 +195,20 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 	// Do after getting list of activities
 	private void postRequest(ArrayList<EighthActivityItem> result) {
-		// Create the content view
-		mSignupFragment = new SignupFragment();
-		// Add ArrayList to the ListView in BlockFragment
-		Bundle args = new Bundle();
-		args.putSerializable("list", result);
-		mSignupFragment.setArguments(args);
-		// Switch to BlockFragment view, remove LoadingFragment
-		getFragmentManager().beginTransaction()
-				.replace(R.id.container, mSignupFragment)
-				.commit();
+		if (mSignupFragment == null) {
+			// Create the content view
+			mSignupFragment = new SignupFragment();
+			// Add ArrayList to the ListView in BlockFragment
+			Bundle args = new Bundle();
+			args.putSerializable("list", result);
+			mSignupFragment.setArguments(args);
+			// Switch to BlockFragment view, remove LoadingFragment
+			getFragmentManager().beginTransaction()
+					.replace(R.id.container, mSignupFragment)
+					.commit();
+		} else {
+			mSignupFragment.setListItems(result);
+		}
 	}
 
 	// Favorite an activity
@@ -207,7 +246,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 			try {
 				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
 				// Add cookies to header
-				for(SerializedCookie cookie : mCookies) {
+				for(Cookie cookie : mCookies) {
 					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
 				}
 				// Begin connection
@@ -253,7 +292,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 				client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
 				HttpPost post = new HttpPost(new URI(urls[0]));
 				// Add cookies
-				for(SerializedCookie cookie : mCookies) {
+				for(Cookie cookie : mCookies) {
 					post.setHeader("Cookie", cookie.getName() + "=" + cookie.getValue());
 				}
 				// Add parameters
@@ -299,7 +338,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 			try {
 				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
 				// Add cookies to header
-				for (SerializedCookie cookie : mCookies) {
+				for (Cookie cookie : mCookies) {
 					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
 				}
 				// Begin connection

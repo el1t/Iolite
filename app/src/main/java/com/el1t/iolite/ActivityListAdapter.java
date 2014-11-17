@@ -1,9 +1,9 @@
 package com.el1t.iolite;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +28,7 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 	private ArrayList<EighthActivityItem> headers;
 	private DefaultSortComp mComp;
 	private LayoutInflater mLayoutInflater;
+	private int[] mColors;
 	private Bitmap ICON_DASH;
 	private Bitmap ICON_LOCK;
 	private Bitmap ICON_STAR;
@@ -47,6 +48,10 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 		FAVORITE, SPECIAL, GENERAL
 	}
 
+	public enum Colors {
+		RED, DEEP_ORANGE, PINK, ORANGE, GREEN, WHITE
+	}
+
 	public ActivityListAdapter(Context context, ArrayList<EighthActivityItem> items) {
 		super(context, 0);
 		// Headers
@@ -59,6 +64,16 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 		mItems = items;
 		sort();
 		mLayoutInflater = LayoutInflater.from(context);
+
+		// Cache colors
+		Resources resources = context.getResources();
+		mColors = new int[6];
+		mColors[Colors.RED.ordinal()]           = resources.getColor(R.color.accent_400);
+		mColors[Colors.DEEP_ORANGE.ordinal()]   = resources.getColor(R.color.deep_orange_400);
+		mColors[Colors.PINK.ordinal()]          = resources.getColor(R.color.pink_400);
+		mColors[Colors.ORANGE.ordinal()]        = resources.getColor(R.color.orange_400);
+		mColors[Colors.GREEN.ordinal()]         = resources.getColor(R.color.green_400);
+		mColors[Colors.WHITE.ordinal()]         = resources.getColor(R.color.background);
 
 		// Cache icons
 		ICON_DASH = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_remove_circle_white_48dp);
@@ -114,30 +129,30 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 			}
 
 			// Set color
-			int color = -1;
+			Colors color = null;
 			if (item.isCancelled()) {
-				color = Color.parseColor("#F44336");            // Red
+				color = Colors.RED;
 				viewHolder.icon.setImageBitmap(ICON_DASH);
 			} else if (item.isRestricted()) {
-				color = Color.parseColor("#FF5722");            // Deep orange
+				color = Colors.DEEP_ORANGE;
 				viewHolder.icon.setImageBitmap(ICON_LOCK);
 			} else if (item.isFavorite()) {
-				color = Color.parseColor("#E91E63");            // Pink
+				color = Colors.PINK;
 				viewHolder.icon.setImageBitmap(ICON_FAVE);
 			} else if (item.isSpecial()) {
-				color = Color.parseColor("#FF9800");            // Orange
+				color = Colors.ORANGE;
 				viewHolder.icon.setImageBitmap(ICON_STAR);
 			} else {
 				// Tint background to green when letter is used
-				viewHolder.circle.setColorFilter(Color.parseColor("#4CAF50"));
+				viewHolder.circle.setColorFilter(mColors[Colors.GREEN.ordinal()]);
 				viewHolder.icon.setVisibility(View.INVISIBLE);
 				viewHolder.letter.setText(item.getFirstChar());
 				viewHolder.letter.setVisibility(View.VISIBLE);
 			}
 			// Tint icon if icon is used
-			if (color != -1) {
-				viewHolder.circle.setColorFilter(Color.parseColor("white"));
-				viewHolder.icon.setColorFilter(color);
+			if (color != null) {
+				viewHolder.circle.setColorFilter(mColors[Colors.WHITE.ordinal()]);
+				viewHolder.icon.setColorFilter(mColors[color.ordinal()]);
 				viewHolder.icon.setVisibility(View.VISIBLE);
 				viewHolder.letter.setVisibility(View.INVISIBLE);
 			}

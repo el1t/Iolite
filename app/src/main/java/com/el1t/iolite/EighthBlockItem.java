@@ -78,7 +78,7 @@ public class EighthBlockItem implements Serializable
 		return header;
 	}
 
-	public Spannable getShortenedDisp() {
+	public Spannable getDisp() {
 		// Add postfix
 		String str = DATE_FORMAT.format(date);
 		switch(str.charAt(str.length() - 1)) {

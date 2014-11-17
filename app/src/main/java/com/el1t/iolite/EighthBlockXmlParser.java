@@ -161,26 +161,18 @@ public class EighthBlockXmlParser
 			String tagName = parser.getName();
 			if (tagName.equals("aid")) {
 				temp.setAID(readInt(parser, "aid"));
+				// Detect "No activity selected" activity
+				if (temp.getAID() == 999) {
+					temp.setName("No Activity Selected");
+					temp.setDescription("Please select an activity");
+					// Skip the rest of the activity
+					while(parser.next() != XmlPullParser.END_TAG || !parser.getName().equals("activity"));
+					break;
+				}
 			} else if (tagName.equals("name")) {
 				temp.setName(readString(parser, "name"));
 			} else if (tagName.equals("description")) {
 				temp.setDescription(readString(parser, "description"));
-			} else if (tagName.equals("restricted")) {
-				temp.setRestricted(readBool(parser, "restricted"));
-			} else if (tagName.equals("presign")) {
-				temp.setPresign(readBool(parser, "presign"));
-			} else if (tagName.equals("oneaday")) {
-				temp.setOneaday(readBool(parser, "oneaday"));
-			} else if (tagName.equals("bothblocks")) {
-				temp.setBothblocks(readBool(parser, "bothblocks"));
-			} else if (tagName.equals("sticky")) {
-				temp.setSticky(readBool(parser, "sticky"));
-			} else if (tagName.equals("special")) {
-				temp.setSpecial(readBool(parser, "special"));
-			} else if (tagName.equals("calendar")) {
-				temp.setCalendar(readBool(parser, "calendar"));
-			} else if (tagName.equals("bid")) {
-				temp.setBID(readInt(parser, "bid"));
 			} else if (tagName.equals("cancelled")) {
 				temp.setCancelled(readBool(parser, "cancelled"));
 			} else if (tagName.equals("attendancetaken")) {
