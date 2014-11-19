@@ -4,6 +4,7 @@
 	<style name="AppTheme" parent="Theme.AppCompat.Light">
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorPrimaryDark">@color/primary_dark</item>
+		<item name="colorAccent">@color/accent</item>
 		<item name="android:windowNoTitle">true</item>
 		<item name="android:windowActionModeOverlay">true</item>
 		<item name="windowActionBar">false</item>
@@ -13,15 +14,10 @@
 	<style name="AppThemeDark" parent="Theme.AppCompat">
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorPrimaryDark">@color/primary_dark</item>
+		<item name="colorAccent">@color/accent</item>
 		<item name="android:windowNoTitle">true</item>
 		<item name="android:windowActionModeOverlay">true</item>
 		<item name="windowActionBar">false</item>
-	</style>
-
-	<style name="Widget.App.EditText" parent="Widget.AppCompat.EditText">
-		<item name="colorControlNormal">@color/primary</item>
-		<item name="colorControlActivated">@color/accent</item>
-		<item name="colorControlHighlight">@color/accent</item>
 	</style>
 
 </resources>

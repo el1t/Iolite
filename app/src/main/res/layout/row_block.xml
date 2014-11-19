@@ -12,6 +12,7 @@
 	android:background="@drawable/material_listview"
 	android:orientation="horizontal">
 
+	<!-- Avatar -->
 	<FrameLayout
 		android:layout_width="40dp"
 	    android:layout_height="40dp">
@@ -40,34 +41,45 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
+		android:layout_gravity="center_vertical"
 		android:paddingStart="@dimen/activity_horizontal_margin"
 		android:paddingLeft="@dimen/activity_horizontal_margin">
 
 		<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+			<!-- Title -->
 			<TextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:ellipsize="end"
 				android:singleLine="true"
-				android:textSize="20sp"
+				android:textSize="16sp"
+				android:textColor="@android:color/primary_text_light"
+				android:alpha=".87"
 				android:includeFontPadding="false"
 				android:id="@+id/title"
 				android:layout_weight="1"/>
+			<!-- Room number -->
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:textSize="20sp"
+				android:textSize="16sp"
+				android:textColor="@android:color/primary_text_light"
+				android:alpha=".87"
 				android:includeFontPadding="false"
 				android:id="@+id/room"/>
 		</LinearLayout>
 
+		<!-- Description -->
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:paddingTop="2dp"
-			android:alpha=".87"
+			android:textSize="14sp"
+			android:textColor="@android:color/primary_text_light"
+			android:alpha=".54"
 			android:ellipsize="end"
 			android:singleLine="true"
 			android:includeFontPadding="false"

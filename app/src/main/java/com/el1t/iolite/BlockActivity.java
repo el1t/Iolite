@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
  * Created by El1t on 10/24/14.
  */
 
-public class BlockActivity extends ActionBarActivity implements BlockFragment.OnFragmentInteractionListener
+public class BlockActivity extends AbstractDrawerActivity implements BlockFragment.OnFragmentInteractionListener
 {
 	private static final String TAG = "Block Activity";
 
@@ -32,7 +30,6 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_block);
 
 		// Check if restoring from previously destroyed instance
 		if (savedInstanceState == null) {
@@ -53,12 +50,6 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 			// Retrieve cookies from shared preferences
 			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
 			mCookies = LoginActivity.getCookies(preferences);
-		}
-
-		// Use material design toolbar
-		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		if(toolbar != null) {
-			setSupportActionBar(toolbar);
 		}
 	}
 
@@ -90,6 +81,45 @@ public class BlockActivity extends ActionBarActivity implements BlockFragment.On
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected NavDrawerActivityConfig getNavDrawerConfiguration() {
+
+		NavDrawerItem[] menu = {
+				NavMenuItem.create(101, "Eighth Signup", false),
+				NavMenuItem.create(102, "Test!", true),
+				null,
+				NavMenuItem.create(201, "Settings", false),
+				NavMenuItem.create(202, "About", false),
+				NavMenuItem.create(203, "Logout", false)};
+
+		NavDrawerActivityConfig navDrawerActivityConfig = new NavDrawerActivityConfig();
+		navDrawerActivityConfig.setMainLayout(R.layout.drawer_layout);
+		navDrawerActivityConfig.setDrawerLayoutId(R.id.drawer_layout);
+		navDrawerActivityConfig.setLeftDrawerId(R.id.drawer);
+		navDrawerActivityConfig.setNavItems(menu);
+//		navDrawerActivityConfig.setDrawerShadow(R.drawable.drawer_shadow);
+//		navDrawerActivityConfig.setDrawerOpenDesc(R.string.drawer_open);
+//		navDrawerActivityConfig.setDrawerCloseDesc(R.string.drawer_close);
+		navDrawerActivityConfig.setBaseAdapter(
+				new NavDrawerAdapter(this, R.layout.nav_item, menu));
+		return navDrawerActivityConfig;
+	}
+
+	@Override
+	protected void onNavItemSelected(int id) {
+		switch (id) {
+			case 203:
+				logout();
+				break;
+//			case 101:
+//				getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FriendMainFragment()).commit();
+//				break;
+//			case 102:
+//				getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new AirportFragment()).commit();
+//				break;
+		}
 	}
 
 	// Select a BID to display activities for

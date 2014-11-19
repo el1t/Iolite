@@ -100,17 +100,22 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 
 			// Format title
 			Colors color;
+			final float alpha;
 			if (activityItem.getAID() == 999) {
 				viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
 				color = Colors.BLACK;
+				alpha = 1f;
 			} else if (activityItem.isCancelled()) {
 				viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD_ITALIC);
 				color = Colors.DARK_RED;
+				alpha = 1f;
 			} else {
 				viewHolder.title.setTypeface(Typeface.SANS_SERIF);
-				color = Colors.TEXT;
+				color = Colors.BLACK;
+				alpha = .87f;
 			}
 			viewHolder.title.setTextColor(mColors[color.ordinal()]);
+			viewHolder.title.setAlpha(alpha);
 
 			// TODO: replace with useful room number
 			// viewHolder.room.setText();
