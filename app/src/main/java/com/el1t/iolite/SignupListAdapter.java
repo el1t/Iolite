@@ -234,6 +234,13 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 		}
 	}
 
+	public boolean changeFavorite(EighthActivityItem item) {
+		final boolean favorited = item.changeFavorite();
+//		mItems.get(mItems.indexOf(item)).changeFavorite();
+		sort();
+		return favorited;
+	}
+
 	@Override
 	public Filter getFilter() {
 

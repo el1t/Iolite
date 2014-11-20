@@ -56,12 +56,8 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem>
 		}
 
 		navMenuItemHolder.labelView.setText(menuItem.getLabel());
-		if (menuItem.getIcon() == -1) {
-			navMenuItemHolder.iconView.setVisibility(View.GONE);
-		} else {
-			navMenuItemHolder.iconView.setImageResource(menuItem.getIcon());
-			navMenuItemHolder.iconView.setVisibility(View.VISIBLE);
-		}
+		navMenuItemHolder.iconView.setImageResource(menuItem.getIcon());
+		navMenuItemHolder.iconView.setVisibility(View.VISIBLE);
 
 		return convertView ;
 	}

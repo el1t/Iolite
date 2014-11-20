@@ -5,7 +5,7 @@ package com.el1t.iolite;
  */
 public interface NavDrawerItem
 {
-	public int getResId();
+	public int getListId();
 
 	public String getLabel();
 
@@ -15,5 +15,5 @@ public interface NavDrawerItem
 
 	public boolean isEnabled();
 
-	public boolean updateActionBarTitle();
+//	public boolean updateActionBarTitle();
 }

@@ -1,7 +1,5 @@
 package com.el1t.iolite;
 
-import android.widget.BaseAdapter;
-
 /**
  * Created by El1t on 11/17/14.
  */

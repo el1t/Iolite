@@ -142,7 +142,7 @@ public abstract class AbstractDrawerActivity extends ActionBarActivity {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			final NavDrawerItem selectedItem = navConf.getAdapter().getItem(position);
-			onNavItemSelected(selectedItem.getResId());
+			onNavItemSelected(selectedItem.getListId());
 			if (selectedItem.isCheckable()) {
 				// Checking is automatically done
 				lastItemChecked = position;

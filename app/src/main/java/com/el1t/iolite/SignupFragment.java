@@ -107,8 +107,7 @@ public class SignupFragment extends Fragment
 			case R.id.context_info:
 				return true;
 			case R.id.context_favorite:
-				mListener.favorite(activityItem.getAID(), activityItem.getBID(), mAdapter.mItems.get(info.position).changeFavorite());
-				mAdapter.sort();
+				mListener.favorite(activityItem.getAID(), activityItem.getBID(), mAdapter.changeFavorite(activityItem));
 				return true;
 			default:
 				return super.onContextItemSelected(item);
