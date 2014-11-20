@@ -37,6 +37,11 @@
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.el1t.BlockActivity" />
 		</activity>
+		<activity
+			android:name="com.el1t.iolite.AboutActivity"
+			android:label="@string/about_view"
+			android:launchMode="singleTop"
+			android:configChanges="orientation|screenSize" />
 	</application>
 
 </manifest>

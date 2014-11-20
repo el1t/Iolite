@@ -10,12 +10,19 @@ public class NavDrawerActivityConfig {
 	private int mainLayout;
 	private int drawerShadow;
 	private int drawerLayoutId;
+	private int drawerContainerId;
 	private int leftDrawerId;
 	private int[] actionMenuItemsToHideWhenDrawerOpen;
 	private NavDrawerItem[] navItems;
 	private int drawerOpenDesc;
 	private int drawerCloseDesc;
-	private BaseAdapter baseAdapter;
+	private NavDrawerAdapter adapter;
+	private int checkedPosition;
+
+	public NavDrawerActivityConfig() {
+		mainLayout = drawerShadow = drawerLayoutId = drawerContainerId = leftDrawerId = drawerOpenDesc =
+				drawerCloseDesc = checkedPosition = -1;
+	}
 
 	public int getMainLayout() {
 		return mainLayout;
@@ -41,6 +48,14 @@ public class NavDrawerActivityConfig {
 		this.drawerLayoutId = drawerLayoutId;
 	}
 
+	public int getDrawerContainerId() {
+		return drawerContainerId;
+	}
+
+	public void setDrawerContainerId(int drawerContainerId) {
+		this.drawerContainerId = drawerContainerId;
+	}
+
 	public int getLeftDrawerId() {
 		return leftDrawerId;
 	}
@@ -53,8 +68,7 @@ public class NavDrawerActivityConfig {
 		return actionMenuItemsToHideWhenDrawerOpen;
 	}
 
-	public void setActionMenuItemsToHideWhenDrawerOpen(
-			int[] actionMenuItemsToHideWhenDrawerOpen) {
+	public void setActionMenuItemsToHideWhenDrawerOpen(int[] actionMenuItemsToHideWhenDrawerOpen) {
 		this.actionMenuItemsToHideWhenDrawerOpen = actionMenuItemsToHideWhenDrawerOpen;
 	}
 
@@ -82,11 +96,75 @@ public class NavDrawerActivityConfig {
 		this.drawerCloseDesc = drawerCloseDesc;
 	}
 
-	public BaseAdapter getBaseAdapter() {
-		return baseAdapter;
+	public NavDrawerAdapter getAdapter() {
+		return adapter;
 	}
 
-	public void setBaseAdapter(BaseAdapter baseAdapter) {
-		this.baseAdapter = baseAdapter;
+	public void setAdapter(NavDrawerAdapter adapter) {
+		this.adapter = adapter;
+	}
+
+	public int getCheckedPosition() {
+		return checkedPosition;
+	}
+
+	public void setCheckedPosition(int checkedPosition) {
+		this.checkedPosition = checkedPosition;
+	}
+
+	public static class Builder {
+
+		private NavDrawerActivityConfig mConf = new NavDrawerActivityConfig();
+
+		public Builder() { }
+
+		public Builder mainLayout(int mainLayout) {
+			mConf.setMainLayout(mainLayout);
+			return this;
+		}
+
+		public NavDrawerActivityConfig build() {
+			return mConf;
+		}
+
+		public Builder drawerLayoutId(int drawerLayoutId) {
+			mConf.setDrawerLayoutId(drawerLayoutId);
+			return this;
+		}
+
+		public Builder drawerContainerId(int drawerContainerId) {
+			mConf.setDrawerContainerId(drawerContainerId);
+			return this;
+		}
+
+		public Builder leftDrawerId(int leftDrawerId) {
+			mConf.setLeftDrawerId(leftDrawerId);
+			return this;
+		}
+
+		public Builder checkedPosition(int checkedPosition) {
+			mConf.setCheckedPosition(checkedPosition);
+			return this;
+		}
+
+		public Builder drawerShadow(int drawerShadowId) {
+			mConf.setDrawerShadow(drawerShadowId);
+			return this;
+		}
+
+		public Builder drawerOpenDesc(int drawerOpenId) {
+			mConf.setDrawerOpenDesc(drawerOpenId);
+			return this;
+		}
+
+		public Builder drawerCloseDesc(int drawerCloseId) {
+			mConf.setDrawerCloseDesc(drawerCloseId);
+			return this;
+		}
+
+		public Builder adapter( NavDrawerAdapter adapter) {
+			mConf.setAdapter(adapter);
+			return this;
+		}
 	}
 }

@@ -199,7 +199,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 			// Create the content view
 			mSignupFragment = new SignupFragment();
 			// Add ArrayList to the ListView in BlockFragment
-			Bundle args = new Bundle();
+			final Bundle args = new Bundle();
 			args.putSerializable("list", result);
 			mSignupFragment.setArguments(args);
 			// Switch to BlockFragment view, remove LoadingFragment
@@ -241,7 +241,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 		@Override
 		protected ArrayList<EighthActivityItem> doInBackground(String... urls) {
-			HttpURLConnection urlConnection;
+			final HttpURLConnection urlConnection;
 			ArrayList<EighthActivityItem> response = null;
 			try {
 				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
@@ -285,7 +285,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 		@Override
 		protected Boolean doInBackground(String... urls) {
-			DefaultHttpClient client = new DefaultHttpClient();
+			final DefaultHttpClient client = new DefaultHttpClient();
 			boolean result = false;
 			try {
 				// Setup client
@@ -296,7 +296,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 					post.setHeader("Cookie", cookie.getName() + "=" + cookie.getValue());
 				}
 				// Add parameters
-				List<NameValuePair> data = new ArrayList<NameValuePair>(2);
+				final List<NameValuePair> data = new ArrayList<NameValuePair>(2);
 				data.add(new BasicNameValuePair("aid", AID));
 				data.add(new BasicNameValuePair("bid", BID));
 				post.setEntity(new UrlEncodedFormEntity(data));
@@ -334,7 +334,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 		@Override
 		protected Boolean doInBackground(String... urls) {
-			HttpURLConnection urlConnection;
+			final HttpURLConnection urlConnection;
 			try {
 				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
 				// Add cookies to header

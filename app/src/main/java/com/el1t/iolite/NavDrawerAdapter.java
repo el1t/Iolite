@@ -13,7 +13,7 @@ import android.widget.TextView;
  */
 public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem>
 {
-	private LayoutInflater inflater;
+	private LayoutInflater mLayoutInflater;
 
 	private static class NavMenuItemHolder {
 		private TextView labelView;
@@ -24,9 +24,9 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem>
 //		private TextView labelView;
 //	}
 
-	public NavDrawerAdapter(Context context, int textViewResourceId, NavDrawerItem[] objects) {
-		super(context, textViewResourceId, objects);
-		this.inflater = LayoutInflater.from(context);
+	public NavDrawerAdapter(Context context, int textViewResourceId) {
+		super(context, textViewResourceId);
+		this.mLayoutInflater = LayoutInflater.from(context);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem>
 		final NavMenuItemHolder navMenuItemHolder;
 
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.nav_item, parentView, false);
+			convertView = mLayoutInflater.inflate(R.layout.nav_item, parentView, false);
 
 			// Use view holder
 			navMenuItemHolder = new NavMenuItemHolder();
@@ -68,7 +68,7 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem>
 
 	public View getSeparatorView(View convertView, ViewGroup parentView) {
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.nav_separator, parentView, false);
+			convertView = mLayoutInflater.inflate(R.layout.nav_separator, parentView, false);
 		}
 		return convertView;
 	}
@@ -79,7 +79,7 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem>
 //		NavMenuSectionHolder navMenuItemHolder = null;
 //
 //		if (convertView == null) {
-//			convertView = inflater.inflate(R.layout.navdrawer_section, parentView, false);
+//			convertView = mLayoutInflater.inflate(R.layout.navdrawer_section, parentView, false);
 //			TextView labelView = (TextView) convertView
 //					.findViewById(R.id.nav_label);
 //
@@ -96,6 +96,13 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem>
 //
 //		return convertView;
 //	}
+
+	public void setItems(NavDrawerItem[] data) {
+		if (data != null) {
+			clear();
+			addAll(data);
+		}
+	}
 
 	@Override
 	public int getViewTypeCount() {

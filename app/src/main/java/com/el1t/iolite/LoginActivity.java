@@ -41,11 +41,11 @@ import java.util.List;
 
 public class LoginActivity extends ActionBarActivity implements LoginFragment.OnFragmentInteractionListener
 {
-	private static final String FAKE_LOGIN = "fake";
+	public static final String FAKE_LOGIN = "fake";
+	public static final String PREFS_NAME = "LOGIN";
 	private static final String TAG = "Login Activity";
 	private static final String[] COOKIE_NAMES = {"IODINE_PASS_VECTOR", "PHPSESSID"};
 
-	public static final String PREFS_NAME = "LOGIN";
 
 	private LoginFragment mLoginFragment;
 	private String login_username;
@@ -170,7 +170,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 
 	private void logout(Cookie[] cookies) {
 		new LogoutRequest(cookies).execute("https://iodine.tjhsst.edu/logout");
-		Toast.makeText(getApplicationContext(), "Logged Out", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
 	}
 
 	void failed(boolean isAborted) {

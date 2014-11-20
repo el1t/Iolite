@@ -25,7 +25,7 @@ public class SignupFragment extends Fragment
 	private static final String TAG = "Signup Fragment";
 
 	private OnFragmentInteractionListener mListener;
-	private ActivityListAdapter mAdapter;
+	private SignupListAdapter mAdapter;
 	private SwipeRefreshLayout mSwipeRefreshLayout;
 
 	public interface OnFragmentInteractionListener {
@@ -38,20 +38,18 @@ public class SignupFragment extends Fragment
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-		View rootView = inflater.inflate(R.layout.fragment_signup,
-				container, false);
+		View rootView = inflater.inflate(R.layout.fragment_signup, container, false);
 
 		// Check if list was provided to setup custom ListAdapter
 		final Bundle args = getArguments();
 		if (args != null && args.getSerializable("list") != null) {
 			Log.d(TAG, "Activity list received");
-			mAdapter = new ActivityListAdapter(getActivity(), (ArrayList<EighthActivityItem>) args.getSerializable("list"));
+			mAdapter = new SignupListAdapter(getActivity(), (ArrayList<EighthActivityItem>) args.getSerializable("list"));
 		} else {
 			throw new IllegalArgumentException();
 		}
 
-		final ListView activityList = (ListView) rootView.findViewById(R.id.activityList);
+		final ListView activityList = (ListView) rootView.findViewById(R.id.activity_list);
 		activityList.setAdapter(mAdapter);
 
 		// Submit activity selection on click

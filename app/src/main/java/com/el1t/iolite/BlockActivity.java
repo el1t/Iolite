@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import org.apache.http.cookie.Cookie;
 import org.xmlpull.v1.XmlPullParserException;
@@ -64,52 +62,42 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 	protected void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
 		savedInstanceState.putSerializable("fake", fake);
-		getFragmentManager().putFragment(savedInstanceState, "fragment", mBlockFragment);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.eighth_block, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch(item.getItemId()) {
-			case R.id.action_logout:
-				logout();
-				return true;
+		if (mBlockFragment != null) {
+			getFragmentManager().putFragment(savedInstanceState, "fragment", mBlockFragment);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
 	protected NavDrawerActivityConfig getNavDrawerConfiguration() {
+		final NavDrawerAdapter adapter = new NavDrawerAdapter(this, R.layout.nav_item);
+		adapter.setItems(new NavMenuBuilder()
+				.addItem(NavMenuItem.create(101, "Eighth Signup"))
+				.addItem(NavMenuItem.create(102, "Test!"))
+				.addSeparator()
+				.addItem(NavMenuItem.createButton(201, "Settings"))
+				.addItem(NavMenuItem.createButton(202, "About"))
+				.addItem(NavMenuItem.createButton(203, "Logout"))
+				.build());
 
-		NavDrawerItem[] menu = {
-				NavMenuItem.create(101, "Eighth Signup", false),
-				NavMenuItem.create(102, "Test!", true),
-				null,
-				NavMenuItem.create(201, "Settings", false),
-				NavMenuItem.create(202, "About", false),
-				NavMenuItem.create(203, "Logout", false)};
-
-		NavDrawerActivityConfig navDrawerActivityConfig = new NavDrawerActivityConfig();
-		navDrawerActivityConfig.setMainLayout(R.layout.drawer_layout);
-		navDrawerActivityConfig.setDrawerLayoutId(R.id.drawer_layout);
-		navDrawerActivityConfig.setLeftDrawerId(R.id.drawer);
-		navDrawerActivityConfig.setNavItems(menu);
-//		navDrawerActivityConfig.setDrawerShadow(R.drawable.drawer_shadow);
-//		navDrawerActivityConfig.setDrawerOpenDesc(R.string.drawer_open);
-//		navDrawerActivityConfig.setDrawerCloseDesc(R.string.drawer_close);
-		navDrawerActivityConfig.setBaseAdapter(
-				new NavDrawerAdapter(this, R.layout.nav_item, menu));
-		return navDrawerActivityConfig;
+		return new NavDrawerActivityConfig.Builder()
+				.mainLayout(R.layout.drawer_layout)
+				.drawerLayoutId(R.id.drawer_layout)
+				.drawerContainerId(R.id.drawer_container)
+				.leftDrawerId(R.id.drawer)
+				.checkedPosition(0)
+				.drawerShadow(R.drawable.drawer_shadow)
+				.drawerOpenDesc(R.string.action_drawer_open)
+				.drawerCloseDesc(R.string.action_drawer_close)
+				.adapter(adapter)
+				.build();
 	}
 
 	@Override
 	protected void onNavItemSelected(int id) {
 		switch (id) {
+			case 202:
+				startActivity(new Intent(this, AboutActivity.class));
+				break;
 			case 203:
 				logout();
 				break;
@@ -125,7 +113,7 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 	// Select a BID to display activities for
 	public void select(int BID) {
 		// Send data to SignupActivity
-		Intent intent = new Intent(this, SignupActivity.class);
+		final Intent intent = new Intent(this, SignupActivity.class);
 		intent.putExtra("BID", BID);
 		intent.putExtra("fake", fake);
 		startActivity(intent);

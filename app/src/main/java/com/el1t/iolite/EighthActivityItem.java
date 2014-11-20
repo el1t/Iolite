@@ -42,7 +42,7 @@ public class EighthActivityItem implements Serializable, Parcelable
 	}
 
 	// Create a header object
-	public EighthActivityItem(String name, ActivityListAdapter.ActivityHeaderType headerType) {
+	public EighthActivityItem(String name, SignupListAdapter.ActivityHeaderType headerType) {
 		this.header = true;
 		this.name = name;
 		switch(headerType) {

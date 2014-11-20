@@ -21,7 +21,7 @@ import java.util.Comparator;
 /**
  * Created by El1t on 10/21/14.
  */
-public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implements Filterable
+public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implements Filterable
 {
 	// This is to hold all items without filtering
 	ArrayList<EighthActivityItem> mItems;
@@ -52,7 +52,7 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 		RED, DEEP_ORANGE, PINK, ORANGE, GREEN, WHITE
 	}
 
-	public ActivityListAdapter(Context context, ArrayList<EighthActivityItem> items) {
+	public SignupListAdapter(Context context, ArrayList<EighthActivityItem> items) {
 		super(context, 0);
 		// Headers
 		headers = new ArrayList<EighthActivityItem>();
@@ -85,8 +85,8 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// Cache the views for faster performance
-		ViewHolder viewHolder;
-		EighthActivityItem item = getItem(position);
+		final ViewHolder viewHolder;
+		final EighthActivityItem item = getItem(position);
 
 		if (convertView == null) {
 			// Initialize viewHolder and convertView
@@ -244,8 +244,8 @@ public class ActivityListAdapter extends ArrayAdapter<EighthActivityItem> implem
 				if (results.count == 0) {
 					notifyDataSetInvalidated();
 				} else {
-					ActivityListAdapter.this.clear();
-					ActivityListAdapter.this.addAll((ArrayList<EighthActivityItem>) results.values);
+					SignupListAdapter.this.clear();
+					SignupListAdapter.this.addAll((ArrayList<EighthActivityItem>) results.values);
 					notifyDataSetChanged();
 				}
 			}

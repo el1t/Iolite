@@ -5,11 +5,13 @@ package com.el1t.iolite;
  */
 public interface NavDrawerItem
 {
-	public int getId();
+	public int getResId();
 
 	public String getLabel();
 
 	public int getType();
+
+	public boolean isCheckable();
 
 	public boolean isEnabled();
 
