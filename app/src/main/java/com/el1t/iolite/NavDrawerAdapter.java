@@ -113,6 +113,6 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem>
 
 	@Override
 	public boolean isEnabled(int position) {
-		return getItem(position).isEnabled();
+		return getItem(position) != null && getItem(position).isEnabled();
 	}
 }

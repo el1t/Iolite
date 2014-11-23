@@ -119,7 +119,11 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 
 			// TODO: replace with useful room number
 			// viewHolder.room.setText();
-			viewHolder.description.setText(blockItem.getEighth().getDescription());
+			if (activityItem.hasDescription()) {
+				viewHolder.description.setText(activityItem.getDescription());
+			} else {
+				viewHolder.description.setText("No description.");
+			}
 
 			// Set color
 			String letter = blockItem.getBlock();
@@ -153,6 +157,11 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 	@Override
 	public int getViewTypeCount() {
 		return 2;
+	}
+
+	@Override
+	public boolean isEnabled(int position) {
+		return !getItem(position).isHeader();
 	}
 
 	void sort() {

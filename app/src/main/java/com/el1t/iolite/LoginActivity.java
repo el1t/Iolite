@@ -68,7 +68,19 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 					.commit();
 		}
 
-		checkAuthentication();
+		// This is identical to checkAuthentication except for intent checking
+		final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+		final Cookie[] cookies = getCookies(preferences);
+		if (cookies != null) {
+			final Intent intent = getIntent();
+			if (intent.getBooleanExtra("logout", false)) {
+				// Send logout request
+				logout(cookies);
+			} else {
+				// Check authentication
+				new Authentication(cookies).execute("https://iodine.tjhsst.edu/api/studentdirectory/info");
+			}
+		}
 
 		// Use material design toolbar
 		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -129,14 +141,8 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		final Cookie[] cookies = getCookies(preferences);
 		if (cookies != null) {
-			final Intent intent = getIntent();
-			if (intent.getBooleanExtra("logout", false)) {
-				// Send logout request
-				logout(cookies);
-			} else {
-				// Check authentication
-				new Authentication(cookies).execute("https://iodine.tjhsst.edu/api/studentdirectory/info");
-			}
+			// Check authentication
+			new Authentication(cookies).execute("https://iodine.tjhsst.edu/api/studentdirectory/info");
 		}
 	}
 

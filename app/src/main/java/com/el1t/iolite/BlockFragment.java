@@ -54,9 +54,7 @@ public class BlockFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
 				final EighthBlockItem item = (EighthBlockItem) parent.getItemAtPosition(position);
-				if (!item.isHeader()) {
-					mListener.select(item.getBID());
-				}
+				mListener.select(item.getBID());
 			}
 		});
 

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 /**
  * Created by El1t on 11/17/14.
@@ -23,7 +24,7 @@ public abstract class AbstractDrawerActivity extends ActionBarActivity {
 
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
-	private LinearLayout mDrawerContainer;
+	private RelativeLayout mDrawerContainer;
 	private ListView mDrawerList;
 	private NavDrawerActivityConfig navConf;
 	private int lastItemChecked;
@@ -45,7 +46,7 @@ public abstract class AbstractDrawerActivity extends ActionBarActivity {
 		}
 
 		mDrawerLayout = (DrawerLayout) findViewById(navConf.getDrawerLayoutId());
-		mDrawerContainer = (LinearLayout) findViewById(navConf.getDrawerContainerId());
+		mDrawerContainer = (RelativeLayout) findViewById(navConf.getDrawerContainerId());
 		mDrawerList = (ListView) findViewById(navConf.getLeftDrawerId());
 
 		mDrawerList.setAdapter(navConf.getAdapter());

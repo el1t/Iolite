@@ -58,9 +58,7 @@ public class SignupFragment extends Fragment
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
 				final EighthActivityItem item = (EighthActivityItem) parent.getItemAtPosition(position);
-				if (!item.isHeader()) {
-					mListener.submit(item);
-				}
+				mListener.submit(item);
 			}
 		});
 
@@ -83,18 +81,16 @@ public class SignupFragment extends Fragment
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 	                                ContextMenuInfo menuInfo) {
-		AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) menuInfo;
-		EighthActivityItem item = (EighthActivityItem) ((ListView) v).getItemAtPosition(acmi.position);
-		if (!item.isHeader()) {
-			getActivity().getMenuInflater().inflate(R.menu.context_menu_signup, menu);
-			if (item.isFavorite()) {
-				menu.findItem(R.id.context_favorite).setTitle("Unfavorite");
-			}
-			if (item.isRestricted() || item.isCancelled() || item.isFull() || item.isAttendanceTaken()) {
-				menu.findItem(R.id.context_signup).setEnabled(false);
-			}
-			super.onCreateContextMenu(menu, v, menuInfo);
+		final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) menuInfo;
+		final EighthActivityItem item = (EighthActivityItem) ((ListView) v).getItemAtPosition(acmi.position);
+		getActivity().getMenuInflater().inflate(R.menu.context_menu_signup, menu);
+		if (item.isFavorite()) {
+			menu.findItem(R.id.context_favorite).setTitle("Unfavorite");
 		}
+		if (item.isRestricted() || item.isCancelled() || item.isFull() || item.isAttendanceTaken()) {
+			menu.findItem(R.id.context_signup).setEnabled(false);
+		}
+		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 
 	@Override

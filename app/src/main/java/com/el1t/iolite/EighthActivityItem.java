@@ -220,11 +220,11 @@ public class EighthActivityItem implements Parcelable
 	}
 
 	public boolean hasDescription() {
-		return description.equals("") || description.trim().toLowerCase().equals("no description available");
+		return !description.equals("") && !description.trim().toLowerCase().equals("no description available");
 	}
 
 	public boolean isFull() {
-		return memberCount >= capacity;
+		return capacity > 0 && memberCount >= capacity;
 	}
 
 	public boolean changeFavorite() {

@@ -1,6 +1,10 @@
-<View xmlns:android="http://schemas.android.com/apk/res/android"
-      android:layout_width="match_parent"
-      android:layout_height="1dp"
-      android:paddingTop="8dp"
-      android:paddingBottom="8dp"
-      android:background="@color/grey_300" />
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="17dp">
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_gravity="center_vertical"
+		android:background="@color/grey_300" />
+</FrameLayout>

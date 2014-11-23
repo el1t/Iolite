@@ -44,12 +44,11 @@ public class User implements Parcelable
 	}
 
 	public String getFullName() {
-		return mName[0] + mName[1] + mName[2];
+		return mName[0] + " " + mName[1] + " " + mName[2];
 	}
 
 	public String getShortName() {
-		System.out.println(mName[0]);
-		return mName[0] + mName[2];
+		return mName[0] + " " + mName[2];
 	}
 
 	public void setFirstName(String name) {
@@ -68,6 +67,11 @@ public class User implements Parcelable
 		return mAddress;
 	}
 
+	public String getAddressString() {
+		return mAddress.getAddressLine(0) + "\n" +
+				mAddress.getSubAdminArea() + ", " + mAddress.getAdminArea() + " " + mAddress.getPostalCode();
+	}
+
 	public void setStreet(String street) {
 		mAddress.setAddressLine(0, street);
 	}
@@ -82,6 +86,10 @@ public class User implements Parcelable
 
 	public void setPostalCode(String postalCode) {
 		mAddress.setPostalCode(postalCode);
+	}
+
+	public String getPhone() {
+		return mAddress.getPhone();
 	}
 
 	public void setPhone(String phone) {

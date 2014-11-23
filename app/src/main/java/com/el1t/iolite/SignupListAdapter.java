@@ -113,10 +113,9 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 		viewHolder.title.setText(item.getName());
 		if (!item.isHeader()) {
 			if (item.hasDescription()) {
-				viewHolder.description.setVisibility(View.GONE);
-			} else {
 				viewHolder.description.setText(item.getDescription());
-				viewHolder.description.setVisibility(View.VISIBLE);
+			} else {
+				viewHolder.description.setText("No description.");
 			}
 
 			// Capacity bar
@@ -169,6 +168,11 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 	@Override
 	public int getViewTypeCount() {
 		return 2;
+	}
+
+	@Override
+	public boolean isEnabled(int position) {
+		return !getItem(position).isHeader();
 	}
 
 	public void sort() {
