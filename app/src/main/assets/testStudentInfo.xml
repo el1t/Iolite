@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--	<!DOCTYPE studentdirectory [
+		<!ELEMENT studentdirectory (body,error,debug)>
+		<!ELEMENT body (#PCDATA)>
+		<!ELEMENT error (#PCDATA)>
+		<!ELEMENT debug (#PCDATA)>
+		]>-->
+<studentdirectory>
+	<info>
+		<objectclass>tjhsstStudent</objectclass>
+		<iodineuid>2015etsung</iodineuid>
+		<iodineuidnumber>14342</iodineuidnumber>
+		<header>TRUE</header>
+		<chrome>TRUE</chrome>
+		<startpage>news</startpage>
+		<locker>0</locker>
+		<perm-showmap>FALSE</perm-showmap>
+		<eighthoffice-comments> </eighthoffice-comments>
+		<perm-showaddress>TRUE</perm-showaddress>
+		<perm-showtelephone>TRUE</perm-showtelephone>
+		<perm-showbirthday>TRUE</perm-showbirthday>
+		<perm-showschedule>TRUE</perm-showschedule>
+		<perm-showpictures>TRUE</perm-showpictures>
+		<perm-showlocker>TRUE</perm-showlocker>
+		<perm-showeighth>TRUE</perm-showeighth>
+		<mobile>5712326080</mobile>
+		<mail>
+			<mai>el1t@ymail.com</mai>
+			<mai>3lli7e@gmail.com</mai>
+		</mail>
+		<jabber>&#7424;&#7458;&#628;&#628;1&#628;&#7434;4@&#7448;&#7456;&#7448;.&#628;&#7431;&#7451;</jabber>
+		<preferredphoto>AUTO</preferredphoto>
+		<style>i3-light</style>
+		<mailentries>-1</mailentries>
+		<perm-showaddress-self>TRUE</perm-showaddress-self>
+		<perm-showtelephone-self>FALSE</perm-showtelephone-self>
+		<perm-showbirthday-self>TRUE</perm-showbirthday-self>
+		<perm-showschedule-self>TRUE</perm-showschedule-self>
+		<perm-showeighth-self>FALSE</perm-showeighth-self>
+		<perm-showmap-self>FALSE</perm-showmap-self>
+		<perm-showpictures-self>TRUE</perm-showpictures-self>
+		<perm-showlocker-self>FALSE</perm-showlocker-self>
+		<tjhsststudentid>1325419</tjhsststudentid>
+		<cn>Ellis Tsung</cn>
+		<sn>Tsung</sn>
+		<postalcode>22033</postalcode>
+		<counselor>22</counselor>
+		<st>VA</st>
+		<l>Fairfax</l>
+		<homephone>7032223876</homephone>
+		<birthday>19970512</birthday>
+		<street>3903 Bay Hill Ct</street>
+		<givenname>Ellis</givenname>
+		<graduationyear>2015</graduationyear>
+		<displayname>Ellis Shin-Li Tsung</displayname>
+		<gender>M</gender>
+		<title>Mr.</title>
+		<middlename>Shin-Li</middlename>
+		<enrolledclass>
+			<enrolledclass>tjhsstSectionId=001564-12,ou=schedule,dc=tjhsst,dc=edu</enrolledclass>
+			<enrolledclass>tjhsstSectionId=4220T1-02,ou=schedule,dc=tjhsst,dc=edu</enrolledclass>
+			<enrolledclass>tjhsstSectionId=319204-03,ou=schedule,dc=tjhsst,dc=edu</enrolledclass>
+			<enrolledclass>tjhsstSectionId=3199J2-01,ou=schedule,dc=tjhsst,dc=edu</enrolledclass>
+			<enrolledclass>tjhsstSectionId=3199T3-03,ou=schedule,dc=tjhsst,dc=edu</enrolledclass>
+			<enrolledclass>tjhsstSectionId=3199J1-02,ou=schedule,dc=tjhsst,dc=edu</enrolledclass>
+			<enrolledclass>tjhsstSectionId=244504-03,ou=schedule,dc=tjhsst,dc=edu</enrolledclass>
+			<enrolledclass>tjhsstSectionId=119604-05,ou=schedule,dc=tjhsst,dc=edu</enrolledclass>
+			<enrolledclass>tjhsstSectionId=280204-04,ou=schedule,dc=tjhsst,dc=edu</enrolledclass>
+			<enrolledclass>tjhsstSectionId=280304-04,ou=schedule,dc=tjhsst,dc=edu</enrolledclass>
+		</enrolledclass>
+		<allset>1</allset>
+	</info>
+	<error></error>
+	<debug></debug>
+</studentdirectory>

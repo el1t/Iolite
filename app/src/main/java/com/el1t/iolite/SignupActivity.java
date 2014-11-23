@@ -200,7 +200,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 			mSignupFragment = new SignupFragment();
 			// Add ArrayList to the ListView in BlockFragment
 			final Bundle args = new Bundle();
-			args.putSerializable("list", result);
+			args.putParcelableArrayList("list", result);
 			mSignupFragment.setArguments(args);
 			// Switch to BlockFragment view, remove LoadingFragment
 			getFragmentManager().beginTransaction()

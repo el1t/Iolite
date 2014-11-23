@@ -64,6 +64,7 @@
 					android:paddingTop="12dp"
 					android:textSize="14sp"
 					android:textStyle="bold"
+					android:textColor="@android:color/white"
 					android:ellipsize="end"
 					android:singleLine="true" />
 				<!-- Username -->
@@ -73,6 +74,7 @@
 					android:layout_height="wrap_content"
 					android:paddingTop="8dp"
 					android:textSize="14sp"
+					android:textColor="@android:color/white"
 					android:ellipsize="end"
 					android:singleLine="true" />
 			</LinearLayout>

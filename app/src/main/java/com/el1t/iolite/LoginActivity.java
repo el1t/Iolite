@@ -13,8 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.CookieStore;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.ClientPNames;
@@ -27,6 +30,7 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,7 +42,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// Login request -> Authentication (Grab info) -> Start activity
 public class LoginActivity extends ActionBarActivity implements LoginFragment.OnFragmentInteractionListener
 {
 	public static final String FAKE_LOGIN = "fake";
@@ -64,18 +68,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 					.commit();
 		}
 
-		final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-		final Cookie[] cookies = getCookies(preferences);
-		if (cookies != null) {
-			final Intent intent = getIntent();
-			if (intent.getBooleanExtra("logout", false)) {
-				// Send logout request
-				logout(cookies);
-			} else {
-				// Check authentication
-				new Authentication(cookies).execute("https://iodine.tjhsst.edu/api");
-			}
-		}
+		checkAuthentication();
 
 		// Use material design toolbar
 		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -132,35 +125,46 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		editor.commit();
 	}
 
+	private void checkAuthentication() {
+		final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+		final Cookie[] cookies = getCookies(preferences);
+		if (cookies != null) {
+			final Intent intent = getIntent();
+			if (intent.getBooleanExtra("logout", false)) {
+				// Send logout request
+				logout(cookies);
+			} else {
+				// Check authentication
+				new Authentication(cookies).execute("https://iodine.tjhsst.edu/api/studentdirectory/info");
+			}
+		}
+	}
+
 	// Submit the login request
 	public void submit(String username, String pass) {
 		login_username = username.trim();
 		login_password = pass;
 		if (isFakeLogin()) {
-			postSubmit();
+			postRequest(getList(), true);
 		} else {
-			new LoginRequest().execute("https://iodine.tjhsst.edu");
+			new LoginRequest().execute("https://iodine.tjhsst.edu/api");
 		}
-	}
-
-	// Do after submission
-	void postSubmit() {
-		if (isFakeLogin()) {
-			Toast.makeText(getApplicationContext(), "Loading faked data", Toast.LENGTH_SHORT).show();
-		} else {
-			Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_SHORT).show();
-		}
-		clearPassword();
-		Intent intent = new Intent(this, BlockActivity.class);
-		intent.putExtra("fake", isFakeLogin());
-		startActivity(intent);
-		finish();
 	}
 
 	// Do after authentication request
-	void postRequest(boolean result) {
-		if (result) {
-			postSubmit();
+	void postRequest(User user, boolean fake) {
+		if (user != null || fake) {
+			if (fake) {
+				Toast.makeText(getApplicationContext(), "Loading faked data", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_SHORT).show();
+			}
+			clearPassword();
+			Intent intent = new Intent(this, BlockActivity.class);
+			intent.putExtra("fake", fake);
+			intent.putExtra("user", user);
+			startActivity(intent);
+			finish();
 		} else {
 			Toast.makeText(getApplicationContext(), "Session Expired", Toast.LENGTH_SHORT).show();
 			Log.d(TAG, "Session expired");
@@ -186,25 +190,24 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		mLoginFragment.clearPassword();
 	}
 
-	// Check without parsing XML, can be optimized but unnecessary
-	private static boolean checkResponse(InputStream inputStream) throws IOException{
-		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-		StringBuilder out = new StringBuilder();
-		String line;
-		while ((line = reader.readLine()) != null) {
-			out.append(line);
-		}
-		reader.close();
-		return !out.toString().contains("not logged in");
-	}
-
 	// Checks if fake offline cache should be used
 	private boolean isFakeLogin() {
 		return login_username != null && login_username.toLowerCase().equals(FAKE_LOGIN);
 	}
 
+	// Get a fake list of blocks for debugging
+	private User getList() {
+		try {
+			return StudentInfoXmlParser.parse(getAssets().open("testStudentInfo.xml"));
+		} catch(Exception e) {
+			Log.e(TAG, "Error parsing block xml", e);
+		}
+		// Don't die?
+		return new User();
+	}
+
 	// Login request using HttpPost
-	private class LoginRequest extends AsyncTask<String, Void, CookieStore> {
+	private class LoginRequest extends AsyncTask<String, Void, List<Cookie>> {
 		private static final String TAG = "Login Connection";
 		private HttpPost mPost;
 
@@ -227,7 +230,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		}
 
 		@Override
-		protected CookieStore doInBackground(String... urls) {
+		protected List<Cookie> doInBackground(String... urls) {
 			DefaultHttpClient client = new DefaultHttpClient();
 			try {
 				client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
@@ -244,7 +247,16 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 				data.add(new BasicNameValuePair("login_password", login_password));
 				mPost.setEntity(new UrlEncodedFormEntity(data));
 
-				client.execute(mPost);
+				// Check for the message "login failed"
+				// Currently, intranet does not return a useful response if login is successful
+				final boolean result = client.execute(mPost, new ResponseHandler<Boolean>() {
+					@Override
+					public Boolean handleResponse(HttpResponse response) throws IOException {
+						final HttpEntity entity = response.getEntity();
+						return entity != null && !EntityUtils.toString(entity).contains("Login failed");
+					}
+				});
+				return result ? client.getCookieStore().getCookies() : null;
 			} catch (IOException e) {
 				if (!mPost.isAborted()) {
 					Log.e(TAG, "Connection error.", e);
@@ -252,26 +264,25 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 			} catch (Exception e) {
 				Log.e(TAG, "URL error.", e);
 			}
-			return client.getCookieStore();
+			return null;
 		}
 
 		@Override
-		protected void onPostExecute(CookieStore result) {
+		protected void onPostExecute(List<Cookie> result) {
 			super.onPostExecute(result);
-			List<Cookie> cookies = result.getCookies();
-			storeCookies(cookies);
 			mProgressDialog.dismiss();
-			if (cookies.size() >= 2) {
-				postSubmit();
-			} else {
+			if (result == null) {
 				failed(mPost.isAborted());
+			} else {
+				storeCookies(result);
+				checkAuthentication();
 			}
 		}
 	}
 
 	// Test if cookies are functional
-	private class Authentication extends AsyncTask<String, Void, Boolean> {
-		private static final String TAG = "Authentication Test Connection";
+	private class Authentication extends AsyncTask<String, Void, User> {
+		private static final String TAG = "Authentication Connection";
 		private HttpURLConnection mConnection;
 		private final Cookie[] mCookies;
 
@@ -283,7 +294,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		protected void onPreExecute() {
 			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
 				mProgressDialog = new ProgressDialog(LoginActivity.this);
-				mProgressDialog.setTitle("Logging in");
+				mProgressDialog.setTitle("Authenticating");
 				mProgressDialog.setMessage("Please wait...");
 				mProgressDialog.setCancelable(true);
 				mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -298,8 +309,8 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		}
 
 		@Override
-		protected Boolean doInBackground(String... urls) {
-			boolean response = false;
+		protected User doInBackground(String... urls) {
+			User response = null;
 			try {
 				mConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
 				// Add cookies to header
@@ -309,7 +320,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 				// Begin connection
 				mConnection.connect();
 				// Parse xml from server
-				response = checkResponse(mConnection.getInputStream());
+				response = StudentInfoXmlParser.parse(mConnection.getInputStream());
 				// Close connection
 				mConnection.disconnect();
 			} catch(IOException e) {
@@ -321,10 +332,10 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		}
 
 		@Override
-		protected void onPostExecute(Boolean result) {
+		protected void onPostExecute(User result) {
 			super.onPostExecute(result);
 			mProgressDialog.dismiss();
-			postRequest(result);
+			postRequest(result, false);
 		}
 	}
 

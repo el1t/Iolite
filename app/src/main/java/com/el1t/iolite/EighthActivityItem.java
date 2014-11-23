@@ -3,12 +3,10 @@ package com.el1t.iolite;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 /**
  * Created by El1t on 10/21/14.
  */
-public class EighthActivityItem implements Serializable, Parcelable
+public class EighthActivityItem implements Parcelable
 {
 	private int AID;
 	private String name;
@@ -237,23 +235,23 @@ public class EighthActivityItem implements Serializable, Parcelable
 		AID = in.readInt();
 		name = in.readString();
 		description = in.readString();
-		restricted = in.readByte() != 0x00;
-		presign = in.readByte() != 0x00;
-		oneaday = in.readByte() != 0x00;
-		bothblocks = in.readByte() != 0x00;
-		sticky = in.readByte() != 0x00;
-		special = in.readByte() != 0x00;
-		calendar = in.readByte() != 0x00;
-		roomChanged = in.readByte() != 0x00;
+		restricted = in.readByte() != 0;
+		presign = in.readByte() != 0;
+		oneaday = in.readByte() != 0;
+		bothblocks = in.readByte() != 0;
+		sticky = in.readByte() != 0;
+		special = in.readByte() != 0;
+		calendar = in.readByte() != 0;
+		roomChanged = in.readByte() != 0;
 		blockRoomString = in.readString();
 		BID = in.readInt();
-		cancelled = in.readByte() != 0x00;
-		attendanceTaken = in.readByte() != 0x00;
-		favorite = in.readByte() != 0x00;
+		cancelled = in.readByte() != 0;
+		attendanceTaken = in.readByte() != 0;
+		favorite = in.readByte() != 0;
 		memberCount = in.readInt();
 		capacity = in.readInt();
 		firstChar = in.readString();
-		header = in.readByte() != 0x00;
+		header = in.readByte() != 0;
 	}
 
 	@Override
@@ -266,26 +264,25 @@ public class EighthActivityItem implements Serializable, Parcelable
 		dest.writeInt(AID);
 		dest.writeString(name);
 		dest.writeString(description);
-		dest.writeByte((byte) (restricted ? 0x01 : 0x00));
-		dest.writeByte((byte) (presign ? 0x01 : 0x00));
-		dest.writeByte((byte) (oneaday ? 0x01 : 0x00));
-		dest.writeByte((byte) (bothblocks ? 0x01 : 0x00));
-		dest.writeByte((byte) (sticky ? 0x01 : 0x00));
-		dest.writeByte((byte) (special ? 0x01 : 0x00));
-		dest.writeByte((byte) (calendar ? 0x01 : 0x00));
-		dest.writeByte((byte) (roomChanged ? 0x01 : 0x00));
+		dest.writeByte((byte) (restricted ? 1 : 0));
+		dest.writeByte((byte) (presign ? 1 : 0));
+		dest.writeByte((byte) (oneaday ? 1 : 0));
+		dest.writeByte((byte) (bothblocks ? 1 : 0));
+		dest.writeByte((byte) (sticky ? 1 : 0));
+		dest.writeByte((byte) (special ? 1 : 0));
+		dest.writeByte((byte) (calendar ? 1 : 0));
+		dest.writeByte((byte) (roomChanged ? 1 : 0));
 		dest.writeString(blockRoomString);
 		dest.writeInt(BID);
-		dest.writeByte((byte) (cancelled ? 0x01 : 0x00));
-		dest.writeByte((byte) (attendanceTaken ? 0x01 : 0x00));
-		dest.writeByte((byte) (favorite ? 0x01 : 0x00));
+		dest.writeByte((byte) (cancelled ? 1 : 0));
+		dest.writeByte((byte) (attendanceTaken ? 1 : 0));
+		dest.writeByte((byte) (favorite ? 1 : 0));
 		dest.writeInt(memberCount);
 		dest.writeInt(capacity);
 		dest.writeString(firstChar);
-		dest.writeByte((byte) (header ? 0x01 : 0x00));
+		dest.writeByte((byte) (header ? 1 : 0));
 	}
 
-	@SuppressWarnings("unused")
 	public static final Parcelable.Creator<EighthActivityItem> CREATOR = new Parcelable.Creator<EighthActivityItem>() {
 		@Override
 		public EighthActivityItem createFromParcel(Parcel in) {

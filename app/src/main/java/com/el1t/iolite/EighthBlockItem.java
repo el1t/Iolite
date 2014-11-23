@@ -1,5 +1,7 @@
 package com.el1t.iolite;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
@@ -13,7 +15,7 @@ import java.util.Date;
 /**
  * Created by El1t on 10/24/14.
  */
-class EighthBlockItem implements Serializable
+class EighthBlockItem implements Parcelable
 {
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEEE, MMMM d");
 	private EighthActivityItem activity;
@@ -101,4 +103,41 @@ class EighthBlockItem implements Serializable
 
 		return sp;
 	}
+
+	protected EighthBlockItem(Parcel in) {
+		activity = in.readParcelable(EighthActivityItem.class.getClassLoader());
+		long tmpDate = in.readLong();
+		date = tmpDate != -1 ? new Date(tmpDate) : null;
+		BID = in.readInt();
+		type = in.readString();
+		locked = in.readByte() != 0;
+		header = in.readByte() != 0;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeParcelable(activity, flags);
+		dest.writeLong(date != null ? date.getTime() : -1L);
+		dest.writeInt(BID);
+		dest.writeString(type);
+		dest.writeByte((byte) (locked ? 1 : 0));
+		dest.writeByte((byte) (header ? 1 : 0));
+	}
+
+	public static final Parcelable.Creator<EighthBlockItem> CREATOR = new Parcelable.Creator<EighthBlockItem>() {
+		@Override
+		public EighthBlockItem createFromParcel(Parcel in) {
+			return new EighthBlockItem(in);
+		}
+
+		@Override
+		public EighthBlockItem[] newArray(int size) {
+			return new EighthBlockItem[size];
+		}
+	};
 }

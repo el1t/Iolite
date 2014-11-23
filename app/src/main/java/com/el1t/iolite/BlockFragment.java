@@ -38,9 +38,10 @@ public class BlockFragment extends Fragment {
 
 		// Check if list was provided from login activity to setup custom ListAdapter
 		final Bundle args = getArguments();
-		if (args != null && args.getSerializable("list") != null) {
+		final ArrayList<EighthBlockItem> items;
+		if (args != null && (items = args.getParcelableArrayList("list")) != null) {
 			Log.d(TAG, "Block list received");
-			mBlockListAdapter = new BlockListAdapter(getActivity(), (ArrayList<EighthBlockItem>) args.getSerializable("list"));
+			mBlockListAdapter = new BlockListAdapter(getActivity(), items);
 		} else {
 			Log.e(TAG, "No list received", new IllegalArgumentException());
 		}

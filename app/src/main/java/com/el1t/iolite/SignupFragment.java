@@ -42,9 +42,10 @@ public class SignupFragment extends Fragment
 
 		// Check if list was provided to setup custom ListAdapter
 		final Bundle args = getArguments();
-		if (args != null && args.getSerializable("list") != null) {
+		final ArrayList<EighthActivityItem> items;
+		if (args != null && (items = args.getParcelableArrayList("list")) != null) {
 			Log.d(TAG, "Activity list received");
-			mAdapter = new SignupListAdapter(getActivity(), (ArrayList<EighthActivityItem>) args.getSerializable("list"));
+			mAdapter = new SignupListAdapter(getActivity(), items);
 		} else {
 			throw new IllegalArgumentException();
 		}

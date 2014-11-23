@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import org.apache.http.cookie.Cookie;
 import org.xmlpull.v1.XmlPullParserException;
@@ -23,6 +24,7 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 
 	private BlockFragment mBlockFragment;
 	private Cookie[] mCookies;
+	private User mUser;
 	private boolean fake;
 
 	@Override
@@ -32,6 +34,7 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 		// Check if restoring from previously destroyed instance
 		if (savedInstanceState == null) {
 			final Intent intent = getIntent();
+			mUser = intent.getParcelableExtra("user");
 
 			// Check if fake information should be used
 			if ((fake = intent.getBooleanExtra("fake", false))) {
@@ -40,8 +43,15 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 				postRequest(getList());
 			}
 		} else {
+			mUser = savedInstanceState.getParcelable("user");
 			fake = savedInstanceState.getBoolean("fake");
 			mBlockFragment = (BlockFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
+		}
+
+		// Set header text
+		if (mUser != null) {
+			((TextView) findViewById(R.id.header_name)).setText(mUser.getShortName());
+			((TextView) findViewById(R.id.header_username)).setText(mUser.getUsername());
 		}
 
 		if (!fake) {
@@ -168,7 +178,7 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 			mBlockFragment = new BlockFragment();
 			// Add ArrayList to the ListView in BlockFragment
 			Bundle args = new Bundle();
-			args.putSerializable("list", result);
+			args.putParcelableArrayList("list", result);
 			mBlockFragment.setArguments(args);
 			// Switch to BlockFragment view, remove LoadingFragment
 			getFragmentManager().beginTransaction()
