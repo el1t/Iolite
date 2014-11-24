@@ -4,9 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -78,6 +83,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 			setSupportActionBar(toolbar);
 		}
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 	}
 
 	@Override
@@ -104,11 +110,15 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		super.onDestroy();
 	}
 
-	//	@Override
-//	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//		inflater.inflate(R.menu.login, menu);
-////		super.onCreateOptionsMenu(menu, inflater);
-//	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		final MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.eighth_signup, menu);
+		final MenuItem searchItem = menu.findItem(R.id.action_search);
+		final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+//		searchView.setOnQueryTextFocusChangeListener(this);
+		return super.onCreateOptionsMenu(menu);
+	}
 
 	public void refresh() {
 		if (!fake) {

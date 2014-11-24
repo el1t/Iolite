@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem>
 {
 	private LayoutInflater mLayoutInflater;
+	private int mChecked;
 
 	private static class NavMenuItemHolder {
 		private TextView labelView;
@@ -26,20 +27,20 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem>
 
 	public NavDrawerAdapter(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);
-		this.mLayoutInflater = LayoutInflater.from(context);
+		mLayoutInflater = LayoutInflater.from(context);
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		final NavDrawerItem menuItem = this.getItem(position);
+		final NavDrawerItem menuItem = getItem(position);
 		// if (menuItem.getType() == NavMenuItem.ITEM_TYPE) {
 		if (menuItem != null) {
-			return getItemView(convertView, parent, menuItem);
+			return getItemView(convertView, parent, menuItem, position == mChecked);
 		}
 		return getSeparatorView(convertView, parent);
 	}
 
-	public View getItemView(View convertView, ViewGroup parentView, NavDrawerItem navDrawerItem) {
+	public View getItemView(View convertView, ViewGroup parentView, NavDrawerItem navDrawerItem, boolean isChecked) {
 		final NavMenuItem menuItem = (NavMenuItem) navDrawerItem;
 		final NavMenuItemHolder navMenuItemHolder;
 
@@ -56,10 +57,15 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem>
 		}
 
 		navMenuItemHolder.labelView.setText(menuItem.getLabel());
+		if (isChecked) {
+			navMenuItemHolder.iconView.setAlpha(1f);
+		} else {
+			navMenuItemHolder.iconView.setAlpha(.54f);
+		}
 		navMenuItemHolder.iconView.setImageResource(menuItem.getIcon());
 		navMenuItemHolder.iconView.setVisibility(View.VISIBLE);
 
-		return convertView ;
+		return convertView;
 	}
 
 	public View getSeparatorView(View convertView, ViewGroup parentView) {
@@ -97,7 +103,13 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem>
 		if (data != null) {
 			clear();
 			addAll(data);
+			notifyDataSetChanged();
 		}
+	}
+
+	public void check(int position) {
+		mChecked = position;
+		notifyDataSetChanged();
 	}
 
 	@Override

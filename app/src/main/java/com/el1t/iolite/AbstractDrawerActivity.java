@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -26,6 +25,7 @@ public abstract class AbstractDrawerActivity extends ActionBarActivity {
 	private ActionBarDrawerToggle mDrawerToggle;
 	private RelativeLayout mDrawerContainer;
 	private ListView mDrawerList;
+	private NavDrawerAdapter mDrawerAdapter;
 	private NavDrawerActivityConfig navConf;
 	private int lastItemChecked;
 
@@ -49,7 +49,9 @@ public abstract class AbstractDrawerActivity extends ActionBarActivity {
 		mDrawerContainer = (RelativeLayout) findViewById(navConf.getDrawerContainerId());
 		mDrawerList = (ListView) findViewById(navConf.getLeftDrawerId());
 
-		mDrawerList.setAdapter(navConf.getAdapter());
+		mDrawerAdapter = navConf.getAdapter();
+		mDrawerAdapter.check(lastItemChecked);
+		mDrawerList.setAdapter(mDrawerAdapter);
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 		this.initDrawerShadow();
@@ -142,9 +144,10 @@ public abstract class AbstractDrawerActivity extends ActionBarActivity {
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			final NavDrawerItem selectedItem = navConf.getAdapter().getItem(position);
+			final NavDrawerItem selectedItem = mDrawerAdapter.getItem(position);
 			onNavItemSelected(selectedItem.getListId());
 			if (selectedItem.isCheckable()) {
+				mDrawerAdapter.check(position);
 				// Checking is automatically done
 				lastItemChecked = position;
 			} else if (lastItemChecked != -1) {
