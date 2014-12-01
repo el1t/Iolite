@@ -101,8 +101,8 @@ public class SignupFragment extends Fragment
 			case R.id.context_signup:
 				mListener.submit(activityItem);
 				return true;
-			case R.id.context_info:
-				return true;
+//			case R.id.context_info:
+//				return true;
 			case R.id.context_favorite:
 				mListener.favorite(activityItem.getAID(), activityItem.getBID(), mAdapter.changeFavorite(activityItem));
 				return true;

@@ -45,7 +45,7 @@ import java.util.List;
 // Login request -> Authentication (Grab info) -> Start activity
 public class LoginActivity extends ActionBarActivity implements LoginFragment.OnFragmentInteractionListener
 {
-	public static final String FAKE_LOGIN = "fake";
+//	public static final String FAKE_LOGIN = "fake";
 	public static final String PREFS_NAME = "LOGIN";
 	private static final String TAG = "Login Activity";
 	private static final String[] COOKIE_NAMES = {"IODINE_PASS_VECTOR", "PHPSESSID"};
@@ -89,24 +89,24 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.login, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		switch(item.getItemId()) {
-			case R.id.action_settings:
-				return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getMenuInflater().inflate(R.menu.login, menu);
+//		return true;
+//	}
+//
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		// Handle action bar item clicks here. The action bar will
+//		// automatically handle clicks on the Home/Up button, so long
+//		// as you specify a parent activity in AndroidManifest.xml.
+//		switch(item.getItemId()) {
+//			case R.id.action_settings:
+//				return true;
+//		}
+//		return super.onOptionsItemSelected(item);
+//	}
 
 	private void storeCookies(List<Cookie> cookies) {
 		final SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
@@ -198,7 +198,8 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 
 	// Checks if fake offline cache should be used
 	private boolean isFakeLogin() {
-		return login_username != null && login_username.toLowerCase().equals(FAKE_LOGIN);
+//		return login_username != null && login_username.toLowerCase().equals(FAKE_LOGIN);
+		return false;
 	}
 
 	// Get a fake list of blocks for debugging

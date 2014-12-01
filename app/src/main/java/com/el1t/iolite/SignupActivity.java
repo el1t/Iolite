@@ -110,15 +110,15 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		super.onDestroy();
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		final MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.eighth_signup, menu);
-		final MenuItem searchItem = menu.findItem(R.id.action_search);
-		final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-//		searchView.setOnQueryTextFocusChangeListener(this);
-		return super.onCreateOptionsMenu(menu);
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		final MenuInflater inflater = getMenuInflater();
+//		inflater.inflate(R.menu.eighth_signup, menu);
+//		final MenuItem searchItem = menu.findItem(R.id.action_search);
+//		final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+////		searchView.setOnQueryTextFocusChangeListener(this);
+//		return super.onCreateOptionsMenu(menu);
+//	}
 
 	public void refresh() {
 		if (!fake) {

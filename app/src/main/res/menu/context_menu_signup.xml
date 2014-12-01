@@ -10,10 +10,10 @@
 	      android:orderInCategory="100"
 	      app:showAsAction="never" />
 
-	<item android:id="@+id/context_info"
+	<!--<item android:id="@+id/context_info"
 	      android:title="Info"
 	      android:orderInCategory="100"
-	      app:showAsAction="never" />
+	      app:showAsAction="never" />-->
 
 	<item android:id="@+id/context_favorite"
 	      android:title="Favorite"

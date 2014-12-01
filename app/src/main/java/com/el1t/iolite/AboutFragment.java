@@ -21,7 +21,7 @@ public class AboutFragment extends Fragment
 		final View rootView = inflater.inflate(R.layout.fragment_about, container, false);
 		final ArrayList<AboutItem> items = new ArrayList<AboutItem>();
 		items.add(new AboutItem("Iolite", "©2014 Ellis Tsung"));
-		items.add(new AboutItem("Version", "0.7b"));
+		items.add(new AboutItem("Version", "1.0"));
 		items.add(new AboutItem("Intranet", "Iodine (v2)"));
 		mAdapter = new AboutListAdapter(getActivity(), items);
 

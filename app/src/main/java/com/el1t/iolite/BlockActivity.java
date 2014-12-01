@@ -82,9 +82,9 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 		final NavDrawerAdapter adapter = new NavDrawerAdapter(this, R.layout.nav_item);
 		adapter.setItems(new NavMenuBuilder()
 				.addItem(NavMenuItem.create(101, "Eighth", R.drawable.ic_event_black_24dp))
-				.addItem(NavMenuItem.create(102, "Test!", R.drawable.ic_event_black_24dp))
+//				.addItem(NavMenuItem.create(102, "Test!", R.drawable.ic_event_black_24dp))
 				.addSeparator()
-				.addItem(NavMenuItem.createButton(201, "Settings", R.drawable.ic_settings_black_24dp))
+//				.addItem(NavMenuItem.createButton(201, "Settings", R.drawable.ic_settings_black_24dp))
 				.addItem(NavMenuItem.createButton(202, "About", R.drawable.ic_help_black_24dp))
 				.addItem(NavMenuItem.createButton(203, "Logout", R.drawable.ic_exit_to_app_black_24dp))
 				.build());

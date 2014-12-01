@@ -68,7 +68,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 		// Cache colors
 		Resources resources = context.getResources();
 		mColors = new int[6];
-		mColors[Colors.RED.ordinal()]           = resources.getColor(R.color.accent_400);
+		mColors[Colors.RED.ordinal()]           = resources.getColor(R.color.red_400);
 		mColors[Colors.DEEP_ORANGE.ordinal()]   = resources.getColor(R.color.deep_orange_400);
 		mColors[Colors.PINK.ordinal()]          = resources.getColor(R.color.pink_400);
 		mColors[Colors.ORANGE.ordinal()]        = resources.getColor(R.color.orange_400);
