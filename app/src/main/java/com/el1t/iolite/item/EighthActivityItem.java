@@ -1,7 +1,9 @@
-package com.el1t.iolite;
+package com.el1t.iolite.item;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.el1t.iolite.adapter.SignupListAdapter;
 
 /**
  * Created by El1t on 10/21/14.

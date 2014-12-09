@@ -1,4 +1,4 @@
-package com.el1t.iolite;
+package com.el1t.iolite.drawer;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -16,6 +16,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.el1t.iolite.R;
+
 /**
  * Created by El1t on 11/17/14.
  */
@@ -29,9 +31,9 @@ public abstract class AbstractDrawerActivity extends ActionBarActivity {
 	private NavDrawerActivityConfig navConf;
 	private int lastItemChecked;
 
-	protected abstract NavDrawerActivityConfig getNavDrawerConfiguration();
+	public abstract NavDrawerActivityConfig getNavDrawerConfiguration();
 
-	protected abstract void onNavItemSelected(int id);
+	public abstract void onNavItemSelected(int id);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

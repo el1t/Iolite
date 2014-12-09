@@ -7,6 +7,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.el1t.iolite.drawer.AbstractDrawerActivity;
+import com.el1t.iolite.drawer.NavDrawerActivityConfig;
+import com.el1t.iolite.drawer.NavDrawerAdapter;
+import com.el1t.iolite.drawer.NavMenuBuilder;
+import com.el1t.iolite.drawer.NavMenuItem;
+import com.el1t.iolite.item.EighthBlockItem;
+import com.el1t.iolite.item.User;
+import com.el1t.iolite.parser.EighthBlockXmlParser;
+
 import org.apache.http.cookie.Cookie;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -78,7 +87,7 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 	}
 
 	@Override
-	protected NavDrawerActivityConfig getNavDrawerConfiguration() {
+	public NavDrawerActivityConfig getNavDrawerConfiguration() {
 		final NavDrawerAdapter adapter = new NavDrawerAdapter(this, R.layout.nav_item);
 		adapter.setItems(new NavMenuBuilder()
 				.addItem(NavMenuItem.create(101, "Eighth", R.drawable.ic_event_black_24dp))
@@ -103,7 +112,7 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 	}
 
 	@Override
-	protected void onNavItemSelected(int id) {
+	public void onNavItemSelected(int id) {
 		switch (id) {
 			case 202:
 				startActivity(new Intent(this, AboutActivity.class));

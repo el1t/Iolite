@@ -1,4 +1,4 @@
-package com.el1t.iolite;
+package com.el1t.iolite.item;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,7 +7,6 @@ import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.SuperscriptSpan;
 
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,7 +14,7 @@ import java.util.Date;
 /**
  * Created by El1t on 10/24/14.
  */
-class EighthBlockItem implements Parcelable
+public class EighthBlockItem implements Parcelable
 {
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEEE, MMMM d");
 	private EighthActivityItem activity;

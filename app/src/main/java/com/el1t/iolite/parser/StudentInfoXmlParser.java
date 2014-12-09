@@ -1,19 +1,20 @@
-package com.el1t.iolite;
+package com.el1t.iolite.parser;
 
 import android.util.Log;
 import android.util.Xml;
+
+import com.el1t.iolite.item.User;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 
 /**
  * Created by El1t on 10/21/14.
  */
-class StudentInfoXmlParser
+public class StudentInfoXmlParser
 {
 	private static final String TAG = "Student Info XML Parser";
 

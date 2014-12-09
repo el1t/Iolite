@@ -1,7 +1,9 @@
-package com.el1t.iolite;
+package com.el1t.iolite.parser;
 
 import android.util.Log;
 import android.util.Xml;
+
+import com.el1t.iolite.item.EighthActivityItem;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by El1t on 10/21/14.
  */
-class EighthActivityXmlParser
+public class EighthActivityXmlParser
 {
 	private static final String TAG = "Activity List XML Parser";
 
@@ -40,8 +42,29 @@ class EighthActivityXmlParser
 				continue;
 			}
 			String name = parser.getName();
-			// Look for success tag
-			if (name.equals("signup")) {
+			if (name.equals("auth")) {
+				parser.next();
+				// Consume the auth AND error tags
+				parser.next();
+				while (parser.next() != XmlPullParser.START_TAG) {
+					parser.next();
+				}
+				// Print debug message of error content
+				while (parser.next() != XmlPullParser.END_TAG) {
+					// Skip whitespace until a tag is reached
+					if (parser.getEventType() != XmlPullParser.START_TAG) {
+						continue;
+					}
+					String tagName = parser.getName();
+
+					if (tagName.equals("message")) {
+						Log.d(TAG, readString(parser, "message"));
+					} else {
+						skip(parser);
+					}
+				}
+			} else if (name.equals("signup")) {
+				// Look for success tag
 				parser.require(XmlPullParser.START_TAG, null, "signup");
 				// Loop through tags under signup
 				while (parser.next() != XmlPullParser.END_TAG) {
@@ -198,28 +221,6 @@ class EighthActivityXmlParser
 		if (parser.next() == XmlPullParser.TEXT) {
 			result = Integer.parseInt(parser.getText()) == 1;
 			parser.nextTag();
-		}
-		parser.require(XmlPullParser.END_TAG, null, tagName);
-		return result;
-	}
-
-	// Read integers inside another tag
-	protected static ArrayList<Integer> readNestedInts(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
-		ArrayList<Integer> result = new ArrayList<Integer>();
-		parser.require(XmlPullParser.START_TAG, null, tagName);
-		while(parser.next() != XmlPullParser.END_TAG) {
-			if (parser.getEventType() != XmlPullParser.START_TAG) {
-				continue;
-			}
-			// Eliminates the plural 's' (e.g. sponsors --> sponsor)
-			if (parser.getName().equals(tagName.substring(0, tagName.length() - 1))) {
-				if (parser.next() == XmlPullParser.TEXT) {
-					result.add(Integer.parseInt(parser.getText()));
-					parser.nextTag();
-				}
-			} else {
-				skip(parser);
-			}
 		}
 		parser.require(XmlPullParser.END_TAG, null, tagName);
 		return result;

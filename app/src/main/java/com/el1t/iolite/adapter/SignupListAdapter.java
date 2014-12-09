@@ -1,4 +1,4 @@
-package com.el1t.iolite;
+package com.el1t.iolite.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,6 +13,9 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.el1t.iolite.R;
+import com.el1t.iolite.item.EighthActivityItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,7 +71,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 		// Cache colors
 		Resources resources = context.getResources();
 		mColors = new int[6];
-		mColors[Colors.RED.ordinal()]           = resources.getColor(R.color.accent_400);
+		mColors[Colors.RED.ordinal()]           = resources.getColor(R.color.red_400);
 		mColors[Colors.DEEP_ORANGE.ordinal()]   = resources.getColor(R.color.deep_orange_400);
 		mColors[Colors.PINK.ordinal()]          = resources.getColor(R.color.pink_400);
 		mColors[Colors.ORANGE.ordinal()]        = resources.getColor(R.color.orange_400);
@@ -184,7 +187,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 	}
 
 	// Sort items and add to both lists
-	void setListItems(ArrayList<EighthActivityItem> items) {
+	public void setListItems(ArrayList<EighthActivityItem> items) {
 		mItems = items;
 		sort();
 	}
@@ -231,7 +234,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 	}
 
 	// Assumes mItems is already sorted
-	void restore() {
+	public void restore() {
 		if(getCount() == 0 && mItems != null) {
 			addAll(mItems);
 			notifyDataSetChanged();

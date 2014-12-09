@@ -15,6 +15,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 
+import com.el1t.iolite.adapter.SignupListAdapter;
+import com.el1t.iolite.item.EighthActivityItem;
+
 import java.util.ArrayList;
 
 /**
@@ -134,7 +137,7 @@ public class SignupFragment extends Fragment
 
 	@Override
 	public void onStart() {
-		super.onResume();
+		super.onStart();
 		mAdapter.restore();
 	}
 

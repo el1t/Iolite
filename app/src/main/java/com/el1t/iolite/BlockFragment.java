@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.el1t.iolite.adapter.BlockListAdapter;
+import com.el1t.iolite.item.EighthBlockItem;
+
 import java.util.ArrayList;
 
 /**

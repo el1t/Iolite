@@ -1,4 +1,4 @@
-package com.el1t.iolite;
+package com.el1t.iolite.item;
 
 /**
  * Created by El1t on 11/19/14.

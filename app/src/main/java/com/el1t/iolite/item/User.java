@@ -1,4 +1,4 @@
-package com.el1t.iolite;
+package com.el1t.iolite.item;
 
 import android.location.Address;
 import android.os.Parcel;

@@ -13,6 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.el1t.iolite.item.User;
+import com.el1t.iolite.parser.StudentInfoXmlParser;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -32,10 +35,7 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
@@ -61,16 +61,23 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
+		final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+		final Cookie[] cookies = getCookies(preferences);
 		if (savedInstanceState == null) {
 			mLoginFragment = new LoginFragment();
+			// Restore saved username
+			if (preferences.getBoolean("remember", false)) {
+				final Bundle args = new Bundle();
+				args.putBoolean("remember", true);
+				args.putString("username", preferences.getString("username", ""));
+				mLoginFragment.setArguments(args);
+			}
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, mLoginFragment)
 					.commit();
 		}
 
 		// This is identical to checkAuthentication except for intent checking
-		final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-		final Cookie[] cookies = getCookies(preferences);
 		if (cookies != null) {
 			final Intent intent = getIntent();
 			if (intent.getBooleanExtra("logout", false)) {
@@ -141,6 +148,12 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		final Cookie[] cookies = getCookies(preferences);
 		if (cookies != null) {
+			if (mLoginFragment.isChecked()) {
+				preferences.edit()
+						.putBoolean("remember", true)
+						.putString("username", login_username)
+						.apply();
+			}
 			// Check authentication
 			new Authentication(cookies).execute("https://iodine.tjhsst.edu/api/studentdirectory/info");
 		}
@@ -150,6 +163,11 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 	public void submit(String username, String pass) {
 		login_username = username.trim();
 		login_password = pass;
+		if (!mLoginFragment.isChecked()) {
+			getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
+					.putBoolean("remember", false)
+					.apply();
+		}
 		if (isFakeLogin()) {
 			postRequest(getList(), true);
 		} else {
@@ -221,8 +239,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		protected void onPreExecute() {
 			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
 				mProgressDialog = new ProgressDialog(LoginActivity.this);
-				mProgressDialog.setTitle("Logging in");
-				mProgressDialog.setMessage("Please wait...");
+				mProgressDialog.setMessage("Logging in");
 				mProgressDialog.setCancelable(true);
 				mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 					@Override
@@ -300,8 +317,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		protected void onPreExecute() {
 			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
 				mProgressDialog = new ProgressDialog(LoginActivity.this);
-				mProgressDialog.setTitle("Authenticating");
-				mProgressDialog.setMessage("Please wait...");
+				mProgressDialog.setMessage("Authenticating");
 				mProgressDialog.setCancelable(true);
 				mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 					@Override

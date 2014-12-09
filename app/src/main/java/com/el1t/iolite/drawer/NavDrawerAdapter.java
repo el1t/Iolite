@@ -1,4 +1,4 @@
-package com.el1t.iolite;
+package com.el1t.iolite.drawer;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.el1t.iolite.R;
 
 /**
  * Created by El1t on 11/18/14.

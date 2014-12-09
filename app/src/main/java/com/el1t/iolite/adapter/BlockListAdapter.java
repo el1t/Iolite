@@ -1,4 +1,4 @@
-package com.el1t.iolite;
+package com.el1t.iolite.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.el1t.iolite.R;
+import com.el1t.iolite.item.EighthActivityItem;
+import com.el1t.iolite.item.EighthBlockItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,12 +56,12 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 		Resources resources = context.getResources();
 		mColors = new int[10];
 		mColors[Colors.INDIGO.ordinal()] = resources.getColor(R.color.primary_400);
-		mColors[Colors.LIGHT_BLUE.ordinal()] = resources.getColor(R.color.light_blue_400);
+		mColors[Colors.LIGHT_BLUE.ordinal()] = resources.getColor(R.color.accent_400);
 		for (int i = 2; i < 6; i++) {
 			mColors[i] = resources.getColor(R.color.grey);
 		}
-		mColors[Colors.RED.ordinal()] = resources.getColor(R.color.accent_400);
-		mColors[Colors.DARK_RED.ordinal()] = resources.getColor(R.color.accent_600);
+		mColors[Colors.RED.ordinal()] = resources.getColor(R.color.red_400);
+		mColors[Colors.DARK_RED.ordinal()] = resources.getColor(R.color.red_600);
 		mColors[Colors.BLACK.ordinal()] = resources.getColor(R.color.primary_text_default_material_light);
 		mColors[Colors.TEXT.ordinal()] = resources.getColor(R.color.secondary_text_default_material_light);
 
@@ -189,7 +193,7 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 		}
 	}
 
-	void setListItems(ArrayList<EighthBlockItem> items) {
+	public void setListItems(ArrayList<EighthBlockItem> items) {
 		mItems = items;
 		sort();
 	}

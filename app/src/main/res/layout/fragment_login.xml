@@ -13,6 +13,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="7dp"
+		android:inputType="textNoSuggestions|textVisiblePassword"
 		android:hint="Username"
 		android:id="@+id/username"/>
 
@@ -25,6 +26,12 @@
 		android:ems="10"
 		android:id="@+id/password"
         android:fontFamily="sans_serif"/>
+
+	<CheckBox
+		android:id="@+id/remember"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Remember username"/>
 
 	<Button
 		android:layout_width="match_parent"

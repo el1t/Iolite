@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.el1t.iolite.adapter.AboutListAdapter;
+import com.el1t.iolite.item.AboutItem;
+
 import java.util.ArrayList;
 
 /**
@@ -21,7 +24,7 @@ public class AboutFragment extends Fragment
 		final View rootView = inflater.inflate(R.layout.fragment_about, container, false);
 		final ArrayList<AboutItem> items = new ArrayList<AboutItem>();
 		items.add(new AboutItem("Iolite", "©2014 Ellis Tsung"));
-		items.add(new AboutItem("Version", "0.7b"));
+		items.add(new AboutItem("Version", BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")"));
 		items.add(new AboutItem("Intranet", "Iodine (v2)"));
 		mAdapter = new AboutListAdapter(getActivity(), items);
 

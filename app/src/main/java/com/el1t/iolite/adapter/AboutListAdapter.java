@@ -1,4 +1,4 @@
-package com.el1t.iolite;
+package com.el1t.iolite.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.el1t.iolite.R;
+import com.el1t.iolite.item.AboutItem;
 
 import java.util.ArrayList;
 
