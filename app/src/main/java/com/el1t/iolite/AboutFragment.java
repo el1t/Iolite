@@ -21,14 +21,14 @@ public class AboutFragment extends Fragment
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		final View rootView = inflater.inflate(R.layout.fragment_about, container, false);
-		final ArrayList<AboutItem> items = new ArrayList<AboutItem>();
+		final View rootView = inflater.inflate(R.layout.fragment_list, container, false);
+		final ArrayList<AboutItem> items = new ArrayList<>();
 		items.add(new AboutItem("Iolite", "©2014 Ellis Tsung"));
 		items.add(new AboutItem("Version", BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")"));
 		items.add(new AboutItem("Intranet", "Iodine (v2)"));
 		mAdapter = new AboutListAdapter(getActivity(), items);
 
-		final ListView aboutList = (ListView) rootView.findViewById(R.id.about_list);
+		final ListView aboutList = (ListView) rootView.findViewById(R.id.list);
 		aboutList.setAdapter(mAdapter);
 
 		return rootView;

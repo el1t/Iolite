@@ -62,7 +62,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 		// Check if restoring from previously destroyed instance that matches the BID
 		if (savedInstanceState == null || BID != savedInstanceState.getInt("BID")) {
-			mTasks = new ArrayList<AsyncTask>();
+			mTasks = new ArrayList<>();
 			// Check if fake information should be used
 			if (fake = intent.getBooleanExtra("fake", false)) {
 				Log.d(TAG, "Loading fake info");
@@ -245,7 +245,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 			Log.e(TAG, "Error parsing activity xml", e);
 		}
 		// Don't die?
-		return new ArrayList<EighthActivityItem>();
+		return new ArrayList<>();
 	}
 
 	// Retrieve activity list for BID from server using HttpURLConnection
@@ -309,7 +309,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 					post.setHeader("Cookie", cookie.getName() + "=" + cookie.getValue());
 				}
 				// Add parameters
-				final List<NameValuePair> data = new ArrayList<NameValuePair>(2);
+				final List<NameValuePair> data = new ArrayList<>(2);
 				data.add(new BasicNameValuePair("aid", AID));
 				data.add(new BasicNameValuePair("bid", BID));
 				post.setEntity(new UrlEncodedFormEntity(data));

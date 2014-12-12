@@ -21,8 +21,8 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="com.el1t.iolite.BlockActivity"
-			android:label="@string/block_view"
+			android:name=".HomeActivity"
+			android:label="@string/home_view"
 			android:parentActivityName="com.el1t.iolite.LoginActivity"
 			android:launchMode="singleTop"
 			android:configChanges="orientation|screenSize">
@@ -30,12 +30,12 @@
 		<activity
 			android:name="com.el1t.iolite.SignupActivity"
 			android:label="@string/activity_view"
-			android:parentActivityName="com.el1t.iolite.BlockActivity"
+			android:parentActivityName=".HomeActivity"
 			android:launchMode="singleTop"
 			android:configChanges="orientation|screenSize">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.el1t.BlockActivity" />
+				android:value="com.el1t.iolite.HomeActivity" />
 		</activity>
 		<activity
 			android:name="com.el1t.iolite.AboutActivity"

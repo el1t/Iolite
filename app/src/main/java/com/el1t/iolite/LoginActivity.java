@@ -184,7 +184,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 				Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_SHORT).show();
 			}
 			clearPassword();
-			Intent intent = new Intent(this, BlockActivity.class);
+			Intent intent = new Intent(this, HomeActivity.class);
 			intent.putExtra("fake", fake);
 			intent.putExtra("user", user);
 			startActivity(intent);
@@ -265,7 +265,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 				context.setAttribute(ClientContext.COOKIE_STORE, temp);
 
 				mPost = new HttpPost(new URI(urls[0]));
-				List<NameValuePair> data = new ArrayList<NameValuePair>(2);
+				List<NameValuePair> data = new ArrayList<>(2);
 				data.add(new BasicNameValuePair("login_username", login_username));
 				data.add(new BasicNameValuePair("login_password", login_password));
 				mPost.setEntity(new UrlEncodedFormEntity(data));

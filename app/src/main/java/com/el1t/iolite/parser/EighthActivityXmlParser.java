@@ -42,56 +42,61 @@ public class EighthActivityXmlParser
 				continue;
 			}
 			String name = parser.getName();
-			if (name.equals("auth")) {
-				parser.next();
-				// Consume the auth AND error tags
-				parser.next();
-				while (parser.next() != XmlPullParser.START_TAG) {
+			switch (name) {
+				case "auth":
 					parser.next();
-				}
-				// Print debug message of error content
-				while (parser.next() != XmlPullParser.END_TAG) {
-					// Skip whitespace until a tag is reached
-					if (parser.getEventType() != XmlPullParser.START_TAG) {
-						continue;
+					// Consume the auth AND error tags
+					parser.next();
+					while (parser.next() != XmlPullParser.START_TAG) {
+						parser.next();
 					}
-					String tagName = parser.getName();
-
-					if (tagName.equals("message")) {
-						Log.d(TAG, readString(parser, "message"));
-					} else {
-						skip(parser);
-					}
-				}
-			} else if (name.equals("signup")) {
-				// Look for success tag
-				parser.require(XmlPullParser.START_TAG, null, "signup");
-				// Loop through tags under signup
-				while (parser.next() != XmlPullParser.END_TAG) {
-					if (parser.getEventType() != XmlPullParser.START_TAG) {
-						continue;
-					}
-					// Look for success tag
-					if (parser.getName().equals("success")) {
-						if (parser.next() == XmlPullParser.TEXT) {
-							response = parser.getText().equals("1");
-							parser.nextTag();
+					// Print debug message of error content
+					while (parser.next() != XmlPullParser.END_TAG) {
+						// Skip whitespace until a tag is reached
+						if (parser.getEventType() != XmlPullParser.START_TAG) {
+							continue;
 						}
-					} else {
-						skip(parser);
+						String tagName = parser.getName();
+
+						if (tagName.equals("message")) {
+							Log.d(TAG, readString(parser, "message"));
+						} else {
+							skip(parser);
+						}
 					}
-				}
-				parser.require(XmlPullParser.END_TAG, null, "signup");
-			// Look for error tag and print any error
-			} else if (name.equals("error")) {
-				parser.require(XmlPullParser.START_TAG, null, "error");
-				if (parser.next() == XmlPullParser.TEXT) {
-					Log.e(TAG, parser.getText());
-					parser.nextTag();
-				}
-				parser.require(XmlPullParser.END_TAG, null, "error");
-			} else {
-				skip(parser);
+					break;
+				case "signup":
+					// Look for success tag
+					parser.require(XmlPullParser.START_TAG, null, "signup");
+					// Loop through tags under signup
+					while (parser.next() != XmlPullParser.END_TAG) {
+						if (parser.getEventType() != XmlPullParser.START_TAG) {
+							continue;
+						}
+						// Look for success tag
+						if (parser.getName().equals("success")) {
+							if (parser.next() == XmlPullParser.TEXT) {
+								response = parser.getText().equals("1");
+								parser.nextTag();
+							}
+						} else {
+							skip(parser);
+						}
+					}
+					parser.require(XmlPullParser.END_TAG, null, "signup");
+					// Look for error tag and print any error
+					break;
+				case "error":
+					parser.require(XmlPullParser.START_TAG, null, "error");
+					if (parser.next() == XmlPullParser.TEXT) {
+						Log.e(TAG, parser.getText());
+						parser.nextTag();
+					}
+					parser.require(XmlPullParser.END_TAG, null, "error");
+					break;
+				default:
+					skip(parser);
+					break;
 			}
 		}
 		return response;
@@ -113,7 +118,7 @@ public class EighthActivityXmlParser
 	}
 
 	private static ArrayList<EighthActivityItem> readEighth(XmlPullParser parser) throws XmlPullParserException, IOException {
-		ArrayList<EighthActivityItem> entries = new ArrayList<EighthActivityItem>();
+		ArrayList<EighthActivityItem> entries = new ArrayList<>();
 		parser.require(XmlPullParser.START_TAG, null, "eighth");
 		// Consume the eighth AND activities tags
 		parser.next();
@@ -147,44 +152,64 @@ public class EighthActivityXmlParser
 			}
 			String tagName = parser.getName();
 
-			if (tagName.equals("aid")) {
-				temp.setAID(readInt(parser, "aid"));
-			} else if (tagName.equals("name")) {
-				temp.setName(readString(parser, "name"));
-			} else if (tagName.equals("description")) {
-				temp.setDescription(readString(parser, "description"));
-			} else if (tagName.equals("restricted")) {
-				temp.setRestricted(readBool(parser, "restricted"));
-			} else if (tagName.equals("presign")) {
-				temp.setPresign(readBool(parser, "presign"));
-			} else if (tagName.equals("oneaday")) {
-				temp.setOneaday(readBool(parser, "oneaday"));
-			} else if (tagName.equals("bothblocks")) {
-				temp.setBothblocks(readBool(parser, "bothblocks"));
-			} else if (tagName.equals("sticky")) {
-				temp.setSticky(readBool(parser, "sticky"));
-			} else if (tagName.equals("special")) {
-				temp.setSpecial(readBool(parser, "special"));
-			} else if (tagName.equals("calendar")) {
-				temp.setCalendar(readBool(parser, "calendar"));
-			} else if (tagName.equals("room_changed")) {
-				temp.setRoomChanged(readBool(parser, "room_changed"));
-			} else if (tagName.equals("block_rooms_comma")) {
-				temp.setBlockRoomString(readString(parser, "block_rooms_comma"));
-			} else if (tagName.equals("bid")) {
-				temp.setBID(readInt(parser, "bid"));
-			} else if (tagName.equals("cancelled")) {
-				temp.setCancelled(readBool(parser, "cancelled"));
-			} else if (tagName.equals("attendancetaken")) {
-				temp.setAttendanceTaken(readBool(parser, "attendancetaken"));
-			} else if (tagName.equals("favorite")) {
-				temp.setFavorite(readBool(parser, "favorite"));
-			} else if (tagName.equals("member_count")) {
-				temp.setMemberCount(readInt(parser, "member_count"));
-			} else if (tagName.equals("capacity")) {
-				temp.setCapacity(readInt(parser, "capacity"));
-			} else {
-				skip(parser);
+			switch (tagName) {
+				case "aid":
+					temp.setAID(readInt(parser, "aid"));
+					break;
+				case "name":
+					temp.setName(readString(parser, "name"));
+					break;
+				case "description":
+					temp.setDescription(readString(parser, "description"));
+					break;
+				case "restricted":
+					temp.setRestricted(readBool(parser, "restricted"));
+					break;
+				case "presign":
+					temp.setPresign(readBool(parser, "presign"));
+					break;
+				case "oneaday":
+					temp.setOneaday(readBool(parser, "oneaday"));
+					break;
+				case "bothblocks":
+					temp.setBothblocks(readBool(parser, "bothblocks"));
+					break;
+				case "sticky":
+					temp.setSticky(readBool(parser, "sticky"));
+					break;
+				case "special":
+					temp.setSpecial(readBool(parser, "special"));
+					break;
+				case "calendar":
+					temp.setCalendar(readBool(parser, "calendar"));
+					break;
+				case "room_changed":
+					temp.setRoomChanged(readBool(parser, "room_changed"));
+					break;
+				case "block_rooms_comma":
+					temp.setBlockRoomString(readString(parser, "block_rooms_comma"));
+					break;
+				case "bid":
+					temp.setBID(readInt(parser, "bid"));
+					break;
+				case "cancelled":
+					temp.setCancelled(readBool(parser, "cancelled"));
+					break;
+				case "attendancetaken":
+					temp.setAttendanceTaken(readBool(parser, "attendancetaken"));
+					break;
+				case "favorite":
+					temp.setFavorite(readBool(parser, "favorite"));
+					break;
+				case "member_count":
+					temp.setMemberCount(readInt(parser, "member_count"));
+					break;
+				case "capacity":
+					temp.setCapacity(readInt(parser, "capacity"));
+					break;
+				default:
+					skip(parser);
+					break;
 			}
 		}
 		parser.require(XmlPullParser.END_TAG, null, "activity");

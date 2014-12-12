@@ -34,75 +34,92 @@ public class StudentInfoXmlParser
 	private static User readInfo(XmlPullParser parser) throws XmlPullParserException, IOException {
 		final String tag = parser.getName();
 		// Not logged in, return null
-		if (tag.equals("auth")) {
-			parser.next();
-			// Consume the auth AND error tags
-			parser.next();
-			while (parser.next() != XmlPullParser.START_TAG) {
+		switch (tag) {
+			case "auth":
 				parser.next();
-			}
-			// Print debug message of error content
-			while (parser.next() != XmlPullParser.END_TAG) {
-				// Skip whitespace until a tag is reached
-				if (parser.getEventType() != XmlPullParser.START_TAG) {
-					continue;
-				}
-				String tagName = parser.getName();
-
-				if (tagName.equals("message")) {
-					Log.d(TAG, readString(parser, "message"));
-				} else {
-					skip(parser);
-				}
-			}
-		} else if (tag.equals("studentdirectory")) {
-			// Consume the studentdirectory AND info tags
-			parser.next();
-			while (parser.next() != XmlPullParser.START_TAG) {
+				// Consume the auth AND error tags
 				parser.next();
-			}
-			final User temp = new User();
-
-			while (parser.next() != XmlPullParser.END_TAG) {
-				// Skip whitespace until a tag is reached
-				if (parser.getEventType() != XmlPullParser.START_TAG) {
-					continue;
+				while (parser.next() != XmlPullParser.START_TAG) {
+					parser.next();
 				}
-				String tagName = parser.getName();
+				// Print debug message of error content
+				while (parser.next() != XmlPullParser.END_TAG) {
+					// Skip whitespace until a tag is reached
+					if (parser.getEventType() != XmlPullParser.START_TAG) {
+						continue;
+					}
+					String tagName = parser.getName();
 
-				if (tagName.equals("iodineuidnumber")) {
-					temp.setUID(readString(parser, "iodineuidnumber"));
-				} else if (tagName.equals("iodineuid")) {
-					temp.setUsername(readString(parser, "iodineuid"));
-				} else if (tagName.equals("givenname")) {
-					temp.setFirstName(readString(parser, "givenname"));
-				} else if (tagName.equals("middlename")) {
-					temp.setMiddleName(readString(parser, "middlename"));
-				} else if (tagName.equals("sn")) {
-					temp.setLastName(readString(parser, "sn"));
-				} else if (tagName.equals("street")) {
-					temp.setStreet(readString(parser, "street"));
-				} else if (tagName.equals("l")) {
-					temp.setCity(readString(parser, "l"));
-				} else if (tagName.equals("st")) {
-					temp.setState(readString(parser, "st"));
-				} else if (tagName.equals("postalcode")) {
-					temp.setPostalCode(readString(parser, "postalcode"));
-				} else if (tagName.equals("mobile")) {
-					temp.setMobile(readString(parser, "mobile"));
-				} else if (tagName.equals("mail")) {
-					readEmails(parser, "mail", temp);
-				} else if (tagName.equals("graduationyear")) {
-					temp.setGradYear(readInt(parser, "graduationyear"));
-				} else {
-					skip(parser);
+					if (tagName.equals("message")) {
+						Log.d(TAG, readString(parser, "message"));
+					} else {
+						skip(parser);
+					}
 				}
-			}
-			parser.require(XmlPullParser.END_TAG, null, "info");
+				break;
+			case "studentdirectory":
+				// Consume the studentdirectory AND info tags
+				parser.next();
+				while (parser.next() != XmlPullParser.START_TAG) {
+					parser.next();
+				}
+				final User temp = new User();
 
-			return temp;
-		} else {
-			Log.e(TAG, "Parser skipped all content");
+				while (parser.next() != XmlPullParser.END_TAG) {
+					// Skip whitespace until a tag is reached
+					if (parser.getEventType() != XmlPullParser.START_TAG) {
+						continue;
+					}
+					String tagName = parser.getName();
+
+					switch (tagName) {
+						case "iodineuidnumber":
+							temp.setUID(readString(parser, "iodineuidnumber"));
+							break;
+						case "iodineuid":
+							temp.setUsername(readString(parser, "iodineuid"));
+							break;
+						case "givenname":
+							temp.setFirstName(readString(parser, "givenname"));
+							break;
+						case "middlename":
+							temp.setMiddleName(readString(parser, "middlename"));
+							break;
+						case "sn":
+							temp.setLastName(readString(parser, "sn"));
+							break;
+						case "street":
+							temp.setStreet(readString(parser, "street"));
+							break;
+						case "l":
+							temp.setCity(readString(parser, "l"));
+							break;
+						case "st":
+							temp.setState(readString(parser, "st"));
+							break;
+						case "postalcode":
+							temp.setPostalCode(readString(parser, "postalcode"));
+							break;
+						case "mobile":
+							temp.setMobile(readString(parser, "mobile"));
+							break;
+						case "mail":
+							readEmails(parser, "mail", temp);
+							break;
+						case "graduationyear":
+							temp.setGradYear(readInt(parser, "graduationyear"));
+							break;
+						default:
+							skip(parser);
+							break;
+					}
+				}
+				parser.require(XmlPullParser.END_TAG, null, "info");
+
+				return temp;
+			default:
+				Log.e(TAG, "Parser skipped all content");
+				break;
 		}
 		return null;
 	}

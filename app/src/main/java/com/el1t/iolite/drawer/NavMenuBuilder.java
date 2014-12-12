@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class NavMenuBuilder {
 
-	private ArrayList<NavDrawerItem> mMenu = new ArrayList<NavDrawerItem>();
+	private ArrayList<NavDrawerItem> mMenu = new ArrayList<>();
 
 	public NavMenuBuilder addItem(NavDrawerItem customItem) {
 		mMenu.add(customItem);

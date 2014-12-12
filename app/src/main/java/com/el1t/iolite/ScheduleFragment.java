@@ -8,59 +8,45 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import com.el1t.iolite.adapter.BlockListAdapter;
-import com.el1t.iolite.item.EighthBlockItem;
-
-import java.util.ArrayList;
+import com.el1t.iolite.adapter.ScheduleListAdapter;
+import com.el1t.iolite.item.Schedule;
 
 /**
- * Created by El1t on 10/24/14.
+ * Created by El1t on 12/11/14.
  */
-public class BlockFragment extends Fragment
+public class ScheduleFragment extends Fragment
 {
-	private static final String TAG = "Block Fragment";
+	private static final String TAG = "Schedule Fragment";
 
 	private OnFragmentInteractionListener mListener;
-	private BlockListAdapter mBlockListAdapter;
+	private ScheduleListAdapter mScheduleListAdapter;
 	private SwipeRefreshLayout mSwipeRefreshLayout;
+	private Schedule mSchedule;
 
 	public interface OnFragmentInteractionListener {
-		public void select(int BID);
 		public void refresh();
 	}
 
-	public BlockFragment() { }
+	public ScheduleFragment() { }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-		View rootView = inflater.inflate(R.layout.fragment_list_refresh,
-				container, false);
+		View rootView = inflater.inflate(R.layout.fragment_list_refresh, container, false);
 
 		// Check if list was provided from login activity to setup custom ListAdapter
 		final Bundle args = getArguments();
-		final ArrayList<EighthBlockItem> items;
-		if (args != null && (items = args.getParcelableArrayList("list")) != null) {
-			Log.d(TAG, "Block list received");
-			mBlockListAdapter = new BlockListAdapter(getActivity(), items);
+		if (args != null && (mSchedule = args.getParcelable("schedule")) != null) {
+			Log.d(TAG, "Schedule received");
+			mScheduleListAdapter = new ScheduleListAdapter(getActivity(), mSchedule);
 		} else {
-			Log.e(TAG, "No list received", new IllegalArgumentException());
+			Log.e(TAG, "Schedule not received", new IllegalArgumentException());
 		}
 
-		final ListView blockList = (ListView) rootView.findViewById(R.id.list);
-		blockList.setAdapter(mBlockListAdapter);
-
-		// Select block selection on click
-		blockList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-				final EighthBlockItem item = (EighthBlockItem) parent.getItemAtPosition(position);
-				mListener.select(item.getBID());
-			}
-		});
+		final ListView scheduleList = (ListView) rootView.findViewById(R.id.list);
+		scheduleList.setAdapter(mScheduleListAdapter);
 
 		mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
 		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -70,7 +56,7 @@ public class BlockFragment extends Fragment
 				mListener.refresh();
 			}
 		});
-		mSwipeRefreshLayout.setColorSchemeResources(R.color.blue, R.color.red_600, R.color.amber, R.color.green_600);
+		mSwipeRefreshLayout.setColorSchemeResources(R.color.blue, R.color.red_600,  R.color.amber, R.color.green_600);
 
 		return rootView;
 	}
@@ -89,8 +75,9 @@ public class BlockFragment extends Fragment
 		}
 	}
 
-	void setListItems(ArrayList<EighthBlockItem> items) {
-		mBlockListAdapter.setListItems(items);
+	void setSchedule(Schedule schedule) {
+		mSchedule = schedule;
+		mScheduleListAdapter.setSchedule(schedule);
 		mSwipeRefreshLayout.setRefreshing(false);
 	}
 }

@@ -24,7 +24,7 @@ public class User implements Parcelable
 		mUID = mMobile = "";
 		mName = new String[] {"", "", ""};
 		mAddress = new Address(Locale.ENGLISH);
-		mEmails = new ArrayList<String>();
+		mEmails = new ArrayList<>();
 	}
 
 	public String getUID() {
@@ -126,7 +126,7 @@ public class User implements Parcelable
 		mName = in.createStringArray();
 		mAddress = in.readParcelable(Address.class.getClassLoader());
 		if (in.readByte() == 1) {
-			mEmails = new ArrayList<String>();
+			mEmails = new ArrayList<>();
 			in.readList(mEmails, String.class.getClassLoader());
 		} else {
 			mEmails = null;

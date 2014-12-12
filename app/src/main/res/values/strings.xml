@@ -5,7 +5,7 @@
 	<string name="login">LOGIN</string>
 
 	<string name="about_view">About</string>
-	<string name="block_view">Blocks</string>
+	<string name="home_view">Home</string>
 	<string name="activity_view">Activities</string>
 
 	<string name="action_refresh">Refresh</string>

@@ -84,7 +84,7 @@ public class ImageLoader
 		                     BitmapWorkerTask bitmapWorkerTask) {
 			super(res, bitmap);
 			bitmapWorkerTaskReference =
-					new WeakReference<BitmapWorkerTask>(bitmapWorkerTask);
+					new WeakReference<>(bitmapWorkerTask);
 		}
 
 		public BitmapWorkerTask getBitmapWorkerTask() {
@@ -116,7 +116,7 @@ public class ImageLoader
 
 		public BitmapWorkerTask(ImageView imageView) {
 			// Use a WeakReference to ensure the ImageView can be garbage collected
-			imageViewReference = new WeakReference<ImageView>(imageView);
+			imageViewReference = new WeakReference<>(imageView);
 		}
 
 		// Decode image in background.

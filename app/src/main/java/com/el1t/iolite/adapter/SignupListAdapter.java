@@ -58,7 +58,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 	public SignupListAdapter(Context context, ArrayList<EighthActivityItem> items) {
 		super(context, 0);
 		// Headers
-		headers = new ArrayList<EighthActivityItem>();
+		headers = new ArrayList<>();
 		headers.add(new EighthActivityItem("Favorites", ActivityHeaderType.FAVORITE));
 		headers.add(new EighthActivityItem("Special", ActivityHeaderType.SPECIAL));
 		headers.add(new EighthActivityItem("Activities", ActivityHeaderType.GENERAL));
@@ -273,7 +273,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 					results.values = mItems;
 					results.count = mItems.size();
 				} else {
-					ArrayList<EighthActivityItem> FilteredArrayNames = new ArrayList<EighthActivityItem>();
+					ArrayList<EighthActivityItem> FilteredArrayNames = new ArrayList<>();
 					constraint = constraint.toString().toLowerCase();
 					// This should preserve the sort of the items
 					for (EighthActivityItem item : mItems) {

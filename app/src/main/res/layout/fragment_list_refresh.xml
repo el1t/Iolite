@@ -5,13 +5,13 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical"
 	android:id="@+id/refresh"
-	tools:context=".BlockFragment">
+	tools:context=".HomeActivity">
 
 	<ListView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:background="@android:color/transparent"
-		android:id="@+id/blockList"
+		android:id="@+id/list"
 		android:dividerHeight="0dp"
 		android:divider="@null"/>
 </android.support.v4.widget.SwipeRefreshLayout>

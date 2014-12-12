@@ -76,7 +76,7 @@ public class SignupFragment extends Fragment
 				mListener.refresh();
 			}
 		});
-		mSwipeRefreshLayout.setColorSchemeResources(R.color.accent_600, R.color.blue, R.color.amber, R.color.green_600);
+		mSwipeRefreshLayout.setColorSchemeResources(R.color.blue, R.color.red_600, R.color.amber, R.color.green_600);
 
 		return rootView;
 	}

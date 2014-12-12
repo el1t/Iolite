@@ -13,12 +13,19 @@ import com.el1t.iolite.drawer.NavDrawerAdapter;
 import com.el1t.iolite.drawer.NavMenuBuilder;
 import com.el1t.iolite.drawer.NavMenuItem;
 import com.el1t.iolite.item.EighthBlockItem;
+import com.el1t.iolite.item.Schedule;
+import com.el1t.iolite.item.ScheduleItem;
 import com.el1t.iolite.item.User;
 import com.el1t.iolite.parser.EighthBlockXmlParser;
+import com.el1t.iolite.parser.ScheduleJsonParser;
 
 import org.apache.http.cookie.Cookie;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,14 +34,21 @@ import java.util.ArrayList;
  * Created by El1t on 10/24/14.
  */
 
-public class BlockActivity extends AbstractDrawerActivity implements BlockFragment.OnFragmentInteractionListener
+public class HomeActivity extends AbstractDrawerActivity implements BlockFragment.OnFragmentInteractionListener,
+		ScheduleFragment.OnFragmentInteractionListener
 {
 	private static final String TAG = "Block Activity";
 
 	private BlockFragment mBlockFragment;
+	private ScheduleFragment mScheduleFragment;
 	private Cookie[] mCookies;
 	private User mUser;
 	private boolean fake;
+	private Section activeView;
+
+	public enum Section {
+		BLOCK, SCHEDULE, LOADING
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,17 +58,26 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 		if (savedInstanceState == null) {
 			final Intent intent = getIntent();
 			mUser = intent.getParcelableExtra("user");
+			activeView = Section.BLOCK;
 
 			// Check if fake information should be used
 			if ((fake = intent.getBooleanExtra("fake", false))) {
 				Log.d(TAG, "Loading fake info");
 				// Pretend fake list was received
-				postRequest(getList());
+				postBlockRequest(getBlockList());
 			}
 		} else {
 			mUser = savedInstanceState.getParcelable("user");
 			fake = savedInstanceState.getBoolean("fake");
-			mBlockFragment = (BlockFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
+			activeView = Section.valueOf(savedInstanceState.getString("activeView"));
+			switch (activeView) {
+				case BLOCK:
+					mBlockFragment = (BlockFragment) getFragmentManager().getFragment(savedInstanceState, "blockFragment");
+					break;
+				case SCHEDULE:
+					mScheduleFragment = (ScheduleFragment) getFragmentManager().getFragment(savedInstanceState, "scheduleFragment");
+					break;
+			}
 		}
 
 		// Set header text
@@ -74,15 +97,25 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 	protected void onResume() {
 		super.onResume();
 		// Load list of blocks from web
-		refresh();
+		refresh(false);
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
 		savedInstanceState.putSerializable("fake", fake);
-		if (mBlockFragment != null) {
-			getFragmentManager().putFragment(savedInstanceState, "fragment", mBlockFragment);
+		savedInstanceState.putString("activeView", activeView.name());
+		switch (activeView) {
+			case BLOCK:
+				if (mBlockFragment != null) {
+					getFragmentManager().putFragment(savedInstanceState, "blockFragment", mBlockFragment);
+				}
+				break;
+			case SCHEDULE:
+				if (mScheduleFragment != null) {
+					getFragmentManager().putFragment(savedInstanceState, "scheduleFragment", mScheduleFragment);
+				}
+				break;
 		}
 	}
 
@@ -91,7 +124,7 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 		final NavDrawerAdapter adapter = new NavDrawerAdapter(this, R.layout.nav_item);
 		adapter.setItems(new NavMenuBuilder()
 				.addItem(NavMenuItem.create(101, "Eighth", R.drawable.ic_event_black_24dp))
-				.addItem(NavMenuItem.create(102, "Test!", R.drawable.ic_event_black_24dp))
+				.addItem(NavMenuItem.create(102, "Schedule", R.drawable.ic_event_black_24dp))
 				.addSeparator()
 				.addItem(NavMenuItem.createButton(201, "Settings", R.drawable.ic_settings_black_24dp))
 				.addItem(NavMenuItem.createButton(202, "About", R.drawable.ic_help_black_24dp))
@@ -114,18 +147,26 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 	@Override
 	public void onNavItemSelected(int id) {
 		switch (id) {
+			case 101:
+				switchView(Section.BLOCK);
+				break;
+			case 102:
+				switchView(Section.SCHEDULE);
+				break;
 			case 202:
 				startActivity(new Intent(this, AboutActivity.class));
 				break;
 			case 203:
 				logout();
 				break;
-//			case 101:
-//				getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FriendMainFragment()).commit();
-//				break;
-//			case 102:
-//				getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new AirportFragment()).commit();
-//				break;
+		}
+	}
+
+	// Switch and refresh view if a new view is selected
+	private void switchView(Section newView) {
+		if (activeView != newView) {
+			activeView = newView;
+			refresh(true);
 		}
 	}
 
@@ -139,34 +180,71 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 	}
 
 	// Get a fake list of blocks for debugging
-	private ArrayList<EighthBlockItem> getList() {
+	private ArrayList<EighthBlockItem> getBlockList() {
 		try {
 			return EighthBlockXmlParser.parse(getAssets().open("testBlockList.xml"), getApplicationContext());
 		} catch(Exception e) {
 			Log.e(TAG, "Error parsing block xml", e);
 		}
 		// Don't die?
-		return new ArrayList<EighthBlockItem>();
+		return new ArrayList<>();
 	}
 
 	public void refresh() {
-		if (!fake) {
-			if (mCookies == null) {
-				logout();
-			} else {
+		refresh(false);
+	}
+
+	/**
+	 * @param changeView True when new view is created
+	 */
+	private void refresh(boolean changeView) {
+		if (fake) {
+			switch (activeView) {
+				case BLOCK:
+					// Reload offline list
+					postBlockRequest(getBlockList());
+					break;
+				case SCHEDULE:
+					break;
+			}
+		} else if (activeView == Section.SCHEDULE) {
+			// The schedule does not need cookies to function
+			if (mScheduleFragment == null) {
+				getFragmentManager().beginTransaction()
+						.replace(R.id.container, new LoadingFragment())
+						.commit();
+				activeView = Section.LOADING;
+				setTitle("Schedule");
+			} else if (changeView) {
+				getFragmentManager().beginTransaction()
+						.replace(R.id.container, mScheduleFragment)
+						.commit();
+				setTitle("Schedule");
+			}
+
+			// Retrieve schedule
+			new ScheduleRequest().execute("https://iodine.tjhsst.edu/ajax/dayschedule/json");
+		} else if (mCookies == null) {
+			logout();
+		} else switch (activeView) {
+			case BLOCK:
 				// Set loading fragment, if necessary
-				if(mBlockFragment == null) {
+				if (mBlockFragment == null) {
 					getFragmentManager().beginTransaction()
 							.replace(R.id.container, new LoadingFragment())
 							.commit();
+					activeView = Section.LOADING;
+					setTitle("Blocks");
+				} else if (changeView) {
+					getFragmentManager().beginTransaction()
+							.replace(R.id.container, mBlockFragment)
+							.commit();
+					setTitle("Blocks");
 				}
 
 				// Retrieve list of bids using cookies
 				new BlockListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_blocks");
-			}
-		} else {
-			// Reload offline list
-			postRequest(getList());
+				break;
 		}
 	}
 
@@ -179,7 +257,7 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 		finish();
 	}
 
-	private void postRequest(ArrayList<EighthBlockItem> result) {
+	private void postBlockRequest(ArrayList<EighthBlockItem> result) {
 		// Check if creating a new fragment is necessary
 		// This should probably be done in onCreate, without a bundle
 		if (mBlockFragment == null) {
@@ -193,8 +271,25 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 			getFragmentManager().beginTransaction()
 					.replace(R.id.container, mBlockFragment)
 					.commit();
+			activeView = Section.BLOCK;
 		} else {
 			mBlockFragment.setListItems(result);
+		}
+	}
+
+	private void postScheduleRequest(Schedule result) {
+		if (mScheduleFragment == null) {
+			// Create the content view
+			mScheduleFragment = new ScheduleFragment();
+			Bundle args = new Bundle();
+			args.putParcelable("schedule", result);
+			mScheduleFragment.setArguments(args);
+			getFragmentManager().beginTransaction()
+					.replace(R.id.container, mScheduleFragment)
+					.commit();
+			activeView = Section.SCHEDULE;
+		} else {
+			mScheduleFragment.setSchedule(result);
 		}
 	}
 
@@ -233,7 +328,51 @@ public class BlockActivity extends AbstractDrawerActivity implements BlockFragme
 			if (result == null) {
 				logout();
 			} else {
-				postRequest(result);
+				postBlockRequest(result);
+			}
+		}
+	}
+
+	private class ScheduleRequest extends AsyncTask<String, Void, Schedule> {
+		private static final String TAG = "Schedule Connection";
+
+		@Override
+		protected Schedule doInBackground(String... urls) {
+
+			HttpURLConnection urlConnection = null;
+			Schedule response = null;
+			try {
+				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
+				// Begin connection
+				urlConnection.connect();
+				// Parse JSON from server
+				BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"), 8);
+				StringBuilder sb = new StringBuilder();
+				String line;
+				while ((line = reader.readLine()) != null) {
+					sb.append(line + "\n");
+				}
+				response = ScheduleJsonParser.parse(new JSONObject(sb.toString()));
+			} catch (JSONException e) {
+				Log.e(TAG, "JSON error.", e);
+			} catch (Exception e) {
+				Log.e(TAG, "Connection error.", e);
+			} finally {
+				if (urlConnection != null) {
+					// Close connection
+					urlConnection.disconnect();
+				}
+			}
+			return response;
+		}
+
+		@Override
+		protected void onPostExecute(Schedule result) {
+			super.onPostExecute(result);
+			if (result == null) {
+				Log.e(TAG, "Schedule listing aborted");
+			} else {
+				postScheduleRequest(result);
 			}
 		}
 	}
