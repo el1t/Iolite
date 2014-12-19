@@ -14,7 +14,6 @@ import com.el1t.iolite.drawer.NavMenuBuilder;
 import com.el1t.iolite.drawer.NavMenuItem;
 import com.el1t.iolite.item.EighthBlockItem;
 import com.el1t.iolite.item.Schedule;
-import com.el1t.iolite.item.ScheduleItem;
 import com.el1t.iolite.item.User;
 import com.el1t.iolite.parser.EighthBlockXmlParser;
 import com.el1t.iolite.parser.ScheduleJsonParser;
@@ -45,6 +44,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	private User mUser;
 	private boolean fake;
 	private Section activeView;
+	private int daysToLoad;
 
 	public enum Section {
 		BLOCK, SCHEDULE, LOADING
@@ -209,6 +209,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			}
 		} else if (activeView == Section.SCHEDULE) {
 			// The schedule does not need cookies to function
+			daysToLoad = 14;
 			if (mScheduleFragment == null) {
 				getFragmentManager().beginTransaction()
 						.replace(R.id.container, new LoadingFragment())
@@ -248,6 +249,16 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 	}
 
+	// Load more posts/days
+	public void load() {
+		daysToLoad = 5;
+		new ScheduleRequest().execute("https://iodine.tjhsst.edu/ajax/dayschedule/json?date=" + mScheduleFragment.getLastDay().getTomorrow());
+	}
+
+	public void queue(int i) {
+		daysToLoad = i;
+	}
+
 	void logout() {
 		mCookies = null;
 		// Start login activity
@@ -278,18 +289,28 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	}
 
 	private void postScheduleRequest(Schedule result) {
+		daysToLoad--;
 		if (mScheduleFragment == null) {
 			// Create the content view
 			mScheduleFragment = new ScheduleFragment();
 			Bundle args = new Bundle();
 			args.putParcelable("schedule", result);
+			args.putBoolean("refreshing", daysToLoad >= 0);
 			mScheduleFragment.setArguments(args);
 			getFragmentManager().beginTransaction()
 					.replace(R.id.container, mScheduleFragment)
 					.commit();
 			activeView = Section.SCHEDULE;
+		} else if (daysToLoad == 13) {
+			mScheduleFragment.reset(result);
+			mScheduleFragment.setRefreshing(true);
 		} else {
-			mScheduleFragment.setSchedule(result);
+			mScheduleFragment.addSchedule(result);
+		}
+		if (daysToLoad >= 0) {
+			new ScheduleRequest().execute("https://iodine.tjhsst.edu/ajax/dayschedule/json?date=" + result.getTomorrow());
+		} else {
+			mScheduleFragment.setRefreshing(false);
 		}
 	}
 

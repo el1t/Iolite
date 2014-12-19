@@ -14,21 +14,24 @@ public class Schedule implements Parcelable
 	private String type;
 	private String yesterday;
 	private String tomorrow;
-	private ArrayList<ScheduleItem> items;
+	private String blocks;
+	private String times;
 
 	/**
 	 * @param day Date (e.g. Monday, February 29)
 	 * @param type Day color (e.g. Blue)
 	 * @param yesterday Date code for previous day (e.g. 20150101)
 	 * @param tomorrow Date code for next day (e.g. 20150103)
-	 * @param items Schedule items
+	 * @param blocks Names of the blocks
+	 * @param times Time intervals for blocks
 	 */
-	public Schedule(String day, String type, String yesterday, String tomorrow, ArrayList<ScheduleItem> items) {
+	public Schedule(String day, String type, String yesterday, String tomorrow, String blocks, String times) {
 		this.day = day;
 		this.type = type;
 		this.yesterday = yesterday;
 		this.tomorrow = tomorrow;
-		this.items = items;
+		this.blocks = blocks;
+		this.times = times;
 	}
 
 	public static class ScheduleBuilder {
@@ -36,7 +39,8 @@ public class Schedule implements Parcelable
 		private String type;
 		private String yesterday;
 		private String tomorrow;
-		private ArrayList<ScheduleItem> items;
+		private String blocks;
+		private String times;
 
 		public ScheduleBuilder day(String day) {
 			this.day = day;
@@ -58,13 +62,18 @@ public class Schedule implements Parcelable
 			return this;
 		}
 
-		public ScheduleBuilder items(ArrayList<ScheduleItem> items) {
-			this.items = items;
+		public ScheduleBuilder blocks(String blocks) {
+			this.blocks = blocks;
+			return this;
+		}
+
+		public ScheduleBuilder times(String times) {
+			this.times = times;
 			return this;
 		}
 
 		public Schedule build() {
-			return new Schedule(day, type, yesterday, tomorrow, items);
+			return new Schedule(day, type, yesterday, tomorrow, blocks, times);
 		}
 	}
 
@@ -84,8 +93,12 @@ public class Schedule implements Parcelable
 		return tomorrow;
 	}
 
-	public ArrayList<ScheduleItem> getItems() {
-		return items;
+	public String getBlocks() {
+		return blocks;
+	}
+
+	public String getTimes() {
+		return times;
 	}
 
 	protected Schedule(Parcel in) {
@@ -93,12 +106,8 @@ public class Schedule implements Parcelable
 		type = in.readString();
 		yesterday = in.readString();
 		tomorrow = in.readString();
-		if (in.readByte() == 1) {
-			items = new ArrayList<>();
-			in.readTypedList(items, ScheduleItem.CREATOR);
-		} else {
-			items = null;
-		}
+		blocks = in.readString();
+		times = in.readString();
 	}
 
 	@Override
@@ -112,12 +121,8 @@ public class Schedule implements Parcelable
 		dest.writeString(type);
 		dest.writeString(yesterday);
 		dest.writeString(tomorrow);
-		if (items == null) {
-			dest.writeByte((byte) 0);
-		} else {
-			dest.writeByte((byte) 1);
-			dest.writeList(items);
-		}
+		dest.writeString(blocks);
+		dest.writeString(times);
 	}
 
 	public static final Parcelable.Creator<Schedule> CREATOR = new Parcelable.Creator<Schedule>() {

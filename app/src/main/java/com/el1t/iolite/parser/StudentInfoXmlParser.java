@@ -36,7 +36,6 @@ public class StudentInfoXmlParser
 		// Not logged in, return null
 		switch (tag) {
 			case "auth":
-				parser.next();
 				// Consume the auth AND error tags
 				parser.next();
 				while (parser.next() != XmlPullParser.START_TAG) {

@@ -1,13 +1,10 @@
 package com.el1t.iolite.parser;
 
 import com.el1t.iolite.item.Schedule;
-import com.el1t.iolite.item.ScheduleItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * Created by El1t on 12/11/14.
@@ -18,22 +15,23 @@ public class ScheduleJsonParser
 
 	public static Schedule parse(JSONObject schedule) throws JSONException {
 		JSONObject date = schedule.getJSONObject("date");
+		final String[] items = getItems(schedule.getJSONObject("schedule").getJSONArray("period"));
 		return new Schedule.ScheduleBuilder()
 				.day(schedule.getString("dayname"))
 				.type(schedule.getString("summary"))
 				.yesterday(date.getString("yesterday"))
 				.tomorrow(date.getString("tomorrow"))
-				.items(getItems(schedule.getJSONObject("schedule").getJSONArray("period")))
+				.blocks(items[0])
+				.times(items[1])
 				.build();
 	}
 
-	private static ArrayList<ScheduleItem> getItems(JSONArray blocks) throws JSONException {
-		ArrayList<ScheduleItem> items = new ArrayList<>();
+	private static String[] getItems(JSONArray blocks) throws JSONException {
+		final String[] items = {"", ""};
 		for (int i = 0; i < blocks.length(); i++) {
 			JSONObject block = blocks.getJSONObject(i);
-			items.add(new ScheduleItem(block.getInt("num"),
-					block.getString("name"),
-					block.getJSONObject("times").getString("times")));
+			items[0] += "\n" + block.getString("name");
+			items[1] += "\n" + block.getJSONObject("times").getString("times");
 		}
 		return items;
 	}
