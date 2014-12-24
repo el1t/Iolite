@@ -89,6 +89,14 @@ public class BlockFragment extends Fragment
 		}
 	}
 
+	@Override
+	public void onPause() {
+		super.onDetach();
+		// Stop refreshing animation to fix overlay bug
+		mSwipeRefreshLayout.setRefreshing(false);
+		mSwipeRefreshLayout.clearAnimation();
+	}
+
 	void setListItems(ArrayList<EighthBlockItem> items) {
 		mBlockListAdapter.setListItems(items);
 		mSwipeRefreshLayout.setRefreshing(false);

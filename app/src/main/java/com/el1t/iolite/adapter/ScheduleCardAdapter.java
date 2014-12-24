@@ -13,6 +13,7 @@ import com.el1t.iolite.R;
 import com.el1t.iolite.item.Schedule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by El1t on 12/16/14.
@@ -113,9 +114,9 @@ public class ScheduleCardAdapter extends RecyclerView.Adapter<ScheduleCardAdapte
 		return mSchedules == null ? 0 : mSchedules.size();
 	}
 
-	public void addItem(Schedule schedule) {
-		mSchedules.add(schedule);
-		notifyItemInserted(mSchedules.size() - 1);
+	public void addAll(Schedule[] schedules) {
+		mSchedules.addAll(Arrays.asList(schedules));
+		notifyItemRangeInserted(mSchedules.size() - schedules.length, schedules.length);
 	}
 
 	public void clear() {

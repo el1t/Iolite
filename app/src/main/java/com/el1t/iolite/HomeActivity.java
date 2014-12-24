@@ -24,10 +24,18 @@ import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by El1t on 10/24/14.
@@ -37,6 +45,8 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		ScheduleFragment.OnFragmentInteractionListener
 {
 	private static final String TAG = "Block Activity";
+	public static final int INITIAL_DAYS_TO_LOAD = 14;
+	public static final int DAYS_TO_LOAD = 7;
 
 	private BlockFragment mBlockFragment;
 	private ScheduleFragment mScheduleFragment;
@@ -44,7 +54,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	private User mUser;
 	private boolean fake;
 	private Section activeView;
-	private int daysToLoad;
 
 	public enum Section {
 		BLOCK, SCHEDULE, LOADING
@@ -209,7 +218,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			}
 		} else if (activeView == Section.SCHEDULE) {
 			// The schedule does not need cookies to function
-			daysToLoad = 14;
 			if (mScheduleFragment == null) {
 				getFragmentManager().beginTransaction()
 						.replace(R.id.container, new LoadingFragment())
@@ -224,7 +232,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			}
 
 			// Retrieve schedule
-			new ScheduleRequest().execute("https://iodine.tjhsst.edu/ajax/dayschedule/json");
+			new ScheduleRequest(Calendar.getInstance().getTime()).execute(INITIAL_DAYS_TO_LOAD);
 		} else if (mCookies == null) {
 			logout();
 		} else switch (activeView) {
@@ -251,12 +259,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 	// Load more posts/days
 	public void load() {
-		daysToLoad = 5;
-		new ScheduleRequest().execute("https://iodine.tjhsst.edu/ajax/dayschedule/json?date=" + mScheduleFragment.getLastDay().getTomorrow());
-	}
-
-	public void queue(int i) {
-		daysToLoad = i;
+		new ScheduleRequest(mScheduleFragment.getLastDay().getTomorrow()).execute(DAYS_TO_LOAD);
 	}
 
 	void logout() {
@@ -288,28 +291,22 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 	}
 
-	private void postScheduleRequest(Schedule result) {
-		daysToLoad--;
+	private void postScheduleRequest(Schedule[] result) {
 		if (mScheduleFragment == null) {
 			// Create the content view
 			mScheduleFragment = new ScheduleFragment();
 			Bundle args = new Bundle();
-			args.putParcelable("schedule", result);
-			args.putBoolean("refreshing", daysToLoad >= 0);
+			args.putParcelableArray("schedule", result);
 			mScheduleFragment.setArguments(args);
 			getFragmentManager().beginTransaction()
 					.replace(R.id.container, mScheduleFragment)
 					.commit();
 			activeView = Section.SCHEDULE;
-		} else if (daysToLoad == 13) {
+		} else if (result.length == INITIAL_DAYS_TO_LOAD) {
 			mScheduleFragment.reset(result);
-			mScheduleFragment.setRefreshing(true);
+			mScheduleFragment.setRefreshing(false);
 		} else {
-			mScheduleFragment.addSchedule(result);
-		}
-		if (daysToLoad >= 0) {
-			new ScheduleRequest().execute("https://iodine.tjhsst.edu/ajax/dayschedule/json?date=" + result.getTomorrow());
-		} else {
+			mScheduleFragment.addSchedules(result);
 			mScheduleFragment.setRefreshing(false);
 		}
 	}
@@ -354,26 +351,38 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 	}
 
-	private class ScheduleRequest extends AsyncTask<String, Void, Schedule> {
+	private class ScheduleRequest extends AsyncTask<Integer, Void, Schedule[]> {
 		private static final String TAG = "Schedule Connection";
+		private static final String API_URL = "https://iodine.tjhsst.edu/ajax/dayschedule/json_exp";
+		private final DateFormat mFormat = new SimpleDateFormat("yyyyMMdd");
+		private Date mStartDate;
+
+		public ScheduleRequest (Date startDate) {
+			mStartDate = startDate;
+		}
+
+		public ScheduleRequest (String startDate) {
+			try {
+				mStartDate = mFormat.parse(startDate);
+			} catch (ParseException e) {
+				Log.e(TAG, "Date parse error.", e);
+				mStartDate = null;
+			}
+		}
 
 		@Override
-		protected Schedule doInBackground(String... urls) {
-
+		protected Schedule[] doInBackground(Integer... days) {
+			final Date endDate = computeDays(days[0]);
 			HttpURLConnection urlConnection = null;
-			Schedule response = null;
+			Schedule[] response = null;
 			try {
-				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
+				urlConnection = (HttpURLConnection) new URL(API_URL +
+						"?start=" + mFormat.format(mStartDate) + "&end=" + mFormat.format(endDate))
+						.openConnection();
 				// Begin connection
 				urlConnection.connect();
 				// Parse JSON from server
-				BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"), 8);
-				StringBuilder sb = new StringBuilder();
-				String line;
-				while ((line = reader.readLine()) != null) {
-					sb.append(line + "\n");
-				}
-				response = ScheduleJsonParser.parse(new JSONObject(sb.toString()));
+				response = ScheduleJsonParser.parseSchedules(inputStreamToJSON(urlConnection.getInputStream()));
 			} catch (JSONException e) {
 				Log.e(TAG, "JSON error.", e);
 			} catch (Exception e) {
@@ -387,8 +396,27 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			return response;
 		}
 
+		private Date computeDays(int daysAfter) {
+			final Calendar c = Calendar.getInstance();
+			c.setTime(mStartDate);
+			// Current day is included, but last day is not included
+			c.add(Calendar.DATE, daysAfter);
+			return c.getTime();
+		}
+
+		// Parse the InputStream into a JSONObject
+		private JSONObject inputStreamToJSON(InputStream inputStream) throws JSONException, IOException {
+			final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+			final StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				sb.append(line).append("\n");
+			}
+			return new JSONObject(sb.toString());
+		}
+
 		@Override
-		protected void onPostExecute(Schedule result) {
+		protected void onPostExecute(Schedule[] result) {
 			super.onPostExecute(result);
 			if (result == null) {
 				Log.e(TAG, "Schedule listing aborted");

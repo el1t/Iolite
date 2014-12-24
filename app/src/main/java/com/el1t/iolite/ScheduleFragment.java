@@ -18,6 +18,7 @@ import com.el1t.iolite.adapter.ScheduleCardAdapter;
 import com.el1t.iolite.item.Schedule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by El1t on 12/11/14.
@@ -30,13 +31,11 @@ public class ScheduleFragment extends Fragment
 	private ScheduleCardAdapter mScheduleCardAdapter;
 	private SwipeRefreshLayout mSwipeRefreshLayout;
 	private LinearLayoutManager mLayoutManager;
-	private int mTotalItemCount;
 	private boolean mLoading;
 
 	public interface OnFragmentInteractionListener {
 		public void refresh();
 		public void load();
-		public void queue(int i);
 	}
 
 	public ScheduleFragment() { }
@@ -47,11 +46,11 @@ public class ScheduleFragment extends Fragment
 
 		// Check if list was provided from login activity to setup custom ListAdapter
 		final Bundle args = getArguments();
-		final Schedule schedule;
-		if (args != null && (schedule = args.getParcelable("schedule")) != null) {
+		final Schedule[] schedules;
+		if (args != null && (schedules = (Schedule[]) args.getParcelableArray("schedule")) != null) {
 			Log.d(TAG, "Schedule received");
 			final ArrayList<Schedule> list = new ArrayList<>();
-			list.add(schedule);
+			list.addAll(Arrays.asList(schedules));
 			mScheduleCardAdapter = new ScheduleCardAdapter(getActivity(), list);
 		} else {
 			Log.e(TAG, "Schedule not received", new IllegalArgumentException());
@@ -66,7 +65,8 @@ public class ScheduleFragment extends Fragment
 			}
 		});
 		mSwipeRefreshLayout.setColorSchemeResources(R.color.blue, R.color.red_600,  R.color.amber, R.color.green_600);
-		mSwipeRefreshLayout.setRefreshing(args != null && args.getBoolean("refreshing", false));
+		// TODO: This currently does not show the indicator
+//		mSwipeRefreshLayout.setRefreshing(args != null && args.getBoolean("refreshing", false));
 
 		final RecyclerView scheduleList = (RecyclerView) rootView.findViewById(R.id.list);
 		mLayoutManager = new LinearLayoutManager(inflater.getContext());
@@ -75,22 +75,12 @@ public class ScheduleFragment extends Fragment
 		scheduleList.setAdapter(mScheduleCardAdapter);
 		scheduleList.setOnScrollListener(new RecyclerView.OnScrollListener() {
 			@Override
-			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-				super.onScrolled(recyclerView, dx, dy);
-			}
-
-			@Override
 			public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 				final int lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
 
-				if (!mSwipeRefreshLayout.isRefreshing() && lastVisibleItem >= mTotalItemCount - 2) {
-					mTotalItemCount += 5;
-					if (mLoading) {
-						mListener.queue(5);
-					} else {
-						mLoading = true;
-						mListener.load();
-					}
+				if (!mLoading && lastVisibleItem >= mLayoutManager.getItemCount() - 3) {
+					mLoading = true;
+					mListener.load();
 				}
 			}
 		});
@@ -111,14 +101,21 @@ public class ScheduleFragment extends Fragment
 		}
 	}
 
-	void reset(Schedule schedule) {
-		mScheduleCardAdapter.clear();
-		mScheduleCardAdapter.addItem(schedule);
-		mTotalItemCount = 14;
+	@Override
+	public void onPause() {
+		super.onDetach();
+		// Stop refreshing animation to fix overlay bug
+		mSwipeRefreshLayout.setRefreshing(false);
+		mSwipeRefreshLayout.clearAnimation();
 	}
 
-	void addSchedule(Schedule schedule) {
-		mScheduleCardAdapter.addItem(schedule);
+	void reset(Schedule[] schedules) {
+		mScheduleCardAdapter.clear();
+		mScheduleCardAdapter.addAll(schedules);
+	}
+
+	void addSchedules(Schedule[] schedules) {
+		mScheduleCardAdapter.addAll(schedules);
 	}
 
 	void setRefreshing(boolean refreshing) {

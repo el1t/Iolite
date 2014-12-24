@@ -2,15 +2,18 @@ package com.el1t.iolite.item;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by El1t on 12/11/14.
  */
-public class Schedule implements Parcelable
+public class Schedule implements Parcelable, Comparable<Schedule>
 {
 	private String day;
+	private Date date;
 	private String type;
 	private String yesterday;
 	private String tomorrow;
@@ -25,8 +28,9 @@ public class Schedule implements Parcelable
 	 * @param blocks Names of the blocks
 	 * @param times Time intervals for blocks
 	 */
-	public Schedule(String day, String type, String yesterday, String tomorrow, String blocks, String times) {
+	public Schedule(String day, Date date, String type, String yesterday, String tomorrow, String blocks, String times) {
 		this.day = day;
+		this.date = date;
 		this.type = type;
 		this.yesterday = yesterday;
 		this.tomorrow = tomorrow;
@@ -36,6 +40,7 @@ public class Schedule implements Parcelable
 
 	public static class ScheduleBuilder {
 		private String day;
+		private Date date;
 		private String type;
 		private String yesterday;
 		private String tomorrow;
@@ -44,6 +49,11 @@ public class Schedule implements Parcelable
 
 		public ScheduleBuilder day(String day) {
 			this.day = day;
+			return this;
+		}
+
+		public ScheduleBuilder date(Date date) {
+			this.date = date;
 			return this;
 		}
 
@@ -73,7 +83,7 @@ public class Schedule implements Parcelable
 		}
 
 		public Schedule build() {
-			return new Schedule(day, type, yesterday, tomorrow, blocks, times);
+			return new Schedule(day, date, type, yesterday, tomorrow, blocks, times);
 		}
 	}
 
@@ -101,8 +111,14 @@ public class Schedule implements Parcelable
 		return times;
 	}
 
+	@Override
+	public int compareTo(@NonNull Schedule schedule) {
+		return date.compareTo(schedule.date);
+	}
+
 	protected Schedule(Parcel in) {
 		day = in.readString();
+		date = new Date(in.readLong());
 		type = in.readString();
 		yesterday = in.readString();
 		tomorrow = in.readString();
@@ -118,6 +134,7 @@ public class Schedule implements Parcelable
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(day);
+		dest.writeLong(date.getTime());
 		dest.writeString(type);
 		dest.writeString(yesterday);
 		dest.writeString(tomorrow);

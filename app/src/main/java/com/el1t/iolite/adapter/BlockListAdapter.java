@@ -3,6 +3,7 @@ package com.el1t.iolite.adapter;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 	// View lookup cache
 	private static class ViewHolder {
 		TextView title;
+		TextView sponsors;
 		TextView room;
 		TextView description;
 		ImageView circle;
@@ -85,6 +87,7 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 			} else {
 				convertView = mLayoutInflater.inflate(R.layout.row_block, parent, false);
 				viewHolder.title = (TextView) convertView.findViewById(R.id.title);
+				viewHolder.sponsors = (TextView) convertView.findViewById(R.id.sponsors);
 				viewHolder.room = (TextView) convertView.findViewById(R.id.room);
 				viewHolder.description = (TextView) convertView.findViewById(R.id.description);
 				viewHolder.circle = (ImageView) convertView.findViewById(R.id.circle);
@@ -102,34 +105,58 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 		} else {
 			viewHolder.title.setText(blockItem.getEighth().getName());
 
-			// Format title
 			Colors color;
 			final float alpha;
 			if (activityItem.getAID() == 999) {
+				// Hide empty fields
+				viewHolder.sponsors.setVisibility(View.GONE);
+				viewHolder.room.setVisibility(View.GONE);
+				viewHolder.description.setText("No description.");
+
+				// Format title
 				viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
 				color = Colors.BLACK;
 				alpha = 1f;
-			} else if (activityItem.isCancelled()) {
-				viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD_ITALIC);
-				color = Colors.DARK_RED;
-				alpha = 1f;
 			} else {
-				viewHolder.title.setTypeface(Typeface.SANS_SERIF);
-				color = Colors.BLACK;
-				alpha = .87f;
+				// Show fields
+				if (activityItem.getRoom().equals("")) {
+					viewHolder.room.setVisibility(View.GONE);
+				} else {
+					viewHolder.room.setVisibility(View.VISIBLE);
+					viewHolder.room.setText(activityItem.getRoom());
+				}
+				if (activityItem.hasSponsors()) {
+					viewHolder.sponsors.setVisibility(View.VISIBLE);
+					// Show dash only if needed
+					if (viewHolder.room.getVisibility() == View.VISIBLE) {
+						viewHolder.sponsors.setText("—" + activityItem.getSponsors());
+					} else {
+						viewHolder.sponsors.setText(activityItem.getSponsors());
+					}
+				} else {
+					viewHolder.sponsors.setVisibility(View.GONE);
+				}
+				if (activityItem.hasDescription()) {
+					viewHolder.description.setText(activityItem.getDescription());
+				} else {
+					viewHolder.description.setText("No description.");
+				}
+
+				// Format title
+				if (activityItem.isCancelled()) {
+					viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD_ITALIC);
+					color = Colors.DARK_RED;
+					alpha = 1f;
+				} else {
+					viewHolder.title.setTypeface(Typeface.SANS_SERIF);
+					color = Colors.BLACK;
+					alpha = .87f;
+				}
 			}
 			viewHolder.title.setTextColor(mColors[color.ordinal()]);
 			viewHolder.title.setAlpha(alpha);
 
-			// TODO: replace with useful room number
-			// viewHolder.room.setText();
-			if (activityItem.hasDescription()) {
-				viewHolder.description.setText(activityItem.getDescription());
-			} else {
-				viewHolder.description.setText("No description.");
-			}
-
-			// Set color
+			// Set color of circle
 			String letter = blockItem.getBlock();
 			if (blockItem.isLocked()) {
 				color = Colors.RED;
@@ -177,17 +204,20 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 	}
 
 	private void addHeaders() {
-		EighthBlockItem item;
-		// Dates must be used because blocks can start on any letter
-		if (getCount() > 0) {
+		// Count will increment every time a header is added
+		int count = getCount();
+		if (count > 0) {
+			// Dates must be used because blocks can start on any letter
 			Date date = getItem(0).getDate();
+			Date nextDate;
 			insert(new EighthBlockItem(date), 0);
-			int count = getCount();
+			count++;
 			for (int i = 1; i < count; i++) {
-				item = getItem(i);
-				if (!item.getDate().equals(date)) {
-					date = item.getDate();
-					insert(new EighthBlockItem(date), i);
+				nextDate = getItem(i).getDate();
+				if (!nextDate.equals(date)) {
+					date = nextDate;
+					insert(new EighthBlockItem(date), i++);
+					count++;
 				}
 			}
 		}

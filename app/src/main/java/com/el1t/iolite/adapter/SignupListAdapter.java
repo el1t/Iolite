@@ -40,6 +40,8 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 	// View lookup cache
 	private static class ViewHolder {
 		TextView title;
+		TextView room;
+		TextView sponsors;
 		TextView description;
 		ImageView circle;
 		ImageView icon;
@@ -101,6 +103,8 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 			} else {
 				convertView = mLayoutInflater.inflate(R.layout.row_signup, parent, false);
 				viewHolder.title = (TextView) convertView.findViewById(R.id.title);
+				viewHolder.room = (TextView) convertView.findViewById(R.id.room);
+				viewHolder.sponsors = (TextView) convertView.findViewById(R.id.sponsors);
 				viewHolder.description = (TextView) convertView.findViewById(R.id.description);
 				viewHolder.capacity = (ProgressBar) convertView.findViewById(R.id.capacity);
 				viewHolder.circle = (ImageView) convertView.findViewById(R.id.circle);
@@ -115,10 +119,28 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 		// Set fields
 		viewHolder.title.setText(item.getName());
 		if (!item.isHeader()) {
+			// Show fields
 			if (item.hasDescription()) {
 				viewHolder.description.setText(item.getDescription());
 			} else {
 				viewHolder.description.setText("No description.");
+			}
+			if (item.getRoom().equals("")) {
+				viewHolder.room.setVisibility(View.GONE);
+			} else {
+				viewHolder.room.setVisibility(View.VISIBLE);
+				viewHolder.room.setText(item.getRoom());
+			}
+			if (item.hasSponsors()) {
+				viewHolder.sponsors.setVisibility(View.VISIBLE);
+				// Show dash only if needed
+				if (viewHolder.room.getVisibility() == View.VISIBLE) {
+					viewHolder.sponsors.setText("—" + item.getSponsors());
+				} else {
+					viewHolder.sponsors.setText(item.getSponsors());
+				}
+			} else {
+				viewHolder.sponsors.setVisibility(View.GONE);
 			}
 
 			// Capacity bar
@@ -279,7 +301,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 					for (EighthActivityItem item : mItems) {
 						// Match activity name, and room number todo: match sponsors
 						if (item.getName().toLowerCase().contains(constraint) ||
-								item.getBlockRoomString().replace(" ", "").contains(constraint.toString().replace(" ", ""))) {
+								item.getRoom().replace(" ", "").contains(constraint.toString().replace(" ", ""))) {
 							FilteredArrayNames.add(item);
 						}
 					}

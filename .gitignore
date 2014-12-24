@@ -5,3 +5,6 @@
 .DS_Store
 /build
 .idea/codeStyleSettings.xml
+.idea/gradle.xml
+.idea/modules.xml
+*.iml

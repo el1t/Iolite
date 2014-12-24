@@ -82,18 +82,22 @@ public class EighthBlockItem implements Parcelable
 	public Spannable getDisp() {
 		// Add postfix
 		String str = DATE_FORMAT.format(date);
-		switch(str.charAt(str.length() - 1)) {
-			case '1':
-				str += "st";
-				break;
-			case '2':
-				str += "nd";
-				break;
-			case '3':
-				str += "rd";
-				break;
-			default:
-				str += "th";
+		if (str.charAt(str.length() - 2) == '1') {
+			str += "th";
+		} else {
+			switch (str.charAt(str.length() - 1)) {
+				case '1':
+					str += "st";
+					break;
+				case '2':
+					str += "nd";
+					break;
+				case '3':
+					str += "rd";
+					break;
+				default:
+					str += "th";
+			}
 		}
 		// Format postfix into superscript
 		Spannable sp = new SpannableString(str);

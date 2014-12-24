@@ -21,7 +21,8 @@ public class EighthActivityItem implements Parcelable
 	private boolean special;
 	private boolean calendar;
 	private boolean roomChanged;
-	private String blockRoomString;
+	private String sponsors;
+	private String room;
 	private int BID;
 	private boolean cancelled;
 	private boolean attendanceTaken;
@@ -37,7 +38,7 @@ public class EighthActivityItem implements Parcelable
 		// Primitive types are automatically initialized
 		name = "";
 		description = "";
-		blockRoomString = "";
+		room = "";
 		firstChar = "";
 	}
 
@@ -89,8 +90,11 @@ public class EighthActivityItem implements Parcelable
 		return description;
 	}
 
+	// Reject empty descriptions
 	public void setDescription(String description) {
-		this.description = description.trim();
+		if (!description.equals("") && !description.toLowerCase().equals("no description available")) {
+			this.description = description;
+		}
 	}
 
 	public boolean isRestricted() {
@@ -157,12 +161,24 @@ public class EighthActivityItem implements Parcelable
 		this.roomChanged = roomChanged;
 	}
 
-	public String getBlockRoomString() {
-		return blockRoomString;
+	public String getRoom() {
+		return room;
 	}
 
-	public void setBlockRoomString(String blockRoomString) {
-		this.blockRoomString = blockRoomString;
+	public void setRoom(String room) {
+		this.room = room;
+	}
+
+	public String getSponsors() {
+		return sponsors;
+	}
+
+	public void setSponsors(String sponsors) {
+		this.sponsors = sponsors;
+	}
+
+	public boolean hasSponsors() {
+		return !(sponsors.equals("") || sponsors.equals("CANCELLED"));
 	}
 
 	public int getBID() {
@@ -222,7 +238,7 @@ public class EighthActivityItem implements Parcelable
 	}
 
 	public boolean hasDescription() {
-		return !description.equals("") && !description.trim().toLowerCase().equals("no description available");
+		return !description.equals("");
 	}
 
 	public boolean isFull() {
@@ -245,7 +261,7 @@ public class EighthActivityItem implements Parcelable
 		special = in.readByte() != 0;
 		calendar = in.readByte() != 0;
 		roomChanged = in.readByte() != 0;
-		blockRoomString = in.readString();
+		room = in.readString();
 		BID = in.readInt();
 		cancelled = in.readByte() != 0;
 		attendanceTaken = in.readByte() != 0;
@@ -274,7 +290,7 @@ public class EighthActivityItem implements Parcelable
 		dest.writeByte((byte) (special ? 1 : 0));
 		dest.writeByte((byte) (calendar ? 1 : 0));
 		dest.writeByte((byte) (roomChanged ? 1 : 0));
-		dest.writeString(blockRoomString);
+		dest.writeString(room);
 		dest.writeInt(BID);
 		dest.writeByte((byte) (cancelled ? 1 : 0));
 		dest.writeByte((byte) (attendanceTaken ? 1 : 0));

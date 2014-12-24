@@ -37,12 +37,13 @@ public class EighthActivityXmlParser
 		parser.require(XmlPullParser.START_TAG, null, "eighth");
 		// Consume the eighth AND signup tags (no need for while loop)
 		parser.next();
+		String tagName;
 		while (parser.next() != XmlPullParser.END_TAG) {
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
-			String name = parser.getName();
-			switch (name) {
+			tagName = parser.getName();
+			switch (tagName) {
 				case "auth":
 					parser.next();
 					// Consume the auth AND error tags
@@ -56,7 +57,7 @@ public class EighthActivityXmlParser
 						if (parser.getEventType() != XmlPullParser.START_TAG) {
 							continue;
 						}
-						String tagName = parser.getName();
+						tagName = parser.getName();
 
 						if (tagName.equals("message")) {
 							Log.d(TAG, readString(parser, "message"));
@@ -107,7 +108,7 @@ public class EighthActivityXmlParser
 	public static ArrayList<EighthActivityItem> parse(InputStream in) throws XmlPullParserException, IOException {
 		// Initialize parser and jump to first tag
 		try {
-			XmlPullParser parser = Xml.newPullParser();
+			final XmlPullParser parser = Xml.newPullParser();
 			parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
 			parser.setInput(in, "UTF-8");
 			parser.nextTag();
@@ -118,20 +119,21 @@ public class EighthActivityXmlParser
 	}
 
 	private static ArrayList<EighthActivityItem> readEighth(XmlPullParser parser) throws XmlPullParserException, IOException {
-		ArrayList<EighthActivityItem> entries = new ArrayList<>();
+		final ArrayList<EighthActivityItem> entries = new ArrayList<>();
 		parser.require(XmlPullParser.START_TAG, null, "eighth");
 		// Consume the eighth AND activities tags
 		parser.next();
 		while(parser.next() != XmlPullParser.START_TAG) {
 			parser.next();
 		}
+		String tagName;
 		while (parser.next() != XmlPullParser.END_TAG) {
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
-			String name = parser.getName();
+			tagName = parser.getName();
 			// Starts by looking for the activity tag
-			if (name.equals("activity")) {
+			if (tagName.equals("activity")) {
 				entries.add(readActivity(parser));
 			} else {
 				skip(parser);
@@ -142,70 +144,71 @@ public class EighthActivityXmlParser
 
 	private static EighthActivityItem readActivity(XmlPullParser parser) throws XmlPullParserException, IOException {
 		parser.require(XmlPullParser.START_TAG, null, "activity");
-
-		final EighthActivityItem temp = new EighthActivityItem();
-
+		final EighthActivityItem activity = new EighthActivityItem();
+		String tagName;
 		while (parser.next() != XmlPullParser.END_TAG) {
 			// Skip whitespace until a tag is reached
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
-			String tagName = parser.getName();
-
+			tagName = parser.getName();
 			switch (tagName) {
 				case "aid":
-					temp.setAID(readInt(parser, "aid"));
+					activity.setAID(readInt(parser, "aid"));
 					break;
 				case "name":
-					temp.setName(readString(parser, "name"));
+					activity.setName(readString(parser, "name"));
 					break;
 				case "description":
-					temp.setDescription(readString(parser, "description"));
+					activity.setDescription(readString(parser, "description"));
 					break;
 				case "restricted":
-					temp.setRestricted(readBool(parser, "restricted"));
+					activity.setRestricted(readBool(parser, "restricted"));
 					break;
 				case "presign":
-					temp.setPresign(readBool(parser, "presign"));
+					activity.setPresign(readBool(parser, "presign"));
 					break;
 				case "oneaday":
-					temp.setOneaday(readBool(parser, "oneaday"));
+					activity.setOneaday(readBool(parser, "oneaday"));
 					break;
 				case "bothblocks":
-					temp.setBothblocks(readBool(parser, "bothblocks"));
+					activity.setBothblocks(readBool(parser, "bothblocks"));
 					break;
 				case "sticky":
-					temp.setSticky(readBool(parser, "sticky"));
+					activity.setSticky(readBool(parser, "sticky"));
 					break;
 				case "special":
-					temp.setSpecial(readBool(parser, "special"));
+					activity.setSpecial(readBool(parser, "special"));
 					break;
 				case "calendar":
-					temp.setCalendar(readBool(parser, "calendar"));
+					activity.setCalendar(readBool(parser, "calendar"));
+					break;
+				case "block_sponsors":
+					activity.setSponsors(EighthActivityXmlParser.readSponsors(parser));
+					break;
+				case "block_rooms":
+					activity.setRoom(EighthActivityXmlParser.readRooms(parser));
 					break;
 				case "room_changed":
-					temp.setRoomChanged(readBool(parser, "room_changed"));
-					break;
-				case "block_rooms_comma":
-					temp.setBlockRoomString(readString(parser, "block_rooms_comma"));
+					activity.setRoomChanged(readBool(parser, "room_changed"));
 					break;
 				case "bid":
-					temp.setBID(readInt(parser, "bid"));
+					activity.setBID(readInt(parser, "bid"));
 					break;
 				case "cancelled":
-					temp.setCancelled(readBool(parser, "cancelled"));
+					activity.setCancelled(readBool(parser, "cancelled"));
 					break;
 				case "attendancetaken":
-					temp.setAttendanceTaken(readBool(parser, "attendancetaken"));
+					activity.setAttendanceTaken(readBool(parser, "attendancetaken"));
 					break;
 				case "favorite":
-					temp.setFavorite(readBool(parser, "favorite"));
+					activity.setFavorite(readBool(parser, "favorite"));
 					break;
 				case "member_count":
-					temp.setMemberCount(readInt(parser, "member_count"));
+					activity.setMemberCount(readInt(parser, "member_count"));
 					break;
 				case "capacity":
-					temp.setCapacity(readInt(parser, "capacity"));
+					activity.setCapacity(readInt(parser, "capacity"));
 					break;
 				default:
 					skip(parser);
@@ -214,22 +217,22 @@ public class EighthActivityXmlParser
 		}
 		parser.require(XmlPullParser.END_TAG, null, "activity");
 
-		return temp;
+		return activity;
 	}
 
-	private static String readString(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
+	static String readString(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
 		parser.require(XmlPullParser.START_TAG, null, tagName);
 		// Note: this cannot be null, because some fields are empty! (empty fields would have to be set to "", anyways)
 		String result = "";
 		if (parser.next() == XmlPullParser.TEXT) {
-			result = parser.getText();
+			result = parser.getText().trim();
 			parser.nextTag();
 		}
 		parser.require(XmlPullParser.END_TAG, null, tagName);
 		return result;
 	}
 
-	private static int readInt(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
+	static int readInt(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
 		parser.require(XmlPullParser.START_TAG, null, tagName);
 		int result = 0;
 		if (parser.next() == XmlPullParser.TEXT) {
@@ -240,7 +243,7 @@ public class EighthActivityXmlParser
 		return result;
 	}
 
-	private static boolean readBool(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
+	static boolean readBool(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
 		parser.require(XmlPullParser.START_TAG, null, tagName);
 		boolean result = false;
 		if (parser.next() == XmlPullParser.TEXT) {
@@ -251,7 +254,94 @@ public class EighthActivityXmlParser
 		return result;
 	}
 
-	private static void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
+	// Read the rooms from <block_rooms>
+	static String readRooms(XmlPullParser parser) throws IOException, XmlPullParserException {
+		final StringBuilder sb = new StringBuilder();
+		parser.require(XmlPullParser.START_TAG, null, "block_rooms");
+		while(parser.next() != XmlPullParser.END_TAG) {
+			if (parser.getEventType() != XmlPullParser.START_TAG) {
+				continue;
+			}
+			if (parser.getName().equals("room")) {
+				readRoom(parser, sb);
+			} else {
+				skip(parser);
+			}
+		}
+		parser.require(XmlPullParser.END_TAG, null, "block_rooms");
+		return sb.toString();
+	}
+
+	private static void readRoom(XmlPullParser parser, StringBuilder sb) throws IOException, XmlPullParserException {
+		parser.require(XmlPullParser.START_TAG, null, "room");
+		if (sb.length() != 0) {
+			sb.append(", ");
+		}
+		while(parser.next() != XmlPullParser.END_TAG) {
+			if (parser.getEventType() != XmlPullParser.START_TAG) {
+				continue;
+			}
+			if (parser.getName().equals("name")) {
+				sb.append(readString(parser, "name"));
+			} else {
+				skip(parser);
+			}
+		}
+		parser.require(XmlPullParser.END_TAG, null, "room");
+	}
+
+	// Read the sponsors from <block_sponsors>
+	static String readSponsors(XmlPullParser parser) throws IOException, XmlPullParserException {
+		final StringBuilder sb = new StringBuilder();
+		parser.require(XmlPullParser.START_TAG, null, "block_sponsors");
+		while(parser.next() != XmlPullParser.END_TAG) {
+			if (parser.getEventType() != XmlPullParser.START_TAG) {
+				continue;
+			}
+			if (parser.getName().equals("sponsor")) {
+				readSponsor(parser, sb);
+			} else {
+				skip(parser);
+			}
+		}
+		parser.require(XmlPullParser.END_TAG, null, "block_sponsors");
+		return sb.toString();
+	}
+
+	private static void readSponsor(XmlPullParser parser, StringBuilder sb) throws IOException, XmlPullParserException {
+		parser.require(XmlPullParser.START_TAG, null, "sponsor");
+		if (sb.length() != 0) {
+			sb.append(", ");
+		}
+		String tagName;
+		String lastName = "";
+		while(parser.next() != XmlPullParser.END_TAG) {
+			if (parser.getEventType() != XmlPullParser.START_TAG) {
+				continue;
+			}
+			tagName = parser.getName();
+			switch (tagName) {
+				case "fname":
+					sb.append(readString(parser, "fname"));
+					break;
+				case "lname":
+					lastName = readString(parser, "lname");
+					break;
+				default:
+					skip(parser);
+					break;
+			}
+		}
+		if (!lastName.equals("")) {
+			if (sb.length() > 0 && sb.charAt(sb.length() - 1) != ' ') {
+				sb.append(" ");
+			}
+			sb.append(lastName);
+		}
+		parser.require(XmlPullParser.END_TAG, null, "sponsor");
+	}
+
+	static void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
 		if (parser.getEventType() != XmlPullParser.START_TAG) {
 			throw new IllegalStateException();
 		}

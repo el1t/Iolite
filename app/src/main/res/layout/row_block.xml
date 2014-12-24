@@ -16,6 +16,7 @@
 		android:layout_width="40dp"
 		android:layout_height="40dp"
 		android:id="@+id/circle"
+		android:layout_marginRight="@dimen/activity_horizontal_margin"
 		android:src="@drawable/activity_letter"
 		tools:ignore="ContentDescription"/>
 	<TextView
@@ -34,41 +35,50 @@
 	<!-- Title -->
 	<TextView
 		android:id="@+id/title"
-		android:layout_width="wrap_content"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/circle"
-		android:layout_toLeftOf="@+id/room"
-		android:paddingLeft="@dimen/activity_horizontal_margin"
-		android:paddingEnd="@dimen/activity_horizontal_margin"
-		android:paddingRight="@dimen/activity_horizontal_margin"
+		android:layout_toEndOf="@id/circle"
 		android:gravity="center_vertical"
 		android:ellipsize="end"
 		android:singleLine="true"
 		android:textSize="16sp"
 		android:textColor="@android:color/primary_text_light"
-		android:alpha=".87"
-		android:includeFontPadding="false"
-		android:layout_weight="1" />
+		android:alpha=".87" />
 	<!-- Room number -->
 	<TextView
 		android:id="@+id/room"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true"
-		android:layout_alignParentEnd="true"
+		android:layout_below="@id/title"
+		android:layout_toRightOf="@id/circle"
+		android:layout_toEndOf="@id/circle"
 		android:gravity="center_vertical"
-		android:textSize="16sp"
+		android:singleLine="true"
+		android:textSize="14sp"
 		android:textColor="@android:color/primary_text_light"
-		android:alpha=".87"
-		android:includeFontPadding="false" />
-
+		android:alpha=".87" />
+	<!-- Sponsors -->
+	<TextView
+		android:id="@+id/sponsors"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/title"
+	    android:layout_toRightOf="@id/room"
+	    android:layout_toEndOf="@id/room"
+	    android:gravity="center_vertical"
+	    android:ellipsize="end"
+	    android:singleLine="true"
+	    android:textSize="14sp"
+	    android:textColor="@android:color/primary_text_light"
+	    android:alpha=".54" />
 	<!-- Description -->
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/title"
+		android:layout_below="@id/room"
 		android:layout_toRightOf="@id/circle"
-		android:paddingLeft="@dimen/activity_horizontal_margin"
+		android:layout_toEndOf="@id/circle"
 		android:gravity="center_vertical"
 		android:paddingTop="2dp"
 		android:textSize="14sp"
@@ -76,7 +86,6 @@
 		android:alpha=".54"
 		android:ellipsize="end"
 		android:singleLine="true"
-		android:includeFontPadding="false"
 		android:fontFamily="sans-serif-light"
 		android:id="@+id/description"/>
 </RelativeLayout>
