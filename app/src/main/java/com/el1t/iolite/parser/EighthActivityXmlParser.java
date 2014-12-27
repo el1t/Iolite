@@ -37,13 +37,11 @@ public class EighthActivityXmlParser
 		parser.require(XmlPullParser.START_TAG, null, "eighth");
 		// Consume the eighth AND signup tags (no need for while loop)
 		parser.next();
-		String tagName;
 		while (parser.next() != XmlPullParser.END_TAG) {
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
-			tagName = parser.getName();
-			switch (tagName) {
+			switch (parser.getName()) {
 				case "auth":
 					parser.next();
 					// Consume the auth AND error tags
@@ -57,9 +55,8 @@ public class EighthActivityXmlParser
 						if (parser.getEventType() != XmlPullParser.START_TAG) {
 							continue;
 						}
-						tagName = parser.getName();
 
-						if (tagName.equals("message")) {
+						if (parser.getName().equals("message")) {
 							Log.d(TAG, readString(parser, "message"));
 						} else {
 							skip(parser);
@@ -126,14 +123,12 @@ public class EighthActivityXmlParser
 		while(parser.next() != XmlPullParser.START_TAG) {
 			parser.next();
 		}
-		String tagName;
 		while (parser.next() != XmlPullParser.END_TAG) {
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
-			tagName = parser.getName();
 			// Starts by looking for the activity tag
-			if (tagName.equals("activity")) {
+			if (parser.getName().equals("activity")) {
 				entries.add(readActivity(parser));
 			} else {
 				skip(parser);
@@ -145,14 +140,12 @@ public class EighthActivityXmlParser
 	private static EighthActivityItem readActivity(XmlPullParser parser) throws XmlPullParserException, IOException {
 		parser.require(XmlPullParser.START_TAG, null, "activity");
 		final EighthActivityItem activity = new EighthActivityItem();
-		String tagName;
 		while (parser.next() != XmlPullParser.END_TAG) {
 			// Skip whitespace until a tag is reached
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
-			tagName = parser.getName();
-			switch (tagName) {
+			switch (parser.getName()) {
 				case "aid":
 					activity.setAID(readInt(parser, "aid"));
 					break;
@@ -313,30 +306,18 @@ public class EighthActivityXmlParser
 		if (sb.length() != 0) {
 			sb.append(", ");
 		}
-		String tagName;
-		String lastName = "";
 		while(parser.next() != XmlPullParser.END_TAG) {
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
-			tagName = parser.getName();
-			switch (tagName) {
-				case "fname":
-					sb.append(readString(parser, "fname"));
-					break;
-				case "lname":
-					lastName = readString(parser, "lname");
-					break;
-				default:
-					skip(parser);
-					break;
+			if (parser.getName().equals("lname")) {
+				if (sb.length() > 0 && sb.charAt(sb.length() - 1) != ' ') {
+					sb.append(' ');
+				}
+				sb.append(readString(parser, "lname"));
+			} else {
+				skip(parser);
 			}
-		}
-		if (!lastName.equals("")) {
-			if (sb.length() > 0 && sb.charAt(sb.length() - 1) != ' ') {
-				sb.append(" ");
-			}
-			sb.append(lastName);
 		}
 		parser.require(XmlPullParser.END_TAG, null, "sponsor");
 	}

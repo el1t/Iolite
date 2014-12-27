@@ -1,5 +1,6 @@
 package com.el1t.iolite;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,30 +64,33 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 
 		final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		final Cookie[] cookies = getCookies(preferences);
+		final boolean remember = preferences.getBoolean("remember", false);
+		final String username = preferences.getString("username", null);
 		if (savedInstanceState == null) {
 			mLoginFragment = new LoginFragment();
 			// Restore saved username
-			if (preferences.getBoolean("remember", false)) {
-				final Bundle args = new Bundle();
-				args.putBoolean("remember", true);
-				args.putString("username", preferences.getString("username", ""));
-				mLoginFragment.setArguments(args);
-			}
+			final Bundle args = new Bundle();
+			args.putBoolean("remember", remember);
+			args.putString("username", username);
+			mLoginFragment.setArguments(args);
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, mLoginFragment)
 					.commit();
+		} else {
+			mLoginFragment.setUsername(username);
 		}
 
 		// This is identical to checkAuthentication except for intent checking
 		if (cookies != null) {
-			final Intent intent = getIntent();
-			if (intent.getBooleanExtra("logout", false)) {
+			if (getIntent().getBooleanExtra("logout", false)) {
 				// Send logout request
 				logout(cookies);
 			} else {
 				// Check authentication
 				new Authentication(cookies).execute("https://iodine.tjhsst.edu/api/studentdirectory/info");
 			}
+		} else if (remember) {
+			submit(username, preferences.getString("password", null));
 		}
 
 		// Use material design toolbar
@@ -139,21 +143,14 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 	}
 
 	private void clearCookies() {
-		final SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
+		getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
+				.clear()
+				.commit();
 	}
 
 	private void checkAuthentication() {
-		final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-		final Cookie[] cookies = getCookies(preferences);
+		final Cookie[] cookies = getCookies(getSharedPreferences(PREFS_NAME, MODE_PRIVATE));
 		if (cookies != null) {
-			if (mLoginFragment.isChecked()) {
-				preferences.edit()
-						.putBoolean("remember", true)
-						.putString("username", login_username)
-						.apply();
-			}
 			// Check authentication
 			new Authentication(cookies).execute("https://iodine.tjhsst.edu/api/studentdirectory/info");
 		}
@@ -161,6 +158,10 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 
 	// Submit the login request
 	public void submit(String username, String pass) {
+		if (username == null || pass == null) {
+			Log.d(TAG, "Null username or password");
+			return;
+		}
 		login_username = username.trim();
 		login_password = pass;
 		if (!mLoginFragment.isChecked()) {
@@ -170,6 +171,10 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		}
 		if (isFakeLogin()) {
 			postRequest(getList(), true);
+		} else if (login_username.isEmpty()) {
+			Toast.makeText(getApplicationContext(), "Please enter a username", Toast.LENGTH_SHORT).show();
+		} else if (login_password.isEmpty()) {
+			Toast.makeText(getApplicationContext(), "Please enter a password", Toast.LENGTH_SHORT).show();
 		} else {
 			new LoginRequest().execute("https://iodine.tjhsst.edu/api");
 		}
@@ -177,14 +182,27 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 
 	// Do after authentication request
 	void postRequest(User user, boolean fake) {
-		if (user != null || fake) {
+		if (user != null) {
 			if (fake) {
 				Toast.makeText(getApplicationContext(), "Loading faked data", Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_SHORT).show();
+				final SharedPreferences.Editor preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
+				if (login_username != null) {
+					preferences.putString("username", login_username);
+				}
+				if (mLoginFragment.isChecked()) {
+					preferences.putBoolean("remember", true);
+					if (login_password != null) {
+						preferences.putString("password", login_password);
+					}
+				} else {
+					preferences.putBoolean("remember", false);
+				}
+				preferences.apply();
 			}
 			clearPassword();
-			Intent intent = new Intent(this, HomeActivity.class);
+			final Intent intent = new Intent(this, HomeActivity.class);
 			intent.putExtra("fake", fake);
 			intent.putExtra("user", user);
 			startActivity(intent);
@@ -193,11 +211,18 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 			Toast.makeText(getApplicationContext(), "Session Expired", Toast.LENGTH_SHORT).show();
 			Log.d(TAG, "Session expired");
 			clearCookies();
+			final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+			if (preferences.getBoolean("remember", false)) {
+				submit(preferences.getString("username", null), preferences.getString("password", null));
+			}
 		}
 	}
 
 	private void logout(Cookie[] cookies) {
 		new LogoutRequest(cookies).execute("https://iodine.tjhsst.edu/logout");
+		getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
+				.remove("password")
+				.apply();
 		Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
 	}
 
@@ -212,6 +237,32 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 	private void clearPassword() {
 		login_password = "";
 		mLoginFragment.clearPassword();
+	}
+
+	public void displayWarning() {
+		new AlertDialog.Builder(this)
+				.setTitle(R.string.dialog_login_disclaimer_title)
+				.setMessage(R.string.dialog_login_disclaimer_body)
+				.setPositiveButton(R.string.dialog_continue, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						// Do nothing
+					}
+				})
+				.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						mLoginFragment.setChecked(false);
+					}
+				})
+				.setOnCancelListener(new DialogInterface.OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialogInterface) {
+						mLoginFragment.setChecked(false);
+					}
+				})
+				.create()
+				.show();
 	}
 
 	// Checks if fake offline cache should be used
@@ -245,7 +296,14 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 					@Override
 					public void onCancel(DialogInterface dialog) {
 						Log.d(TAG, "Connection aborted!");
-						mPost.abort();
+						// Abort connection on background thread
+						new Thread(new Runnable() {
+							@Override
+							public void run() {
+								mPost.abort();
+							}
+						}).start();
+						cancel(true);
 					}
 				});
 				mProgressDialog.show();
@@ -295,11 +353,16 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 			super.onPostExecute(result);
 			mProgressDialog.dismiss();
 			if (result == null) {
-				failed(mPost.isAborted());
+				failed(false);
 			} else {
 				storeCookies(result);
 				checkAuthentication();
 			}
+		}
+
+		@Override
+		protected void onCancelled() {
+			failed(true);
 		}
 	}
 
@@ -323,7 +386,14 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 					@Override
 					public void onCancel(DialogInterface dialog) {
 						Log.d(TAG, "Connection aborted!");
-						mConnection.disconnect();
+						// Abort connection on background thread
+						new Thread(new Runnable() {
+							@Override
+							public void run() {
+								mConnection.disconnect();
+							}
+						}).start();
+						cancel(true);
 					}
 				});
 				mProgressDialog.show();

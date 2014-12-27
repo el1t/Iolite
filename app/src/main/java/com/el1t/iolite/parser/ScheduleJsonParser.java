@@ -46,8 +46,9 @@ public class ScheduleJsonParser
 
 	private static String[] getItems(JSONArray blocks) throws JSONException {
 		final String[] items = {"", ""};
+		JSONObject block;
 		for (int i = 0; i < blocks.length(); i++) {
-			JSONObject block = blocks.getJSONObject(i);
+			block = blocks.getJSONObject(i);
 			items[0] += "\n" + block.getString("name");
 			items[1] += "\n" + block.getJSONObject("times").getString("times");
 		}

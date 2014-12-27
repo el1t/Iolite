@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 /**
@@ -22,6 +23,7 @@ public class LoginFragment extends Fragment
 
 	public interface OnFragmentInteractionListener {
 		public void submit(String username, String password);
+		public void displayWarning();
 	}
 
 	public LoginFragment() { }
@@ -47,10 +49,23 @@ public class LoginFragment extends Fragment
 
 		// Restore remembered username
 		final Bundle args = getArguments();
-		if (args != null && args.getBoolean("remember", false)) {
-			remember.setChecked(true);
-			username.setText(args.getString("username", ""));
+		if (args != null) {
+			remember.setChecked(args.getBoolean("remember", false));
+			final String name = args.getString("username", null);
+			if (username != null) {
+				username.setText(name);
+				password.requestFocus();
+			}
 		}
+
+		remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					mListener.displayWarning();
+				}
+			}
+		});
 
 		return rootView;
 	}
@@ -75,5 +90,16 @@ public class LoginFragment extends Fragment
 
 	public boolean isChecked() {
 		return remember.isChecked();
+	}
+
+	public void setChecked(boolean checked) {
+		remember.setChecked(checked);
+	}
+
+	public void setUsername(String name) {
+		if (name != null) {
+			username.setText(name);
+			password.requestFocus();
+		}
 	}
 }

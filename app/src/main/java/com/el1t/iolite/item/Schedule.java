@@ -91,6 +91,10 @@ public class Schedule implements Parcelable, Comparable<Schedule>
 		return day;
 	}
 
+	public Date getDate() {
+		return date;
+	}
+
 	public String getType() {
 		return type;
 	}

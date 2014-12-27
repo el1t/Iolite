@@ -49,13 +49,11 @@ public class EighthBlockXmlParser
 			parser.next();
 		}
 		try {
-			String tagName;
 			while (parser.next() != XmlPullParser.END_TAG) {
 				if (parser.getEventType() != XmlPullParser.START_TAG) {
 					continue;
 				}
-				tagName = parser.getName();
-				switch (tagName) {
+				switch (parser.getName()) {
 					case "auth":
 						parser.next();
 						// Consume the auth AND error tags
@@ -69,9 +67,8 @@ public class EighthBlockXmlParser
 							if (parser.getEventType() != XmlPullParser.START_TAG) {
 								continue;
 							}
-							tagName = parser.getName();
 
-							if (tagName.equals("message")) {
+							if (parser.getName().equals("message")) {
 								Log.d(TAG, EighthActivityXmlParser.readString(parser, "message"));
 							} else {
 								EighthActivityXmlParser.skip(parser);
@@ -97,15 +94,13 @@ public class EighthBlockXmlParser
 	private static EighthBlockItem readBlock(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
 		parser.require(XmlPullParser.START_TAG, null, "block");
 		final EighthBlockItem temp = new EighthBlockItem();
-		String tagName;
 
 		while (parser.next() != XmlPullParser.END_TAG) {
 			// Skip whitespace until a tag is reached
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
-			tagName = parser.getName();
-			switch (tagName) {
+			switch (parser.getName()) {
 				case "activity":
 					readActivity(parser, temp.getEighth());
 					break;
@@ -153,7 +148,6 @@ public class EighthBlockXmlParser
 	// A different method for parsing the inexplicably different tags inside the block xml
 	private static void readActivity(XmlPullParser parser, EighthActivityItem temp) throws XmlPullParserException, IOException {
 		parser.require(XmlPullParser.START_TAG, null, "activity");
-		String tagName;
 
 		label:
 		while (parser.next() != XmlPullParser.END_TAG) {
@@ -161,8 +155,7 @@ public class EighthBlockXmlParser
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
-			tagName = parser.getName();
-			switch (tagName) {
+			switch (parser.getName()) {
 				case "aid":
 					temp.setAID(EighthActivityXmlParser.readInt(parser, "aid"));
 					// Detect "No activity selected" activity

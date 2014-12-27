@@ -92,9 +92,9 @@ public class ScheduleCardAdapter extends RecyclerView.Adapter<ScheduleCardAdapte
 	public void onBindViewHolder(ViewHolder viewHolder, int i) {
 		final Schedule schedule = mSchedules.get(i);
 		// Set fields
-		final int index = Days.indexOf(schedule.getType());
+		final int dayType = Days.indexOf(schedule.getType());
 		// Add "No School"
-		if (index == Days.OFF.ordinal()) {
+		if (dayType == Days.OFF.ordinal()) {
 			viewHolder.title.setText(schedule.getDay() + "\nNo School!");
 			viewHolder.blocks.setVisibility(View.GONE);
 			viewHolder.times.setVisibility(View.GONE);
@@ -106,7 +106,7 @@ public class ScheduleCardAdapter extends RecyclerView.Adapter<ScheduleCardAdapte
 			viewHolder.times.setText(schedule.getTimes());
 		}
 		// Get the index of the color by day
-		viewHolder.card.setCardBackgroundColor(mColors[index]);
+		viewHolder.card.setCardBackgroundColor(mColors[dayType]);
 	}
 
 	@Override

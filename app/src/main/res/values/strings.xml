@@ -15,4 +15,9 @@
 	<string name="action_drawer_open">Drawer Open</string>
 	<string name="action_drawer_close">Drawer Close</string>
 
+	<string name="dialog_login_disclaimer_title">Warning</string>
+	<string name="dialog_login_disclaimer_body">Storing your password on your device may be insecure.</string>
+	<string name="dialog_cancel">Cancel</string>
+	<string name="dialog_continue">Continue</string>
+
 </resources>

@@ -6,13 +6,13 @@
  <!ELEMENT debug (#PCDATA)>
 ]>-->
 <eighth>
- <signup>
-  <bid>2843</bid>
-  <aid>115</aid>
-  <uid>14342</uid>
-  <success>1</success>
-  <result>0</result>
- </signup>
- <error/>
- <debug/>
+	<signup>
+		<bid>2843</bid>
+		<aid>115</aid>
+		<uid>12345</uid>
+		<success>1</success>
+		<result>0</result>
+	</signup>
+	<error/>
+	<debug/>
 </eighth>
