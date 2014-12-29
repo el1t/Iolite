@@ -66,8 +66,8 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		final Cookie[] cookies = getCookies(preferences);
 		final boolean remember = preferences.getBoolean("remember", false);
 		final String username = preferences.getString("username", null);
+        mLoginFragment = new LoginFragment();
 		if (savedInstanceState == null) {
-			mLoginFragment = new LoginFragment();
 			// Restore saved username
 			final Bundle args = new Bundle();
 			args.putBoolean("remember", remember);
