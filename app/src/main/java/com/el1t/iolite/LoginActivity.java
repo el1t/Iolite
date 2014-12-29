@@ -66,9 +66,9 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		final Cookie[] cookies = getCookies(preferences);
 		final boolean remember = preferences.getBoolean("remember", false);
 		final String username = preferences.getString("username", null);
-        mLoginFragment = new LoginFragment();
 		if (savedInstanceState == null) {
 			// Restore saved username
+			mLoginFragment = new LoginFragment();
 			final Bundle args = new Bundle();
 			args.putBoolean("remember", remember);
 			args.putString("username", username);
@@ -77,7 +77,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 					.add(R.id.container, mLoginFragment)
 					.commit();
 		} else {
-			mLoginFragment.setUsername(username);
+			mLoginFragment = (LoginFragment) getFragmentManager().getFragment(savedInstanceState, "loginFragment");
 		}
 
 		// This is identical to checkAuthentication except for intent checking
@@ -101,22 +101,9 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.login, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		switch(item.getItemId()) {
-			case R.id.action_settings:
-				return true;
-		}
-		return super.onOptionsItemSelected(item);
+	protected void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		getFragmentManager().putFragment(savedInstanceState, "loginFragment", mLoginFragment);
 	}
 
 	private void storeCookies(List<Cookie> cookies) {
