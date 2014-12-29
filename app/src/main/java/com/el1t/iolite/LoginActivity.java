@@ -85,6 +85,8 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 			if (getIntent().getBooleanExtra("logout", false)) {
 				// Send logout request
 				logout(cookies);
+			} else if (getIntent().getBooleanExtra("expired", false)) {
+				postRequest(null, isFakeLogin());
 			} else {
 				// Check authentication
 				new Authentication(cookies).execute("https://iodine.tjhsst.edu/api/studentdirectory/info");

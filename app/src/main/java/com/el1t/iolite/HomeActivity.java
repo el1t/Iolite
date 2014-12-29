@@ -234,7 +234,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			// Retrieve schedule
 			new ScheduleRequest(Calendar.getInstance().getTime()).execute(INITIAL_DAYS_TO_LOAD);
 		} else if (mCookies == null) {
-			logout();
+			expired();
 		} else switch (activeView) {
 			case BLOCK:
 				// Set loading fragment, if necessary
@@ -265,8 +265,16 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	void logout() {
 		mCookies = null;
 		// Start login activity
-		Intent intent = new Intent(this, LoginActivity.class);
+		final Intent intent = new Intent(this, LoginActivity.class);
 		intent.putExtra("logout", true);
+		startActivity(intent);
+		finish();
+	}
+
+	void expired() {
+		mCookies = null;
+		final Intent intent = new Intent(this, LoginActivity.class);
+		intent.putExtra("expired", true);
 		startActivity(intent);
 		finish();
 	}
@@ -344,7 +352,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		protected void onPostExecute(ArrayList<EighthBlockItem> result) {
 			super.onPostExecute(result);
 			if (result == null) {
-				logout();
+				expired();
 			} else {
 				postBlockRequest(result);
 			}

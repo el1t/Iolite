@@ -126,7 +126,7 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 	public void refresh() {
 		if (!fake) {
 			if (mCookies == null) {
-				logout();
+				expired();
 			} else {
 				// Set loading fragment, if necessary
 				if (mSignupFragment == null) {
@@ -145,10 +145,10 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		}
 	}
 
-	void logout() {
+	void expired() {
 		mCookies = null;
-		// Start login activity
-		Intent intent = new Intent(this, LoginActivity.class);
+		final Intent intent = new Intent(this, LoginActivity.class);
+		intent.putExtra("expired", true);
 		startActivity(intent);
 		finish();
 	}

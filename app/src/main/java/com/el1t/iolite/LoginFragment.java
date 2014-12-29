@@ -95,11 +95,4 @@ public class LoginFragment extends Fragment
 	public void setChecked(boolean checked) {
 		remember.setChecked(checked);
 	}
-
-	public void setUsername(String name) {
-		if (name != null) {
-			username.setText(name);
-			password.requestFocus();
-		}
-	}
 }
