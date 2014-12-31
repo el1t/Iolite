@@ -131,10 +131,10 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	public NavDrawerActivityConfig getNavDrawerConfiguration() {
 		final NavDrawerAdapter adapter = new NavDrawerAdapter(this, R.layout.nav_item);
 		adapter.setItems(new NavMenuBuilder()
-				.addItem(NavMenuItem.create(101, "Eighth", R.drawable.ic_event_black_24dp))
-				.addItem(NavMenuItem.create(102, "Schedule", R.drawable.ic_event_black_24dp))
+				.addItem(NavMenuItem.create(101, "Eighth", R.drawable.ic_event_available_black_24dp))
+				.addItem(NavMenuItem.create(102, "Schedule", R.drawable.ic_today_black_24dp))
 				.addSeparator()
-				.addItem(NavMenuItem.createButton(201, "Settings", R.drawable.ic_settings_black_24dp))
+//				.addItem(NavMenuItem.createButton(201, "Settings", R.drawable.ic_settings_black_24dp))
 				.addItem(NavMenuItem.createButton(202, "About", R.drawable.ic_help_black_24dp))
 				.addItem(NavMenuItem.createButton(203, "Logout", R.drawable.ic_exit_to_app_black_24dp))
 				.build());
@@ -161,6 +161,8 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			case 102:
 				switchView(Section.SCHEDULE);
 				break;
+//			case 201:
+//				break;
 			case 202:
 				startActivity(new Intent(this, AboutActivity.class));
 				break;

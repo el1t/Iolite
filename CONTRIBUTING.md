@@ -18,9 +18,7 @@ When you have made a satisfactory change (and tested it!), [submit][https://gith
 * Keep overriden methods at the top of the file
 * Avoid/break lines longer than 100 characters
 * Order layout properties as follows: `id`, `layout_width`, `layout_height`, other `layout_` properties, other properties
-* Write a [good commit message!][https://github.com/erlang/otp/wiki/Writing-good-commit-messages]
-
-Anything not mentioned here? Just take a look at the source code.
+* Write a [good commit message][https://github.com/erlang/otp/wiki/Writing-good-commit-messages]!
 
 ## Coding guidelines
 
@@ -39,4 +37,5 @@ Anything not mentioned here? Just take a look at the source code.
 * Optimize imports frequently (`Code` -> `Optimize Imports`)
 * Inspect code occasionally (`Analyze` -> `Inspect Code`)
 
+Anything not mentioned here? Just take a look at the source code.
 Based on thoughtbot's [contributing.md][https://github.com/thoughtbot/factory_girl_rails/blob/master/CONTRIBUTING.md] and [style guide][https://github.com/thoughtbot/guides/tree/master/style].
