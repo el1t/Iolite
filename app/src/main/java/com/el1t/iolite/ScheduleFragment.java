@@ -11,8 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.el1t.iolite.adapter.ScheduleCardAdapter;
 import com.el1t.iolite.item.Schedule;

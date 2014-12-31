@@ -46,13 +46,18 @@ public class AboutActivity extends ActionBarActivity implements AboutFragment.On
 
 	// When back button in actionbar is activated
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
+	public boolean onOptionsItemSelected(MenuItem item) {
+		onBackPressed();
+		return true;
+	}
+
+	@Override
+	public void onBackPressed() {
 		if (licenseShowing) {
 			changeView();
 		} else {
 			finish();
 		}
-		return true;
 	}
 
 	public void changeView() {
