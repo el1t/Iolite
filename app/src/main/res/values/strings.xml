@@ -4,9 +4,9 @@
 	<string name="app_name">Iolite</string>
 	<string name="login">LOGIN</string>
 
-	<string name="about_view">About</string>
-	<string name="home_view">Home</string>
-	<string name="activity_view">Activities</string>
+	<string name="view_about">About</string>
+	<string name="view_home">Home</string>
+	<string name="view_activity">Activities</string>
 
 	<string name="action_refresh">Refresh</string>
 	<string name="action_settings">Settings</string>
@@ -20,4 +20,6 @@
 	<string name="dialog_cancel">Cancel</string>
 	<string name="dialog_continue">Continue</string>
 
+	<string name="contributors">Thanks to: Timothy Cyrus</string>
+	<string name="license">VIEW LICENSE</string>
 </resources>

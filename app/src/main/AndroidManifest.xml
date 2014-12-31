@@ -31,14 +31,14 @@
 		</activity>
 		<activity
 			android:name=".HomeActivity"
-			android:label="@string/home_view"
+			android:label="@string/view_home"
 			android:parentActivityName="com.el1t.iolite.LoginActivity"
 			android:launchMode="singleTop"
 			android:configChanges="orientation|screenSize">
 		</activity>
 		<activity
 			android:name="com.el1t.iolite.SignupActivity"
-			android:label="@string/activity_view"
+			android:label="@string/view_activity"
 			android:parentActivityName=".HomeActivity"
 			android:launchMode="singleTop"
 			android:configChanges="orientation|screenSize">
@@ -48,7 +48,7 @@
 		</activity>
 		<activity
 			android:name="com.el1t.iolite.AboutActivity"
-			android:label="@string/about_view"
+			android:label="@string/view_about"
 			android:launchMode="singleTop"
 			android:configChanges="orientation|screenSize" />
 	</application>
