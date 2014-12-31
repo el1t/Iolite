@@ -34,6 +34,7 @@
 			android:layout_height="171dp"
 			android:src="@drawable/drawer_background"
 			android:scaleType="fitCenter"
+			android:clickable="true"
 			tools:ignore="ContentDescription" />
 		<!-- Shadow -->
 		<View

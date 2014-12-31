@@ -6,17 +6,25 @@ When you have made a satisfactory change (and tested it!), [submit][https://gith
 
 ## Style guidelines
 
+Following these style guidelines will increase the chance that your pull request will be accepted!
+
+### General
 * Remove trailing whitespace
 * Tab indentation
-* Do not add a newline before `{`, unless declaring a class
-* Use an empty line between methods
+* Avoid/break lines longer than 100 characters
+
+### Java
 * Use camelCasing in Java files, including naming
-* Use underscores in xml and res files, including naming
+* Use an empty line between methods
 * Use spaces between operands
+* Do not add a newline before `{`, unless declaring a class
 * Prefix class variables with `m`
 * Tag overridden methods with `@Override`
 * Keep overriden methods at the top of the file
-* Avoid/break lines longer than 100 characters
+
+### Resource files
+* Use underscores in xml and res files, including naming
+* Order views in the order that they would appear on a device from top to bottom, left to right
 * Order layout properties as follows: `id`, `layout_width`, `layout_height`, other `layout_` properties, other properties
 * Write a [good commit message][https://github.com/erlang/otp/wiki/Writing-good-commit-messages]!
 
