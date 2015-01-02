@@ -18,4 +18,4 @@ Tired of using the web interface on your mobile device? Iolite is a native inter
 - [ ] Look up students in directory
 - [ ] Notifications
 
-This project uses Google's [material design icons][https://github.com/google/material-design-icons], which are licensed under an [Attribution 4.0 International][http://creativecommons.org/licenses/by/4.0/] license. Some icons were slightly modified.
+This project uses Google's [material design icons](https://github.com/google/material-design-icons), which are licensed under an [Attribution 4.0 International](http://creativecommons.org/licenses/by/4.0/) license. Some icons were slightly modified.
