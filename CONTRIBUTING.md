@@ -1,8 +1,8 @@
 # How to contribute
 
-Simply fork and clone this repo, and [download](developer.android.com/sdk/index.html) Android Studio to start coding!
+Simply fork and clone this repo, and [download](http://developer.android.com/sdk/index.html) Android Studio to start coding!
 
-When you have made a satisfactory change (and tested it!), [submit](www.github.com/el1t/Iolite/compare/) a pull request.
+When you have made a satisfactory change (and tested it!), [submit](http://www.github.com/el1t/Iolite/compare/) a pull request.
 
 ## Style guidelines
 
@@ -26,7 +26,7 @@ Following these style guidelines will increase the chance that your pull request
 * Use underscores in xml and res files, including naming
 * Order views in the order that they would appear on a device from top to bottom, left to right
 * Order layout properties as follows: `id`, `layout_width`, `layout_height`, other `layout_` properties, other properties
-* Write a [good commit message](www.github.com/erlang/otp/wiki/Writing-good-commit-messages)!
+* Write a [good commit message](http://www.github.com/erlang/otp/wiki/Writing-good-commit-messages)!
 
 ## Coding guidelines
 
@@ -46,4 +46,4 @@ Following these style guidelines will increase the chance that your pull request
 * Inspect code occasionally (`Analyze` -> `Inspect Code`)
 
 Anything not mentioned here? Just take a look at the source code.
-Based on thoughtbot's [contributing.md](www.github.com/thoughtbot/factory_girl_rails/blob/master/CONTRIBUTING.md) and [style guide](www.github.com/thoughtbot/guides/tree/master/style).
+Based on thoughtbot's [contributing.md](http://www.github.com/thoughtbot/factory_girl_rails/blob/master/CONTRIBUTING.md) and [style guide](http://www.github.com/thoughtbot/guides/tree/master/style).
