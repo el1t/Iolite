@@ -20,7 +20,7 @@ Following these style guidelines will increase the chance that your pull request
 * Do not add a newline before `{`, unless declaring a class
 * Prefix class variables with `m`
 * Tag overridden methods with `@Override`
-* Keep overriden methods at the top of the file
+* Keep overridden methods at the top of the file
 
 ### Resource files
 * Use underscores in xml and res files, including naming
