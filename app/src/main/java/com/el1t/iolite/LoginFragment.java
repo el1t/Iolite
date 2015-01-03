@@ -86,6 +86,11 @@ public class LoginFragment extends Fragment
 
 	public void clearPassword() {
 		password.setText("");
+		password.requestFocus();
+	}
+
+	public boolean isCreated() {
+		return username != null && password != null && remember != null;
 	}
 
 	public boolean isChecked() {

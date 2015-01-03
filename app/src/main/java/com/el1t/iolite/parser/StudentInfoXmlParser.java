@@ -32,9 +32,8 @@ public class StudentInfoXmlParser
 	}
 
 	private static User readInfo(XmlPullParser parser) throws XmlPullParserException, IOException {
-		final String tag = parser.getName();
 		// Not logged in, return null
-		switch (tag) {
+		switch (parser.getName()) {
 			case "auth":
 				// Consume the auth AND error tags
 				parser.next();
@@ -47,9 +46,8 @@ public class StudentInfoXmlParser
 					if (parser.getEventType() != XmlPullParser.START_TAG) {
 						continue;
 					}
-					String tagName = parser.getName();
 
-					if (tagName.equals("message")) {
+					if (parser.getName().equals("message")) {
 						Log.d(TAG, readString(parser, "message"));
 					} else {
 						skip(parser);

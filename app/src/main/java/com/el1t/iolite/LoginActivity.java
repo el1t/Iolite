@@ -49,11 +49,11 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 	private static final String TAG = "Login Activity";
 	private static final String[] COOKIE_NAMES = {"IODINE_PASS_VECTOR", "PHPSESSID"};
 
-
 	private LoginFragment mLoginFragment;
+	private ProgressDialog mProgressDialog;
 	private String login_username;
 	private String login_password;
-	private ProgressDialog mProgressDialog;
+	private int attempt;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +78,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 			mLoginFragment = (LoginFragment) getFragmentManager().getFragment(savedInstanceState, "loginFragment");
 		}
 
+		attempt = 0;
 		// This is identical to checkAuthentication except for intent checking
 		if (cookies != null) {
 			if (getIntent().getBooleanExtra("logout", false)) {
@@ -115,7 +116,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 				editor.putString("COOKIE_" + COOKIE_NAMES[1], cookie.getValue());
 			}
 		}
-		editor.commit();
+		editor.apply();
 	}
 
 	public static Cookie[] getCookies(SharedPreferences preferences) {
@@ -131,8 +132,9 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 
 	private void clearCookies() {
 		getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
-				.clear()
-				.commit();
+				.remove("COOKIE_" + COOKIE_NAMES[0])
+				.remove("COOKIE_" + COOKIE_NAMES[1])
+				.apply();
 	}
 
 	private void checkAuthentication() {
@@ -151,9 +153,10 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		}
 		login_username = username.trim();
 		login_password = pass;
-		if (!mLoginFragment.isChecked()) {
+		// Check that the fragment is instantiated, since submit can be called before that
+		if (mLoginFragment.isCreated() && !mLoginFragment.isChecked()) {
 			getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
-					.putBoolean("remember", false)
+					.remove("remember")
 					.apply();
 		}
 		if (isFakeLogin()) {
@@ -173,7 +176,6 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 			if (fake) {
 				Toast.makeText(getApplicationContext(), "Loading faked data", Toast.LENGTH_SHORT).show();
 			} else {
-				Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_SHORT).show();
 				final SharedPreferences.Editor preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
 				if (login_username != null) {
 					preferences.putString("username", login_username);
@@ -188,6 +190,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 				}
 				preferences.apply();
 			}
+			attempt = 0;
 			clearPassword();
 			final Intent intent = new Intent(this, HomeActivity.class);
 			intent.putExtra("fake", fake);
@@ -199,7 +202,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 			Log.d(TAG, "Session expired");
 			clearCookies();
 			final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-			if (preferences.getBoolean("remember", false)) {
+			if (preferences.getBoolean("remember", false) && attempt < 1) {
 				submit(preferences.getString("username", null), preferences.getString("password", null));
 			}
 		}
@@ -275,6 +278,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 
 		@Override
 		protected void onPreExecute() {
+			attempt++;
 			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
 				mProgressDialog = new ProgressDialog(LoginActivity.this);
 				mProgressDialog.setMessage("Logging in");
