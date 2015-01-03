@@ -35,7 +35,7 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
+import javax.net.ssl.HttpsURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
@@ -360,7 +360,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 	// Test if cookies are functional
 	private class Authentication extends AsyncTask<String, Void, User> {
 		private static final String TAG = "Authentication Connection";
-		private HttpURLConnection mConnection;
+		private HttpsURLConnection mConnection;
 		private final Cookie[] mCookies;
 
 		public Authentication (Cookie[] cookies) {
@@ -395,7 +395,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		protected User doInBackground(String... urls) {
 			User response = null;
 			try {
-				mConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
+				mConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
 				// Add cookies to header
 				for (Cookie cookie : mCookies) {
 					mConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
@@ -433,9 +433,9 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 
 		@Override
 		protected Void doInBackground(String... urls) {
-			HttpURLConnection urlConnection;
+			HttpsURLConnection urlConnection;
 			try {
-				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
+				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
 				// Add cookies to header
 				for(Cookie cookie : mCookies) {
 					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());

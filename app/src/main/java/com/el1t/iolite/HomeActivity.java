@@ -27,7 +27,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
+import javax.net.ssl.HttpsURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -327,10 +327,10 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		@Override
 		protected ArrayList<EighthBlockItem> doInBackground(String... urls) {
 
-			HttpURLConnection urlConnection;
+			HttpsURLConnection urlConnection;
 			ArrayList<EighthBlockItem> response = null;
 			try {
-				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
+				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
 				// Add cookies to header
 				for(Cookie cookie : mCookies) {
 					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
@@ -382,10 +382,10 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		@Override
 		protected Schedule[] doInBackground(Integer... days) {
 			final Date endDate = computeDays(days[0]);
-			HttpURLConnection urlConnection = null;
+			HttpsURLConnection urlConnection = null;
 			Schedule[] response = null;
 			try {
-				urlConnection = (HttpURLConnection) new URL(API_URL +
+				urlConnection = (HttpsURLConnection) new URL(API_URL +
 						"?start=" + mFormat.format(mStartDate) + "&end=" + mFormat.format(endDate))
 						.openConnection();
 				// Begin connection

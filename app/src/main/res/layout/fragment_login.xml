@@ -31,7 +31,7 @@
 		android:id="@+id/remember"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Stay logged in"/>
+		android:text="Stay Logged In"/>
 
 	<Button
 		android:layout_width="match_parent"

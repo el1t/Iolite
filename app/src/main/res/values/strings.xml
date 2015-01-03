@@ -20,6 +20,6 @@
 	<string name="dialog_cancel">Cancel</string>
 	<string name="dialog_continue">Continue</string>
 
-	<string name="contributors">Thanks to: Timothy Cyrus</string>
+	<string name="contributors">Thanks to: Timothy Cyrus and Rushi Shah</string>
 	<string name="license">VIEW LICENSE</string>
 </resources>
