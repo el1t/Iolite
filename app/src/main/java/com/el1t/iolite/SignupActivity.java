@@ -29,7 +29,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
+import javax.net.ssl.HttpsURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -254,10 +254,10 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 		@Override
 		protected ArrayList<EighthActivityItem> doInBackground(String... urls) {
-			final HttpURLConnection urlConnection;
+			final HttpsURLConnection urlConnection;
 			ArrayList<EighthActivityItem> response = null;
 			try {
-				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
+				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
 				// Add cookies to header
 				for(Cookie cookie : mCookies) {
 					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
@@ -347,9 +347,9 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 		@Override
 		protected Boolean doInBackground(String... urls) {
-			final HttpURLConnection urlConnection;
+			final HttpsURLConnection urlConnection;
 			try {
-				urlConnection = (HttpURLConnection) new URL(urls[0]).openConnection();
+				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
 				// Add cookies to header
 				for (Cookie cookie : mCookies) {
 					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
