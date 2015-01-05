@@ -70,7 +70,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 			// Check if fake information should be used
 			if ((fake = intent.getBooleanExtra("fake", false))) {
-				Log.d(TAG, "Loading fake info");
+				Log.d(TAG, "Loading Fake Info");
 				// Pretend fake list was received
 				postBlockRequest(getBlockList());
 			}
@@ -194,7 +194,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		try {
 			return EighthBlockXmlParser.parse(getAssets().open("testBlockList.xml"), getApplicationContext());
 		} catch(Exception e) {
-			Log.e(TAG, "Error parsing block xml", e);
+			Log.e(TAG, "Error parsing block XML", e);
 		}
 		// Don't die?
 		return new ArrayList<>();
@@ -342,9 +342,9 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 				// Close connection
 				urlConnection.disconnect();
 			} catch (XmlPullParserException e) {
-				Log.e(TAG, "XML error.", e);
+				Log.e(TAG, "XML Error.", e);
 			} catch (Exception e) {
-				Log.e(TAG, "Connection error.", e);
+				Log.e(TAG, "Connection Error.", e);
 			}
 			return response;
 		}
@@ -374,7 +374,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			try {
 				mStartDate = mFormat.parse(startDate);
 			} catch (ParseException e) {
-				Log.e(TAG, "Date parse error.", e);
+				Log.e(TAG, "Date Parse Error.", e);
 				mStartDate = null;
 			}
 		}
@@ -393,9 +393,9 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 				// Parse JSON from server
 				response = ScheduleJsonParser.parseSchedules(inputStreamToJSON(urlConnection.getInputStream()));
 			} catch (JSONException e) {
-				Log.e(TAG, "JSON error.", e);
+				Log.e(TAG, "JSON Error.", e);
 			} catch (Exception e) {
-				Log.e(TAG, "Connection error.", e);
+				Log.e(TAG, "Connection Error.", e);
 			} finally {
 				if (urlConnection != null) {
 					// Close connection
@@ -428,7 +428,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		protected void onPostExecute(Schedule[] result) {
 			super.onPostExecute(result);
 			if (result == null) {
-				Log.e(TAG, "Schedule listing aborted");
+				Log.e(TAG, "Schedule Listing Aborted");
 			} else {
 				postScheduleRequest(result);
 			}

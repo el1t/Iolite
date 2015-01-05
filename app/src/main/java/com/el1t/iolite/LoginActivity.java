@@ -148,7 +148,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 	// Submit the login request
 	public void submit(String username, String pass) {
 		if (username == null || pass == null) {
-			Log.d(TAG, "Null username or password");
+			Log.d(TAG, "Null Username or Password");
 			return;
 		}
 		login_username = username.trim();
@@ -162,9 +162,9 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		if (isFakeLogin()) {
 			postRequest(getList(), true);
 		} else if (login_username.isEmpty()) {
-			Toast.makeText(getApplicationContext(), "Please enter a username", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Please enter a Username", Toast.LENGTH_SHORT).show();
 		} else if (login_password.isEmpty()) {
-			Toast.makeText(getApplicationContext(), "Please enter a password", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Please enter a Password", Toast.LENGTH_SHORT).show();
 		} else {
 			new LoginRequest().execute("https://iodine.tjhsst.edu/api");
 		}
@@ -199,7 +199,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 			finish();
 		} else {
 			Toast.makeText(getApplicationContext(), "Session Expired", Toast.LENGTH_SHORT).show();
-			Log.d(TAG, "Session expired");
+			Log.d(TAG, "Session Expired");
 			clearCookies();
 			final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 			if (preferences.getBoolean("remember", false) && attempt < 1) {
@@ -213,13 +213,13 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
 				.remove("password")
 				.apply();
-		Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), "Logged Out", Toast.LENGTH_SHORT).show();
 	}
 
 	void failed(boolean isAborted) {
 		if (!isAborted) {
 			Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_SHORT).show();
-			Log.d(TAG, "Login failed");
+			Log.d(TAG, "Login Failed");
 		}
 		clearPassword();
 	}
@@ -265,7 +265,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		try {
 			return StudentInfoXmlParser.parse(getAssets().open("testStudentInfo.xml"));
 		} catch(Exception e) {
-			Log.e(TAG, "Error parsing block xml", e);
+			Log.e(TAG, "Error Parsing Block XML", e);
 		}
 		// Don't die?
 		return new User();
@@ -281,12 +281,12 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 			attempt++;
 			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
 				mProgressDialog = new ProgressDialog(LoginActivity.this);
-				mProgressDialog.setMessage("Logging in");
+				mProgressDialog.setMessage("Logging In");
 				mProgressDialog.setCancelable(true);
 				mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 					@Override
 					public void onCancel(DialogInterface dialog) {
-						Log.d(TAG, "Connection aborted!");
+						Log.d(TAG, "Connection Aborted!");
 						// Abort connection on background thread
 						new Thread(new Runnable() {
 							@Override
@@ -376,7 +376,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 				mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 					@Override
 					public void onCancel(DialogInterface dialog) {
-						Log.d(TAG, "Connection aborted!");
+						Log.d(TAG, "Connection Aborted!");
 						// Abort connection on background thread
 						new Thread(new Runnable() {
 							@Override
@@ -447,7 +447,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 				// Close connection
 				urlConnection.disconnect();
 			} catch (Exception e) {
-				Log.e(TAG, "Connection error.", e);
+				Log.e(TAG, "Connection Error.", e);
 			}
 			return null;
 		}
