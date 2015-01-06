@@ -11,6 +11,7 @@ public class NavMenuItem implements NavDrawerItem
 	private String label;
 	private int icon;
 	private boolean checkable;
+	private boolean updateActionBarTitle;
 
 	private NavMenuItem() { }
 
@@ -78,10 +79,10 @@ public class NavMenuItem implements NavDrawerItem
 
 //	@Override
 //	public boolean updateActionBarTitle() {
-//		return updateActionBarTitle;
+//		return this.updateActionBarTitle;
 //	}
 
 	public void setUpdateActionBarTitle(boolean updateActionBarTitle) {
-		updateActionBarTitle = updateActionBarTitle;
+		this.updateActionBarTitle = updateActionBarTitle;
 	}
 }

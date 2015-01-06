@@ -6,7 +6,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 	<item android:id="@+id/context_signup"
-	      android:title="Sign up"
+	      android:title="Sign Up"
 	      android:orderInCategory="100"
 	      app:showAsAction="never" />
 

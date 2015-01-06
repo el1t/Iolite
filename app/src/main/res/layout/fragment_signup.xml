@@ -5,7 +5,8 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical"
 	android:id="@+id/refresh"
-	tools:context=".SignupFragment">
+	tools:context=".SignupFragment"
+	tools:showIn="@layout/activity_signup">
 
 	<ListView
 		android:layout_width="match_parent"
