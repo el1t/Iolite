@@ -11,6 +11,6 @@
 		android:id="@+id/container"
 		android:layout_width="match_parent"
 		android:layout_height="fill_parent">
-        <include layout="@layout/fragment_signup" />
-    </FrameLayout>
+		<include layout="@layout/fragment_signup" />
+	</FrameLayout>
 </LinearLayout>

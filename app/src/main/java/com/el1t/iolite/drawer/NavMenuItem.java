@@ -11,7 +11,7 @@ public class NavMenuItem implements NavDrawerItem
 	private String label;
 	private int icon;
 	private boolean checkable;
-    private boolean updateActionBarTitle;
+	private boolean updateActionBarTitle;
 
 	private NavMenuItem() { }
 
