@@ -1,19 +1,19 @@
 language: android
 android:
-	components:
-		# Uncomment the lines below if you want to
-		# use the latest revision of Android SDK Tools
-		- platform-tools
-		- tools
+    components:
+        # Uncomment the lines below if you want to
+        # use the latest revision of Android SDK Tools
+        - platform-tools
+        - tools
 
-		# Build Tools version
-		- build-tools-21.1.2
+        # Build Tools version
+        - build-tools-21.1.2
 
-		# SDK version
-		- android-21
+        # SDK version
+        - android-21
 
-		# Additional components
-		- extra-android-support
-		- extra-google-m2repository
-		- extra-android-m2repository
-		- addon-google_apis-google-19
+        # Additional components
+        - extra-android-support
+        - extra-google-m2repository
+        - extra-android-m2repository
+        - addon-google_apis-google-19
