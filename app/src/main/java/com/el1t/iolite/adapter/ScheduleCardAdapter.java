@@ -29,6 +29,9 @@ public class ScheduleCardAdapter extends RecyclerView.Adapter<ScheduleCardAdapte
 		BLUE("Blue Day"),
 		RED("Red Day"),
 		JLC("JLC Blue Day"),
+		MODIFIED_BLUE("Modified Blue"),
+		MODIFIED_RED("Modified Red"),
+		MODIFIED_JLC("Modified JLC"),
 		OFF("No School");
 
 		private String name;
@@ -43,6 +46,12 @@ public class ScheduleCardAdapter extends RecyclerView.Adapter<ScheduleCardAdapte
 		}
 
 		public static int indexOf(String name) {
+			if (name.startsWith("Modified")) {
+				if (name.contains("Blue")) {
+					return name.contains("JLC") ? MODIFIED_JLC.ordinal() : MODIFIED_BLUE.ordinal();
+				}
+				return MODIFIED_RED.ordinal();
+			}
 			for (Days day : values()) {
 				if (day.name.charAt(0) == name.charAt(0)) {
 					return day.ordinal();
@@ -72,12 +81,15 @@ public class ScheduleCardAdapter extends RecyclerView.Adapter<ScheduleCardAdapte
 		mSchedules = schedule;
 
 		final Resources resources = context.getResources();
-		mColors = new int[5];
+		mColors = new int[8];
 		mColors[0] = resources.getColor(R.color.deep_purple_300);
 		mColors[1] = resources.getColor(R.color.primary_300);
 		mColors[2] = resources.getColor(R.color.red_300);
 		mColors[3] = resources.getColor(R.color.light_blue_300);
-		mColors[4] = resources.getColor(R.color.grey_300);
+		mColors[4] = resources.getColor(R.color.primary_400);
+		mColors[5] = resources.getColor(R.color.red_400);
+		mColors[6] = resources.getColor(R.color.light_blue_400);
+		mColors[7] = resources.getColor(R.color.grey_300);
 
 		mLayoutInflater = LayoutInflater.from(context);
 	}

@@ -1,5 +1,7 @@
 package com.el1t.iolite;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -10,8 +12,6 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.el1t.iolite.item.EighthActivityItem;
@@ -29,12 +29,13 @@ import org.apache.http.message.BasicNameValuePair;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import javax.net.ssl.HttpsURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by El1t on 10/21/14.
@@ -59,10 +60,10 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		setContentView(R.layout.activity_signup);
 		final Intent intent = getIntent();
 		BID = intent.getIntExtra("BID", -1);
+		mTasks = new ArrayList<>();
 
 		// Check if restoring from previously destroyed instance that matches the BID
 		if (savedInstanceState == null || BID != savedInstanceState.getInt("BID")) {
-			mTasks = new ArrayList<>();
 			// Check if fake information should be used
 			if (fake = intent.getBooleanExtra("fake", false)) {
 				Log.d(TAG, "Loading fake info");
@@ -86,7 +87,6 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 			setSupportActionBar(toolbar);
 		}
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 	}
 
 	@Override
@@ -115,13 +115,32 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		final MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.eighth_signup, menu);
-		final MenuItem searchItem = menu.findItem(R.id.action_search);
-		final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-//		searchView.setOnQueryTextFocusChangeListener(this);
+		getMenuInflater().inflate(R.menu.eighth_signup, menu);
+		final SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+		if (searchView != null) {
+			searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+			searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+				@Override
+				public boolean onQueryTextChange(String query) {
+					mSignupFragment.filter(query);
+					return true;
+				}
+
+				@Override
+				public boolean onQueryTextSubmit(String query) {
+					return true;
+				}
+			});
+		}
 		return super.onCreateOptionsMenu(menu);
 	}
+
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		((SearchView) item.getActionView()).setIconified(false);
+//		return true;
+//	}
 
 	public void refresh() {
 		if (!fake) {

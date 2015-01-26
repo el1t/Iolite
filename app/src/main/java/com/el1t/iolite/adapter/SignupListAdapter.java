@@ -60,7 +60,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 	public SignupListAdapter(Context context, ArrayList<EighthActivityItem> items) {
 		super(context, 0);
 		// Headers
-		headers = new ArrayList<>();
+		headers = new ArrayList<>(3 + items.size());
 		headers.add(new EighthActivityItem("Favorites", ActivityHeaderType.FAVORITE));
 		headers.add(new EighthActivityItem("Special", ActivityHeaderType.SPECIAL));
 		headers.add(new EighthActivityItem("Activities", ActivityHeaderType.GENERAL));
@@ -71,7 +71,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 		mLayoutInflater = LayoutInflater.from(context);
 
 		// Cache colors
-		Resources resources = context.getResources();
+		final Resources resources = context.getResources();
 		mColors = new int[6];
 		mColors[Colors.RED.ordinal()]           = resources.getColor(R.color.red_400);
 		mColors[Colors.DEEP_ORANGE.ordinal()]   = resources.getColor(R.color.deep_orange_400);
@@ -203,8 +203,8 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 	public void sort() {
 		Collections.sort(mItems, mComp);
 		clear();
+		addHeaders(mItems);
 		addAll(mItems);
-		addHeaders();
 		notifyDataSetChanged();
 	}
 
@@ -214,16 +214,16 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 		sort();
 	}
 
-	private void addHeaders() {
+	private void addHeaders(ArrayList<EighthActivityItem> list) {
 		ActivityHeaderType index = ActivityHeaderType.FAVORITE;
 		EighthActivityItem item;
-		int count = getCount();
+		int count = list.size();
 		for (int i = 0; i < count; i++) {
-			item = getItem(i);
+			item = list.get(i);
 			switch (index) {
 				case FAVORITE:
 					if (item.isFavorite()) {
-						insert(headers.get(index.ordinal()), i);
+						list.add(i, headers.get(index.ordinal()));
 						index = ActivityHeaderType.SPECIAL;
 						continue;
 					} else {
@@ -235,7 +235,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 				case SPECIAL:
 					if (!item.isFavorite()) {
 						if (item.isSpecial()) {
-							insert(headers.get(index.ordinal()), i);
+							list.add(i, headers.get(index.ordinal()));
 							index = ActivityHeaderType.GENERAL;
 						} else {
 							// Skip if no special activities
@@ -247,7 +247,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 					break;
 				case GENERAL:
 					if (!(item.isFavorite() || item.isSpecial())) {
-						insert(headers.get(index.ordinal()), i);
+						list.add(i, headers.get(index.ordinal()));
 						return;
 					}
 					break;
@@ -272,18 +272,15 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 
 	@Override
 	public Filter getFilter() {
-
 		return new Filter() {
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void publishResults(CharSequence constraint, FilterResults results) {
-				if (results.count == 0) {
-					notifyDataSetInvalidated();
-				} else {
-					SignupListAdapter.this.clear();
-					SignupListAdapter.this.addAll((ArrayList<EighthActivityItem>) results.values);
-					notifyDataSetChanged();
+				if (results.count != 0) {
+					clear();
+					addAll((ArrayList<EighthActivityItem>) results.values);
 				}
+				notifyDataSetChanged();
 			}
 
 			@Override
@@ -291,20 +288,21 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 				FilterResults results = new FilterResults();
 
 				// Empty constraints display all items
-				if(constraint == null || constraint.toString().trim().length() == 0){
+				if(constraint == null || constraint.length() == 0) {
 					results.values = mItems;
 					results.count = mItems.size();
 				} else {
-					ArrayList<EighthActivityItem> FilteredArrayNames = new ArrayList<>();
-					constraint = constraint.toString().toLowerCase();
+					final ArrayList<EighthActivityItem> FilteredArrayNames = new ArrayList<>();
+					String temp = constraint.toString().toLowerCase();
 					// This should preserve the sort of the items
 					for (EighthActivityItem item : mItems) {
 						// Match activity name, and room number todo: match sponsors
-						if (item.getName().toLowerCase().contains(constraint) ||
-								item.getRoom().replace(" ", "").contains(constraint.toString().replace(" ", ""))) {
+						if (!item.isHeader() && (item.getName().toLowerCase().contains(temp) || item.getSponsors().toLowerCase().contains(temp) ||
+								item.getRoom().replace(" ", "").contains(temp.replace(" ", "")))) {
 							FilteredArrayNames.add(item);
 						}
 					}
+					addHeaders(FilteredArrayNames);
 					results.values = FilteredArrayNames;
 					results.count = FilteredArrayNames.size();
 				}

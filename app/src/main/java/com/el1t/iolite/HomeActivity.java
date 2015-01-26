@@ -304,7 +304,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		if (mScheduleFragment == null) {
 			// Create the content view
 			mScheduleFragment = new ScheduleFragment();
-			Bundle args = new Bundle();
+			final Bundle args = new Bundle();
 			args.putParcelableArray("schedule", result);
 			mScheduleFragment.setArguments(args);
 			getFragmentManager().beginTransaction()
@@ -412,7 +412,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			c.add(Calendar.DATE, daysAfter);
 			return c.getTime();
 		}
-
 		// Parse the InputStream into a JSONObject
 		private JSONObject inputStreamToJSON(InputStream inputStream) throws JSONException, IOException {
 			final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);

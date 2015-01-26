@@ -145,4 +145,8 @@ public class SignupFragment extends Fragment
 		mAdapter.setListItems(items);
 		mSwipeRefreshLayout.setRefreshing(false);
 	}
+
+	void filter(String query) {
+		mAdapter.getFilter().filter(query);
+	}
 }

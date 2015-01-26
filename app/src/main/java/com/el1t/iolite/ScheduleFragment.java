@@ -44,11 +44,10 @@ public class ScheduleFragment extends Fragment
 
 		// Check if list was provided from login activity to setup custom ListAdapter
 		final Bundle args = getArguments();
-		final Schedule[] schedules;
-		if (args != null && (schedules = (Schedule[]) args.getParcelableArray("schedule")) != null) {
+		if (args != null && args.getParcelableArray("schedule") != null) {
 			Log.d(TAG, "Schedule received");
 			final ArrayList<Schedule> list = new ArrayList<>();
-			list.addAll(Arrays.asList(schedules));
+			list.addAll(Arrays.asList((Schedule[]) args.getParcelableArray("schedule")));
 			mScheduleCardAdapter = new ScheduleCardAdapter(getActivity(), list);
 		} else {
 			Log.e(TAG, "Schedule not received", new IllegalArgumentException());

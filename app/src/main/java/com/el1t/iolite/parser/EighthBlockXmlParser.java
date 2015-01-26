@@ -41,54 +41,77 @@ public class EighthBlockXmlParser
 	}
 
 	private static ArrayList<EighthBlockItem> readEighth(XmlPullParser parser) throws XmlPullParserException, IOException {
-		ArrayList<EighthBlockItem> entries = new ArrayList<>();
-		parser.require(XmlPullParser.START_TAG, null, "eighth");
-		// Consume the "eighth" AND "blocks" tags
-		parser.next();
-		while(parser.next() != XmlPullParser.START_TAG) {
-			parser.next();
-		}
-		try {
-			while (parser.next() != XmlPullParser.END_TAG) {
-				if (parser.getEventType() != XmlPullParser.START_TAG) {
-					continue;
+		switch (parser.getName()) {
+			case "auth":
+				// Consume the auth AND error tags
+				parser.next();
+				while (parser.next() != XmlPullParser.START_TAG) {
+					parser.next();
 				}
-				switch (parser.getName()) {
-					case "auth":
-						parser.next();
-						// Consume the auth AND error tags
-						parser.next();
-						while (parser.next() != XmlPullParser.START_TAG) {
-							parser.next();
-						}
-						// Print debug message of error content
-						while (parser.next() != XmlPullParser.END_TAG) {
-							// Skip whitespace until a tag is reached
-							if (parser.getEventType() != XmlPullParser.START_TAG) {
-								continue;
-							}
+				// Print debug message of error content
+				while (parser.next() != XmlPullParser.END_TAG) {
+					// Skip whitespace until a tag is reached
+					if (parser.getEventType() != XmlPullParser.START_TAG) {
+						continue;
+					}
 
-							if (parser.getName().equals("message")) {
-								Log.d(TAG, EighthActivityXmlParser.readString(parser, "message"));
-							} else {
-								EighthActivityXmlParser.skip(parser);
-							}
-						}
-						break;
-					// Starts by looking for the block tag
-					case "block":
-						entries.add(readBlock(parser));
-						break;
-					default:
+					if (parser.getName().equals("message")) {
+						Log.d(TAG, EighthActivityXmlParser.readString(parser, "message"));
+					} else {
 						EighthActivityXmlParser.skip(parser);
-						break;
+					}
 				}
-			}
-		} catch (ParseException e) {
-			Log.e(TAG, "Block parser", e);
-			Toast.makeText(mContext, "Some blocks failed to load.", Toast.LENGTH_SHORT).show();
+				break;
+			case "eighth":
+				// Consume the "eighth" AND "blocks" tags
+				parser.next();
+				final ArrayList<EighthBlockItem> entries = new ArrayList<>();
+				while (parser.next() != XmlPullParser.START_TAG) {
+					parser.next();
+				}
+				try {
+					while (parser.next() != XmlPullParser.END_TAG) {
+						if (parser.getEventType() != XmlPullParser.START_TAG) {
+							continue;
+						}
+						switch (parser.getName()) {
+							case "auth":
+								parser.next();
+								// Consume the auth AND error tags
+								parser.next();
+								while (parser.next() != XmlPullParser.START_TAG) {
+									parser.next();
+								}
+								// Print debug message of error content
+								while (parser.next() != XmlPullParser.END_TAG) {
+									// Skip whitespace until a tag is reached
+									if (parser.getEventType() != XmlPullParser.START_TAG) {
+										continue;
+									}
+
+									if (parser.getName().equals("message")) {
+										Log.d(TAG, EighthActivityXmlParser.readString(parser, "message"));
+									} else {
+										EighthActivityXmlParser.skip(parser);
+									}
+								}
+								break;
+							// Starts by looking for the block tag
+							case "block":
+								entries.add(readBlock(parser));
+								break;
+							default:
+								EighthActivityXmlParser.skip(parser);
+								break;
+						}
+					}
+				} catch (ParseException e) {
+					Log.e(TAG, "Block parser", e);
+					Toast.makeText(mContext, "Some blocks failed to load.", Toast.LENGTH_SHORT).show();
+				}
+				return entries;
 		}
-		return entries;
+		return null;
 	}
 
 	private static EighthBlockItem readBlock(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {

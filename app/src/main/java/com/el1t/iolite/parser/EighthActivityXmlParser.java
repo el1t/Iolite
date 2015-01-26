@@ -23,8 +23,7 @@ public class EighthActivityXmlParser
 		// Initialize parser and jump to first tag
 		try {
 			XmlPullParser parser = Xml.newPullParser();
-			parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-			parser.setInput(in, "UTF-8");
+			parser.setInput(in, null);
 			parser.nextTag();
 			return readResponse(parser);
 		} finally {
@@ -33,71 +32,94 @@ public class EighthActivityXmlParser
 	}
 
 	private static boolean readResponse(XmlPullParser parser) throws XmlPullParserException, IOException {
-		boolean response = false;
-		parser.require(XmlPullParser.START_TAG, null, "eighth");
-		// Consume the eighth AND signup tags (no need for while loop)
-		parser.next();
-		while (parser.next() != XmlPullParser.END_TAG) {
-			if (parser.getEventType() != XmlPullParser.START_TAG) {
-				continue;
-			}
-			switch (parser.getName()) {
-				case "auth":
+		switch (parser.getName()) {
+			case "auth":
+				// Consume the auth AND error tags
+				parser.next();
+				while (parser.next() != XmlPullParser.START_TAG) {
 					parser.next();
-					// Consume the auth AND error tags
-					parser.next();
-					while (parser.next() != XmlPullParser.START_TAG) {
-						parser.next();
+				}
+				// Print debug message of error content
+				while (parser.next() != XmlPullParser.END_TAG) {
+					// Skip whitespace until a tag is reached
+					if (parser.getEventType() != XmlPullParser.START_TAG) {
+						continue;
 					}
-					// Print debug message of error content
-					while (parser.next() != XmlPullParser.END_TAG) {
-						// Skip whitespace until a tag is reached
-						if (parser.getEventType() != XmlPullParser.START_TAG) {
-							continue;
-						}
 
-						if (parser.getName().equals("message")) {
-							Log.d(TAG, readString(parser, "message"));
-						} else {
-							skip(parser);
-						}
+					if (parser.getName().equals("message")) {
+						Log.d(TAG, readString(parser, "message"));
+					} else {
+						skip(parser);
 					}
-					break;
-				case "signup":
-					// Look for success tag
-					parser.require(XmlPullParser.START_TAG, null, "signup");
-					// Loop through tags under signup
-					while (parser.next() != XmlPullParser.END_TAG) {
-						if (parser.getEventType() != XmlPullParser.START_TAG) {
-							continue;
-						}
-						// Look for success tag
-						if (parser.getName().equals("success")) {
+				}
+				break;
+			case "eighth":
+				boolean response = false;
+				// Consume the eighth AND signup tags (no need for while loop)
+				parser.next();
+				while (parser.next() != XmlPullParser.END_TAG) {
+					if (parser.getEventType() != XmlPullParser.START_TAG) {
+						continue;
+					}
+					switch (parser.getName()) {
+						case "auth":
+							parser.next();
+							// Consume the auth AND error tags
+							parser.next();
+							while (parser.next() != XmlPullParser.START_TAG) {
+								parser.next();
+							}
+							// Print debug message of error content
+							while (parser.next() != XmlPullParser.END_TAG) {
+								// Skip whitespace until a tag is reached
+								if (parser.getEventType() != XmlPullParser.START_TAG) {
+									continue;
+								}
+
+								if (parser.getName().equals("message")) {
+									Log.d(TAG, readString(parser, "message"));
+								} else {
+									skip(parser);
+								}
+							}
+							break;
+						case "signup":
+							// Look for success tag
+							parser.require(XmlPullParser.START_TAG, null, "signup");
+							// Loop through tags under signup
+							while (parser.next() != XmlPullParser.END_TAG) {
+								if (parser.getEventType() != XmlPullParser.START_TAG) {
+									continue;
+								}
+								// Look for success tag
+								if (parser.getName().equals("success")) {
+									if (parser.next() == XmlPullParser.TEXT) {
+										response = parser.getText().equals("1");
+										parser.nextTag();
+									}
+								} else {
+									skip(parser);
+								}
+							}
+							parser.require(XmlPullParser.END_TAG, null, "signup");
+							// Look for error tag and print any error
+							break;
+						case "error":
+							parser.require(XmlPullParser.START_TAG, null, "error");
 							if (parser.next() == XmlPullParser.TEXT) {
-								response = parser.getText().equals("1");
+								Log.e(TAG, parser.getText());
 								parser.nextTag();
 							}
-						} else {
+							parser.require(XmlPullParser.END_TAG, null, "error");
+							break;
+						default:
 							skip(parser);
-						}
+							break;
 					}
-					parser.require(XmlPullParser.END_TAG, null, "signup");
-					// Look for error tag and print any error
-					break;
-				case "error":
-					parser.require(XmlPullParser.START_TAG, null, "error");
-					if (parser.next() == XmlPullParser.TEXT) {
-						Log.e(TAG, parser.getText());
-						parser.nextTag();
-					}
-					parser.require(XmlPullParser.END_TAG, null, "error");
-					break;
-				default:
-					skip(parser);
-					break;
-			}
+				}
+				return response;
 		}
-		return response;
+		return false;
 	}
 
 // ============ Parse activity list =============
@@ -106,8 +128,7 @@ public class EighthActivityXmlParser
 		// Initialize parser and jump to first tag
 		try {
 			final XmlPullParser parser = Xml.newPullParser();
-			parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-			parser.setInput(in, "UTF-8");
+			parser.setInput(in, null);
 			parser.nextTag();
 			return readEighth(parser);
 		} finally {
