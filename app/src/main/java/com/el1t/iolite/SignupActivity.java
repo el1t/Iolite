@@ -123,7 +123,9 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 			searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 				@Override
 				public boolean onQueryTextChange(String query) {
-					mSignupFragment.filter(query);
+					if (mSignupFragment != null) {
+						mSignupFragment.filter(query);
+					}
 					return true;
 				}
 
@@ -135,12 +137,6 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 		}
 		return super.onCreateOptionsMenu(menu);
 	}
-
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		((SearchView) item.getActionView()).setIconified(false);
-//		return true;
-//	}
 
 	public void refresh() {
 		if (!fake) {

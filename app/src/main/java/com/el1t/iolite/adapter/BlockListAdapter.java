@@ -110,7 +110,7 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 				// Hide empty fields
 				viewHolder.sponsors.setVisibility(View.GONE);
 				viewHolder.room.setVisibility(View.GONE);
-				viewHolder.description.setText("No description.");
+				viewHolder.description.setText("Please select an activity.");
 
 				// Format title
 				viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
@@ -118,7 +118,7 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 				alpha = 1f;
 			} else {
 				// Show fields
-				if (activityItem.getRoom().equals("")) {
+				if (activityItem.getRoom().isEmpty()) {
 					viewHolder.room.setVisibility(View.GONE);
 				} else {
 					viewHolder.room.setVisibility(View.VISIBLE);
@@ -143,7 +143,8 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 
 				// Format title
 				if (activityItem.isCancelled()) {
-					viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD_ITALIC);
+					viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+					viewHolder.description.setText("Cancelled!");
 					color = Colors.DARK_RED;
 					alpha = 1f;
 				} else {
@@ -156,9 +157,11 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 			viewHolder.title.setAlpha(alpha);
 
 			// Set color of circle
-			String letter = blockItem.getBlock();
+			final String letter = blockItem.getBlock();
 			if (blockItem.isLocked()) {
 				color = Colors.RED;
+			} else if (activityItem.isCancelled()) {
+				color = Colors.DARK_RED;
 			} else {
 				switch(Block.valueOf(letter)) {
 					case A:

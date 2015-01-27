@@ -15,10 +15,19 @@ import com.el1t.iolite.drawer.NavMenuItem;
 import com.el1t.iolite.item.EighthBlockItem;
 import com.el1t.iolite.item.Schedule;
 import com.el1t.iolite.item.User;
+import com.el1t.iolite.parser.EighthActivityXmlParser;
 import com.el1t.iolite.parser.EighthBlockXmlParser;
 import com.el1t.iolite.parser.ScheduleJsonParser;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.ClientPNames;
+import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParserException;
@@ -28,6 +37,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import javax.net.ssl.HttpsURLConnection;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -35,6 +47,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by El1t on 10/24/14.
@@ -187,6 +200,11 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		intent.putExtra("BID", BID);
 		intent.putExtra("fake", fake);
 		startActivity(intent);
+	}
+
+	// Clear the selected activity
+	public void clear(int BID) {
+		new ClearRequest(BID).execute("https://iodine.tjhsst.edu/api/eighth/signup_activity");
 	}
 
 	// Get a fake list of blocks for debugging
@@ -360,6 +378,50 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 	}
 
+	// Web request for clearing activity using HttpClient
+	private class ClearRequest extends AsyncTask<String, Void, Boolean> {
+		private static final String TAG = "Clear Connection";
+		private final String BID;
+
+		public ClearRequest(int BID) {
+			this.BID = Integer.toString(BID);
+		}
+
+		@Override
+		protected Boolean doInBackground(String... urls) {
+			final DefaultHttpClient client = new DefaultHttpClient();
+			try {
+				// Setup client
+				client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
+				HttpPost post = new HttpPost(new URI(urls[0]));
+				// Add cookies
+				for(Cookie cookie : mCookies) {
+					post.setHeader("Cookie", cookie.getName() + "=" + cookie.getValue());
+				}
+				// Add parameters
+				final List<NameValuePair> data = new ArrayList<>(2);
+				data.add(new BasicNameValuePair("aid", "999")); // Use 999 for empty activity
+				data.add(new BasicNameValuePair("bid", BID));
+				post.setEntity(new UrlEncodedFormEntity(data));
+
+				// Send request
+				client.execute(post);
+				return true;
+			} catch (URISyntaxException e) {
+				Log.e(TAG, "URL -> URI error");
+			} catch (IOException e) {
+				Log.e(TAG, "Connection error.", e);
+			}
+			return false;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			super.onPostExecute(result);
+			refresh();
+		}
+	}
+
 	private class ScheduleRequest extends AsyncTask<Integer, Void, Schedule[]> {
 		private static final String TAG = "Schedule Connection";
 		private static final String API_URL = "https://iodine.tjhsst.edu/ajax/dayschedule/json_exp";
@@ -412,6 +474,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			c.add(Calendar.DATE, daysAfter);
 			return c.getTime();
 		}
+
 		// Parse the InputStream into a JSONObject
 		private JSONObject inputStreamToJSON(InputStream inputStream) throws JSONException, IOException {
 			final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);

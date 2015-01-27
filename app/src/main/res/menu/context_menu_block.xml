@@ -6,17 +6,18 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 	<item android:id="@+id/context_select"
-	      android:title="Sign Up"
+	      android:title="View Activities"
 	      android:orderInCategory="100"
 	      app:showAsAction="never" />
 
 	<item android:id="@+id/context_info"
 	      android:title="Activity Info"
 	      android:orderInCategory="100"
+	      android:enabled="false"
 	      app:showAsAction="never" />
 
-	<item android:id="@+id/context_favorite"
-	      android:title="Favorite"
+	<item android:id="@+id/context_clear"
+	      android:title="Clear Activity"
 	      android:orderInCategory="100"
 	      app:showAsAction="never" />
 </menu>

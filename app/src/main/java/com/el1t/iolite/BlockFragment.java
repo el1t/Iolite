@@ -5,13 +5,16 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.el1t.iolite.adapter.BlockListAdapter;
+import com.el1t.iolite.item.EighthActivityItem;
 import com.el1t.iolite.item.EighthBlockItem;
 
 import java.util.ArrayList;
@@ -24,11 +27,12 @@ public class BlockFragment extends Fragment
 	private static final String TAG = "Block Fragment";
 
 	private OnFragmentInteractionListener mListener;
-	private BlockListAdapter mBlockListAdapter;
+	private BlockListAdapter mAdapter;
 	private SwipeRefreshLayout mSwipeRefreshLayout;
 
 	public interface OnFragmentInteractionListener {
 		public void select(int BID);
+		public void clear(int BID);
 		public void refresh();
 	}
 
@@ -45,13 +49,13 @@ public class BlockFragment extends Fragment
 		final ArrayList<EighthBlockItem> items;
 		if (args != null && (items = args.getParcelableArrayList("list")) != null) {
 			Log.d(TAG, "Block list received");
-			mBlockListAdapter = new BlockListAdapter(getActivity(), items);
+			mAdapter = new BlockListAdapter(getActivity(), items);
 		} else {
 			Log.e(TAG, "No list received", new IllegalArgumentException());
 		}
 
 		final ListView blockList = (ListView) rootView.findViewById(R.id.list);
-		blockList.setAdapter(mBlockListAdapter);
+		blockList.setAdapter(mAdapter);
 
 		// Select block selection on click
 		blockList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -62,6 +66,9 @@ public class BlockFragment extends Fragment
 			}
 		});
 
+		// Display menu on long click
+		registerForContextMenu(blockList);
+
 		mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
 		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
@@ -70,7 +77,7 @@ public class BlockFragment extends Fragment
 				mListener.refresh();
 			}
 		});
-		mSwipeRefreshLayout.setColorSchemeResources(R.color.blue, R.color.red_600, R.color.amber, R.color.green_600);
+		mSwipeRefreshLayout.setColorSchemeResources(R.color.blue, R.color.red_600,R.color.amber, R.color.green_600);
 
 		return rootView;
 	}
@@ -97,8 +104,39 @@ public class BlockFragment extends Fragment
 		mSwipeRefreshLayout.clearAnimation();
 	}
 
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+	                                ContextMenu.ContextMenuInfo menuInfo) {
+		final AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
+		final EighthBlockItem item = (EighthBlockItem) ((ListView) v).getItemAtPosition(acmi.position);
+		getActivity().getMenuInflater().inflate(R.menu.context_menu_block, menu);
+		if (item.getEighth().getAID() == 999) {
+			menu.findItem(R.id.context_info).setVisible(false);
+			menu.findItem(R.id.context_clear).setVisible(false);
+		}
+		super.onCreateContextMenu(menu, v, menuInfo);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		final EighthBlockItem blockItem = mAdapter.getItem(info.position);
+		switch (item.getItemId()) {
+			case R.id.context_select:
+				mListener.select(blockItem.getBID());
+				return true;
+			case R.id.context_info:
+				return true;
+			case R.id.context_clear:
+				mListener.clear(blockItem.getBID());
+				return true;
+			default:
+				return super.onContextItemSelected(item);
+		}
+	}
+
 	void setListItems(ArrayList<EighthBlockItem> items) {
-		mBlockListAdapter.setListItems(items);
+		mAdapter.setListItems(items);
 		mSwipeRefreshLayout.setRefreshing(false);
 	}
 }

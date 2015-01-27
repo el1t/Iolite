@@ -12,7 +12,5 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:background="@android:color/transparent"
-		android:id="@+id/activity_list"
-		android:dividerHeight="0dp"
-		android:divider="@null"/>
+		android:id="@+id/activity_list"/>
 </android.support.v4.widget.SwipeRefreshLayout>

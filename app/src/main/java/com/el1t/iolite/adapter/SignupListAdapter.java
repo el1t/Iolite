@@ -276,8 +276,8 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void publishResults(CharSequence constraint, FilterResults results) {
+				clear();
 				if (results.count != 0) {
-					clear();
 					addAll((ArrayList<EighthActivityItem>) results.values);
 				}
 				notifyDataSetChanged();

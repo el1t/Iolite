@@ -82,39 +82,6 @@ public class SignupFragment extends Fragment
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-	                                ContextMenuInfo menuInfo) {
-		final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) menuInfo;
-		final EighthActivityItem item = (EighthActivityItem) ((ListView) v).getItemAtPosition(acmi.position);
-		getActivity().getMenuInflater().inflate(R.menu.context_menu_signup, menu);
-		if (item.isFavorite()) {
-			menu.findItem(R.id.context_favorite).setTitle("Unfavorite");
-		}
-		if (item.isRestricted() || item.isCancelled() || item.isFull() || item.isAttendanceTaken()) {
-			menu.findItem(R.id.context_signup).setEnabled(false);
-		}
-		super.onCreateContextMenu(menu, v, menuInfo);
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		final EighthActivityItem activityItem = mAdapter.getItem(info.position);
-		switch (item.getItemId()) {
-			case R.id.context_signup:
-				mListener.submit(activityItem);
-				return true;
-			case R.id.context_info:
-				return true;
-			case R.id.context_favorite:
-				mListener.favorite(activityItem.getAID(), activityItem.getBID(), mAdapter.changeFavorite(activityItem));
-				return true;
-			default:
-				return super.onContextItemSelected(item);
-		}
-	}
-
-	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 
@@ -139,6 +106,39 @@ public class SignupFragment extends Fragment
 	public void onStart() {
 		super.onStart();
 		mAdapter.restore();
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+	                                ContextMenuInfo menuInfo) {
+		final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) menuInfo;
+		final EighthActivityItem item = (EighthActivityItem) ((ListView) v).getItemAtPosition(acmi.position);
+		getActivity().getMenuInflater().inflate(R.menu.context_menu_signup, menu);
+		if (item.isFavorite()) {
+			menu.findItem(R.id.context_favorite).setTitle("Unfavorite");
+		}
+		if (item.isRestricted() || item.isCancelled() || item.isFull() || item.isAttendanceTaken()) {
+			menu.findItem(R.id.context_select).setEnabled(false);
+		}
+		super.onCreateContextMenu(menu, v, menuInfo);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		final EighthActivityItem activityItem = mAdapter.getItem(info.position);
+		switch (item.getItemId()) {
+			case R.id.context_select:
+				mListener.submit(activityItem);
+				return true;
+			case R.id.context_info:
+				return true;
+			case R.id.context_favorite:
+				mListener.favorite(activityItem.getAID(), activityItem.getBID(), mAdapter.changeFavorite(activityItem));
+				return true;
+			default:
+				return super.onContextItemSelected(item);
+		}
 	}
 
 	void setListItems(ArrayList<EighthActivityItem> items) {
