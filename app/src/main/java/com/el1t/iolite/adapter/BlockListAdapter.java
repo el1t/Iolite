@@ -230,13 +230,17 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 		sort();
 	}
 
-	// Sort by BID (which also happens to sort by date)
+	// Sort by block date and type
 	private class BIDSortComp implements Comparator<EighthBlockItem>
 	{
 		@Override
 		public int compare(EighthBlockItem e1, EighthBlockItem e2) {
-			// Double, because Integer does not have compare prior to Java 7
-			return Double.compare(e1.getBID(), e2.getBID());
+			int cmp = e1.getDate().compareTo(e2.getDate());
+			if (cmp != 0) {
+				return cmp;
+			} else {
+				return e1.getBlock().compareTo(e2.getBlock());
+			}
 		}
 	}
 }
