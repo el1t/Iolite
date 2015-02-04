@@ -5,7 +5,7 @@ package com.el1t.iolite.drawer;
  */
 public class NavMenuItem implements NavDrawerItem
 {
-	public static final int ITEM_TYPE = 1;
+	private static final int ITEM_TYPE = 1;
 
 	private int listId;
 	private String label;
@@ -44,7 +44,7 @@ public class NavMenuItem implements NavDrawerItem
 		return listId;
 	}
 
-	public void setListId(int listId) {
+	void setListId(int listId) {
 		this.listId = listId;
 	}
 
@@ -52,7 +52,7 @@ public class NavMenuItem implements NavDrawerItem
 		return label;
 	}
 
-	public void setLabel(String label) {
+	void setLabel(String label) {
 		this.label = label;
 	}
 
@@ -60,7 +60,7 @@ public class NavMenuItem implements NavDrawerItem
 		return icon;
 	}
 
-	public void setIcon(int icon) {
+	void setIcon(int icon) {
 		this.icon = icon;
 	}
 
@@ -68,7 +68,7 @@ public class NavMenuItem implements NavDrawerItem
 		return checkable;
 	}
 
-	public void setCheckable(boolean checkable) {
+	void setCheckable(boolean checkable) {
 		this.checkable = checkable;
 	}
 

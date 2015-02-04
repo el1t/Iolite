@@ -31,9 +31,9 @@ public abstract class AbstractDrawerActivity extends ActionBarActivity {
 	private NavDrawerActivityConfig navConf;
 	private int lastItemChecked;
 
-	public abstract NavDrawerActivityConfig getNavDrawerConfiguration();
+	protected abstract NavDrawerActivityConfig getNavDrawerConfiguration();
 
-	public abstract void onNavItemSelected(int id);
+	protected abstract void onNavItemSelected(int id);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,7 @@ public abstract class AbstractDrawerActivity extends ActionBarActivity {
 		}
 	}
 
-	protected void initDrawerShadow() {
+	void initDrawerShadow() {
 		mDrawerLayout.setDrawerShadow(navConf.getDrawerShadow(), GravityCompat.START);
 	}
 
@@ -165,7 +165,7 @@ public abstract class AbstractDrawerActivity extends ActionBarActivity {
 
 	@Override
 	public void onBackPressed() {
-		if(mDrawerLayout.isDrawerOpen(Gravity.START| Gravity.LEFT)){
+		if(mDrawerLayout.isDrawerOpen(Gravity.START | Gravity.LEFT)){
 			mDrawerLayout.closeDrawers();
 			return;
 		}

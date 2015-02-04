@@ -17,7 +17,7 @@ public class NavDrawerActivityConfig {
 	private NavDrawerAdapter adapter;
 	private int checkedPosition;
 
-	public NavDrawerActivityConfig() {
+	private NavDrawerActivityConfig() {
 		mainLayout = drawerShadow = drawerLayoutId = drawerContainerId = leftDrawerId = drawerOpenDesc =
 				drawerCloseDesc = checkedPosition = -1;
 	}
@@ -26,7 +26,7 @@ public class NavDrawerActivityConfig {
 		return mainLayout;
 	}
 
-	public void setMainLayout(int mainLayout) {
+	void setMainLayout(int mainLayout) {
 		this.mainLayout = mainLayout;
 	}
 
@@ -34,7 +34,7 @@ public class NavDrawerActivityConfig {
 		return drawerShadow;
 	}
 
-	public void setDrawerShadow(int drawerShadow) {
+	void setDrawerShadow(int drawerShadow) {
 		this.drawerShadow = drawerShadow;
 	}
 
@@ -42,7 +42,7 @@ public class NavDrawerActivityConfig {
 		return drawerLayoutId;
 	}
 
-	public void setDrawerLayoutId(int drawerLayoutId) {
+	void setDrawerLayoutId(int drawerLayoutId) {
 		this.drawerLayoutId = drawerLayoutId;
 	}
 
@@ -50,7 +50,7 @@ public class NavDrawerActivityConfig {
 		return drawerContainerId;
 	}
 
-	public void setDrawerContainerId(int drawerContainerId) {
+	void setDrawerContainerId(int drawerContainerId) {
 		this.drawerContainerId = drawerContainerId;
 	}
 
@@ -58,7 +58,7 @@ public class NavDrawerActivityConfig {
 		return leftDrawerId;
 	}
 
-	public void setLeftDrawerId(int leftDrawerId) {
+	void setLeftDrawerId(int leftDrawerId) {
 		this.leftDrawerId = leftDrawerId;
 	}
 
@@ -82,7 +82,7 @@ public class NavDrawerActivityConfig {
 		return drawerOpenDesc;
 	}
 
-	public void setDrawerOpenDesc(int drawerOpenDesc) {
+	void setDrawerOpenDesc(int drawerOpenDesc) {
 		this.drawerOpenDesc = drawerOpenDesc;
 	}
 
@@ -90,7 +90,7 @@ public class NavDrawerActivityConfig {
 		return drawerCloseDesc;
 	}
 
-	public void setDrawerCloseDesc(int drawerCloseDesc) {
+	void setDrawerCloseDesc(int drawerCloseDesc) {
 		this.drawerCloseDesc = drawerCloseDesc;
 	}
 
@@ -98,7 +98,7 @@ public class NavDrawerActivityConfig {
 		return adapter;
 	}
 
-	public void setAdapter(NavDrawerAdapter adapter) {
+	void setAdapter(NavDrawerAdapter adapter) {
 		this.adapter = adapter;
 	}
 
@@ -106,7 +106,7 @@ public class NavDrawerActivityConfig {
 		return checkedPosition;
 	}
 
-	public void setCheckedPosition(int checkedPosition) {
+	void setCheckedPosition(int checkedPosition) {
 		this.checkedPosition = checkedPosition;
 	}
 

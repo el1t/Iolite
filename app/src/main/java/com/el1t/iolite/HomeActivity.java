@@ -57,8 +57,8 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		ScheduleFragment.OnFragmentInteractionListener
 {
 	private static final String TAG = "Block Activity";
-	public static final int INITIAL_DAYS_TO_LOAD = 14;
-	public static final int DAYS_TO_LOAD = 7;
+	private static final int INITIAL_DAYS_TO_LOAD = 14;
+	private static final int DAYS_TO_LOAD = 7;
 
 	private BlockFragment mBlockFragment;
 	private ScheduleFragment mScheduleFragment;

@@ -30,7 +30,7 @@ public class ScheduleJsonParser
 		return schedules;
 	}
 
-	public static Schedule parseSchedule(JSONObject schedule) throws JSONException, ParseException {
+	private static Schedule parseSchedule(JSONObject schedule) throws JSONException, ParseException {
 		final JSONObject date = schedule.getJSONObject("date");
 		final String[] items = getItems(schedule.getJSONObject("schedule").getJSONArray("period"));
 		return new Schedule.ScheduleBuilder()
