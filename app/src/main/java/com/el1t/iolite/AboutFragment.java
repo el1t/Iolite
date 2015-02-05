@@ -13,7 +13,7 @@ import android.widget.TextView;
  */
 public class AboutFragment extends Fragment
 {
-	public OnFragmentInteractionListener mListener;
+	private OnFragmentInteractionListener mListener;
 
 	public interface OnFragmentInteractionListener {
 		public void changeView();

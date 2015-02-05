@@ -107,7 +107,7 @@ public class EighthBlockItem implements Parcelable
 		return sp;
 	}
 
-	protected EighthBlockItem(Parcel in) {
+	private EighthBlockItem(Parcel in) {
 		activity = in.readParcelable(EighthActivityItem.class.getClassLoader());
 		long tmpDate = in.readLong();
 		date = tmpDate != -1 ? new Date(tmpDate) : null;

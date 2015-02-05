@@ -120,7 +120,7 @@ public class User implements Parcelable
 		mGradYear = gradYear;
 	}
 
-	protected User(Parcel in) {
+	private User(Parcel in) {
 		mUID = in.readString();
 		mUsername = in.readString();
 		mName = in.createStringArray();

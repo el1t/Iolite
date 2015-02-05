@@ -44,7 +44,7 @@ import java.util.List;
 // Login request -> Authentication (Grab info) -> Start activity
 public class LoginActivity extends ActionBarActivity implements LoginFragment.OnFragmentInteractionListener
 {
-	public static final String FAKE_LOGIN = "fake";
+	private static final String FAKE_LOGIN = "fake";
 	public static final String PREFS_NAME = "LOGIN";
 	private static final String TAG = "Login Activity";
 	private static final String[] COOKIE_NAMES = {"IODINE_PASS_VECTOR", "PHPSESSID"};

@@ -42,7 +42,7 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem>
 		return getSeparatorView(convertView, parent);
 	}
 
-	public View getItemView(View convertView, ViewGroup parentView, NavDrawerItem navDrawerItem, boolean isChecked) {
+	View getItemView(View convertView, ViewGroup parentView, NavDrawerItem navDrawerItem, boolean isChecked) {
 		final NavMenuItem menuItem = (NavMenuItem) navDrawerItem;
 		final NavMenuItemHolder navMenuItemHolder;
 
@@ -70,7 +70,7 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem>
 		return convertView;
 	}
 
-	public View getSeparatorView(View convertView, ViewGroup parentView) {
+	View getSeparatorView(View convertView, ViewGroup parentView) {
 		if (convertView == null) {
 			convertView = mLayoutInflater.inflate(R.layout.nav_separator, parentView, false);
 		}

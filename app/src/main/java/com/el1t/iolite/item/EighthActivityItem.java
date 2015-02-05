@@ -249,7 +249,7 @@ public class EighthActivityItem implements Parcelable
 		return favorite = !favorite;
 	}
 
-	protected EighthActivityItem(Parcel in) {
+	EighthActivityItem(Parcel in) {
 		AID = in.readInt();
 		name = in.readString();
 		description = in.readString();

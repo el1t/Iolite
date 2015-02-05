@@ -27,7 +27,7 @@ public class Schedule implements Parcelable, Comparable<Schedule>
 	 * @param blocks Names of the blocks
 	 * @param times Time intervals for blocks
 	 */
-	public Schedule(String day, Date date, String type, String yesterday, String tomorrow, String blocks, String times) {
+	private Schedule(String day, Date date, String type, String yesterday, String tomorrow, String blocks, String times) {
 		this.day = day;
 		this.date = date;
 		this.type = type;
@@ -119,7 +119,7 @@ public class Schedule implements Parcelable, Comparable<Schedule>
 		return date.compareTo(schedule.date);
 	}
 
-	protected Schedule(Parcel in) {
+	private Schedule(Parcel in) {
 		day = in.readString();
 		date = new Date(in.readLong());
 		type = in.readString();

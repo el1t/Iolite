@@ -27,7 +27,7 @@ import java.util.Comparator;
 public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implements Filterable
 {
 	// This is to hold all items without filtering
-	ArrayList<EighthActivityItem> mItems;
+	private ArrayList<EighthActivityItem> mItems;
 	private final ArrayList<EighthActivityItem> headers;
 	private final DefaultSortComp mComp;
 	private final LayoutInflater mLayoutInflater;
@@ -200,7 +200,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 		return !getItem(position).isHeader();
 	}
 
-	public void sort() {
+	void sort() {
 		Collections.sort(mItems, mComp);
 		clear();
 		addHeaders(mItems);
