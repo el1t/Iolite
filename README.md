@@ -3,7 +3,7 @@
 
 [![Available on Google Play](http://developer.android.com/images/brand/en_app_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.el1t.iolite)
 
-The Android companion to TJHSST's intranet is here!  
+The Android companion to TJHSST's intranet is here!
 
 Tired of using the web interface on your mobile device? Iolite is a native interface for [TJHSST's Iodine](https://iodine.tjhsst.edu/) in Google's beautiful material design. Browsing Iodine has never been easier!
 
@@ -12,7 +12,7 @@ Tired of using the web interface on your mobile device? Iolite is a native inter
 - [x] Favorite activities
 - [x] Sign up for activities
 - [x] View schedule
-- [ ] Search activities
+- [x] Search activities
 - [ ] View activity info
 - [ ] View news
 - [ ] Look up students in directory

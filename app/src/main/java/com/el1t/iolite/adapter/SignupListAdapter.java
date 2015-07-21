@@ -203,8 +203,8 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 	public void sort() {
 		Collections.sort(mItems, mComp);
 		clear();
-		addHeaders(mItems);
 		addAll(mItems);
+		addHeaders();
 		notifyDataSetChanged();
 	}
 
@@ -214,16 +214,16 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 		sort();
 	}
 
-	private void addHeaders(ArrayList<EighthActivityItem> list) {
+	private void addHeaders() {
 		ActivityHeaderType index = ActivityHeaderType.FAVORITE;
 		EighthActivityItem item;
-		int count = list.size();
+		int count = getCount();
 		for (int i = 0; i < count; i++) {
-			item = list.get(i);
+			item = getItem(i);
 			switch (index) {
 				case FAVORITE:
 					if (item.isFavorite()) {
-						list.add(i, headers.get(index.ordinal()));
+						insert(headers.get(index.ordinal()), i);
 						index = ActivityHeaderType.SPECIAL;
 						continue;
 					} else {
@@ -235,7 +235,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 				case SPECIAL:
 					if (!item.isFavorite()) {
 						if (item.isSpecial()) {
-							list.add(i, headers.get(index.ordinal()));
+							insert(headers.get(index.ordinal()), i);
 							index = ActivityHeaderType.GENERAL;
 						} else {
 							// Skip if no special activities
@@ -247,7 +247,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 					break;
 				case GENERAL:
 					if (!(item.isFavorite() || item.isSpecial())) {
-						list.add(i, headers.get(index.ordinal()));
+						insert(headers.get(index.ordinal()), i);
 						return;
 					}
 					break;
@@ -263,13 +263,6 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 		}
 	}
 
-	public boolean changeFavorite(EighthActivityItem item) {
-		final boolean favorited = item.changeFavorite();
-//		mItems.get(mItems.indexOf(item)).changeFavorite();
-		sort();
-		return favorited;
-	}
-
 	@Override
 	public Filter getFilter() {
 		return new Filter() {
@@ -279,6 +272,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 				clear();
 				if (results.count != 0) {
 					addAll((ArrayList<EighthActivityItem>) results.values);
+					addHeaders();
 				}
 				notifyDataSetChanged();
 			}
@@ -302,7 +296,6 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 							FilteredArrayNames.add(item);
 						}
 					}
-					addHeaders(FilteredArrayNames);
 					results.values = FilteredArrayNames;
 					results.count = FilteredArrayNames.size();
 				}

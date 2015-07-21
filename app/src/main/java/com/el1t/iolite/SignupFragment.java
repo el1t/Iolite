@@ -32,9 +32,9 @@ public class SignupFragment extends Fragment
 	private SwipeRefreshLayout mSwipeRefreshLayout;
 
 	public interface OnFragmentInteractionListener {
-		public void submit(EighthActivityItem item);
-		public void favorite(int AID, int BID, boolean status);
-		public void refresh();
+		void submit(EighthActivityItem item);
+		void favorite(int AID, int BID, EighthActivityItem item);
+		void refresh();
 	}
 
 	public SignupFragment() { }
@@ -134,11 +134,16 @@ public class SignupFragment extends Fragment
 			case R.id.context_info:
 				return true;
 			case R.id.context_favorite:
-				mListener.favorite(activityItem.getAID(), activityItem.getBID(), mAdapter.changeFavorite(activityItem));
+				mListener.favorite(activityItem.getAID(), activityItem.getBID(), activityItem);
+				mAdapter.sort();
 				return true;
 			default:
 				return super.onContextItemSelected(item);
 		}
+	}
+
+	public void updateAdapter() {
+		mAdapter.sort();
 	}
 
 	void setListItems(ArrayList<EighthActivityItem> items) {

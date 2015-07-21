@@ -8,6 +8,7 @@
 		<item name="android:windowNoTitle">true</item>
 		<item name="android:windowActionModeOverlay">true</item>
 		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
 	</style>
 
 	<!-- Dark application theme. -->
@@ -18,6 +19,7 @@
 		<item name="android:windowNoTitle">true</item>
 		<item name="android:windowActionModeOverlay">true</item>
 		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
 	</style>
 
 </resources>

@@ -1,7 +1,7 @@
 package com.el1t.iolite;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
 /**
  * Created by El1t on 11/19/14.
  */
-public class AboutActivity extends ActionBarActivity implements AboutFragment.OnFragmentInteractionListener
+public class AboutActivity extends AppCompatActivity implements AboutFragment.OnFragmentInteractionListener
 {
 	private final static String TAG = "About Activity";
 	private AboutFragment mAboutFragment;

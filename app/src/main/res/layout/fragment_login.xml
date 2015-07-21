@@ -10,23 +10,32 @@
 	tools:context=".LoginFragment"
 	tools:showIn="@layout/activity_login">
 
-	<EditText
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginBottom="7dp"
-		android:inputType="textNoSuggestions|textVisiblePassword"
-		android:hint="Username"
-		android:id="@+id/username"/>
 
-	<EditText
+	<android.support.design.widget.TextInputLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginBottom="14dp"
-		android:inputType="textPassword"
-		android:hint="Password"
-		android:ems="10"
-		android:id="@+id/password"
-		android:fontFamily="sans_serif"/>
+		android:layout_height="wrap_content">
+		<EditText
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="7dp"
+			android:inputType="textNoSuggestions|textVisiblePassword"
+			android:hint="Username"
+			android:id="@+id/username"/>
+	</android.support.design.widget.TextInputLayout>
+
+	<android.support.design.widget.TextInputLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		<EditText
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="14dp"
+			android:inputType="textPassword"
+			android:hint="Password"
+			android:ems="10"
+			android:id="@+id/password"
+			android:fontFamily="sans_serif"/>
+	</android.support.design.widget.TextInputLayout>
 
 	<CheckBox
 		android:id="@+id/remember"

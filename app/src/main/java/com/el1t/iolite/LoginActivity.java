@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.el1t.iolite.item.User;
 import com.el1t.iolite.parser.StudentInfoXmlParser;
@@ -35,14 +37,15 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import javax.net.ssl.HttpsURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
+
 // Login request -> Authentication (Grab info) -> Start activity
-public class LoginActivity extends ActionBarActivity implements LoginFragment.OnFragmentInteractionListener
+public class LoginActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener
 {
 	public static final String FAKE_LOGIN = "fake";
 	public static final String PREFS_NAME = "LOGIN";
@@ -147,6 +150,14 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 
 	// Submit the login request
 	public void submit(String username, String pass) {
+		// Hide soft keyboard
+		final InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+		final View view = getCurrentFocus();
+
+		if (view != null && imm.isAcceptingText()) {
+			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+		}
+
 		if (username == null || pass == null) {
 			Log.d(TAG, "Null Username or Password");
 			return;
@@ -162,9 +173,9 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		if (isFakeLogin()) {
 			postRequest(getList(), true);
 		} else if (login_username.isEmpty()) {
-			Toast.makeText(getApplicationContext(), "Please enter a Username", Toast.LENGTH_SHORT).show();
+			Snackbar.make(findViewById(R.id.container), "Username empty", Snackbar.LENGTH_SHORT).show();
 		} else if (login_password.isEmpty()) {
-			Toast.makeText(getApplicationContext(), "Please enter a Password", Toast.LENGTH_SHORT).show();
+			Snackbar.make(findViewById(R.id.container), "Password empty", Snackbar.LENGTH_SHORT).show();
 		} else {
 			new LoginRequest().execute("https://iodine.tjhsst.edu/api");
 		}
@@ -174,7 +185,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 	void postRequest(User user, boolean fake) {
 		if (user != null) {
 			if (fake) {
-				Toast.makeText(getApplicationContext(), "Loading faked data", Toast.LENGTH_SHORT).show();
+				Log.d(TAG, "Loading test data");
 			} else {
 				final SharedPreferences.Editor preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
 				if (login_username != null) {
@@ -191,14 +202,14 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 				preferences.apply();
 			}
 			attempt = 0;
-			clearPassword();
+//			clearPassword();
 			final Intent intent = new Intent(this, HomeActivity.class);
 			intent.putExtra("fake", fake);
 			intent.putExtra("user", user);
 			startActivity(intent);
 			finish();
 		} else {
-			Toast.makeText(getApplicationContext(), "Session Expired", Toast.LENGTH_SHORT).show();
+			Snackbar.make(findViewById(R.id.container), "Session Expired", Snackbar.LENGTH_SHORT).show();
 			Log.d(TAG, "Session Expired");
 			clearCookies();
 			final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -213,15 +224,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
 				.remove("password")
 				.apply();
-		Toast.makeText(getApplicationContext(), "Logged Out", Toast.LENGTH_SHORT).show();
-	}
-
-	void failed(boolean isAborted) {
-		if (!isAborted) {
-			Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_SHORT).show();
-			Log.d(TAG, "Login Failed");
-		}
-		clearPassword();
+		Snackbar.make(findViewById(R.id.container), "Logged out", Snackbar.LENGTH_SHORT).show();
 	}
 
 	private void clearPassword() {
@@ -328,9 +331,21 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 						return entity != null && !EntityUtils.toString(entity).contains("Login failed");
 					}
 				});
-				return result ? client.getCookieStore().getCookies() : null;
+				if (result) {
+					return client.getCookieStore().getCookies();
+				}
+				Snackbar.make(findViewById(R.id.container), "Invalid login credentials", Snackbar.LENGTH_SHORT).show();
+				clearPassword();
+				return null;
 			} catch (IOException e) {
 				if (!mPost.isAborted()) {
+					Snackbar.make(findViewById(R.id.container), "Cannot connect to server", Snackbar.LENGTH_SHORT)
+							.setAction("Retry", new View.OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									submit(login_username, login_password);
+								}
+							}).show();
 					Log.e(TAG, "Connection error.", e);
 				}
 			} catch (Exception e) {
@@ -343,9 +358,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		protected void onPostExecute(List<Cookie> result) {
 			super.onPostExecute(result);
 			mProgressDialog.dismiss();
-			if (result == null) {
-				failed(false);
-			} else {
+			if (result != null) {
 				storeCookies(result);
 				checkAuthentication();
 			}
@@ -353,7 +366,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 
 		@Override
 		protected void onCancelled() {
-			failed(true);
+			Log.d(TAG, "Login cancelled");
 		}
 	}
 
@@ -409,6 +422,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 			} catch(IOException e) {
 				Log.e(TAG, "Parse error.", e);
 			} catch (Exception e) {
+				Snackbar.make(findViewById(R.id.container), "Connection error", Snackbar.LENGTH_SHORT).show();
 				Log.e(TAG, "Connection error.", e);
 			}
 			return response;
@@ -418,6 +432,7 @@ public class LoginActivity extends ActionBarActivity implements LoginFragment.On
 		protected void onPostExecute(User result) {
 			super.onPostExecute(result);
 			mProgressDialog.dismiss();
+
 			postRequest(result, false);
 		}
 	}

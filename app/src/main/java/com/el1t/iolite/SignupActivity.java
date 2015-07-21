@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Toast;
 
 import com.el1t.iolite.item.EighthActivityItem;
@@ -40,7 +42,7 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Created by El1t on 10/21/14.
  */
-public class SignupActivity extends ActionBarActivity implements SignupFragment.OnFragmentInteractionListener
+public class SignupActivity extends AppCompatActivity implements SignupFragment.OnFragmentInteractionListener
 {
 	private static final String TAG = "Signup Activity";
 
@@ -83,10 +85,10 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 
 		// Use material design toolbar
 		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		if(toolbar != null) {
+		if (toolbar != null) {
 			setSupportActionBar(toolbar);
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -189,33 +191,33 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 	void postSubmit(Response result) {
 		switch(result) {
 			case SUCCESS:
-				Toast.makeText(getApplicationContext(), "Signed up!", Toast.LENGTH_SHORT).show();
+				// TODO: Pass success to home activity
 				Log.d(TAG, "Sign up success");
 				finish();
 				break;
 			case CAPACITY:
-				Toast.makeText(getApplicationContext(), "Capacity exceeded", Toast.LENGTH_SHORT).show();
+				Snackbar.make(findViewById(R.id.container), "Capacity exceeded", Snackbar.LENGTH_SHORT).show();
 				Log.d(TAG, "Capacity exceeded");
 				break;
 			case RESTRICTED:
-				Toast.makeText(getApplicationContext(), "Activity restricted", Toast.LENGTH_SHORT).show();
+				Snackbar.make(findViewById(R.id.container), "Activity restricted", Snackbar.LENGTH_SHORT).show();
 				Log.d(TAG, "Restricted activity");
 				break;
 			case CANCELLED:
-				Toast.makeText(getApplicationContext(), "Activity cancelled", Toast.LENGTH_SHORT).show();
+				Snackbar.make(findViewById(R.id.container), "Activity cancelled", Snackbar.LENGTH_SHORT).show();
 				Log.d(TAG, "Cancelled activity");
 				break;
 			case PRESIGN:
-				Toast.makeText(getApplicationContext(), "Too early!", Toast.LENGTH_SHORT).show();
+				Snackbar.make(findViewById(R.id.container), "Activity signup not open yet", Snackbar.LENGTH_SHORT).show();
 				Log.d(TAG, "Presign activity");
 				break;
 			case ATTENDANCE_TAKEN:
-				Toast.makeText(getApplicationContext(), "Signup closed", Toast.LENGTH_SHORT).show();
+				Snackbar.make(findViewById(R.id.container), "Signup closed", Snackbar.LENGTH_SHORT).show();
 				Log.d(TAG, "Attendance taken");
 				break;
 			case FAIL:
 				// TODO: Make this error message reflect the actual error
-				Toast.makeText(getApplicationContext(), "Something went wrong...", Toast.LENGTH_SHORT).show();
+				Snackbar.make(findViewById(R.id.container), "Fatal error", Snackbar.LENGTH_SHORT).show();
 				Log.w(TAG, "Sign up failure");
 				break;
 		}
@@ -240,14 +242,32 @@ public class SignupActivity extends ActionBarActivity implements SignupFragment.
 	}
 
 	// Favorite an activity
-	public void favorite(int AID, int BID, boolean status) {
+	public void favorite(final int AID, final int BID, final EighthActivityItem item) {
 		// Note: the server uses the UID field as the AID in its API
 		// Sending the BID is useless, but it is required by the server
 		mTasks.add(new ServerRequest().execute("https://iodine.tjhsst.edu/eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID));
-		if (status) {
-			Toast.makeText(getApplicationContext(), "Favorited", Toast.LENGTH_SHORT).show();
+		if (item.changeFavorite()) {
+			Snackbar.make(findViewById(R.id.container), "Favorited", Snackbar.LENGTH_SHORT)
+					.setAction("Undo", new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							mTasks.add(new ServerRequest()
+									.execute("https://iodine.tjhsst.edu/eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID));
+							item.changeFavorite();
+							mSignupFragment.updateAdapter();
+						}
+					}).show();
 		} else {
-			Toast.makeText(getApplicationContext(), "Unfavorited", Toast.LENGTH_SHORT).show();
+			Snackbar.make(findViewById(R.id.container), "Unfavorited", Snackbar.LENGTH_SHORT)
+					.setAction("Undo", new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							mTasks.add(new ServerRequest()
+									.execute("https://iodine.tjhsst.edu/eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID));
+							item.changeFavorite();
+							mSignupFragment.updateAdapter();
+						}
+					}).show();
 		}
 		Log.d(TAG, "Favorited AID " + AID);
 	}
