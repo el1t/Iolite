@@ -10,36 +10,19 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.el1t.iolite.item.User;
-import com.el1t.iolite.parser.StudentInfoXmlParser;
+import com.el1t.iolite.parser.ProfileJsonParser;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.CookieStore;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.client.params.CookiePolicy;
-import org.apache.http.client.protocol.ClientContext;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.cookie.BasicClientCookie;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
-
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
+import java.net.HttpCookie;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -50,12 +33,13 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 	public static final String FAKE_LOGIN = "fake";
 	public static final String PREFS_NAME = "LOGIN";
 	private static final String TAG = "Login Activity";
-	private static final String[] COOKIE_NAMES = {"IODINE_PASS_VECTOR", "PHPSESSID"};
 
+	static java.net.CookieManager mCookieManager = new java.net.CookieManager();
 	private LoginFragment mLoginFragment;
 	private ProgressDialog mProgressDialog;
 	private String login_username;
 	private String login_password;
+	private String mAuthKey;
 	private int attempt;
 
 	@Override
@@ -64,7 +48,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		setContentView(R.layout.activity_login);
 
 		final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-		final Cookie[] cookies = getCookies(preferences);
 		final boolean remember = preferences.getBoolean("remember", false);
 		final String username = preferences.getString("username", null);
 		if (savedInstanceState == null) {
@@ -83,15 +66,15 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
 		attempt = 0;
 		// This is identical to checkAuthentication except for intent checking
-		if (cookies != null) {
+		if (mAuthKey != null) {
 			if (getIntent().getBooleanExtra("logout", false)) {
 				// Send logout request
-				logout(cookies);
+				logout();
 			} else if (getIntent().getBooleanExtra("expired", false)) {
 				postRequest(null, isFakeLogin());
 			} else {
 				// Check authentication
-				new Authentication(cookies).execute("https://iodine.tjhsst.edu/api/studentdirectory/info");
+				new Authentication().execute("https://ion.tjhsst.edu/api/profile?format=json");
 			}
 		} else if (remember) {
 			submit(username, preferences.getString("password", null));
@@ -110,42 +93,26 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		getFragmentManager().putFragment(savedInstanceState, "loginFragment", mLoginFragment);
 	}
 
-	private void storeCookies(List<Cookie> cookies) {
-		final SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
-		for (Cookie cookie : cookies) {
-			if (cookie.getName().equals(COOKIE_NAMES[0])) {
-				editor.putString("COOKIE_" + COOKIE_NAMES[0], cookie.getValue());
-			} else if (cookie.getName().equals(COOKIE_NAMES[1])) {
-				editor.putString("COOKIE_" + COOKIE_NAMES[1], cookie.getValue());
-			}
+	private static void storeCookies(List<String> cookies) {
+		for (String cookie : cookies) {
+			Log.d(TAG, cookie);
+			mCookieManager.getCookieStore().add(null, HttpCookie.parse(cookie).get(0));
 		}
-		editor.apply();
 	}
 
-	public static Cookie[] getCookies(SharedPreferences preferences) {
-		final Cookie[] cookies = new Cookie[COOKIE_NAMES.length];
-		for (int i = 0; i < cookies.length; i++) {
-			cookies[i] = new BasicClientCookie(COOKIE_NAMES[i], preferences.getString("COOKIE_" + COOKIE_NAMES[i], null));
-			if (cookies[i].getValue() == null) {
-				return null;
-			}
+	public static String getCookies() {
+		if(mCookieManager.getCookieStore().getCookies().size() > 0) {
+			return TextUtils.join(",", mCookieManager.getCookieStore().getCookies());
 		}
-		return cookies;
+		return "";
 	}
 
 	private void clearCookies() {
-		getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
-				.remove("COOKIE_" + COOKIE_NAMES[0])
-				.remove("COOKIE_" + COOKIE_NAMES[1])
-				.apply();
+		mCookieManager.getCookieStore().removeAll();
 	}
 
 	private void checkAuthentication() {
-		final Cookie[] cookies = getCookies(getSharedPreferences(PREFS_NAME, MODE_PRIVATE));
-		if (cookies != null) {
-			// Check authentication
-			new Authentication(cookies).execute("https://iodine.tjhsst.edu/api/studentdirectory/info");
-		}
+		new Authentication().execute("https://ion.tjhsst.edu/api/profile?format=json");
 	}
 
 	// Submit the login request
@@ -177,7 +144,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		} else if (login_password.isEmpty()) {
 			Snackbar.make(findViewById(R.id.container), "Password empty", Snackbar.LENGTH_SHORT).show();
 		} else {
-			new LoginRequest().execute("https://iodine.tjhsst.edu/api");
+			new LoginRequest().execute("https://ion.tjhsst.edu/api");
 		}
 	}
 
@@ -202,7 +169,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 				preferences.apply();
 			}
 			attempt = 0;
-//			clearPassword();
 			final Intent intent = new Intent(this, HomeActivity.class);
 			intent.putExtra("fake", fake);
 			intent.putExtra("user", user);
@@ -219,18 +185,19 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		}
 	}
 
-	private void logout(Cookie[] cookies) {
-		new LogoutRequest(cookies).execute("https://iodine.tjhsst.edu/logout");
+	private void logout() {
 		getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
 				.remove("password")
 				.apply();
+		login_password = null;
+		mAuthKey = null;
 		Snackbar.make(findViewById(R.id.container), "Logged out", Snackbar.LENGTH_SHORT).show();
 	}
 
-	private void clearPassword() {
-		login_password = "";
-		mLoginFragment.clearPassword();
-	}
+//	private void clearPassword() {
+//		login_password = "";
+//		mLoginFragment.clearPassword();
+//	}
 
 	public void displayWarning() {
 		new AlertDialog.Builder(this)
@@ -263,21 +230,20 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		return login_username != null && login_username.toLowerCase().equals(FAKE_LOGIN);
 	}
 
-	// Get a fake list of blocks for debugging
+	// Get a test info for debugging
 	private User getList() {
 		try {
-			return StudentInfoXmlParser.parse(getAssets().open("testStudentInfo.xml"));
+			return ProfileJsonParser.parse(getAssets().open("testProfile.json"));
 		} catch(Exception e) {
 			Log.e(TAG, "Error Parsing Block XML", e);
 		}
-		// Don't die?
-		return new User();
+		return null;
 	}
 
 	// Login request using HttpPost
-	private class LoginRequest extends AsyncTask<String, Void, List<Cookie>> {
+	private class LoginRequest extends AsyncTask<String, Void, List<String>> {
 		private static final String TAG = "Login Connection";
-		private HttpPost mPost;
+		private HttpsURLConnection mConnection;
 
 		@Override
 		protected void onPreExecute() {
@@ -289,12 +255,12 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 				mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 					@Override
 					public void onCancel(DialogInterface dialog) {
-						Log.d(TAG, "Connection Aborted!");
+						Log.d(TAG, "Connection cancelled!");
 						// Abort connection on background thread
 						new Thread(new Runnable() {
 							@Override
 							public void run() {
-								mPost.abort();
+								mConnection.disconnect();
 							}
 						}).start();
 						cancel(true);
@@ -305,40 +271,34 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		}
 
 		@Override
-		protected List<Cookie> doInBackground(String... urls) {
-			DefaultHttpClient client = new DefaultHttpClient();
+		protected List<String> doInBackground(String... urls) {
 			try {
-				client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
-
-				// Create local HTTP context
-				HttpContext context = new BasicHttpContext();
-				CookieStore temp = new BasicCookieStore();
-				// Bind custom cookie store to the local context
-				context.setAttribute(ClientContext.COOKIE_STORE, temp);
-
-				mPost = new HttpPost(new URI(urls[0]));
-				List<NameValuePair> data = new ArrayList<>(2);
-				data.add(new BasicNameValuePair("login_username", login_username));
-				data.add(new BasicNameValuePair("login_password", login_password));
-				mPost.setEntity(new UrlEncodedFormEntity(data));
-
-				// Check for the message "login failed"
-				// Currently, intranet does not return a useful response if login is successful
-				final boolean result = client.execute(mPost, new ResponseHandler<Boolean>() {
-					@Override
-					public Boolean handleResponse(HttpResponse response) throws IOException {
-						final HttpEntity entity = response.getEntity();
-						return entity != null && !EntityUtils.toString(entity).contains("Login failed");
+				mConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
+				mAuthKey = "Basic " + Base64.encodeToString((login_username + ":" + login_password).getBytes(), Base64.NO_WRAP);
+				mConnection.setRequestProperty("Authorization", mAuthKey);
+				mConnection.setUseCaches(false);
+				mConnection.connect();
+				java.util.Scanner s = new java.util.Scanner(mConnection.getInputStream()).useDelimiter("\\A");
+				Log.d(TAG, s.next());
+				return mConnection.getHeaderFields().get("Set-Cookie");
+			} catch (FileNotFoundException e) {
+				try {
+					if (mConnection.getResponseCode() == 401) {
+						Snackbar.make(findViewById(R.id.container), "Invalid login credentials", Snackbar.LENGTH_SHORT).show();
 					}
-				});
-				if (result) {
-					return client.getCookieStore().getCookies();
+				} catch (IOException err) {
+					Log.e(TAG, "Cannot read response code", err);
 				}
-				Snackbar.make(findViewById(R.id.container), "Invalid login credentials", Snackbar.LENGTH_SHORT).show();
-				clearPassword();
-				return null;
 			} catch (IOException e) {
-				if (!mPost.isAborted()) {
+				if (isCancelled()) {
+					Snackbar.make(findViewById(R.id.container), "Cancelled", Snackbar.LENGTH_SHORT)
+							.setAction("Retry", new View.OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									submit(login_username, login_password);
+								}
+							}).show();
+				} else {
 					Snackbar.make(findViewById(R.id.container), "Cannot connect to server", Snackbar.LENGTH_SHORT)
 							.setAction("Retry", new View.OnClickListener() {
 								@Override
@@ -346,16 +306,17 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 									submit(login_username, login_password);
 								}
 							}).show();
-					Log.e(TAG, "Connection error.", e);
 				}
 			} catch (Exception e) {
-				Log.e(TAG, "URL error.", e);
+				Log.e(TAG, "Login error", e);
+			} finally {
+				mConnection.disconnect();
 			}
 			return null;
 		}
 
 		@Override
-		protected void onPostExecute(List<Cookie> result) {
+		protected void onPostExecute(List<String> result) {
 			super.onPostExecute(result);
 			mProgressDialog.dismiss();
 			if (result != null) {
@@ -372,13 +333,8 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
 	// Test if cookies are functional
 	private class Authentication extends AsyncTask<String, Void, User> {
-		private static final String TAG = "Authentication Connection";
+		private static final String TAG = "Authentication";
 		private HttpsURLConnection mConnection;
-		private final Cookie[] mCookies;
-
-		public Authentication (Cookie[] cookies) {
-			mCookies = cookies;
-		}
 
 		@Override
 		protected void onPreExecute() {
@@ -406,26 +362,31 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
 		@Override
 		protected User doInBackground(String... urls) {
-			User response = null;
+			User response;
 			try {
 				mConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
-				// Add cookies to header
-				for (Cookie cookie : mCookies) {
-					mConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
-				}
+				// Attach authentication
+				mConnection.setRequestProperty("Authorization", mAuthKey);
+				mConnection.setUseCaches(false);
 				// Begin connection
 				mConnection.connect();
 				// Parse xml from server
-				response = StudentInfoXmlParser.parse(mConnection.getInputStream());
+				response = ProfileJsonParser.parse(mConnection.getInputStream());
 				// Close connection
 				mConnection.disconnect();
+				return response;
 			} catch(IOException e) {
 				Log.e(TAG, "Parse error.", e);
 			} catch (Exception e) {
 				Snackbar.make(findViewById(R.id.container), "Connection error", Snackbar.LENGTH_SHORT).show();
 				Log.e(TAG, "Connection error.", e);
 			}
-			return response;
+			try {
+				Log.d(TAG, "Response: " + mConnection.getResponseCode());
+			} catch (Exception e) {
+
+			}
+			return null;
 		}
 
 		@Override
@@ -434,43 +395,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 			mProgressDialog.dismiss();
 
 			postRequest(result, false);
-		}
-	}
-
-	// Logs the user out
-	private class LogoutRequest extends AsyncTask<String, Void, Void> {
-		private static final String TAG = "Logout Request";
-		private final Cookie[] mCookies;
-
-		public LogoutRequest (Cookie[] cookies) {
-			mCookies = cookies;
-		}
-
-		@Override
-		protected Void doInBackground(String... urls) {
-			HttpsURLConnection urlConnection;
-			try {
-				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
-				// Add cookies to header
-				for(Cookie cookie : mCookies) {
-					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
-				}
-				// Begin connection
-				urlConnection.connect();
-				// Get response
-				urlConnection.getInputStream();
-				// Close connection
-				urlConnection.disconnect();
-			} catch (Exception e) {
-				Log.e(TAG, "Connection Error.", e);
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void v) {
-			super.onPostExecute(v);
-			clearCookies();
 		}
 	}
 }

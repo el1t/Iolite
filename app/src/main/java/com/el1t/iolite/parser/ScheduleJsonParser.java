@@ -20,7 +20,7 @@ public class ScheduleJsonParser
 	private static final String TAG = "Schedule JSON Parser";
 	private static final DateFormat mFormat = new SimpleDateFormat("yyyyMMdd");
 
-	public static Schedule[] parseSchedules(JSONObject schedule) throws JSONException, ParseException {
+	public static Schedule[] parseAll(JSONObject schedule) throws JSONException, ParseException {
 		final Schedule[] schedules = new Schedule[schedule.length()];
 		int index = 0;
 		for (Iterator<String> keys = schedule.keys(); keys.hasNext(); index++) {

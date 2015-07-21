@@ -16,7 +16,7 @@ public class AboutFragment extends Fragment
 	public OnFragmentInteractionListener mListener;
 
 	public interface OnFragmentInteractionListener {
-		public void changeView();
+		void changeView();
 	}
 
 	@Override

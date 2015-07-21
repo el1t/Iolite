@@ -31,9 +31,9 @@ public class BlockFragment extends Fragment
 	private SwipeRefreshLayout mSwipeRefreshLayout;
 
 	public interface OnFragmentInteractionListener {
-		public void select(int BID);
-		public void clear(int BID);
-		public void refresh();
+		void select(int BID);
+		void clear(int BID);
+		void refresh();
 	}
 
 	public BlockFragment() { }

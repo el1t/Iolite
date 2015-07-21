@@ -22,8 +22,8 @@ public class LoginFragment extends Fragment
 	private CheckBox remember;
 
 	public interface OnFragmentInteractionListener {
-		public void submit(String username, String password);
-		public void displayWarning();
+		void submit(String username, String password);
+		void displayWarning();
 	}
 
 	public LoginFragment() { }

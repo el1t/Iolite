@@ -15,11 +15,9 @@ import com.el1t.iolite.drawer.NavMenuItem;
 import com.el1t.iolite.item.EighthBlockItem;
 import com.el1t.iolite.item.Schedule;
 import com.el1t.iolite.item.User;
-import com.el1t.iolite.parser.EighthActivityXmlParser;
 import com.el1t.iolite.parser.EighthBlockXmlParser;
 import com.el1t.iolite.parser.ScheduleJsonParser;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -29,13 +27,10 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+
 import javax.net.ssl.HttpsURLConnection;
 
 import java.net.URI;
@@ -62,7 +57,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 	private BlockFragment mBlockFragment;
 	private ScheduleFragment mScheduleFragment;
-	private Cookie[] mCookies;
+	private String mCookies;
 	private User mUser;
 	private boolean fake;
 	private Section activeView;
@@ -109,8 +104,8 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 		if (!fake) {
 			// Retrieve cookies from shared preferences
-			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
-			mCookies = LoginActivity.getCookies(preferences);
+//			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
+			mCookies = LoginActivity.getCookies();
 		}
 	}
 
@@ -350,9 +345,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			try {
 				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
 				// Add cookies to header
-				for(Cookie cookie : mCookies) {
-					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
-				}
+				urlConnection.setRequestProperty("Cookie", mCookies);
 				// Begin connection
 				urlConnection.connect();
 				// Parse xml from server
@@ -394,10 +387,10 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 				// Setup client
 				client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
 				HttpPost post = new HttpPost(new URI(urls[0]));
-				// Add cookies
-				for(Cookie cookie : mCookies) {
-					post.setHeader("Cookie", cookie.getName() + "=" + cookie.getValue());
-				}
+				// TODO: Add cookies
+//				for(Cookie cookie : mCookies) {
+//					post.setHeader("Cookie", cookie.getName() + "=" + cookie.getValue());
+//				}
 				// Add parameters
 				final List<NameValuePair> data = new ArrayList<>(2);
 				data.add(new BasicNameValuePair("aid", "999")); // Use 999 for empty activity
@@ -453,11 +446,9 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 				// Begin connection
 				urlConnection.connect();
 				// Parse JSON from server
-				response = ScheduleJsonParser.parseSchedules(inputStreamToJSON(urlConnection.getInputStream()));
-			} catch (JSONException e) {
-				Log.e(TAG, "JSON Error.", e);
+				response = ScheduleJsonParser.parseAll(Utils.inputStreamToJSON(urlConnection.getInputStream()));
 			} catch (Exception e) {
-				Log.e(TAG, "Connection Error.", e);
+				Log.e(TAG, "Error retrieving schedule", e);
 			} finally {
 				if (urlConnection != null) {
 					// Close connection
@@ -473,17 +464,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			// Current day is included, but last day is not included
 			c.add(Calendar.DATE, daysAfter);
 			return c.getTime();
-		}
-
-		// Parse the InputStream into a JSONObject
-		private JSONObject inputStreamToJSON(InputStream inputStream) throws JSONException, IOException {
-			final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-			final StringBuilder sb = new StringBuilder();
-			String line;
-			while ((line = reader.readLine()) != null) {
-				sb.append(line).append("\n");
-			}
-			return new JSONObject(sb.toString());
 		}
 
 		@Override

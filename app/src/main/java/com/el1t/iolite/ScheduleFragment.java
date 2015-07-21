@@ -32,8 +32,8 @@ public class ScheduleFragment extends Fragment
 	private boolean mLoading;
 
 	public interface OnFragmentInteractionListener {
-		public void refresh();
-		public void load();
+		void refresh();
+		void load();
 	}
 
 	public ScheduleFragment() { }

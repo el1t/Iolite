@@ -5,15 +5,15 @@ package com.el1t.iolite.drawer;
  */
 public interface NavDrawerItem
 {
-	public int getListId();
+	int getListId();
 
-	public String getLabel();
+	String getLabel();
 
-	public int getType();
+	int getType();
 
-	public boolean isCheckable();
+	boolean isCheckable();
 
-	public boolean isEnabled();
+	boolean isEnabled();
 
 //	public boolean updateActionBarTitle();
 }

@@ -80,7 +80,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		if (!fake) {
 			// Retrieve cookies from shared preferences
 			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
-			mCookies = LoginActivity.getCookies(preferences);
+//			mCookies = LoginActivity.getCookies(preferences);
 		}
 
 		// Use material design toolbar

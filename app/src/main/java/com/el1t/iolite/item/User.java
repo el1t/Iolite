@@ -16,31 +16,117 @@ public class User implements Parcelable
 	private String mUsername;
 	private String[] mName;
 	private Address mAddress;
-	private ArrayList<String> mEmails;
+	private String[] mEmails;
 	private String mMobile;
 	private int mGradYear;
 
-	public User() {
-		mUID = mMobile = "";
-		mName = new String[] {"", "", ""};
-		mAddress = new Address(Locale.ENGLISH);
-		mEmails = new ArrayList<>();
+	public User(String UID, String username, String[] name, Address address, String[] emails,
+	            String mobile, int gradYear) {
+		this.mUID = UID;
+		this.mUsername = username;
+		this.mName = name;
+		this.mAddress = address;
+		this.mEmails = emails;
+		this.mMobile = mobile;
+		this.mGradYear = gradYear;
+	}
+
+	public static class UserBuilder {
+		private String UID;
+		private String username;
+		private String[] name;
+		private Address address;
+		private String[] emails;
+		private String mobile;
+		private int gradYear;
+
+		public UserBuilder() {
+			this.address = new Address(Locale.ENGLISH);
+			this.name = new String[] {"", "", ""};
+		}
+
+		public UserBuilder UID(String UID) {
+			this.UID = UID;
+			return this;
+		}
+
+		public UserBuilder username(String username) {
+			this.username = username;
+			return this;
+		}
+
+		public UserBuilder firstName(String first) {
+			if (first != null) {
+				this.name[0] = first;
+			}
+			return this;
+		}
+
+		public UserBuilder middleName(String middle) {
+			if (middle != null) {
+				this.name[1] = middle;
+			}
+			return this;
+		}
+
+		public UserBuilder lastName(String last) {
+			if (last != null) {
+				this.name[2] = last;
+			}
+			return this;
+		}
+
+		public UserBuilder street(String street) {
+			this.address.setAddressLine(0, street);
+			return this;
+		}
+
+		public UserBuilder city(String city) {
+			this.address.setSubAdminArea(city);
+			return this;
+		}
+
+		public UserBuilder state(String state) {
+			this.address.setAdminArea(state);
+			return this;
+		}
+
+		public UserBuilder postalCode(String postalCode) {
+			this.address.setPostalCode(postalCode);
+			return this;
+		}
+
+		public UserBuilder emails(String[] emails) {
+			this.emails = emails;
+			return this;
+		}
+
+		public UserBuilder phone(String home) {
+			this.address.setPhone(home);
+			return this;
+		}
+
+		public UserBuilder mobile(String mobile) {
+			this.mobile = mobile;
+			return this;
+		}
+
+		public UserBuilder gradYear(int gradYear) {
+			this.gradYear = gradYear;
+			return this;
+		}
+
+		public User build() {
+			return new User(UID, username, name, address, emails, mobile, gradYear);
+		}
 	}
 
 	public String getUID() {
 		return mUID;
 	}
 
-	public void setUID(String UID) {
-		mUID = UID;
-	}
-
 	public String getUsername() {
 		return mUsername;
-	}
-
-	public void setUsername(String username) {
-		mUsername = username;
 	}
 
 	public String getFullName() {
@@ -49,18 +135,6 @@ public class User implements Parcelable
 
 	public String getShortName() {
 		return mName[0] + " " + mName[2];
-	}
-
-	public void setFirstName(String name) {
-		mName[0] = name;
-	}
-
-	public void setMiddleName(String name) {
-		mName[1] = name;
-	}
-
-	public void setLastName(String name) {
-		mName[2] = name;
 	}
 
 	public Address getAddress() {
@@ -72,36 +146,12 @@ public class User implements Parcelable
 				mAddress.getSubAdminArea() + ", " + mAddress.getAdminArea() + " " + mAddress.getPostalCode();
 	}
 
-	public void setStreet(String street) {
-		mAddress.setAddressLine(0, street);
-	}
-
-	public void setCity(String city) {
-		mAddress.setSubAdminArea(city);
-	}
-
-	public void setState(String state) {
-		mAddress.setAdminArea(state);
-	}
-
-	public void setPostalCode(String postalCode) {
-		mAddress.setPostalCode(postalCode);
-	}
-
 	public String getPhone() {
 		return mAddress.getPhone();
 	}
 
-	public void setPhone(String phone) {
-		mAddress.setPhone(phone);
-	}
-
-	public ArrayList<String> getEmails() {
+	public String[] getEmails() {
 		return mEmails;
-	}
-
-	public void addEmail(String email) {
-		mEmails.add(email);
 	}
 
 	public String getMobile() {
@@ -125,12 +175,7 @@ public class User implements Parcelable
 		mUsername = in.readString();
 		mName = in.createStringArray();
 		mAddress = in.readParcelable(Address.class.getClassLoader());
-		if (in.readByte() == 1) {
-			mEmails = new ArrayList<>();
-			in.readList(mEmails, String.class.getClassLoader());
-		} else {
-			mEmails = null;
-		}
+		mEmails = in.createStringArray();
 		mMobile = in.readString();
 		mGradYear = in.readInt();
 	}
@@ -146,12 +191,7 @@ public class User implements Parcelable
 		dest.writeString(mUsername);
 		dest.writeStringArray(mName);
 		dest.writeParcelable(mAddress, flags);
-		if (mEmails == null) {
-			dest.writeByte((byte) 0);
-		} else {
-			dest.writeByte((byte) 1);
-			dest.writeList(mEmails);
-		}
+		dest.writeStringArray(mEmails);
 		dest.writeString(mMobile);
 		dest.writeInt(mGradYear);
 	}
