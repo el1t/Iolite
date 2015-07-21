@@ -7,10 +7,10 @@ android:
         - tools
 
         # Build Tools version
-        - build-tools-21.1.2
+        - build-tools-22.0.1
 
         # SDK version
-        - android-21
+        - android-22
 
         # Additional components
         - extra-android-support
