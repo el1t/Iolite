@@ -30,7 +30,7 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 	private final int[] mColors;
 
 	public enum Block {
-		A, B, C, D, E, F
+		A, B, C, D, E, F, G, H, I, J
 	}
 
 	public enum Colors {
@@ -102,65 +102,67 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 			// Note: superscript does not work in header
 			viewHolder.title.setText(blockItem.getDisp());
 		} else {
-			viewHolder.title.setText(blockItem.getEighth().getName());
-
 			Colors color;
-			final float alpha;
-			if (activityItem.getAID() == 999) {
-				// Hide empty fields
-				viewHolder.sponsors.setVisibility(View.GONE);
-				viewHolder.room.setVisibility(View.GONE);
-				viewHolder.description.setText("Please select an activity.");
+			if (activityItem != null) {
+				viewHolder.title.setText(activityItem.getName());
+				final float alpha;
 
-				// Format title
-				viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-				color = Colors.BLACK;
-				alpha = 1f;
-			} else {
-				// Show fields
-				if (activityItem.getRoom().isEmpty()) {
-					viewHolder.room.setVisibility(View.GONE);
-				} else {
-					viewHolder.room.setVisibility(View.VISIBLE);
-					viewHolder.room.setText(activityItem.getRoom());
-				}
-				if (activityItem.hasSponsors()) {
-					viewHolder.sponsors.setVisibility(View.VISIBLE);
-					// Show dash only if needed
-					if (viewHolder.room.getVisibility() == View.VISIBLE) {
-						viewHolder.sponsors.setText("—" + activityItem.getSponsors());
-					} else {
-						viewHolder.sponsors.setText(activityItem.getSponsors());
-					}
-				} else {
+				if (activityItem.getAID() == 999) {
+					// Hide empty fields
 					viewHolder.sponsors.setVisibility(View.GONE);
-				}
-				if (activityItem.hasDescription()) {
-					viewHolder.description.setText(activityItem.getDescription());
-				} else {
-					viewHolder.description.setText("No description.");
-				}
+					viewHolder.room.setVisibility(View.GONE);
+					viewHolder.description.setText("Please select an activity.");
 
-				// Format title
-				if (activityItem.isCancelled()) {
+					// Format title
 					viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-					viewHolder.description.setText("Cancelled!");
-					color = Colors.DARK_RED;
+					color = Colors.BLACK;
 					alpha = 1f;
 				} else {
-					viewHolder.title.setTypeface(Typeface.SANS_SERIF);
-					color = Colors.BLACK;
-					alpha = .87f;
+					// Show fields
+					if (activityItem.getRooms().isEmpty()) {
+						viewHolder.room.setVisibility(View.GONE);
+					} else {
+						viewHolder.room.setVisibility(View.VISIBLE);
+						viewHolder.room.setText(activityItem.getRooms());
+					}
+					if (activityItem.hasSponsors()) {
+						viewHolder.sponsors.setVisibility(View.VISIBLE);
+						// Show dash only if needed
+						if (viewHolder.room.getVisibility() == View.VISIBLE) {
+							viewHolder.sponsors.setText("—" + activityItem.getSponsors());
+						} else {
+							viewHolder.sponsors.setText(activityItem.getSponsors());
+						}
+					} else {
+						viewHolder.sponsors.setVisibility(View.GONE);
+					}
+					if (activityItem.hasDescription()) {
+						viewHolder.description.setText(activityItem.getDescription());
+					} else {
+						viewHolder.description.setText("No description.");
+					}
+
+					// Format title
+					if (activityItem.isCancelled()) {
+						viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+						viewHolder.description.setText("Cancelled!");
+						color = Colors.DARK_RED;
+						alpha = 1f;
+					} else {
+						viewHolder.title.setTypeface(Typeface.SANS_SERIF);
+						color = Colors.BLACK;
+						alpha = .87f;
+					}
 				}
+				viewHolder.title.setTextColor(mColors[color.ordinal()]);
+				viewHolder.title.setAlpha(alpha);
 			}
-			viewHolder.title.setTextColor(mColors[color.ordinal()]);
-			viewHolder.title.setAlpha(alpha);
 
 			// Set color of circle
-			final String letter = blockItem.getBlock();
+			final String letter = String.valueOf(blockItem.getBlock());
 			if (blockItem.isLocked()) {
 				color = Colors.RED;
-			} else if (activityItem.isCancelled()) {
+			} else if (activityItem != null && activityItem.isCancelled()) {
 				color = Colors.DARK_RED;
 			} else {
 				switch(Block.valueOf(letter)) {
@@ -239,7 +241,7 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 			if (cmp != 0) {
 				return cmp;
 			} else {
-				return e1.getBlock().compareTo(e2.getBlock());
+				return e1.getBlock() > e2.getBlock() ? 1 : -1;
 			}
 		}
 	}

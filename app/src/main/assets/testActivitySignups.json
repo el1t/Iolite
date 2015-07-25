@@ -12,7 +12,7 @@
       "title": "HR Harris (R) (S)"
     },
     "scheduled_activity": 36604,
-    "user": 14342
+    "user": 12345
   },
   {
     "id": 1925,
@@ -27,7 +27,7 @@
       "title": "HR Harris (R) (S)"
     },
     "scheduled_activity": 36605,
-    "user": 14342
+    "user": 12345
   },
   {
     "id": 3740,
@@ -42,7 +42,7 @@
       "title": "HR Harris (R) (S)"
     },
     "scheduled_activity": 36606,
-    "user": 14342
+    "user": 12345
   },
   {
     "id": 16962,
@@ -57,7 +57,7 @@
       "title": "Ballroom Dance Club"
     },
     "scheduled_activity": 38689,
-    "user": 14342
+    "user": 12345
   },
   {
     "id": 13092,
@@ -72,7 +72,7 @@
       "title": "Last Day - Activities - 10:10 - 11:20"
     },
     "scheduled_activity": 50595,
-    "user": 14342
+    "user": 12345
   },
   {
     "id": 14911,
@@ -87,7 +87,7 @@
       "title": "Last Day - Activities - 11:30 - 12:40"
     },
     "scheduled_activity": 50596,
-    "user": 14342
+    "user": 12345
   },
   {
     "id": 16730,
@@ -102,6 +102,6 @@
       "title": "Last Day - Visit Teachers - 8:50 - 10:00"
     },
     "scheduled_activity": 50597,
-    "user": 14342
+    "user": 12345
   }
 ]

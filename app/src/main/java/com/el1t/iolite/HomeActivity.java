@@ -12,10 +12,12 @@ import com.el1t.iolite.drawer.NavDrawerActivityConfig;
 import com.el1t.iolite.drawer.NavDrawerAdapter;
 import com.el1t.iolite.drawer.NavMenuBuilder;
 import com.el1t.iolite.drawer.NavMenuItem;
+import com.el1t.iolite.item.EighthActivityItem;
 import com.el1t.iolite.item.EighthBlockItem;
 import com.el1t.iolite.item.Schedule;
 import com.el1t.iolite.item.User;
-import com.el1t.iolite.parser.EighthBlockXmlParser;
+import com.el1t.iolite.parser.EighthActivityJsonParser;
+import com.el1t.iolite.parser.EighthBlockJsonParser;
 import com.el1t.iolite.parser.ScheduleJsonParser;
 
 import org.apache.http.NameValuePair;
@@ -23,16 +25,10 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.params.CookiePolicy;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-
-import javax.net.ssl.HttpsURLConnection;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -43,6 +39,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by El1t on 10/24/14.
@@ -57,7 +55,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 	private BlockFragment mBlockFragment;
 	private ScheduleFragment mScheduleFragment;
-	private String mCookies;
+	private String mAuthKey;
 	private User mUser;
 	private boolean fake;
 	private Section activeView;
@@ -78,7 +76,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 			// Check if fake information should be used
 			if ((fake = intent.getBooleanExtra("fake", false))) {
-				Log.d(TAG, "Loading Fake Info");
+				Log.d(TAG, "Loading test info");
 				// Pretend fake list was received
 				postBlockRequest(getBlockList());
 			}
@@ -100,12 +98,15 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		if (mUser != null) {
 			((TextView) findViewById(R.id.header_name)).setText(mUser.getShortName());
 			((TextView) findViewById(R.id.header_username)).setText(mUser.getUsername());
+		} else {
+			((TextView) findViewById(R.id.header_name)).setText("Unknown");
+			((TextView) findViewById(R.id.header_username)).setText("Unknown");
 		}
 
 		if (!fake) {
-			// Retrieve cookies from shared preferences
-//			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
-			mCookies = LoginActivity.getCookies();
+			// Retrieve authKey from shared preferences
+			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
+			mAuthKey = Utils.getAuthKey(preferences);
 		}
 	}
 
@@ -205,7 +206,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	// Get a fake list of blocks for debugging
 	private ArrayList<EighthBlockItem> getBlockList() {
 		try {
-			return EighthBlockXmlParser.parse(getAssets().open("testBlockList.xml"), getApplicationContext());
+			return EighthBlockJsonParser.parse(getAssets().open("testBlockList.json"));
 		} catch(Exception e) {
 			Log.e(TAG, "Error parsing block XML", e);
 		}
@@ -231,7 +232,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 					break;
 			}
 		} else if (activeView == Section.SCHEDULE) {
-			// The schedule does not need cookies to function
+			// The schedule uses iodine's api
 			if (mScheduleFragment == null) {
 				getFragmentManager().beginTransaction()
 						.replace(R.id.container, new LoadingFragment())
@@ -247,7 +248,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 			// Retrieve schedule
 			new ScheduleRequest(Calendar.getInstance().getTime()).execute(INITIAL_DAYS_TO_LOAD);
-		} else if (mCookies == null) {
+		} else if (mAuthKey == null) {
 			expired();
 		} else switch (activeView) {
 			case BLOCK:
@@ -265,8 +266,8 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 					setTitle("Blocks");
 				}
 
-				// Retrieve list of bids using cookies
-				new BlockListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_blocks");
+				// Retrieve list of bids using authKey
+				new BlockListRequest().execute("https://ion.tjhsst.edu/api/blocks");
 				break;
 		}
 	}
@@ -277,7 +278,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	}
 
 	void logout() {
-		mCookies = null;
+		mAuthKey = null;
 		// Start login activity
 		final Intent intent = new Intent(this, LoginActivity.class);
 		intent.putExtra("logout", true);
@@ -286,7 +287,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	}
 
 	void expired() {
-		mCookies = null;
+		mAuthKey = null;
 		final Intent intent = new Intent(this, LoginActivity.class);
 		intent.putExtra("expired", true);
 		startActivity(intent);
@@ -344,18 +345,18 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			ArrayList<EighthBlockItem> response = null;
 			try {
 				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
-				// Add cookies to header
-				urlConnection.setRequestProperty("Cookie", mCookies);
+				// Add authKey to header
+				urlConnection.setRequestProperty("Authorization", mAuthKey);
 				// Begin connection
 				urlConnection.connect();
-				// Parse xml from server
-				response = EighthBlockXmlParser.parse(urlConnection.getInputStream(), getApplicationContext());
+				// Parse JSON from server
+				response = EighthBlockJsonParser.parse(urlConnection.getInputStream());
 				// Close connection
 				urlConnection.disconnect();
-			} catch (XmlPullParserException e) {
-				Log.e(TAG, "XML Error.", e);
+			} catch (IOException e) {
+				Log.e(TAG, "IO Error", e);
 			} catch (Exception e) {
-				Log.e(TAG, "Connection Error.", e);
+				Log.e(TAG, "Connection Error", e);
 			}
 			return response;
 		}
@@ -367,6 +368,43 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 				expired();
 			} else {
 				postBlockRequest(result);
+			}
+		}
+	}
+
+	// Get list of activity signups
+	private class ActivitySignupListRequest extends AsyncTask<String, Void, EighthActivityItem[]> {
+		private static final String TAG = "Block List Connection";
+
+		@Override
+		protected EighthActivityItem[] doInBackground(String... urls) {
+			HttpsURLConnection urlConnection;
+			EighthActivityItem[] response = null;
+			try {
+				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
+				// Add authKey to header
+				urlConnection.setRequestProperty("Authorization", mAuthKey);
+				// Begin connection
+				urlConnection.connect();
+				// Parse JSON from server
+				response = EighthActivityJsonParser.parseAll(urlConnection.getInputStream());
+				// Close connection
+				urlConnection.disconnect();
+			} catch (IOException e) {
+				Log.e(TAG, "IO Error", e);
+			} catch (Exception e) {
+				Log.e(TAG, "Connection Error", e);
+			}
+			return response;
+		}
+
+		@Override
+		protected void onPostExecute(EighthActivityItem[] result) {
+			super.onPostExecute(result);
+			if (result == null) {
+				expired();
+			} else {
+				postBlockRequest(null);
 			}
 		}
 	}

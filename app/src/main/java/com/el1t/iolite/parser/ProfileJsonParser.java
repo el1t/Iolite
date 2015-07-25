@@ -18,7 +18,7 @@ import java.text.ParseException;
  */
 public class ProfileJsonParser
 {
-	private static final String TAG = "Student Info JSON Parser";
+	private static final String TAG = "Profile JSON Parser";
 
 	public static User parse(InputStream in) throws JSONException, ParseException {
 		return parse(Utils.inputStreamToJSON(in));
@@ -26,12 +26,6 @@ public class ProfileJsonParser
 
 	public static User parse(JSONObject user) throws JSONException, ParseException {
 		final JSONObject address = user.getJSONObject("address");
-		final JSONArray emailArray = user.getJSONArray("emails");
-		final String[] emails = new String[emailArray.length()];
-
-		for(int i = 0; i < emails.length; i++) {
-			emails[i] = (String) emailArray.get(i);
-		}
 
 		return new User.UserBuilder()
 				.UID(user.getString("id"))
@@ -43,7 +37,7 @@ public class ProfileJsonParser
 				.city(address.getString("city"))
 				.state(address.getString("state"))
 				.postalCode(address.getString("postal_code"))
-				.emails(emails)
+				.emails(Utils.JSONArrayToStringArray(user.getJSONArray("emails")))
 				.phone(user.getString("home_phone"))
 				.mobile(user.getString("mobile_phone"))
 				.gradYear(user.getInt("graduation_year"))

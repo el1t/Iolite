@@ -14,12 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
 import com.el1t.iolite.item.EighthActivityItem;
-import com.el1t.iolite.parser.EighthActivityXmlParser;
+import com.el1t.iolite.parser.EighthActivityJsonParser;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -28,12 +26,13 @@ import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.xmlpull.v1.XmlPullParserException;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +48,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 	private SignupFragment mSignupFragment;
 	private Cookie[] mCookies;
 	private int BID;
+	private String mAuthKey;
 	private boolean fake;
 	private ArrayList<AsyncTask> mTasks;
 
@@ -87,7 +87,12 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		if (toolbar != null) {
 			setSupportActionBar(toolbar);
-			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		}
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		if (!fake) {
+			// Retrieve authKey from shared preferences
+			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
+			mAuthKey = Utils.getAuthKey(preferences);
 		}
 	}
 
@@ -142,32 +147,20 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 
 	public void refresh() {
 		if (!fake) {
-			if (mCookies == null) {
-				expired();
-			} else {
-				// Set loading fragment, if necessary
-				if (mSignupFragment == null) {
-					// Set loading fragment
-					getFragmentManager().beginTransaction()
-							.add(R.id.container, new LoadingFragment())
-							.commit();
-				}
-
-				// Retrieve list for bid using cookies
-				mTasks.add(new ActivityListRequest().execute("https://iodine.tjhsst.edu/api/eighth/list_activities/" + BID));
+			// Set loading fragment, if necessary
+			if (mSignupFragment == null) {
+				// Set loading fragment
+				getFragmentManager().beginTransaction()
+						.add(R.id.container, new LoadingFragment())
+						.commit();
 			}
+
+			// Retrieve list for bid using cookies
+			mTasks.add(new ActivityListRequest(BID).execute());
 		} else {
 			// Reload offline list
 			postRequest(getList());
 		}
-	}
-
-	void expired() {
-		mCookies = null;
-		final Intent intent = new Intent(this, LoginActivity.class);
-		intent.putExtra("expired", true);
-		startActivity(intent);
-		finish();
 	}
 
 	// Try signing up for an activity
@@ -178,10 +171,8 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 			postSubmit(Response.CANCELLED);
 		} else if (item.isFull()) {
 			postSubmit(Response.CAPACITY);
-//		} else if (item.isRestricted()) {
-//			postSubmit(Response.RESTRICTED);
-		} else if (item.isAttendanceTaken()) {
-			postSubmit(Response.ATTENDANCE_TAKEN);
+		} else if (item.isRestricted()) {
+			postSubmit(Response.RESTRICTED);
 		} else {
 			mTasks.add(new SignupRequest(item.getAID(), item.getBID()).execute("https://iodine.tjhsst.edu/api/eighth/signup_activity"));
 		}
@@ -224,13 +215,13 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 	}
 
 	// Do after getting list of activities
-	private void postRequest(ArrayList<EighthActivityItem> result) {
+	private void postRequest(EighthActivityItem[] result) {
 		if (mSignupFragment == null) {
 			// Create the content view
 			mSignupFragment = new SignupFragment();
 			// Add ArrayList to the ListView in BlockFragment
 			final Bundle args = new Bundle();
-			args.putParcelableArrayList("list", result);
+			args.putParcelableArray("list", result);
 			mSignupFragment.setArguments(args);
 			// Switch to BlockFragment view, remove LoadingFragment
 			getFragmentManager().beginTransaction()
@@ -273,38 +264,41 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 	}
 
 	// Get a fake list of activities for debugging
-	private ArrayList<EighthActivityItem> getList() {
+	private EighthActivityItem[] getList() {
 		try {
-			return EighthActivityXmlParser.parse(getAssets().open("testActivityList.xml"));
-		} catch(Exception e) {
+			return EighthActivityJsonParser.parseAll(getAssets().open("testActivityList.json"));
+		} catch (Exception e) {
 			Log.e(TAG, "Error parsing activity xml", e);
 		}
-		// Don't die?
-		return new ArrayList<>();
+		return null;
 	}
 
 	// Retrieve activity list for BID from server using HttpURLConnection
-	private class ActivityListRequest extends AsyncTask<String, Void, ArrayList<EighthActivityItem>> {
-		private static final String TAG = "Activity List Connection";
+	private class ActivityListRequest extends AsyncTask<Void, Void, EighthActivityItem[]> {
+		private static final String TAG = "ActivityListRequest";
+		private static final String URL = "https://ion.tjhsst.edu/api/blocks/";
+		private int BID;
+
+		public ActivityListRequest(int BID) {
+			this.BID = BID;
+		}
 
 		@Override
-		protected ArrayList<EighthActivityItem> doInBackground(String... urls) {
+		protected EighthActivityItem[] doInBackground(Void... params) {
 			final HttpsURLConnection urlConnection;
-			ArrayList<EighthActivityItem> response = null;
+			EighthActivityItem[] response = null;
 			try {
-				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
-				// Add cookies to header
-				for(Cookie cookie : mCookies) {
-					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
-				}
+				urlConnection = (HttpsURLConnection) new URL(URL + BID).openConnection();
+				// Add authKey to header
+				urlConnection.setRequestProperty("Authorization", mAuthKey);
 				// Begin connection
 				urlConnection.connect();
 				// Parse xml from server
-				response = EighthActivityXmlParser.parse(urlConnection.getInputStream());
+				response = EighthActivityJsonParser.parseAll(urlConnection.getInputStream());
 				// Close connection
 				urlConnection.disconnect();
-			} catch (XmlPullParserException e) {
-				Log.e(TAG, "XML error.", e);
+			} catch (JSONException | ParseException e) {
+				Log.e(TAG, "Parsing error.", e);
 			} catch (IOException e) {
 				Log.e(TAG, "Connection error.", e);
 			}
@@ -312,7 +306,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<EighthActivityItem> result) {
+		protected void onPostExecute(EighthActivityItem[] result) {
 			super.onPostExecute(result);
 			mTasks.remove(this);
 			// Add ArrayList to the ListView in SignupFragment
@@ -334,7 +328,6 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		@Override
 		protected Boolean doInBackground(String... urls) {
 			final DefaultHttpClient client = new DefaultHttpClient();
-			boolean result = false;
 			try {
 				// Setup client
 				client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
@@ -350,18 +343,15 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 				post.setEntity(new UrlEncodedFormEntity(data));
 
 				// Send request
-				HttpResponse response = client.execute(post);
+				client.execute(post);
 
-				// Parse response
-				result = EighthActivityXmlParser.parseSuccess(response.getEntity().getContent());
-			} catch (XmlPullParserException e) {
-				Log.e(TAG, "XML error.", e);
+				return true;
 			} catch (URISyntaxException e) {
 				Log.e(TAG, "URL -> URI error");
 			} catch (IOException e) {
 				Log.e(TAG, "Connection error.", e);
 			}
-			return result;
+			return false;
 		}
 
 		@Override

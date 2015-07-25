@@ -20,21 +20,52 @@ public class EighthBlockItem implements Parcelable
 	private EighthActivityItem activity;
 	private Date date;
 	private int BID;
-	private String type;
+	private char type;
 	private boolean locked;
 	private boolean header;
-
-	public EighthBlockItem() {
-		activity = new EighthActivityItem();
-		date = new Date();
-		type = "";
-	}
 
 	// Constructor for a header item
 	public EighthBlockItem(Date date) {
 		header = true;
 		this.date = date;
-		type = "";
+	}
+
+	public EighthBlockItem(Date date, int BID, char type, boolean locked) {
+		this.date = date;
+		this.BID = BID;
+		this.type = type;
+		this.locked = locked;
+	}
+
+	public static class ItemBuilder {
+		private Date date;
+		private int BID;
+		private char type;
+		private boolean locked;
+
+		public ItemBuilder date(Date date) {
+			this.date = date;
+			return this;
+		}
+
+		public ItemBuilder BID(int BID) {
+			this.BID = BID;
+			return this;
+		}
+
+		public ItemBuilder type(char type) {
+			this.type = type;
+			return this;
+		}
+
+		public ItemBuilder locked(boolean locked) {
+			this.locked = locked;
+			return this;
+		}
+
+		public EighthBlockItem build() {
+			return new EighthBlockItem(date, BID, type, locked);
+		}
 	}
 
 	public EighthActivityItem getEighth() {
@@ -47,32 +78,16 @@ public class EighthBlockItem implements Parcelable
 		return date;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
 	public int getBID() {
 		return BID;
 	}
 
-	public void setBID(int BID) {
-		this.BID = BID;
-	}
-
-	public String getBlock() {
+	public char getBlock() {
 		return type;
-	}
-
-	public void setBlock(String type) {
-		this.type = type;
 	}
 
 	public boolean isLocked() {
 		return locked;
-	}
-
-	public void setLocked(boolean locked) {
-		this.locked = locked;
 	}
 
 	public boolean isHeader() {
@@ -112,7 +127,7 @@ public class EighthBlockItem implements Parcelable
 		long tmpDate = in.readLong();
 		date = tmpDate != -1 ? new Date(tmpDate) : null;
 		BID = in.readInt();
-		type = in.readString();
+		type = (char) in.readByte();
 		locked = in.readByte() != 0;
 		header = in.readByte() != 0;
 	}
@@ -127,7 +142,7 @@ public class EighthBlockItem implements Parcelable
 		dest.writeParcelable(activity, flags);
 		dest.writeLong(date != null ? date.getTime() : -1L);
 		dest.writeInt(BID);
-		dest.writeString(type);
+		dest.writeByte((byte) type);
 		dest.writeByte((byte) (locked ? 1 : 0));
 		dest.writeByte((byte) (header ? 1 : 0));
 	}

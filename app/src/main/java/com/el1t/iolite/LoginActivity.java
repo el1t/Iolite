@@ -1,6 +1,5 @@
 package com.el1t.iolite;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -66,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
 		attempt = 0;
 		// This is identical to checkAuthentication except for intent checking
-		if (mAuthKey != null) {
+		if ((mAuthKey = Utils.getAuthKey(preferences)) != null) {
 			if (getIntent().getBooleanExtra("logout", false)) {
 				// Send logout request
 				logout();
@@ -82,7 +81,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
 		// Use material design toolbar
 		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		if(toolbar != null) {
+		if (toolbar != null) {
 			setSupportActionBar(toolbar);
 		}
 	}
@@ -95,7 +94,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
 	private static void storeCookies(List<String> cookies) {
 		for (String cookie : cookies) {
-			Log.d(TAG, cookie);
 			mCookieManager.getCookieStore().add(null, HttpCookie.parse(cookie).get(0));
 		}
 	}
@@ -158,14 +156,10 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 				if (login_username != null) {
 					preferences.putString("username", login_username);
 				}
-				if (mLoginFragment.isChecked()) {
-					preferences.putBoolean("remember", true);
-					if (login_password != null) {
-						preferences.putString("password", login_password);
-					}
-				} else {
-					preferences.putBoolean("remember", false);
+				if (login_password != null) {
+					preferences.putString("password", login_password);
 				}
+				preferences.putBoolean("remember", mLoginFragment.isChecked());
 				preferences.apply();
 			}
 			attempt = 0;
@@ -198,32 +192,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 //		login_password = "";
 //		mLoginFragment.clearPassword();
 //	}
-
-	public void displayWarning() {
-		new AlertDialog.Builder(this)
-				.setTitle(R.string.dialog_login_disclaimer_title)
-				.setMessage(R.string.dialog_login_disclaimer_body)
-				.setPositiveButton(R.string.dialog_continue, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						// Do nothing
-					}
-				})
-				.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						mLoginFragment.setChecked(false);
-					}
-				})
-				.setOnCancelListener(new DialogInterface.OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface dialogInterface) {
-						mLoginFragment.setChecked(false);
-					}
-				})
-				.create()
-				.show();
-	}
 
 	// Checks if fake offline cache should be used
 	private boolean isFakeLogin() {
@@ -278,8 +246,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 				mConnection.setRequestProperty("Authorization", mAuthKey);
 				mConnection.setUseCaches(false);
 				mConnection.connect();
-				java.util.Scanner s = new java.util.Scanner(mConnection.getInputStream()).useDelimiter("\\A");
-				Log.d(TAG, s.next());
 				return mConnection.getHeaderFields().get("Set-Cookie");
 			} catch (FileNotFoundException e) {
 				try {

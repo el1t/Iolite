@@ -3,6 +3,7 @@ package com.el1t.iolite.item;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.el1t.iolite.Utils;
 import com.el1t.iolite.adapter.SignupListAdapter;
 
 /**
@@ -11,35 +12,49 @@ import com.el1t.iolite.adapter.SignupListAdapter;
 public class EighthActivityItem implements Parcelable
 {
 	private int AID;
+	private int BID;
+	private int memberCount;
+	private int capacity;
 	private String name;
 	private String description;
+	private String URL;
+	private String firstChar;
+	private String[] sponsors;
+	private String[] rooms;
 	private boolean restricted;
+	private boolean administrative;
 	private boolean presign;
-	private boolean oneaday;
 	private boolean bothblocks;
 	private boolean sticky;
 	private boolean special;
-	private boolean calendar;
-	private boolean roomChanged;
-	private String sponsors;
-	private String room;
-	private int BID;
 	private boolean cancelled;
-	private boolean attendanceTaken;
 	private boolean favorite;
-	private int memberCount;
-	private int capacity;
-	private String firstChar;
 
 	private boolean header;
 
-	public EighthActivityItem() {
-		// Initialize strings
-		// Primitive types are automatically initialized
-		name = "";
-		description = "";
-		room = "";
-		firstChar = "";
+	public EighthActivityItem(int AID, int BID, int memberCount, int capacity, String name,
+	                          String description, String URL, String[] sponsors,
+	                          String[] rooms, boolean restricted, boolean administrative,
+	                          boolean presign, boolean bothblocks, boolean sticky, boolean special,
+	                          boolean cancelled, boolean favorite) {
+		firstChar = name.substring(0, 1).toUpperCase();
+		this.AID = AID;
+		this.BID = BID;
+		this.memberCount = memberCount;
+		this.capacity = capacity;
+		this.name = name;
+		this.description = description;
+		this.URL = URL;
+		this.sponsors = sponsors;
+		this.rooms = rooms;
+		this.restricted = restricted;
+		this.administrative = administrative;
+		this.presign = presign;
+		this.bothblocks = bothblocks;
+		this.sticky = sticky;
+		this.special = special;
+		this.cancelled = cancelled;
+		this.favorite = favorite;
 	}
 
 	// Create a header object
@@ -59,31 +74,128 @@ public class EighthActivityItem implements Parcelable
 		}
 	}
 
-	private void firstCharHelper() {
-		for(char c : name.toCharArray()) {
-			if(Character.isLetter(c)) {
-				firstChar = String.valueOf(Character.toUpperCase(c));
-				return;
-			}
+	public static class EighthActivityItemBuilder {
+		private int AID;
+		private int BID;
+		private int memberCount;
+		private int capacity;
+		private String name;
+		private String description;
+		private String URL;
+		private String[] sponsors;
+		private String[] rooms;
+		private boolean restricted;
+		private boolean administrative;
+		private boolean presign;
+		private boolean bothblocks;
+		private boolean sticky;
+		private boolean special;
+		private boolean cancelled;
+		private boolean favorite;
+
+		public EighthActivityItemBuilder AID(int AID) {
+			this.AID = AID;
+			return this;
 		}
-		firstChar = name.substring(0, 1).toUpperCase();
+
+		public EighthActivityItemBuilder BID(int BID) {
+			this.BID = BID;
+			return this;
+		}
+
+		public EighthActivityItemBuilder memberCount(int memberCount) {
+			this.memberCount = memberCount;
+			return this;
+		}
+
+		public EighthActivityItemBuilder capacity(int capacity) {
+			this.capacity = capacity;
+			return this;
+		}
+
+		public EighthActivityItemBuilder name(String name) {
+			this.name = name.trim();
+			return this;
+		}
+
+		public EighthActivityItemBuilder description(String description) {
+			if (description.toLowerCase().equals("no description available")) {
+				this.description = "";
+			} else {
+				this.description = description.trim();
+			}
+			return this;
+		}
+
+		public EighthActivityItemBuilder URL(String URL) {
+			this.URL = URL;
+			return this;
+		}
+
+		public EighthActivityItemBuilder sponsors(String[] sponsors) {
+			this.sponsors = sponsors;
+			return this;
+		}
+
+		public EighthActivityItemBuilder rooms(String[] rooms) {
+			this.rooms = rooms;
+			return this;
+		}
+
+		public EighthActivityItemBuilder administrative(boolean administrative) {
+			this.administrative = administrative;
+			return this;
+		}
+
+		public EighthActivityItemBuilder restricted(boolean restricted) {
+			this.restricted = restricted;
+			return this;
+		}
+
+		public EighthActivityItemBuilder presign(boolean presign) {
+			this.presign = presign;
+			return this;
+		}
+
+		public EighthActivityItemBuilder bothblocks(boolean bothblocks) {
+			this.bothblocks = bothblocks;
+			return this;
+		}
+
+		public EighthActivityItemBuilder sticky(boolean sticky) {
+			this.sticky = sticky;
+			return this;
+		}
+
+		public EighthActivityItemBuilder special(boolean special) {
+			this.special = special;
+			return this;
+		}
+
+		public EighthActivityItemBuilder cancelled(boolean cancelled) {
+			this.cancelled = cancelled;
+			return this;
+		}
+
+		public EighthActivityItemBuilder favorite(boolean favorite) {
+			this.favorite = favorite;
+			return this;
+		}
+
+		public EighthActivityItem build() {
+			return new EighthActivityItem(AID, BID, memberCount, capacity, name, description, URL,
+					sponsors, rooms, restricted, administrative, presign, bothblocks, sticky,
+					special, cancelled, favorite);
+
+		}
 	}
 
 	public int getAID() {
 		return AID;
 	}
 
-	public void setAID(int AID) {
-		this.AID = AID;
-	}
-
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-		firstCharHelper();
 	}
 
 	public String getDescription() {
@@ -101,132 +213,60 @@ public class EighthActivityItem implements Parcelable
 		return restricted;
 	}
 
-	public void setRestricted(boolean restricted) {
-		this.restricted = restricted;
-	}
-
 	public boolean isPresign() {
 		return presign;
-	}
-
-	public void setPresign(boolean presign) {
-		this.presign = presign;
-	}
-
-	public boolean isOneaday() {
-		return oneaday;
-	}
-
-	public void setOneaday(boolean oneaday) {
-		this.oneaday = oneaday;
 	}
 
 	public boolean isBothblocks() {
 		return bothblocks;
 	}
 
-	public void setBothblocks(boolean bothblocks) {
-		this.bothblocks = bothblocks;
-	}
-
 	public boolean isSticky() {
 		return sticky;
-	}
-
-	public void setSticky(boolean sticky) {
-		this.sticky = sticky;
 	}
 
 	public boolean isSpecial() {
 		return special;
 	}
 
-	public void setSpecial(boolean special) {
-		this.special = special;
+	public String[] getRoomsArray() {
+		return rooms;
 	}
 
-	public boolean isCalendar() {
-		return calendar;
+	public String getRooms() {
+		return Utils.join(rooms);
 	}
 
-	public void setCalendar(boolean calendar) {
-		this.calendar = calendar;
-	}
-
-	public boolean isRoomChanged() {
-		return roomChanged;
-	}
-
-	public void setRoomChanged(boolean roomChanged) {
-		this.roomChanged = roomChanged;
-	}
-
-	public String getRoom() {
-		return room;
-	}
-
-	public void setRoom(String room) {
-		this.room = room;
-	}
-
-	public String getSponsors() {
+	public String[] getSponsorsArray() {
 		return sponsors;
 	}
 
-	public void setSponsors(String sponsors) {
-		this.sponsors = sponsors;
+	public String getSponsors() {
+		return Utils.join(sponsors);
 	}
 
 	public boolean hasSponsors() {
-		return !(sponsors.equals("") || sponsors.equals("CANCELLED"));
+		return !(sponsors.length == 0 || sponsors[0].equals("CANCELLED"));
 	}
 
 	public int getBID() {
 		return BID;
 	}
 
-	public void setBID(int BID) {
-		this.BID = BID;
-	}
-
 	public boolean isCancelled() {
 		return cancelled;
-	}
-
-	public void setCancelled(boolean cancelled) {
-		this.cancelled = cancelled;
-	}
-
-	public boolean isAttendanceTaken() {
-		return attendanceTaken;
-	}
-
-	public void setAttendanceTaken(boolean attendanceTaken) {
-		this.attendanceTaken = attendanceTaken;
 	}
 
 	public boolean isFavorite() {
 		return favorite;
 	}
 
-	public void setFavorite(boolean favorite) {
-		this.favorite = favorite;
-	}
-
 	public int getMemberCount() {
 		return memberCount;
 	}
 
-	public void setMemberCount(int memberCount) {
-		this.memberCount = memberCount;
-	}
-
 	public int getCapacity() {
 		return capacity;
-	}
-
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
 	}
 
 	public String getFirstChar() {
@@ -238,7 +278,7 @@ public class EighthActivityItem implements Parcelable
 	}
 
 	public boolean hasDescription() {
-		return !description.equals("");
+		return !description.isEmpty();
 	}
 
 	public boolean isFull() {
@@ -251,24 +291,23 @@ public class EighthActivityItem implements Parcelable
 
 	protected EighthActivityItem(Parcel in) {
 		AID = in.readInt();
+		BID = in.readInt();
+		memberCount = in.readInt();
+		capacity = in.readInt();
 		name = in.readString();
 		description = in.readString();
+		URL = in.readString();
+		firstChar = in.readString();
+		sponsors = in.createStringArray();
+		rooms = in.createStringArray();
 		restricted = in.readByte() != 0;
+		administrative = in.readByte() != 0;
 		presign = in.readByte() != 0;
-		oneaday = in.readByte() != 0;
 		bothblocks = in.readByte() != 0;
 		sticky = in.readByte() != 0;
 		special = in.readByte() != 0;
-		calendar = in.readByte() != 0;
-		roomChanged = in.readByte() != 0;
-		room = in.readString();
-		BID = in.readInt();
 		cancelled = in.readByte() != 0;
-		attendanceTaken = in.readByte() != 0;
 		favorite = in.readByte() != 0;
-		memberCount = in.readInt();
-		capacity = in.readInt();
-		firstChar = in.readString();
 		header = in.readByte() != 0;
 	}
 
@@ -280,24 +319,23 @@ public class EighthActivityItem implements Parcelable
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(AID);
+		dest.writeInt(BID);
+		dest.writeInt(memberCount);
+		dest.writeInt(capacity);
 		dest.writeString(name);
 		dest.writeString(description);
+		dest.writeString(URL);
+		dest.writeString(firstChar);
+		dest.writeStringArray(sponsors);
+		dest.writeStringArray(rooms);
 		dest.writeByte((byte) (restricted ? 1 : 0));
+		dest.writeByte((byte) (administrative ? 1 : 0));
 		dest.writeByte((byte) (presign ? 1 : 0));
-		dest.writeByte((byte) (oneaday ? 1 : 0));
 		dest.writeByte((byte) (bothblocks ? 1 : 0));
 		dest.writeByte((byte) (sticky ? 1 : 0));
 		dest.writeByte((byte) (special ? 1 : 0));
-		dest.writeByte((byte) (calendar ? 1 : 0));
-		dest.writeByte((byte) (roomChanged ? 1 : 0));
-		dest.writeString(room);
-		dest.writeInt(BID);
 		dest.writeByte((byte) (cancelled ? 1 : 0));
-		dest.writeByte((byte) (attendanceTaken ? 1 : 0));
 		dest.writeByte((byte) (favorite ? 1 : 0));
-		dest.writeInt(memberCount);
-		dest.writeInt(capacity);
-		dest.writeString(firstChar);
 		dest.writeByte((byte) (header ? 1 : 0));
 	}
 

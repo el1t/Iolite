@@ -19,6 +19,7 @@ import com.el1t.iolite.adapter.SignupListAdapter;
 import com.el1t.iolite.item.EighthActivityItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by El1t on 10/21/14.
@@ -45,8 +46,8 @@ public class SignupFragment extends Fragment
 
 		// Check if list was provided to setup custom ListAdapter
 		final Bundle args = getArguments();
-		final ArrayList<EighthActivityItem> items;
-		if (args != null && (items = args.getParcelableArrayList("list")) != null) {
+		final EighthActivityItem[] items;
+		if (args != null && (items = (EighthActivityItem[]) args.getParcelableArray("list")) != null) {
 			Log.d(TAG, "Activity list received");
 			mAdapter = new SignupListAdapter(getActivity(), items);
 		} else {
@@ -117,7 +118,7 @@ public class SignupFragment extends Fragment
 		if (item.isFavorite()) {
 			menu.findItem(R.id.context_favorite).setTitle("Unfavorite");
 		}
-		if (item.isRestricted() || item.isCancelled() || item.isFull() || item.isAttendanceTaken()) {
+		if (item.isRestricted() || item.isCancelled() || item.isFull()) {
 			menu.findItem(R.id.context_select).setEnabled(false);
 		}
 		super.onCreateContextMenu(menu, v, menuInfo);
@@ -146,7 +147,7 @@ public class SignupFragment extends Fragment
 		mAdapter.sort();
 	}
 
-	void setListItems(ArrayList<EighthActivityItem> items) {
+	void setListItems(EighthActivityItem[] items) {
 		mAdapter.setListItems(items);
 		mSwipeRefreshLayout.setRefreshing(false);
 	}

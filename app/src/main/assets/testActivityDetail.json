@@ -1,0 +1,85 @@
+{
+  "id": 1033,
+  "aid": "1033",
+  "name": "HR Harris",
+  "description": "",
+  "administrative": false,
+  "restricted": true,
+  "presign": false,
+  "one_a_day": false,
+  "both_blocks": false,
+  "sticky": true,
+  "special": false,
+  "scheduled_on": {
+    "2827": {
+      "date": "2015-09-14",
+      "url": "https://ion.tjhsst.edu/api/blocks/2827",
+      "id": 2827,
+      "block_letter": "B",
+      "roster": {
+        "url": "https://ion.tjhsst.edu/api/signups/scheduled_activity/36612",
+        "id": 36612
+      }
+    },
+    "2793": {
+      "date": "2015-09-02",
+      "url": "https://ion.tjhsst.edu/api/blocks/2793",
+      "id": 2793,
+      "block_letter": "A",
+      "roster": {
+        "url": "https://ion.tjhsst.edu/api/signups/scheduled_activity/36604",
+        "id": 36604
+      }
+    },
+    "2794": {
+      "date": "2015-09-02",
+      "url": "https://ion.tjhsst.edu/api/blocks/2794",
+      "id": 2794,
+      "block_letter": "B",
+      "roster": {
+        "url": "https://ion.tjhsst.edu/api/signups/scheduled_activity/36605",
+        "id": 36605
+      }
+    },
+    "2795": {
+      "date": "2015-09-04",
+      "url": "https://ion.tjhsst.edu/api/blocks/2795",
+      "id": 2795,
+      "block_letter": "A",
+      "roster": {
+        "url": "https://ion.tjhsst.edu/api/signups/scheduled_activity/36606",
+        "id": 36606
+      }
+    },
+    "2797": {
+      "date": "2015-09-07",
+      "url": "https://ion.tjhsst.edu/api/blocks/2797",
+      "id": 2797,
+      "block_letter": "B",
+      "roster": {
+        "url": "https://ion.tjhsst.edu/api/signups/scheduled_activity/36608",
+        "id": 36608
+      }
+    },
+    "2798": {
+      "date": "2015-09-09",
+      "url": "https://ion.tjhsst.edu/api/blocks/2798",
+      "id": 2798,
+      "block_letter": "A",
+      "roster": {
+        "url": "https://ion.tjhsst.edu/api/signups/scheduled_activity/36609",
+        "id": 36609
+      }
+    },
+    "2800": {
+      "date": "2015-09-11",
+      "url": "https://ion.tjhsst.edu/api/blocks/2800",
+      "id": 2800,
+      "block_letter": "A",
+      "roster": {
+        "url": "https://ion.tjhsst.edu/api/signups/scheduled_activity/36610",
+        "id": 36610
+      }
+    }
+  }
+}

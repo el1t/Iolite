@@ -18,6 +18,7 @@ import com.el1t.iolite.R;
 import com.el1t.iolite.item.EighthActivityItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -57,16 +58,16 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 		RED, DEEP_ORANGE, PINK, ORANGE, GREEN, WHITE
 	}
 
-	public SignupListAdapter(Context context, ArrayList<EighthActivityItem> items) {
+	public SignupListAdapter(Context context, EighthActivityItem[] items) {
 		super(context, 0);
 		// Headers
-		headers = new ArrayList<>(3 + items.size());
+		headers = new ArrayList<>(items.length + 3);
 		headers.add(new EighthActivityItem("Favorites", ActivityHeaderType.FAVORITE));
 		headers.add(new EighthActivityItem("Special", ActivityHeaderType.SPECIAL));
 		headers.add(new EighthActivityItem("Activities", ActivityHeaderType.GENERAL));
 
 		mComp = new DefaultSortComp();
-		mItems = items;
+		mItems = new ArrayList<>(Arrays.asList(items));
 		sort();
 		mLayoutInflater = LayoutInflater.from(context);
 
@@ -125,11 +126,11 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 			} else {
 				viewHolder.description.setText("No description.");
 			}
-			if (item.getRoom().equals("")) {
+			if (item.getRooms().isEmpty()) {
 				viewHolder.room.setVisibility(View.GONE);
 			} else {
 				viewHolder.room.setVisibility(View.VISIBLE);
-				viewHolder.room.setText(item.getRoom());
+				viewHolder.room.setText(item.getRooms());
 			}
 			if (item.hasSponsors()) {
 				viewHolder.sponsors.setVisibility(View.VISIBLE);
@@ -200,6 +201,9 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 		return !getItem(position).isHeader();
 	}
 
+	/**
+	 * Sorts mItems, adds headers, and puts them into the view
+	 */
 	public void sort() {
 		Collections.sort(mItems, mComp);
 		clear();
@@ -209,8 +213,9 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 	}
 
 	// Sort items and add to both lists
-	public void setListItems(ArrayList<EighthActivityItem> items) {
-		mItems = items;
+	public void setListItems(EighthActivityItem[] items) {
+		mItems.clear();
+		mItems.addAll(Arrays.asList(items));
 		sort();
 	}
 
@@ -292,7 +297,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 					for (EighthActivityItem item : mItems) {
 						// Match activity name, and room number todo: match sponsors
 						if (!item.isHeader() && (item.getName().toLowerCase().contains(temp) || item.getSponsors().toLowerCase().contains(temp) ||
-								item.getRoom().replace(" ", "").contains(temp.replace(" ", "")))) {
+								item.getRooms().replace(", ", "").contains(temp.replace(" ", "")))) {
 							FilteredArrayNames.add(item);
 						}
 					}

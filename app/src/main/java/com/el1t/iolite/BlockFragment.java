@@ -109,12 +109,14 @@ public class BlockFragment extends Fragment
 	                                ContextMenu.ContextMenuInfo menuInfo) {
 		final AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
 		final EighthBlockItem item = (EighthBlockItem) ((ListView) v).getItemAtPosition(acmi.position);
-		getActivity().getMenuInflater().inflate(R.menu.context_menu_block, menu);
-		if (item.getEighth().getAID() == 999) {
-			menu.findItem(R.id.context_info).setVisible(false);
-			menu.findItem(R.id.context_clear).setVisible(false);
+		if (item.getEighth() != null) {
+			getActivity().getMenuInflater().inflate(R.menu.context_menu_block, menu);
+			if (item.getEighth().getAID() == 999) {
+				menu.findItem(R.id.context_info).setVisible(false);
+				menu.findItem(R.id.context_clear).setVisible(false);
+			}
+			super.onCreateContextMenu(menu, v, menuInfo);
 		}
-		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 
 	@Override

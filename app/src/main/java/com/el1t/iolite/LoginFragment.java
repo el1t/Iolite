@@ -23,7 +23,6 @@ public class LoginFragment extends Fragment
 
 	public interface OnFragmentInteractionListener {
 		void submit(String username, String password);
-		void displayWarning();
 	}
 
 	public LoginFragment() { }
@@ -57,15 +56,6 @@ public class LoginFragment extends Fragment
 				password.requestFocus();
 			}
 		}
-
-		remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked) {
-					mListener.displayWarning();
-				}
-			}
-		});
 
 		return rootView;
 	}
