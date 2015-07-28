@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.el1t.iolite.item.User;
@@ -69,14 +70,13 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 			if (getIntent().getBooleanExtra("logout", false)) {
 				// Send logout request
 				logout();
-			} else if (getIntent().getBooleanExtra("expired", false)) {
-				postRequest(null, isFakeLogin());
 			} else {
 				// Check authentication
 				new Authentication().execute("https://ion.tjhsst.edu/api/profile?format=json");
 			}
-		} else if (remember) {
-			submit(username, preferences.getString("password", null));
+		} else {
+			// Show keyboard
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 		}
 
 		// Use material design toolbar
