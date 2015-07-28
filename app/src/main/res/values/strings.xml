@@ -2,7 +2,10 @@
 <resources>
 
 	<string name="app_name">Iolite</string>
-	<string name="login">LOGIN</string>
+	<string name="button_login">LOGIN</string>
+
+	<string name="field_username">Username</string>
+	<string name="field_password">Password</string>
 
 	<string name="view_about">About</string>
 	<string name="view_home">Home</string>
@@ -15,6 +18,7 @@
 	<string name="action_search">Search</string>
 	<string name="action_drawer_open">Drawer Open</string>
 	<string name="action_drawer_close">Drawer Close</string>
+	<string name="action_remember">Remember me</string>
 
 	<string name="dialog_cancel">Cancel</string>
 	<string name="dialog_continue">Continue</string>
