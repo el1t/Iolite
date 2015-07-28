@@ -34,7 +34,9 @@
 			android:hint="Password"
 			android:ems="10"
 			android:id="@+id/password"
-			android:fontFamily="sans_serif"/>
+			android:fontFamily="sans_serif"
+			android:imeActionLabel="Done"
+			android:imeOptions="actionDone"/>
 	</android.support.design.widget.TextInputLayout>
 
 	<CheckBox

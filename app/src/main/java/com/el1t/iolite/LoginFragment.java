@@ -3,13 +3,16 @@ package com.el1t.iolite;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * Created by El1t on 10/20/14.
@@ -45,19 +48,27 @@ public class LoginFragment extends Fragment
 				mListener.submit(username.getText().toString(), password.getText().toString());
 			}
 		});
+		password.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					mListener.submit(username.getText().toString(), password.getText().toString());
+					return true;
+				}
+				return false;
+			}
+		});
 
 		// Restore remembered username
 		final Bundle args = getArguments();
 		if (args != null) {
 			remember.setChecked(args.getBoolean("remember", false));
 			final String name = args.getString("username", null);
-			if (username != null) {
-				if (name == null) {
-					username.requestFocus();
-				} else {
-					username.setText(name);
-					password.requestFocus();
-				}
+			if (name == null) {
+				username.requestFocus();
+			} else {
+				username.setText(name);
+				password.requestFocus();
 			}
 		}
 
