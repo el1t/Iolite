@@ -115,14 +115,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
 	// Submit the login request
 	public void submit(String username, String pass) {
-		// Hide soft keyboard
-		final InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-		final View view = getCurrentFocus();
-
-		if (view != null && imm.isAcceptingText()) {
-			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-		}
-
 		if (username == null || pass == null) {
 			Log.d(TAG, "Null Username or Password");
 			return;
@@ -135,12 +127,16 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 					.remove("remember")
 					.apply();
 		}
-		if (isFakeLogin()) {
+		if (login_username.toLowerCase().equals(FAKE_LOGIN)) {
 			postRequest(getList(), true);
 		} else if (login_username.isEmpty()) {
-			Snackbar.make(findViewById(R.id.container), "Username empty", Snackbar.LENGTH_SHORT).show();
+			if (login_password.isEmpty()) {
+				mLoginFragment.showError(LoginFragment.ErrorType.EMPTY_BOTH);
+			} else {
+				mLoginFragment.showError(LoginFragment.ErrorType.EMPTY_USERNAME);
+			}
 		} else if (login_password.isEmpty()) {
-			Snackbar.make(findViewById(R.id.container), "Password empty", Snackbar.LENGTH_SHORT).show();
+			mLoginFragment.showError(LoginFragment.ErrorType.EMPTY_PASSWORD);
 		} else {
 			new LoginRequest().execute("https://ion.tjhsst.edu/api");
 		}
@@ -186,16 +182,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		login_password = null;
 		mAuthKey = null;
 		Snackbar.make(findViewById(R.id.container), "Logged out", Snackbar.LENGTH_SHORT).show();
-	}
-
-//	private void clearPassword() {
-//		login_password = "";
-//		mLoginFragment.clearPassword();
-//	}
-
-	// Checks if fake offline cache should be used
-	private boolean isFakeLogin() {
-		return login_username != null && login_username.toLowerCase().equals(FAKE_LOGIN);
 	}
 
 	// Get a test info for debugging
@@ -250,12 +236,18 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 			} catch (FileNotFoundException e) {
 				try {
 					if (mConnection.getResponseCode() == 401) {
-						Snackbar.make(findViewById(R.id.container), "Invalid login credentials", Snackbar.LENGTH_SHORT).show();
+						mLoginFragment.showError(LoginFragment.ErrorType.INVALID);
 					}
 				} catch (IOException err) {
 					Log.e(TAG, "Cannot read response code", err);
 				}
 			} catch (IOException e) {
+				// Hide soft keyboard
+				final InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+				final View view = getCurrentFocus();
+				if (view != null && imm.isAcceptingText()) {
+					imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+				}
 				if (isCancelled()) {
 					Snackbar.make(findViewById(R.id.container), "Cancelled", Snackbar.LENGTH_SHORT)
 							.setAction("Retry", new View.OnClickListener() {

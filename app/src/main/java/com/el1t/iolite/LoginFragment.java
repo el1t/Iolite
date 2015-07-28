@@ -3,6 +3,7 @@ package com.el1t.iolite;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +21,16 @@ import android.widget.TextView;
 public class LoginFragment extends Fragment
 {
 	private OnFragmentInteractionListener mListener;
-	private EditText username;
-	private EditText password;
+	private TextInputLayout username;
+	private TextInputLayout password;
 	private CheckBox remember;
 
 	public interface OnFragmentInteractionListener {
 		void submit(String username, String password);
+	}
+
+	public enum ErrorType {
+		EMPTY_USERNAME, EMPTY_PASSWORD, EMPTY_BOTH, INVALID
 	}
 
 	public LoginFragment() { }
@@ -36,8 +41,8 @@ public class LoginFragment extends Fragment
 				, container, false);
 
 		// Get fields
-		username	= (EditText) rootView.findViewById(R.id.username);
-		password	= (EditText) rootView.findViewById(R.id.password);
+		username	= (TextInputLayout) rootView.findViewById(R.id.username);
+		password	= (TextInputLayout) rootView.findViewById(R.id.password);
 		remember    = (CheckBox) rootView.findViewById(R.id.remember);
 
 		// Submit button
@@ -45,14 +50,14 @@ public class LoginFragment extends Fragment
 		login.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mListener.submit(username.getText().toString(), password.getText().toString());
+				submit();
 			}
 		});
-		password.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+		password.getEditText().setOnEditorActionListener(new EditText.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE) {
-					mListener.submit(username.getText().toString(), password.getText().toString());
+					submit();
 					return true;
 				}
 				return false;
@@ -67,7 +72,7 @@ public class LoginFragment extends Fragment
 			if (name == null) {
 				username.requestFocus();
 			} else {
-				username.setText(name);
+				username.getEditText().setText(name);
 				password.requestFocus();
 			}
 		}
@@ -89,9 +94,31 @@ public class LoginFragment extends Fragment
 		}
 	}
 
-	public void clearPassword() {
-		password.setText("");
-		password.requestFocus();
+	private void submit() {
+		final String un = username.getEditText().getText().toString().trim();
+		final String pw = password.getEditText().getText().toString().trim();
+		mListener.submit(un, pw);
+	}
+
+	public void showError(ErrorType error) {
+		switch(error) {
+			case EMPTY_USERNAME:
+				username.setError("Empty username");
+				password.setErrorEnabled(false);
+				break;
+			case EMPTY_PASSWORD:
+				password.setError("Empty password");
+				username.setErrorEnabled(false);
+				break;
+			case EMPTY_BOTH:
+				username.setError("Empty username");
+				password.setError("Empty password");
+				break;
+			case INVALID:
+				username.setErrorEnabled(false);
+				password.setError("Invalid username or password");
+				break;
+		}
 	}
 
 	public boolean isCreated() {

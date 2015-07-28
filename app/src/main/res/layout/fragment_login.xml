@@ -13,19 +13,20 @@
 
 	<android.support.design.widget.TextInputLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:id="@+id/username">
 		<EditText
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="7dp"
 			android:inputType="textNoSuggestions|textVisiblePassword"
-			android:hint="Username"
-			android:id="@+id/username"/>
+			android:hint="Username"/>
 	</android.support.design.widget.TextInputLayout>
 
 	<android.support.design.widget.TextInputLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:id="@+id/password">
 		<EditText
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -33,7 +34,6 @@
 			android:inputType="textPassword"
 			android:hint="Password"
 			android:ems="10"
-			android:id="@+id/password"
 			android:fontFamily="sans_serif"
 			android:imeActionLabel="Done"
 			android:imeOptions="actionDone"/>
