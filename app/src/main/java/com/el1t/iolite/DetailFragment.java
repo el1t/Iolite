@@ -3,19 +3,17 @@ package com.el1t.iolite;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.el1t.iolite.adapter.DetailCardAdapter;
-import com.el1t.iolite.item.Detail;
-import com.el1t.iolite.item.EighthActivityItem;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.el1t.iolite.item.EighthActivity;
 
 
 /**
@@ -27,11 +25,12 @@ import java.util.Arrays;
  */
 public class DetailFragment extends Fragment
 {
+	public interface OnFragmentInteractionListener { }
 	private static final String TAG = "Detail Fragment";
-	private static final String ARG_ARRAY = "array";
+	private static final String ARG_EIGHTH = "eighth";
 
-	private DetailCardAdapter mDetailCardAdapter;
-	private SwipeRefreshLayout mSwipeRefreshLayout;
+	private DetailCardAdapter mAdapter;
+	private LinearLayoutManager mLayoutManager;
 	private OnFragmentInteractionListener mListener;
 
 	/**
@@ -41,10 +40,10 @@ public class DetailFragment extends Fragment
 	 * @param item The initial activity information prior to a more detailed query.
 	 * @return A new instance of fragment DetailFragment.
 	 */
-	public static DetailFragment newInstance(EighthActivityItem item) {
+	public static DetailFragment newInstance(EighthActivity item) {
 		final DetailFragment fragment = new DetailFragment();
 		final Bundle args = new Bundle();
-		args.putParcelableArray(ARG_ARRAY, Detail.fromActivity(item));
+		args.putParcelable(ARG_EIGHTH, item);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -55,11 +54,9 @@ public class DetailFragment extends Fragment
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		final Bundle args = getArguments();
-		final Detail[] array;
-		if (args != null && (array = (Detail[]) args.getParcelableArray(ARG_ARRAY)) != null) {
-			final ArrayList<Detail> list = new ArrayList<>();
-			list.addAll(Arrays.asList(array));
-			mDetailCardAdapter = new DetailCardAdapter(getActivity(), list);
+		final EighthActivity eighthActivity;
+		if (args != null && (eighthActivity = args.getParcelable(ARG_EIGHTH)) != null) {
+			mAdapter = new DetailCardAdapter(getActivity(), eighthActivity);
 		} else {
 			Log.e(TAG, "Details not received", new IllegalArgumentException());
 		}
@@ -69,14 +66,11 @@ public class DetailFragment extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		final View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-		mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
-		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-			@Override
-			public void onRefresh() {
-				mSwipeRefreshLayout.setRefreshing(true);
-				mListener.refresh();
-			}
-		});
+		final RecyclerView activityList = (RecyclerView) rootView.findViewById(R.id.list);
+		mLayoutManager = new LinearLayoutManager(inflater.getContext());
+		activityList.setLayoutManager(mLayoutManager);
+		activityList.setItemAnimator(new DefaultItemAnimator());
+		activityList.setAdapter(mAdapter);
 		return rootView;
 	}
 
@@ -97,11 +91,11 @@ public class DetailFragment extends Fragment
 		mListener = null;
 	}
 
-	public interface OnFragmentInteractionListener {
-		void refresh();
+	public EighthActivity getEighth() {
+		return mAdapter.getEighth();
 	}
 
-	public ArrayList<Detail> getDetails() {
-		return mDetailCardAdapter.getDetails();
+	public void update(EighthActivity detail) {
+		mAdapter.update(detail);
 	}
 }

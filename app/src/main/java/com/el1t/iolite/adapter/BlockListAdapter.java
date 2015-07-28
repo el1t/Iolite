@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.el1t.iolite.R;
-import com.el1t.iolite.item.EighthActivityItem;
-import com.el1t.iolite.item.EighthBlockItem;
+import com.el1t.iolite.item.EighthActivity;
+import com.el1t.iolite.item.EighthBlock;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,9 +22,9 @@ import java.util.Date;
 /**
  * Created by El1t on 10/24/14.
  */
-public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
+public class BlockListAdapter extends ArrayAdapter<EighthBlock>
 {
-	private ArrayList<EighthBlockItem> mItems;
+	private ArrayList<EighthBlock> mItems;
 	private final BIDSortComp mComp;
 	private final LayoutInflater mLayoutInflater;
 	private final int[] mColors;
@@ -47,7 +47,7 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 		TextView letter;
 	}
 
-	public BlockListAdapter(Context context, ArrayList<EighthBlockItem> items) {
+	public BlockListAdapter(Context context, ArrayList<EighthBlock> items) {
 		super(context, 0);
 		mComp = new BIDSortComp();
 		mItems = items;
@@ -73,8 +73,8 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// Cache the views for faster performance
 		ViewHolder viewHolder;
-		final EighthBlockItem blockItem = getItem(position);
-		final EighthActivityItem activityItem = blockItem.getEighth();
+		final EighthBlock blockItem = getItem(position);
+		final EighthActivity activityItem = blockItem.getEighth();
 
 		if (convertView == null) {
 			// Initialize viewHolder and convertView
@@ -214,29 +214,29 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlockItem>
 			// Dates must be used because blocks can start on any letter
 			Date date = getItem(0).getDate();
 			Date nextDate;
-			insert(new EighthBlockItem(date), 0);
+			insert(new EighthBlock(date), 0);
 			count++;
 			for (int i = 1; i < count; i++) {
 				nextDate = getItem(i).getDate();
 				if (!nextDate.equals(date)) {
 					date = nextDate;
-					insert(new EighthBlockItem(date), i++);
+					insert(new EighthBlock(date), i++);
 					count++;
 				}
 			}
 		}
 	}
 
-	public void setListItems(ArrayList<EighthBlockItem> items) {
+	public void setListItems(ArrayList<EighthBlock> items) {
 		mItems = items;
 		sort();
 	}
 
 	// Sort by block date and type
-	private class BIDSortComp implements Comparator<EighthBlockItem>
+	private class BIDSortComp implements Comparator<EighthBlock>
 	{
 		@Override
-		public int compare(EighthBlockItem e1, EighthBlockItem e2) {
+		public int compare(EighthBlock e1, EighthBlock e2) {
 			int cmp = e1.getDate().compareTo(e2.getDate());
 			if (cmp != 0) {
 				return cmp;

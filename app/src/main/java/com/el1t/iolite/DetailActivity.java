@@ -4,12 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.el1t.iolite.item.EighthActivityItem;
+import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.parser.DetailJsonParser;
 
 import org.json.JSONException;
@@ -28,38 +29,33 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
 	private final static String TAG = "Detail Activity";
 	private DetailFragment mDetailFragment;
 	private String mAuthKey;
-	private EighthActivityItem mEighthActivity;
+	private int AID;
 	private boolean fake;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_about);
+		setContentView(R.layout.activity_detail);
 
 		// Check if restoring from previously destroyed instance
 		if (savedInstanceState == null) {
 			final Intent intent = getIntent();
-			mEighthActivity = intent.getParcelableExtra("activity");
-			if (mEighthActivity == null) {
-				Log.e(TAG, "Missing EighthActivityItem", new IllegalArgumentException());
+			final EighthActivity activityItem = intent.getParcelableExtra("activity");
+			if (activityItem == null) {
+				Log.e(TAG, "Missing EighthActivity", new IllegalArgumentException());
+			} else {
+				AID = activityItem.getAID();
+				((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar)).setTitle(activityItem.getName());
+				mDetailFragment = DetailFragment.newInstance(activityItem);
+				getFragmentManager().beginTransaction()
+						.replace(R.id.container, mDetailFragment)
+						.commit();
 			}
-			setTitle(mEighthActivity.getName());
-			mDetailFragment = DetailFragment.newInstance(mEighthActivity);
-			getFragmentManager().beginTransaction()
-					.replace(R.id.container, mDetailFragment)
-					.commit();
 
 			// Check if fake information should be used
-			if ((fake = intent.getBooleanExtra("fake", false))) {
-				Log.d(TAG, "Loading test details");
-				// Pretend fake list was received
-				try {
-					DetailJsonParser.parse(getAssets().open("testActivityDetail.json"));
-				} catch (IOException | JSONException | ParseException e) {
-					Log.e(TAG, "Error loading test activity details", e);
-				}
-			}
+			fake = intent.getBooleanExtra("fake", false);
 		} else {
+			AID = savedInstanceState.getInt("AID");
 			fake = savedInstanceState.getBoolean("fake");
 			mDetailFragment = (DetailFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
 		}
@@ -81,12 +77,24 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
 	@Override
 	public void onResume() {
 		super.onResume();
-		refresh();
+		if (fake) {
+			Log.d(TAG, "Loading test details");
+			// Pretend fake list was received
+			try {
+				mDetailFragment.update(DetailJsonParser.parse(getAssets().open("testActivityDetail.json"),
+						mDetailFragment.getEighth()));
+			} catch (IOException | JSONException | ParseException e) {
+				Log.e(TAG, "Error loading test activity details", e);
+			}
+		} else {
+			new DetailRequest(AID).execute();
+		}
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putInt("AID", AID);
 		savedInstanceState.putSerializable("fake", fake);
 		getFragmentManager().putFragment(savedInstanceState, "detailFragment", mDetailFragment);
 	}
@@ -98,12 +106,8 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
 		return true;
 	}
 
-	public void refresh() {
-		new DetailRequest(mEighthActivity.getAID()).execute();
-	}
-
 	// Get list of blocks
-	private class DetailRequest extends AsyncTask<Void, Void, Boolean> {
+	private class DetailRequest extends AsyncTask<Void, Void, EighthActivity> {
 		private static final String TAG = "Detail Connection";
 		private static final String URL = "https://ion.tjhsst.edu/api/activities/";
 		private int AID;
@@ -113,7 +117,7 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
 		}
 
 		@Override
-		protected Boolean doInBackground(Void... params) {
+		protected EighthActivity doInBackground(Void... params) {
 
 			HttpsURLConnection urlConnection;
 			try {
@@ -123,21 +127,25 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
 				// Begin connection
 				urlConnection.connect();
 				// Parse JSON from server
-				DetailJsonParser.parse(urlConnection.getInputStream(), mDetailFragment.getDetails());
+				final EighthActivity details = DetailJsonParser.parse(urlConnection.getInputStream(),
+						mDetailFragment.getEighth());
 				// Close connection
 				urlConnection.disconnect();
-				return true;
+				return details;
 			} catch (IOException e) {
 				Log.e(TAG, "IO Error", e);
 			} catch (Exception e) {
 				Log.e(TAG, "Connection Error", e);
 			}
-			return false;
+			return null;
 		}
 
 		@Override
-		protected void onPostExecute(Boolean result) {
+		protected void onPostExecute(EighthActivity result) {
 			super.onPostExecute(result);
+			if (result != null) {
+				mDetailFragment.update(result);
+			}
 		}
 	}
 }

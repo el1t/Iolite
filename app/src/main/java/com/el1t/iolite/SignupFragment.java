@@ -16,10 +16,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 
 import com.el1t.iolite.adapter.SignupListAdapter;
-import com.el1t.iolite.item.EighthActivityItem;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.el1t.iolite.item.EighthActivity;
 
 /**
  * Created by El1t on 10/21/14.
@@ -33,8 +30,9 @@ public class SignupFragment extends Fragment
 	private SwipeRefreshLayout mSwipeRefreshLayout;
 
 	public interface OnFragmentInteractionListener {
-		void submit(EighthActivityItem item);
-		void favorite(int AID, int BID, EighthActivityItem item);
+		void submit(EighthActivity item);
+		void viewDetails(EighthActivity activityItem);
+		void favorite(int AID, int BID, EighthActivity item);
 		void refresh();
 	}
 
@@ -46,8 +44,8 @@ public class SignupFragment extends Fragment
 
 		// Check if list was provided to setup custom ListAdapter
 		final Bundle args = getArguments();
-		final EighthActivityItem[] items;
-		if (args != null && (items = (EighthActivityItem[]) args.getParcelableArray("list")) != null) {
+		final EighthActivity[] items;
+		if (args != null && (items = (EighthActivity[]) args.getParcelableArray("list")) != null) {
 			Log.d(TAG, "Activity list received");
 			mAdapter = new SignupListAdapter(getActivity(), items);
 		} else {
@@ -61,7 +59,7 @@ public class SignupFragment extends Fragment
 		activityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-				final EighthActivityItem item = (EighthActivityItem) parent.getItemAtPosition(position);
+				final EighthActivity item = (EighthActivity) parent.getItemAtPosition(position);
 				mListener.submit(item);
 			}
 		});
@@ -113,7 +111,7 @@ public class SignupFragment extends Fragment
 	public void onCreateContextMenu(ContextMenu menu, View v,
 	                                ContextMenuInfo menuInfo) {
 		final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) menuInfo;
-		final EighthActivityItem item = (EighthActivityItem) ((ListView) v).getItemAtPosition(acmi.position);
+		final EighthActivity item = (EighthActivity) ((ListView) v).getItemAtPosition(acmi.position);
 		getActivity().getMenuInflater().inflate(R.menu.context_menu_signup, menu);
 		if (item.isFavorite()) {
 			menu.findItem(R.id.context_favorite).setTitle("Unfavorite");
@@ -127,12 +125,13 @@ public class SignupFragment extends Fragment
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		final EighthActivityItem activityItem = mAdapter.getItem(info.position);
+		final EighthActivity activityItem = mAdapter.getItem(info.position);
 		switch (item.getItemId()) {
 			case R.id.context_select:
 				mListener.submit(activityItem);
 				return true;
 			case R.id.context_info:
+				mListener.viewDetails(activityItem);
 				return true;
 			case R.id.context_favorite:
 				mListener.favorite(activityItem.getAID(), activityItem.getBID(), activityItem);
@@ -147,7 +146,7 @@ public class SignupFragment extends Fragment
 		mAdapter.sort();
 	}
 
-	void setListItems(EighthActivityItem[] items) {
+	void setListItems(EighthActivity[] items) {
 		mAdapter.setListItems(items);
 		mSwipeRefreshLayout.setRefreshing(false);
 	}

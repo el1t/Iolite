@@ -14,8 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.el1t.iolite.adapter.BlockListAdapter;
-import com.el1t.iolite.item.EighthActivityItem;
-import com.el1t.iolite.item.EighthBlockItem;
+import com.el1t.iolite.item.EighthActivity;
+import com.el1t.iolite.item.EighthBlock;
 
 import java.util.ArrayList;
 
@@ -32,6 +32,7 @@ public class BlockFragment extends Fragment
 
 	public interface OnFragmentInteractionListener {
 		void select(int BID);
+		void viewDetails(EighthActivity activityItem);
 		void clear(int BID);
 		void refresh();
 	}
@@ -46,7 +47,7 @@ public class BlockFragment extends Fragment
 
 		// Check if list was provided from login activity to setup custom ListAdapter
 		final Bundle args = getArguments();
-		final ArrayList<EighthBlockItem> items;
+		final ArrayList<EighthBlock> items;
 		if (args != null && (items = args.getParcelableArrayList("list")) != null) {
 			Log.d(TAG, "Block list received");
 			mAdapter = new BlockListAdapter(getActivity(), items);
@@ -61,7 +62,7 @@ public class BlockFragment extends Fragment
 		blockList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-				final EighthBlockItem item = (EighthBlockItem) parent.getItemAtPosition(position);
+				final EighthBlock item = (EighthBlock) parent.getItemAtPosition(position);
 				mListener.select(item.getBID());
 			}
 		});
@@ -108,7 +109,7 @@ public class BlockFragment extends Fragment
 	public void onCreateContextMenu(ContextMenu menu, View v,
 	                                ContextMenu.ContextMenuInfo menuInfo) {
 		final AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
-		final EighthBlockItem item = (EighthBlockItem) ((ListView) v).getItemAtPosition(acmi.position);
+		final EighthBlock item = (EighthBlock) ((ListView) v).getItemAtPosition(acmi.position);
 		if (item.getEighth() != null) {
 			getActivity().getMenuInflater().inflate(R.menu.context_menu_block, menu);
 			if (item.getEighth().getAID() == 999) {
@@ -122,12 +123,13 @@ public class BlockFragment extends Fragment
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-		final EighthBlockItem blockItem = mAdapter.getItem(info.position);
+		final EighthBlock blockItem = mAdapter.getItem(info.position);
 		switch (item.getItemId()) {
 			case R.id.context_select:
 				mListener.select(blockItem.getBID());
 				return true;
 			case R.id.context_info:
+				mListener.viewDetails(blockItem.getEighth());
 				return true;
 			case R.id.context_clear:
 				mListener.clear(blockItem.getBID());
@@ -137,7 +139,7 @@ public class BlockFragment extends Fragment
 		}
 	}
 
-	void setListItems(ArrayList<EighthBlockItem> items) {
+	void setListItems(ArrayList<EighthBlock> items) {
 		mAdapter.setListItems(items);
 		mSwipeRefreshLayout.setRefreshing(false);
 	}

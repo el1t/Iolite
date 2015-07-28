@@ -14,10 +14,10 @@ import java.util.Date;
 /**
  * Created by El1t on 10/24/14.
  */
-public class EighthBlockItem implements Parcelable
+public class EighthBlock implements Parcelable
 {
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEEE, MMMM d");
-	private EighthActivityItem activity;
+	private EighthActivity activity;
 	private Date date;
 	private int BID;
 	private char type;
@@ -25,12 +25,12 @@ public class EighthBlockItem implements Parcelable
 	private boolean header;
 
 	// Constructor for a header item
-	public EighthBlockItem(Date date) {
+	public EighthBlock(Date date) {
 		header = true;
 		this.date = date;
 	}
 
-	public EighthBlockItem(Date date, int BID, char type, boolean locked) {
+	public EighthBlock(Date date, int BID, char type, boolean locked) {
 		this.date = date;
 		this.BID = BID;
 		this.type = type;
@@ -63,12 +63,12 @@ public class EighthBlockItem implements Parcelable
 			return this;
 		}
 
-		public EighthBlockItem build() {
-			return new EighthBlockItem(date, BID, type, locked);
+		public EighthBlock build() {
+			return new EighthBlock(date, BID, type, locked);
 		}
 	}
 
-	public EighthActivityItem getEighth() {
+	public EighthActivity getEighth() {
 		return activity;
 	}
 
@@ -122,8 +122,8 @@ public class EighthBlockItem implements Parcelable
 		return sp;
 	}
 
-	protected EighthBlockItem(Parcel in) {
-		activity = in.readParcelable(EighthActivityItem.class.getClassLoader());
+	protected EighthBlock(Parcel in) {
+		activity = in.readParcelable(EighthActivity.class.getClassLoader());
 		long tmpDate = in.readLong();
 		date = tmpDate != -1 ? new Date(tmpDate) : null;
 		BID = in.readInt();
@@ -147,15 +147,15 @@ public class EighthBlockItem implements Parcelable
 		dest.writeByte((byte) (header ? 1 : 0));
 	}
 
-	public static final Parcelable.Creator<EighthBlockItem> CREATOR = new Parcelable.Creator<EighthBlockItem>() {
+	public static final Parcelable.Creator<EighthBlock> CREATOR = new Parcelable.Creator<EighthBlock>() {
 		@Override
-		public EighthBlockItem createFromParcel(Parcel in) {
-			return new EighthBlockItem(in);
+		public EighthBlock createFromParcel(Parcel in) {
+			return new EighthBlock(in);
 		}
 
 		@Override
-		public EighthBlockItem[] newArray(int size) {
-			return new EighthBlockItem[size];
+		public EighthBlock[] newArray(int size) {
+			return new EighthBlock[size];
 		}
 	};
 }

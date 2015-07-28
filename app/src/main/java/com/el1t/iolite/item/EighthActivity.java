@@ -9,7 +9,7 @@ import com.el1t.iolite.adapter.SignupListAdapter;
 /**
  * Created by El1t on 10/21/14.
  */
-public class EighthActivityItem implements Parcelable
+public class EighthActivity implements Parcelable
 {
 	private int AID;
 	private int BID;
@@ -32,11 +32,11 @@ public class EighthActivityItem implements Parcelable
 
 	private boolean header;
 
-	public EighthActivityItem(int AID, int BID, int memberCount, int capacity, String name,
-	                          String description, String URL, String[] sponsors,
-	                          String[] rooms, boolean restricted, boolean administrative,
-	                          boolean presign, boolean bothblocks, boolean sticky, boolean special,
-	                          boolean cancelled, boolean favorite) {
+	public EighthActivity(int AID, int BID, int memberCount, int capacity, String name,
+	                      String description, String URL, String[] sponsors,
+	                      String[] rooms, boolean restricted, boolean administrative,
+	                      boolean presign, boolean bothblocks, boolean sticky, boolean special,
+	                      boolean cancelled, boolean favorite) {
 		firstChar = name.substring(0, 1).toUpperCase();
 		this.AID = AID;
 		this.BID = BID;
@@ -58,7 +58,7 @@ public class EighthActivityItem implements Parcelable
 	}
 
 	// Create a header object
-	public EighthActivityItem(String name, SignupListAdapter.ActivityHeaderType headerType) {
+	public EighthActivity(String name, SignupListAdapter.ActivityHeaderType headerType) {
 		this.header = true;
 		this.name = name;
 		switch(headerType) {
@@ -74,7 +74,7 @@ public class EighthActivityItem implements Parcelable
 		}
 	}
 
-	public static class EighthActivityItemBuilder {
+	public static class EighthActivityBuilder {
 		private int AID;
 		private int BID;
 		private int memberCount;
@@ -92,33 +92,40 @@ public class EighthActivityItem implements Parcelable
 		private boolean special;
 		private boolean cancelled;
 		private boolean favorite;
+		private EighthActivity activity;
 
-		public EighthActivityItemBuilder AID(int AID) {
+		public EighthActivityBuilder() { }
+
+		public EighthActivityBuilder(EighthActivity activity) {
+			this.activity = activity;
+		}
+
+		public EighthActivityBuilder AID(int AID) {
 			this.AID = AID;
 			return this;
 		}
 
-		public EighthActivityItemBuilder BID(int BID) {
+		public EighthActivityBuilder BID(int BID) {
 			this.BID = BID;
 			return this;
 		}
 
-		public EighthActivityItemBuilder memberCount(int memberCount) {
+		public EighthActivityBuilder memberCount(int memberCount) {
 			this.memberCount = memberCount;
 			return this;
 		}
 
-		public EighthActivityItemBuilder capacity(int capacity) {
+		public EighthActivityBuilder capacity(int capacity) {
 			this.capacity = capacity;
 			return this;
 		}
 
-		public EighthActivityItemBuilder name(String name) {
+		public EighthActivityBuilder name(String name) {
 			this.name = name.trim();
 			return this;
 		}
 
-		public EighthActivityItemBuilder description(String description) {
+		public EighthActivityBuilder description(String description) {
 			if (description.toLowerCase().equals("no description available")) {
 				this.description = "";
 			} else {
@@ -127,66 +134,95 @@ public class EighthActivityItem implements Parcelable
 			return this;
 		}
 
-		public EighthActivityItemBuilder URL(String URL) {
+		public EighthActivityBuilder URL(String URL) {
 			this.URL = URL;
 			return this;
 		}
 
-		public EighthActivityItemBuilder sponsors(String[] sponsors) {
+		public EighthActivityBuilder sponsors(String[] sponsors) {
 			this.sponsors = sponsors;
 			return this;
 		}
 
-		public EighthActivityItemBuilder rooms(String[] rooms) {
+		public EighthActivityBuilder rooms(String[] rooms) {
 			this.rooms = rooms;
 			return this;
 		}
 
-		public EighthActivityItemBuilder administrative(boolean administrative) {
+		public EighthActivityBuilder administrative(boolean administrative) {
 			this.administrative = administrative;
 			return this;
 		}
 
-		public EighthActivityItemBuilder restricted(boolean restricted) {
+		public EighthActivityBuilder restricted(boolean restricted) {
 			this.restricted = restricted;
 			return this;
 		}
 
-		public EighthActivityItemBuilder presign(boolean presign) {
+		public EighthActivityBuilder presign(boolean presign) {
 			this.presign = presign;
 			return this;
 		}
 
-		public EighthActivityItemBuilder bothblocks(boolean bothblocks) {
+		public EighthActivityBuilder bothblocks(boolean bothblocks) {
 			this.bothblocks = bothblocks;
 			return this;
 		}
 
-		public EighthActivityItemBuilder sticky(boolean sticky) {
+		public EighthActivityBuilder sticky(boolean sticky) {
 			this.sticky = sticky;
 			return this;
 		}
 
-		public EighthActivityItemBuilder special(boolean special) {
+		public EighthActivityBuilder special(boolean special) {
 			this.special = special;
 			return this;
 		}
 
-		public EighthActivityItemBuilder cancelled(boolean cancelled) {
+		public EighthActivityBuilder cancelled(boolean cancelled) {
 			this.cancelled = cancelled;
 			return this;
 		}
 
-		public EighthActivityItemBuilder favorite(boolean favorite) {
+		public EighthActivityBuilder favorite(boolean favorite) {
 			this.favorite = favorite;
 			return this;
 		}
 
-		public EighthActivityItem build() {
-			return new EighthActivityItem(AID, BID, memberCount, capacity, name, description, URL,
-					sponsors, rooms, restricted, administrative, presign, bothblocks, sticky,
-					special, cancelled, favorite);
-
+		public EighthActivity build() {
+			if (activity == null) {
+				return new EighthActivity(AID, BID, memberCount, capacity, name, description, URL,
+						sponsors, rooms, restricted, administrative, presign, bothblocks, sticky,
+						special, cancelled, favorite);
+			}
+			if (this.administrative) {
+				activity.administrative = this.administrative;
+			}
+			if (this.restricted) {
+				activity.restricted = this.restricted;
+			}
+			if (this.presign) {
+				activity.presign = this.presign;
+			}
+			if (this.bothblocks) {
+				activity.bothblocks = this.bothblocks;
+			}
+			if (this.sticky) {
+				activity.sticky = this.sticky;
+			}
+			if (this.special) {
+				activity.special = this.special;
+			}
+			if (this.cancelled) {
+				activity.cancelled = this.cancelled;
+			}
+			if (this.favorite) {
+				activity.favorite = this.favorite;
+			}
+			if (this.description != null) {
+				activity.description = this.description;
+			}
+			return activity;
 		}
 	}
 
@@ -200,13 +236,6 @@ public class EighthActivityItem implements Parcelable
 
 	public String getDescription() {
 		return description;
-	}
-
-	// Reject empty descriptions
-	public void setDescription(String description) {
-		if (!description.equals("") && !description.toLowerCase().equals("no description available")) {
-			this.description = description;
-		}
 	}
 
 	public boolean isRestricted() {
@@ -289,7 +318,7 @@ public class EighthActivityItem implements Parcelable
 		return favorite = !favorite;
 	}
 
-	protected EighthActivityItem(Parcel in) {
+	protected EighthActivity(Parcel in) {
 		AID = in.readInt();
 		BID = in.readInt();
 		memberCount = in.readInt();
@@ -339,15 +368,15 @@ public class EighthActivityItem implements Parcelable
 		dest.writeByte((byte) (header ? 1 : 0));
 	}
 
-	public static final Parcelable.Creator<EighthActivityItem> CREATOR = new Parcelable.Creator<EighthActivityItem>() {
+	public static final Parcelable.Creator<EighthActivity> CREATOR = new Parcelable.Creator<EighthActivity>() {
 		@Override
-		public EighthActivityItem createFromParcel(Parcel in) {
-			return new EighthActivityItem(in);
+		public EighthActivity createFromParcel(Parcel in) {
+			return new EighthActivity(in);
 		}
 
 		@Override
-		public EighthActivityItem[] newArray(int size) {
-			return new EighthActivityItem[size];
+		public EighthActivity[] newArray(int size) {
+			return new EighthActivity[size];
 		}
 	};
 }

@@ -10,10 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.el1t.iolite.R;
-import com.el1t.iolite.item.Detail;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.el1t.iolite.item.EighthActivity;
 
 /**
  * Created by El1t on 7/25/15.
@@ -21,11 +18,13 @@ import java.util.Arrays;
 public class DetailCardAdapter extends RecyclerView.Adapter<DetailCardAdapter.ViewHolder>
 {
 	private final LayoutInflater mLayoutInflater;
-	private ArrayList<Detail> mDetails;
+	private EighthActivity mEighthActivity;
 
 	public enum Types {
 		STATUS("Status"),
-		DESCRIPTION("Description");
+		DESCRIPTION("Description"),
+		ROOMS("Rooms"),
+		SPONSORS("Sponsors");
 
 		private String name;
 
@@ -55,8 +54,8 @@ public class DetailCardAdapter extends RecyclerView.Adapter<DetailCardAdapter.Vi
 		}
 	}
 
-	public DetailCardAdapter(Context context, ArrayList<Detail> details) {
-		mDetails = details;
+	public DetailCardAdapter(Context context, EighthActivity eighthActivity) {
+		mEighthActivity = eighthActivity;
 		mLayoutInflater = LayoutInflater.from(context);
 	}
 
@@ -68,34 +67,40 @@ public class DetailCardAdapter extends RecyclerView.Adapter<DetailCardAdapter.Vi
 
 	@Override
 	public void onBindViewHolder(ViewHolder viewHolder, int i) {
-		final Detail detail = mDetails.get(i);
 		// Set fields
-		viewHolder.title.setText(detail.getTitle());
-		switch(detail.getType()) {
+		final Types type = Types.values()[i];
+		viewHolder.title.setText(type.toString());
+		switch(type) {
 			case STATUS:
 				break;
 			case DESCRIPTION:
-				viewHolder.info.setText(detail.getDescription());
+				viewHolder.info.setText(mEighthActivity.getDescription());
+				break;
+			case ROOMS:
+				viewHolder.info.setText(mEighthActivity.getRooms());
+				break;
+			case SPONSORS:
+				viewHolder.info.setText(mEighthActivity.getSponsors());
 				break;
 		}
 	}
 
 	@Override
 	public int getItemCount() {
-		return mDetails == null ? 0 : mDetails.size();
-	}
-
-	public void addAll(Detail[] details) {
-		mDetails.addAll(Arrays.asList(details));
-		notifyItemRangeInserted(mDetails.size() - details.length, details.length);
+		return mEighthActivity == null ? 0 : Types.values().length;
 	}
 
 	public void clear() {
-		mDetails.clear();
+		mEighthActivity = null;
 		notifyDataSetChanged();
 	}
 
-	public ArrayList<Detail> getDetails() {
-		return mDetails;
+	public void update(EighthActivity detail) {
+		mEighthActivity = detail;
+		notifyDataSetChanged();
+	}
+
+	public EighthActivity getEighth() {
+		return mEighthActivity;
 	}
 }

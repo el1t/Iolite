@@ -1,14 +1,13 @@
 package com.el1t.iolite.parser;
 
 import com.el1t.iolite.Utils;
-import com.el1t.iolite.item.EighthActivityItem;
+import com.el1t.iolite.item.EighthActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -23,14 +22,14 @@ public class EighthActivityJsonParser
 		this.BID = BID;
 	}
 
-	public static EighthActivityItem[] parseAll(InputStream in) throws JSONException, ParseException {
+	public static EighthActivity[] parseAll(InputStream in) throws JSONException, ParseException {
 		return parseAll(Utils.inputStreamToJSON(in));
 	}
 
-	public static EighthActivityItem[] parseAll(JSONObject input) throws JSONException, ParseException {
+	public static EighthActivity[] parseAll(JSONObject input) throws JSONException, ParseException {
 		final JSONObject activityList = input.getJSONObject("activities");
 		final EighthActivityJsonParser parser = new EighthActivityJsonParser(input.getInt("id"));
-		final EighthActivityItem[] activities = new EighthActivityItem[activityList.length()];
+		final EighthActivity[] activities = new EighthActivity[activityList.length()];
 		int index = 0;
 		for (Iterator<String> keys = activityList.keys(); keys.hasNext(); index++) {
 			activities[index] = parser.parse(activityList.getJSONObject(keys.next()));
@@ -38,9 +37,9 @@ public class EighthActivityJsonParser
 		return activities;
 	}
 
-	public EighthActivityItem parse(JSONObject activity) throws JSONException, ParseException {
+	public EighthActivity parse(JSONObject activity) throws JSONException, ParseException {
 		final JSONObject roster = activity.getJSONObject("roster");
-		return new EighthActivityItem.EighthActivityItemBuilder()
+		return new EighthActivity.EighthActivityBuilder()
 				.AID(activity.getInt("id"))
 				.BID(BID)
 				.memberCount(roster.getInt("count"))

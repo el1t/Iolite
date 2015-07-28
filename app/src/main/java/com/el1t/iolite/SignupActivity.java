@@ -15,7 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
-import com.el1t.iolite.item.EighthActivityItem;
+import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.parser.EighthActivityJsonParser;
 
 import org.apache.http.NameValuePair;
@@ -23,7 +23,6 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.params.CookiePolicy;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -46,7 +45,6 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 	private static final String TAG = "Signup Activity";
 
 	private SignupFragment mSignupFragment;
-	private Cookie[] mCookies;
 	private int BID;
 	private String mAuthKey;
 	private boolean fake;
@@ -164,7 +162,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 	}
 
 	// Try signing up for an activity
-	public void submit(EighthActivityItem item) {
+	public void submit(EighthActivity item) {
 		// Perform checks before submission
 		// Note that server performs checks as well
 		 if (item.isCancelled()) {
@@ -176,6 +174,14 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		} else {
 			mTasks.add(new SignupRequest(item.getAID(), item.getBID()).execute("https://iodine.tjhsst.edu/api/eighth/signup_activity"));
 		}
+	}
+
+	// Display details for activity
+	public void viewDetails(EighthActivity activityItem) {
+		final Intent intent = new Intent(this, DetailActivity.class);
+		intent.putExtra("activity", activityItem);
+		intent.putExtra("fake", fake);
+		startActivity(intent);
 	}
 
 	// Notify the user after submission
@@ -215,7 +221,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 	}
 
 	// Do after getting list of activities
-	private void postRequest(EighthActivityItem[] result) {
+	private void postRequest(EighthActivity[] result) {
 		if (mSignupFragment == null) {
 			// Create the content view
 			mSignupFragment = new SignupFragment();
@@ -233,7 +239,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 	}
 
 	// Favorite an activity
-	public void favorite(final int AID, final int BID, final EighthActivityItem item) {
+	public void favorite(final int AID, final int BID, final EighthActivity item) {
 		// Note: the server uses the UID field as the AID in its API
 		// Sending the BID is useless, but it is required by the server
 		mTasks.add(new ServerRequest().execute("https://iodine.tjhsst.edu/eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID));
@@ -264,7 +270,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 	}
 
 	// Get a fake list of activities for debugging
-	private EighthActivityItem[] getList() {
+	private EighthActivity[] getList() {
 		try {
 			return EighthActivityJsonParser.parseAll(getAssets().open("testActivityList.json"));
 		} catch (Exception e) {
@@ -274,7 +280,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 	}
 
 	// Retrieve activity list for BID from server using HttpURLConnection
-	private class ActivityListRequest extends AsyncTask<Void, Void, EighthActivityItem[]> {
+	private class ActivityListRequest extends AsyncTask<Void, Void, EighthActivity[]> {
 		private static final String TAG = "ActivityListRequest";
 		private static final String URL = "https://ion.tjhsst.edu/api/blocks/";
 		private int BID;
@@ -284,9 +290,9 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		}
 
 		@Override
-		protected EighthActivityItem[] doInBackground(Void... params) {
+		protected EighthActivity[] doInBackground(Void... params) {
 			final HttpsURLConnection urlConnection;
-			EighthActivityItem[] response = null;
+			EighthActivity[] response = null;
 			try {
 				urlConnection = (HttpsURLConnection) new URL(URL + BID).openConnection();
 				// Add authKey to header
@@ -306,7 +312,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		}
 
 		@Override
-		protected void onPostExecute(EighthActivityItem[] result) {
+		protected void onPostExecute(EighthActivity[] result) {
 			super.onPostExecute(result);
 			mTasks.remove(this);
 			// Add ArrayList to the ListView in SignupFragment
@@ -332,10 +338,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 				// Setup client
 				client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
 				HttpPost post = new HttpPost(new URI(urls[0]));
-				// Add cookies
-				for(Cookie cookie : mCookies) {
-					post.setHeader("Cookie", cookie.getName() + "=" + cookie.getValue());
-				}
+				// TODO: add auth token
 				// Add parameters
 				final List<NameValuePair> data = new ArrayList<>(2);
 				data.add(new BasicNameValuePair("aid", AID));
@@ -375,10 +378,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 			final HttpsURLConnection urlConnection;
 			try {
 				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
-				// Add cookies to header
-				for (Cookie cookie : mCookies) {
-					urlConnection.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
-				}
+				// TODO: add auth token
 				// Begin connection
 				urlConnection.connect();
 				urlConnection.getInputStream();

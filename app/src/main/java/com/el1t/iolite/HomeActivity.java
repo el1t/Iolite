@@ -12,8 +12,8 @@ import com.el1t.iolite.drawer.NavDrawerActivityConfig;
 import com.el1t.iolite.drawer.NavDrawerAdapter;
 import com.el1t.iolite.drawer.NavMenuBuilder;
 import com.el1t.iolite.drawer.NavMenuItem;
-import com.el1t.iolite.item.EighthActivityItem;
-import com.el1t.iolite.item.EighthBlockItem;
+import com.el1t.iolite.item.EighthActivity;
+import com.el1t.iolite.item.EighthBlock;
 import com.el1t.iolite.item.Schedule;
 import com.el1t.iolite.item.User;
 import com.el1t.iolite.parser.EighthActivityJsonParser;
@@ -198,13 +198,21 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		startActivity(intent);
 	}
 
+	// Display details for activity
+	public void viewDetails(EighthActivity activityItem) {
+		final Intent intent = new Intent(this, DetailActivity.class);
+		intent.putExtra("activity", activityItem);
+		intent.putExtra("fake", fake);
+		startActivity(intent);
+	}
+
 	// Clear the selected activity
 	public void clear(int BID) {
 		new ClearRequest(BID).execute("https://iodine.tjhsst.edu/api/eighth/signup_activity");
 	}
 
 	// Get a fake list of blocks for debugging
-	private ArrayList<EighthBlockItem> getBlockList() {
+	private ArrayList<EighthBlock> getBlockList() {
 		try {
 			return EighthBlockJsonParser.parse(getAssets().open("testBlockList.json"));
 		} catch(Exception e) {
@@ -294,7 +302,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		finish();
 	}
 
-	private void postBlockRequest(ArrayList<EighthBlockItem> result) {
+	private void postBlockRequest(ArrayList<EighthBlock> result) {
 		// Check if creating a new fragment is necessary
 		// This should probably be done in onCreate, without a bundle
 		if (mBlockFragment == null) {
@@ -335,14 +343,14 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	}
 
 	// Get list of blocks
-	private class BlockListRequest extends AsyncTask<String, Void, ArrayList<EighthBlockItem>> {
+	private class BlockListRequest extends AsyncTask<String, Void, ArrayList<EighthBlock>> {
 		private static final String TAG = "Block List Connection";
 
 		@Override
-		protected ArrayList<EighthBlockItem> doInBackground(String... urls) {
+		protected ArrayList<EighthBlock> doInBackground(String... urls) {
 
 			HttpsURLConnection urlConnection;
-			ArrayList<EighthBlockItem> response = null;
+			ArrayList<EighthBlock> response = null;
 			try {
 				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
 				// Add authKey to header
@@ -362,7 +370,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<EighthBlockItem> result) {
+		protected void onPostExecute(ArrayList<EighthBlock> result) {
 			super.onPostExecute(result);
 			if (result == null) {
 				expired();
@@ -373,13 +381,13 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	}
 
 	// Get list of activity signups
-	private class ActivitySignupListRequest extends AsyncTask<String, Void, EighthActivityItem[]> {
+	private class ActivitySignupListRequest extends AsyncTask<String, Void, EighthActivity[]> {
 		private static final String TAG = "Block List Connection";
 
 		@Override
-		protected EighthActivityItem[] doInBackground(String... urls) {
+		protected EighthActivity[] doInBackground(String... urls) {
 			HttpsURLConnection urlConnection;
-			EighthActivityItem[] response = null;
+			EighthActivity[] response = null;
 			try {
 				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
 				// Add authKey to header
@@ -399,7 +407,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 
 		@Override
-		protected void onPostExecute(EighthActivityItem[] result) {
+		protected void onPostExecute(EighthActivity[] result) {
 			super.onPostExecute(result);
 			if (result == null) {
 				expired();

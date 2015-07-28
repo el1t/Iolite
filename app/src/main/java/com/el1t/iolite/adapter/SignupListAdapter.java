@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.el1t.iolite.R;
-import com.el1t.iolite.item.EighthActivityItem;
+import com.el1t.iolite.item.EighthActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,11 +25,11 @@ import java.util.Comparator;
 /**
  * Created by El1t on 10/21/14.
  */
-public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implements Filterable
+public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements Filterable
 {
 	// This is to hold all items without filtering
-	ArrayList<EighthActivityItem> mItems;
-	private final ArrayList<EighthActivityItem> headers;
+	ArrayList<EighthActivity> mItems;
+	private final ArrayList<EighthActivity> headers;
 	private final DefaultSortComp mComp;
 	private final LayoutInflater mLayoutInflater;
 	private final int[] mColors;
@@ -58,13 +58,13 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 		RED, DEEP_ORANGE, PINK, ORANGE, GREEN, WHITE
 	}
 
-	public SignupListAdapter(Context context, EighthActivityItem[] items) {
+	public SignupListAdapter(Context context, EighthActivity[] items) {
 		super(context, 0);
 		// Headers
 		headers = new ArrayList<>(items.length + 3);
-		headers.add(new EighthActivityItem("Favorites", ActivityHeaderType.FAVORITE));
-		headers.add(new EighthActivityItem("Special", ActivityHeaderType.SPECIAL));
-		headers.add(new EighthActivityItem("Activities", ActivityHeaderType.GENERAL));
+		headers.add(new EighthActivity("Favorites", ActivityHeaderType.FAVORITE));
+		headers.add(new EighthActivity("Special", ActivityHeaderType.SPECIAL));
+		headers.add(new EighthActivity("Activities", ActivityHeaderType.GENERAL));
 
 		mComp = new DefaultSortComp();
 		mItems = new ArrayList<>(Arrays.asList(items));
@@ -92,7 +92,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// Cache the views for faster performance
 		final ViewHolder viewHolder;
-		final EighthActivityItem item = getItem(position);
+		final EighthActivity item = getItem(position);
 
 		if (convertView == null) {
 			// Initialize viewHolder and convertView
@@ -213,7 +213,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 	}
 
 	// Sort items and add to both lists
-	public void setListItems(EighthActivityItem[] items) {
+	public void setListItems(EighthActivity[] items) {
 		mItems.clear();
 		mItems.addAll(Arrays.asList(items));
 		sort();
@@ -221,7 +221,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 
 	private void addHeaders() {
 		ActivityHeaderType index = ActivityHeaderType.FAVORITE;
-		EighthActivityItem item;
+		EighthActivity item;
 		int count = getCount();
 		for (int i = 0; i < count; i++) {
 			item = getItem(i);
@@ -276,7 +276,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 			protected void publishResults(CharSequence constraint, FilterResults results) {
 				clear();
 				if (results.count != 0) {
-					addAll((ArrayList<EighthActivityItem>) results.values);
+					addAll((ArrayList<EighthActivity>) results.values);
 					addHeaders();
 				}
 				notifyDataSetChanged();
@@ -291,10 +291,10 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 					results.values = mItems;
 					results.count = mItems.size();
 				} else {
-					final ArrayList<EighthActivityItem> FilteredArrayNames = new ArrayList<>();
+					final ArrayList<EighthActivity> FilteredArrayNames = new ArrayList<>();
 					String temp = constraint.toString().toLowerCase();
 					// This should preserve the sort of the items
-					for (EighthActivityItem item : mItems) {
+					for (EighthActivity item : mItems) {
 						// Match activity name, and room number todo: match sponsors
 						if (!item.isHeader() && (item.getName().toLowerCase().contains(temp) || item.getSponsors().toLowerCase().contains(temp) ||
 								item.getRooms().replace(", ", "").contains(temp.replace(" ", "")))) {
@@ -310,10 +310,10 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivityItem> implemen
 	}
 
 	// Sort by favorites, alphabetically
-	private class DefaultSortComp implements Comparator<EighthActivityItem>
+	private class DefaultSortComp implements Comparator<EighthActivity>
 	{
 		@Override
-		public int compare(EighthActivityItem e1, EighthActivityItem e2) {
+		public int compare(EighthActivity e1, EighthActivity e2) {
 			// Compare by name if both or neither are favorites, or return the favorite
 			if (e1.isFavorite()) {
 				if (e2.isFavorite())

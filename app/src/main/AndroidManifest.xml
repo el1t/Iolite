@@ -47,6 +47,12 @@
 				android:resource="@xml/searchable"/>
 		</activity>
 		<activity
+			android:name="com.el1t.iolite.DetailActivity"
+			android:label="@string/view_activity"
+			android:launchMode="singleTop"
+			android:configChanges="orientation|screenSize">
+		</activity>
+		<activity
 			android:name="com.el1t.iolite.AboutActivity"
 			android:label="@string/view_about"
 			android:launchMode="singleTop"
