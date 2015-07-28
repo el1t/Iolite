@@ -264,7 +264,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		return null;
 	}
 
-	// Retrieve activity list for BID from server using HttpURLConnection
+	// Retrieve activity list for BID from server
 	private class ActivityListRequest extends AsyncTask<Void, Void, EighthActivity[]> {
 		private static final String TAG = "ActivityListRequest";
 		private static final String URL = "https://ion.tjhsst.edu/api/blocks/";
@@ -305,7 +305,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		}
 	}
 
-	// Web request for activity signup using HttpClient
+	// Web request for activity signup
 	private class SignupRequest extends AsyncTask<Void, Void, Boolean> {
 		private static final String TAG = "Signup Connection";
 		private static final String URL = "https://ion.tjhsst.edu/api/signups/user";
@@ -355,7 +355,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 	// Ping the server, discard response and do nothing afterwards
 	private class ServerRequest extends AsyncTask<Void, Void, Boolean> {
 		private static final String TAG = "Server Ping";
-		private static final String URL = "https://iodine.tjhsst.edu/";
+		private static final String URL = "https://iodine.tjhsst.edu/"; // TODO: switch to ion
 		private final String domain;
 
 		public ServerRequest(String domain) {

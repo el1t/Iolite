@@ -208,7 +208,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 	// Clear the selected activity
 	public void clear(int BID) {
-		new ClearRequest(BID).execute("https://iodine.tjhsst.edu/api/eighth/signup_activity");
+		new ClearRequest(BID).execute();
 	}
 
 	// Get a fake list of blocks for debugging
@@ -275,7 +275,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 				}
 
 				// Retrieve list of bids using authKey
-				new BlockListRequest().execute("https://ion.tjhsst.edu/api/blocks");
+				new BlockListRequest().execute();
 				break;
 		}
 	}
@@ -343,16 +343,16 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	}
 
 	// Get list of blocks
-	private class BlockListRequest extends AsyncTask<String, Void, ArrayList<EighthBlock>> {
+	private class BlockListRequest extends AsyncTask<Void, Void, ArrayList<EighthBlock>> {
 		private static final String TAG = "Block List Connection";
+		private static final String URL = "https://ion.tjhsst.edu/api/blocks";
 
 		@Override
-		protected ArrayList<EighthBlock> doInBackground(String... urls) {
-
+		protected ArrayList<EighthBlock> doInBackground(Void... params) {
 			HttpsURLConnection urlConnection;
 			ArrayList<EighthBlock> response = null;
 			try {
-				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
+				urlConnection = (HttpsURLConnection) new URL(URL).openConnection();
 				// Add authKey to header
 				urlConnection.setRequestProperty("Authorization", mAuthKey);
 				// Begin connection
@@ -381,15 +381,16 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	}
 
 	// Get list of activity signups
-	private class ActivitySignupListRequest extends AsyncTask<String, Void, EighthActivity[]> {
+	private class ActivitySignupListRequest extends AsyncTask<Void, Void, EighthActivity[]> {
 		private static final String TAG = "Block List Connection";
+		private static final String URL = "https://ion.tjhsst.edu/api/signups/user"; // TODO: fix
 
 		@Override
-		protected EighthActivity[] doInBackground(String... urls) {
+		protected EighthActivity[] doInBackground(Void... urls) {
 			HttpsURLConnection urlConnection;
 			EighthActivity[] response = null;
 			try {
-				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
+				urlConnection = (HttpsURLConnection) new URL(URL).openConnection();
 				// Add authKey to header
 				urlConnection.setRequestProperty("Authorization", mAuthKey);
 				// Begin connection
@@ -417,9 +418,10 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 	}
 
-	// Web request for clearing activity using HttpClient
-	private class ClearRequest extends AsyncTask<String, Void, Boolean> {
+	// Web request for clearing activity
+	private class ClearRequest extends AsyncTask<Void, Void, Boolean> {
 		private static final String TAG = "Clear Connection";
+		private static final String URL = "https://ion.tjhsst.edu/api/signups/user";
 		private final String BID;
 
 		public ClearRequest(int BID) {
@@ -427,27 +429,22 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 
 		@Override
-		protected Boolean doInBackground(String... urls) {
-			final DefaultHttpClient client = new DefaultHttpClient();
+		protected Boolean doInBackground(Void... params) {
+			final HttpsURLConnection urlConnection;
 			try {
-				// Setup client
-				client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
-				HttpPost post = new HttpPost(new URI(urls[0]));
-				// TODO: Add cookies
-//				for(Cookie cookie : mCookies) {
-//					post.setHeader("Cookie", cookie.getName() + "=" + cookie.getValue());
-//				}
+				urlConnection = (HttpsURLConnection) new URL(URL).openConnection();
+				// Add auth token
+				urlConnection.setRequestProperty("Authorization", mAuthKey);
+
 				// Add parameters
-				final List<NameValuePair> data = new ArrayList<>(2);
-				data.add(new BasicNameValuePair("aid", "999")); // Use 999 for empty activity
-				data.add(new BasicNameValuePair("bid", BID));
-				post.setEntity(new UrlEncodedFormEntity(data));
+				urlConnection.addRequestProperty("block", BID);
+				urlConnection.addRequestProperty("activity", "999");
 
 				// Send request
-				client.execute(post);
+				urlConnection.connect();
+				urlConnection.getInputStream();
+				urlConnection.disconnect();
 				return true;
-			} catch (URISyntaxException e) {
-				Log.e(TAG, "URL -> URI error");
 			} catch (IOException e) {
 				Log.e(TAG, "Connection error.", e);
 			}
