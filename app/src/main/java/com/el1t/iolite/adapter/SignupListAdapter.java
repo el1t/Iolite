@@ -1,5 +1,6 @@
 package com.el1t.iolite.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.el1t.iolite.R;
+import com.el1t.iolite.SignupFragment;
 import com.el1t.iolite.item.EighthActivity;
 
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 	private final ArrayList<EighthActivity> headers;
 	private final DefaultSortComp mComp;
 	private final LayoutInflater mLayoutInflater;
+	private final SignupFragment.OnFragmentInteractionListener mContext;
 	private final int[] mColors;
 	private final Bitmap ICON_DASH;
 	private final Bitmap ICON_LOCK;
@@ -58,8 +61,9 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 		RED, DEEP_ORANGE, PINK, ORANGE, GREEN, WHITE
 	}
 
-	public SignupListAdapter(Context context, EighthActivity[] items) {
+	public SignupListAdapter(Activity context, EighthActivity[] items) {
 		super(context, 0);
+		mContext = (SignupFragment.OnFragmentInteractionListener) context;
 		// Headers
 		headers = new ArrayList<>(items.length + 3);
 		headers.add(new EighthActivity("Favorites", ActivityHeaderType.FAVORITE));
@@ -181,6 +185,12 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 				viewHolder.icon.setVisibility(View.VISIBLE);
 				viewHolder.letter.setVisibility(View.INVISIBLE);
 			}
+			viewHolder.circle.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					mContext.viewDetails(item);
+				}
+			});
 		}
 
 		return convertView;

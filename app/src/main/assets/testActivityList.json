@@ -17,7 +17,7 @@
       "favorited": false,
       "description": "Learn how to draw or just make beautiful art!  Supplies are provided.\r\n",
       "roster": {
-        "count": 0,
+        "count": 10,
         "url": "https://ion.tjhsst.edu/api/signups/scheduled_activity/2105",
         "capacity": 30
       },
@@ -46,7 +46,7 @@
       "favorited": false,
       "description": "American Sign Language ",
       "roster": {
-        "count": 0,
+        "count": 5,
         "url": "https://ion.tjhsst.edu/api/signups/scheduled_activity/37592",
         "capacity": 28
       },
@@ -75,7 +75,7 @@
       "favorited": false,
       "description": "A OR B block, not both - in room 240, no computers",
       "roster": {
-        "count": 0,
+        "count": 15,
         "url": "https://ion.tjhsst.edu/api/signups/scheduled_activity/37672",
         "capacity": 50
       },
@@ -107,7 +107,7 @@
       "favorited": false,
       "description": "Interested in helping with technology maintenance at TJ and learning the craft of a technology specialist?  Sign up for Computer Tech Assistants where you can collect service hours and learn new skills on set up and maintenance of projectors, computers, laptops, network drops, and printers.  No tech experience required, just come willing to learn.",
       "roster": {
-        "count": 0,
+        "count": 10,
         "url": "https://ion.tjhsst.edu/api/signups/scheduled_activity/1311",
         "capacity": 15
       },
@@ -136,7 +136,7 @@
       "favorited": false,
       "description": "",
       "roster": {
-        "count": 0,
+        "count": 20,
         "url": "https://ion.tjhsst.edu/api/signups/scheduled_activity/425",
         "capacity": 28
       },
