@@ -18,22 +18,12 @@ import android.view.View;
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.parser.EighthActivityJsonParser;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.client.params.CookiePolicy;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -75,10 +65,10 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 			mSignupFragment = (SignupFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
 		}
 
+		// Retrieve authKey from shared preferences
 		if (!fake) {
-			// Retrieve cookies from shared preferences
 			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
-//			mCookies = LoginActivity.getCookies(preferences);
+			mAuthKey = Utils.getAuthKey(preferences);
 		}
 
 		// Use material design toolbar
@@ -87,11 +77,6 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 			setSupportActionBar(toolbar);
 		}
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		if (!fake) {
-			// Retrieve authKey from shared preferences
-			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
-			mAuthKey = Utils.getAuthKey(preferences);
-		}
 	}
 
 	@Override
@@ -166,13 +151,13 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		// Perform checks before submission
 		// Note that server performs checks as well
 		 if (item.isCancelled()) {
-			postSubmit(Response.CANCELLED);
+			showSnackbar(Response.CANCELLED);
 		} else if (item.isFull()) {
-			postSubmit(Response.CAPACITY);
+			showSnackbar(Response.CAPACITY);
 		} else if (item.isRestricted()) {
-			postSubmit(Response.RESTRICTED);
+			showSnackbar(Response.RESTRICTED);
 		} else {
-			mTasks.add(new SignupRequest(item.getAID(), item.getBID()).execute("https://iodine.tjhsst.edu/api/eighth/signup_activity"));
+			mTasks.add(new SignupRequest(item.getAID(), item.getBID()).execute());
 		}
 	}
 
@@ -184,8 +169,8 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		startActivity(intent);
 	}
 
-	// Notify the user after submission
-	void postSubmit(Response result) {
+	// Notify the user of server response
+	void showSnackbar(Response result) {
 		switch(result) {
 			case SUCCESS:
 				// TODO: Pass success to home activity
@@ -242,14 +227,14 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 	public void favorite(final int AID, final int BID, final EighthActivity item) {
 		// Note: the server uses the UID field as the AID in its API
 		// Sending the BID is useless, but it is required by the server
-		mTasks.add(new ServerRequest().execute("https://iodine.tjhsst.edu/eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID));
+		mTasks.add(new ServerRequest("eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID).execute());
 		if (item.changeFavorite()) {
 			Snackbar.make(findViewById(R.id.container), "Favorited", Snackbar.LENGTH_SHORT)
 					.setAction("Undo", new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							mTasks.add(new ServerRequest()
-									.execute("https://iodine.tjhsst.edu/eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID));
+							mTasks.add(new ServerRequest("eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID)
+									.execute());
 							item.changeFavorite();
 							mSignupFragment.updateAdapter();
 						}
@@ -259,8 +244,8 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 					.setAction("Undo", new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							mTasks.add(new ServerRequest()
-									.execute("https://iodine.tjhsst.edu/eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID));
+							mTasks.add(new ServerRequest("eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID)
+									.execute());
 							item.changeFavorite();
 							mSignupFragment.updateAdapter();
 						}
@@ -321,8 +306,9 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 	}
 
 	// Web request for activity signup using HttpClient
-	private class SignupRequest extends AsyncTask<String, Void, Boolean> {
+	private class SignupRequest extends AsyncTask<Void, Void, Boolean> {
 		private static final String TAG = "Signup Connection";
+		private static final String URL = "https://ion.tjhsst.edu/api/signups/user";
 		private final String AID;
 		private final String BID;
 
@@ -332,25 +318,22 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		}
 
 		@Override
-		protected Boolean doInBackground(String... urls) {
-			final DefaultHttpClient client = new DefaultHttpClient();
+		protected Boolean doInBackground(Void... params) {
+			final HttpsURLConnection urlConnection;
 			try {
-				// Setup client
-				client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
-				HttpPost post = new HttpPost(new URI(urls[0]));
-				// TODO: add auth token
+				urlConnection = (HttpsURLConnection) new URL(URL).openConnection();
+				// Add auth token
+				urlConnection.setRequestProperty("Authorization", mAuthKey);
+
 				// Add parameters
-				final List<NameValuePair> data = new ArrayList<>(2);
-				data.add(new BasicNameValuePair("aid", AID));
-				data.add(new BasicNameValuePair("bid", BID));
-				post.setEntity(new UrlEncodedFormEntity(data));
+				urlConnection.addRequestProperty("block", BID);
+				urlConnection.addRequestProperty("activity", AID);
 
 				// Send request
-				client.execute(post);
-
+				urlConnection.connect();
+				urlConnection.getInputStream();
+				urlConnection.disconnect();
 				return true;
-			} catch (URISyntaxException e) {
-				Log.e(TAG, "URL -> URI error");
 			} catch (IOException e) {
 				Log.e(TAG, "Connection error.", e);
 			}
@@ -361,24 +344,31 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		protected void onPostExecute(Boolean result) {
 			super.onPostExecute(result);
 			mTasks.remove(this);
-			if(result) {
-				postSubmit(Response.SUCCESS);
+			if (result) {
+				showSnackbar(Response.SUCCESS);
 			} else {
-				postSubmit(Response.FAIL);
+				showSnackbar(Response.FAIL);
 			}
 		}
 	}
 
 	// Ping the server, discard response and do nothing afterwards
-	private class ServerRequest extends AsyncTask<String, Void, Boolean> {
+	private class ServerRequest extends AsyncTask<Void, Void, Boolean> {
 		private static final String TAG = "Server Ping";
+		private static final String URL = "https://iodine.tjhsst.edu/";
+		private final String domain;
+
+		public ServerRequest(String domain) {
+			this.domain = domain;
+		}
 
 		@Override
-		protected Boolean doInBackground(String... urls) {
+		protected Boolean doInBackground(Void... params) {
 			final HttpsURLConnection urlConnection;
 			try {
-				urlConnection = (HttpsURLConnection) new URL(urls[0]).openConnection();
-				// TODO: add auth token
+				urlConnection = (HttpsURLConnection) new URL(URL + domain).openConnection();
+				// Add auth token
+				urlConnection.setRequestProperty("Authorization", mAuthKey);
 				// Begin connection
 				urlConnection.connect();
 				urlConnection.getInputStream();
