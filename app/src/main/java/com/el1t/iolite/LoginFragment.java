@@ -52,8 +52,12 @@ public class LoginFragment extends Fragment
 			remember.setChecked(args.getBoolean("remember", false));
 			final String name = args.getString("username", null);
 			if (username != null) {
-				username.setText(name);
-				password.requestFocus();
+				if (name == null) {
+					username.requestFocus();
+				} else {
+					username.setText(name);
+					password.requestFocus();
+				}
 			}
 		}
 
