@@ -5,10 +5,12 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.parser.DetailJsonParser;
@@ -59,6 +61,14 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
 			fake = savedInstanceState.getBoolean("fake");
 			mDetailFragment = (DetailFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
 		}
+
+		// Bind FAB click
+		findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Snackbar.make(findViewById(R.id.container), "Noticed", Snackbar.LENGTH_SHORT).show();
+			}
+		});
 
 		// Use material design toolbar
 		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
