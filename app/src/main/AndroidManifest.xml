@@ -28,6 +28,8 @@
 				<data android:scheme="https" />
 				<data android:host="iodine.tjhsst.edu" />
 				<data android:host="www.iodine.tjhsst.edu" />
+				<data android:host="ion.tjhsst.edu" />
+				<data android:host="www.ion.tjhsst.edu" />
 			</intent-filter>
 		</activity>
 		<activity
