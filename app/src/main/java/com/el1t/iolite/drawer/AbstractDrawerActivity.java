@@ -2,61 +2,44 @@ package com.el1t.iolite.drawer;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.el1t.iolite.R;
 
 /**
  * Created by El1t on 11/17/14.
  */
-public abstract class AbstractDrawerActivity extends ActionBarActivity {
-
+public abstract class AbstractDrawerActivity extends AppCompatActivity implements
+		NavigationView.OnNavigationItemSelectedListener
+{
 	private DrawerLayout mDrawerLayout;
+	private NavigationView mNavigationView;
 	private ActionBarDrawerToggle mDrawerToggle;
-	private RelativeLayout mDrawerContainer;
-	private ListView mDrawerList;
-	private NavDrawerAdapter mDrawerAdapter;
-	private NavDrawerActivityConfig navConf;
-	private int lastItemChecked;
 
-	public abstract NavDrawerActivityConfig getNavDrawerConfiguration();
-
-	public abstract void onNavItemSelected(int id);
+	public boolean onNavigationItemSelected(MenuItem item) {
+		if (item.isCheckable()) {
+			item.setChecked(true);
+		}
+		mDrawerLayout.closeDrawer(GravityCompat.START);
+		return true;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		navConf = getNavDrawerConfiguration();
-		setContentView(navConf.getMainLayout());
+		setContentView(R.layout.activity_home);
 
-		if (savedInstanceState == null) {
-			lastItemChecked = navConf.getCheckedPosition();
-		} else {
-			lastItemChecked = savedInstanceState.getInt("lastItemChecked");
-		}
-
-		mDrawerLayout = (DrawerLayout) findViewById(navConf.getDrawerLayoutId());
-		mDrawerContainer = (RelativeLayout) findViewById(navConf.getDrawerContainerId());
-		mDrawerList = (ListView) findViewById(navConf.getLeftDrawerId());
-
-		mDrawerAdapter = navConf.getAdapter();
-		mDrawerAdapter.check(lastItemChecked);
-		mDrawerList.setAdapter(mDrawerAdapter);
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-		this.initDrawerShadow();
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mNavigationView = (NavigationView) mDrawerLayout.findViewById(R.id.navigation);
+		mNavigationView.setNavigationItemSelectedListener(this);
 
 		// Use material design toolbar
 		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -67,8 +50,8 @@ public abstract class AbstractDrawerActivity extends ActionBarActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, navConf.getDrawerOpenDesc(),
-												  navConf.getDrawerCloseDesc()) {
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.action_drawer_close,
+												  R.string.action_drawer_close) {
 			public void onDrawerClosed(View view) {
 				invalidateOptionsMenu();
 			}
@@ -78,19 +61,6 @@ public abstract class AbstractDrawerActivity extends ActionBarActivity {
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-		// Do this last for it to show
-		if (lastItemChecked != -1) {
-			mDrawerList.setItemChecked(lastItemChecked, true);
-		}
-	}
-
-	protected void initDrawerShadow() {
-		mDrawerLayout.setDrawerShadow(navConf.getDrawerShadow(), GravityCompat.START);
-	}
-
-	protected int getDrawerIcon() {
-		return R.drawable.ic_launcher;
 	}
 
 	@Override
@@ -106,17 +76,6 @@ public abstract class AbstractDrawerActivity extends ActionBarActivity {
 	}
 
 	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		if (navConf.getActionMenuItemsToHideWhenDrawerOpen() != null) {
-			final boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerContainer);
-			for(int iItem : navConf.getActionMenuItemsToHideWhenDrawerOpen()) {
-				menu.findItem(iItem).setVisible(!drawerOpen);
-			}
-		}
-		return super.onPrepareOptionsMenu(menu);
-	}
-
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return mDrawerToggle.onOptionsItemSelected(item);
 	}
@@ -124,57 +83,23 @@ public abstract class AbstractDrawerActivity extends ActionBarActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_MENU) {
-			if (mDrawerLayout.isDrawerOpen(mDrawerContainer)) {
-				mDrawerLayout.closeDrawer(mDrawerContainer);
+			if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+				mDrawerLayout.closeDrawer(GravityCompat.START);
 			}
 			else {
-				mDrawerLayout.openDrawer(mDrawerContainer);
+				mDrawerLayout.openDrawer(GravityCompat.START);
 			}
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
 
-	protected DrawerLayout getDrawerLayout() {
-		return mDrawerLayout;
-	}
-
-	protected ActionBarDrawerToggle getDrawerToggle() {
-		return mDrawerToggle;
-	}
-
-	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			final NavDrawerItem selectedItem = mDrawerAdapter.getItem(position);
-			onNavItemSelected(selectedItem.getListId());
-			if (selectedItem.isCheckable()) {
-				mDrawerAdapter.check(position);
-				// Checking is automatically done
-				lastItemChecked = position;
-			} else if (lastItemChecked != -1) {
-				// Check other position instead
-				mDrawerList.setItemChecked(lastItemChecked, true);
-			}
-
-			if (mDrawerLayout.isDrawerOpen(mDrawerContainer)) {
-				mDrawerLayout.closeDrawer(mDrawerContainer);
-			}
-		}
-	}
-
 	@Override
 	public void onBackPressed() {
-		if(mDrawerLayout.isDrawerOpen(Gravity.START| Gravity.LEFT)){
-			mDrawerLayout.closeDrawers();
+		if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+			mDrawerLayout.closeDrawer(GravityCompat.START);
 			return;
 		}
 		super.onBackPressed();
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt("lastItemChecked", this.lastItemChecked);
 	}
 }

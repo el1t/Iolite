@@ -42,7 +42,7 @@ public class BlockFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_list_refresh,
+		View rootView = inflater.inflate(R.layout.fragment_block,
 				container, false);
 
 		// Check if list was provided from login activity to setup custom ListAdapter

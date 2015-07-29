@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.el1t.iolite.drawer.AbstractDrawerActivity;
-import com.el1t.iolite.drawer.NavDrawerActivityConfig;
-import com.el1t.iolite.drawer.NavDrawerAdapter;
-import com.el1t.iolite.drawer.NavMenuBuilder;
-import com.el1t.iolite.drawer.NavMenuItem;
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.item.EighthBlock;
 import com.el1t.iolite.item.Schedule;
@@ -20,17 +18,7 @@ import com.el1t.iolite.parser.EighthActivityJsonParser;
 import com.el1t.iolite.parser.EighthBlockJsonParser;
 import com.el1t.iolite.parser.ScheduleJsonParser;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.client.params.CookiePolicy;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -38,7 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -47,7 +34,7 @@ import javax.net.ssl.HttpsURLConnection;
  */
 
 public class HomeActivity extends AbstractDrawerActivity implements BlockFragment.OnFragmentInteractionListener,
-		ScheduleFragment.OnFragmentInteractionListener
+		ScheduleFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener
 {
 	private static final String TAG = "Block Activity";
 	public static final int INITIAL_DAYS_TO_LOAD = 14;
@@ -137,48 +124,26 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	}
 
 	@Override
-	public NavDrawerActivityConfig getNavDrawerConfiguration() {
-		final NavDrawerAdapter adapter = new NavDrawerAdapter(this, R.layout.nav_item);
-		adapter.setItems(new NavMenuBuilder()
-				.addItem(NavMenuItem.create(101, "Eighth", R.drawable.ic_event_available_black_24dp))
-				.addItem(NavMenuItem.create(102, "Schedule", R.drawable.ic_today_black_24dp))
-				.addSeparator()
-//				.addItem(NavMenuItem.createButton(201, "Settings", R.drawable.ic_settings_black_24dp))
-				.addItem(NavMenuItem.createButton(202, "About", R.drawable.ic_help_black_24dp))
-				.addItem(NavMenuItem.createButton(203, "Logout", R.drawable.ic_exit_to_app_black_24dp))
-				.build());
-
-		return new NavDrawerActivityConfig.Builder()
-				.mainLayout(R.layout.drawer_layout)
-				.drawerLayoutId(R.id.drawer_layout)
-				.drawerContainerId(R.id.drawer_container)
-				.leftDrawerId(R.id.drawer)
-				.checkedPosition(0)
-				.drawerShadow(R.drawable.drawer_shadow)
-				.drawerOpenDesc(R.string.action_drawer_open)
-				.drawerCloseDesc(R.string.action_drawer_close)
-				.adapter(adapter)
-				.build();
-	}
-
-	@Override
-	public void onNavItemSelected(int id) {
-		switch (id) {
-			case 101:
+	public boolean onNavigationItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.nav_eighth:
 				switchView(Section.BLOCK);
 				break;
-			case 102:
+			case R.id.nav_schedule:
 				switchView(Section.SCHEDULE);
 				break;
 //			case 201:
 //				break;
-			case 202:
+			case R.id.nav_about:
 				startActivity(new Intent(this, AboutActivity.class));
 				break;
-			case 203:
+			case R.id.nav_logout:
 				logout();
 				break;
+			default:
+				return false;
 		}
+		return super.onNavigationItemSelected(item);
 	}
 
 	// Switch and refresh view if a new view is selected
@@ -235,8 +200,10 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 				case BLOCK:
 					// Reload offline list
 					postBlockRequest(getBlockList());
+					setTitle("Blocks");
 					break;
 				case SCHEDULE:
+					setTitle("Schedule");
 					break;
 			}
 		} else if (activeView == Section.SCHEDULE) {

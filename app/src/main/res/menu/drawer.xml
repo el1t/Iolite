@@ -1,0 +1,27 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".HomeActivity">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_eighth"
+            android:icon="@drawable/ic_event_available_black_24dp"
+            android:title="@string/nav_blocks"
+	        android:checked="true"/>
+        <item
+            android:id="@+id/nav_schedule"
+            android:icon="@drawable/ic_today_black_24dp"
+            android:title="@string/nav_schedule"/>
+    </group>
+	<group android:checkableBehavior="none">
+		<item
+			android:id="@+id/nav_about"
+			android:icon="@drawable/ic_help_black_24dp"
+			android:title="@string/nav_about"/>
+		<item
+			android:id="@+id/nav_logout"
+			android:icon="@drawable/ic_exit_to_app_black_24dp"
+			android:title="@string/nav_logout"/>
+	</group>
+</menu>
