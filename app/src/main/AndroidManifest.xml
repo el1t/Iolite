@@ -14,7 +14,8 @@
 		android:launchMode="singleTop">
 		<activity
 			android:name="com.el1t.iolite.LoginActivity"
-			android:configChanges="orientation|screenSize">
+			android:configChanges="orientation|screenSize"
+			android:windowSoftInputMode="adjustPan">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
@@ -34,14 +35,15 @@
 			android:label="@string/view_home"
 			android:parentActivityName="com.el1t.iolite.LoginActivity"
 			android:launchMode="singleTop"
-			android:configChanges="orientation|screenSize">
-		</activity>
+			android:configChanges="orientation|screenSize"
+			android:windowSoftInputMode="adjustNothing" />
 		<activity
 			android:name="com.el1t.iolite.SignupActivity"
 			android:label="@string/view_activity"
 			android:parentActivityName=".HomeActivity"
 			android:launchMode="singleTop"
-			android:configChanges="orientation|screenSize">
+			android:configChanges="orientation|screenSize"
+			android:windowSoftInputMode="adjustNothing">
 			<meta-data
 				android:name="android.app.searchable"
 				android:resource="@xml/searchable"/>
@@ -50,8 +52,7 @@
 			android:name="com.el1t.iolite.DetailActivity"
 			android:label="@string/view_activity"
 			android:launchMode="singleTop"
-			android:configChanges="orientation|screenSize">
-		</activity>
+			android:configChanges="orientation|screenSize" />
 		<activity
 			android:name="com.el1t.iolite.AboutActivity"
 			android:label="@string/view_about"

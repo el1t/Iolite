@@ -135,6 +135,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 			preferences.putBoolean("remember", mLoginFragment.isChecked());
 			preferences.apply();
 		}
+		hideKeyboard();
 		final Intent intent = new Intent(this, HomeActivity.class);
 		intent.putExtra("fake", fake);
 		intent.putExtra("user", user);
@@ -149,6 +150,14 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		login_password = null;
 		mAuthKey = null;
 		Snackbar.make(findViewById(R.id.container), "Logged out", Snackbar.LENGTH_SHORT).show();
+	}
+
+	private void hideKeyboard() {
+		final InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+		final View view = getCurrentFocus();
+		if (view != null && imm.isAcceptingText()) {
+			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+		}
 	}
 
 	// Get a test info for debugging
@@ -209,12 +218,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 					Log.e(TAG, "Cannot read response code", err);
 				}
 			} catch (IOException e) {
-				// Hide soft keyboard
-				final InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-				final View view = getCurrentFocus();
-				if (view != null && imm.isAcceptingText()) {
-					imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-				}
+				hideKeyboard();
 				if (isCancelled()) {
 					Snackbar.make(findViewById(R.id.container), "Cancelled", Snackbar.LENGTH_SHORT)
 							.setAction("Retry", new View.OnClickListener() {
@@ -302,12 +306,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 				mConnection.disconnect();
 				return response;
 			} catch(IOException e) {
-				// Hide soft keyboard
-				final InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-				final View view = getCurrentFocus();
-				if (view != null && imm.isAcceptingText()) {
-					imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-				}
+				hideKeyboard();
 				if (isCancelled()) {
 					Snackbar.make(findViewById(R.id.container), "Cancelled", Snackbar.LENGTH_SHORT)
 							.setAction("Retry", new View.OnClickListener() {
