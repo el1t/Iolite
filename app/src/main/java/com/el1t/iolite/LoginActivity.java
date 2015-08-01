@@ -173,7 +173,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 	// Login request using HttpPost
 	private class LoginRequest extends AsyncTask<Void, Void, Boolean> {
 		private static final String TAG = "Login Connection";
-		private static final String URL = "https://ion.tjhsst.edu/api";
 		private HttpsURLConnection mConnection;
 
 		@Override
@@ -203,7 +202,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			try {
-				mConnection = (HttpsURLConnection) new URL(URL).openConnection();
+				mConnection = (HttpsURLConnection) new URL(Utils.API.LOGIN).openConnection();
 				mAuthKey = "Basic " + Base64.encodeToString((login_username + ":" + login_password).getBytes(), Base64.NO_WRAP);
 				mConnection.setRequestProperty("Authorization", mAuthKey);
 				mConnection.setUseCaches(false);
@@ -263,7 +262,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 	// Load student profile data
 	private class Authentication extends AsyncTask<Void, Void, User> {
 		private static final String TAG = "Authentication";
-		private static final String URL = "https://ion.tjhsst.edu/api/profile?format=json";
 		private HttpsURLConnection mConnection;
 
 		@Override
@@ -294,7 +292,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		protected User doInBackground(Void... params) {
 			final User response;
 			try {
-				mConnection = (HttpsURLConnection) new URL(URL).openConnection();
+				mConnection = (HttpsURLConnection) new URL(Utils.API.PROFILE).openConnection();
 				// Attach authentication
 				mConnection.setRequestProperty("Authorization", mAuthKey);
 				mConnection.setUseCaches(false);

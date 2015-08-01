@@ -308,7 +308,6 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 	// Web request for activity signup
 	private class SignupRequest extends AsyncTask<Void, Void, Boolean> {
 		private static final String TAG = "Signup Connection";
-		private static final String URL = "https://ion.tjhsst.edu/api/signups/user";
 		private final String AID;
 		private final String BID;
 
@@ -321,7 +320,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		protected Boolean doInBackground(Void... params) {
 			final HttpsURLConnection urlConnection;
 			try {
-				urlConnection = (HttpsURLConnection) new URL(URL).openConnection();
+				urlConnection = (HttpsURLConnection) new URL(Utils.API.SIGNUP).openConnection();
 				// Add auth token
 				urlConnection.setRequestProperty("Authorization", mAuthKey);
 

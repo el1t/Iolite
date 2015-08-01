@@ -119,7 +119,6 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
 	// Get list of blocks
 	private class DetailRequest extends AsyncTask<Void, Void, EighthActivity> {
 		private static final String TAG = "Detail Connection";
-		private static final String URL = "https://ion.tjhsst.edu/api/activities/";
 		private int AID;
 
 		public DetailRequest(int AID) {
@@ -131,7 +130,7 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
 
 			HttpsURLConnection urlConnection;
 			try {
-				urlConnection = (HttpsURLConnection) new URL(URL + AID).openConnection();
+				urlConnection = (HttpsURLConnection) new URL(Utils.API.ACTIVITIES + AID).openConnection();
 				// Add authKey to header
 				urlConnection.setRequestProperty("Authorization", mAuthKey);
 				// Begin connection

@@ -312,14 +312,13 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	// Get list of blocks
 	private class BlockListRequest extends AsyncTask<Void, Void, ArrayList<EighthBlock>> {
 		private static final String TAG = "Block List Connection";
-		private static final String URL = "https://ion.tjhsst.edu/api/blocks";
 
 		@Override
 		protected ArrayList<EighthBlock> doInBackground(Void... params) {
 			HttpsURLConnection urlConnection;
 			ArrayList<EighthBlock> response = null;
 			try {
-				urlConnection = (HttpsURLConnection) new URL(URL).openConnection();
+				urlConnection = (HttpsURLConnection) new URL(Utils.API.BLOCKS).openConnection();
 				// Add authKey to header
 				urlConnection.setRequestProperty("Authorization", mAuthKey);
 				// Begin connection
@@ -388,7 +387,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	// Web request for clearing activity
 	private class ClearRequest extends AsyncTask<Void, Void, Boolean> {
 		private static final String TAG = "Clear Connection";
-		private static final String URL = "https://ion.tjhsst.edu/api/signups/user";
 		private final String BID;
 
 		public ClearRequest(int BID) {
@@ -399,7 +397,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		protected Boolean doInBackground(Void... params) {
 			final HttpsURLConnection urlConnection;
 			try {
-				urlConnection = (HttpsURLConnection) new URL(URL).openConnection();
+				urlConnection = (HttpsURLConnection) new URL(Utils.API.SIGNUP).openConnection();
 				// Add auth token
 				urlConnection.setRequestProperty("Authorization", mAuthKey);
 
@@ -427,7 +425,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 	private class ScheduleRequest extends AsyncTask<Integer, Void, Schedule[]> {
 		private static final String TAG = "Schedule Connection";
-		private static final String API_URL = "https://iodine.tjhsst.edu/ajax/dayschedule/json_exp";
 		private final DateFormat mFormat = new SimpleDateFormat("yyyyMMdd");
 		private Date mStartDate;
 
@@ -450,7 +447,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			HttpsURLConnection urlConnection = null;
 			Schedule[] response = null;
 			try {
-				urlConnection = (HttpsURLConnection) new URL(API_URL +
+				urlConnection = (HttpsURLConnection) new URL(Utils.API.SCHEDULE +
 						"?start=" + mFormat.format(mStartDate) + "&end=" + mFormat.format(endDate))
 						.openConnection();
 				// Begin connection

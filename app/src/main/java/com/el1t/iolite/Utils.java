@@ -20,6 +20,16 @@ import java.util.Scanner;
 public class Utils {
 	public static final String TAG = "Utils";
 
+	public static class API {
+		private static final String PREFIX = "https://ion.tjhsst.edu/api";
+		public static final String LOGIN = PREFIX;
+		public static final String PROFILE = PREFIX + "/profile?format=json";
+		public static final String BLOCKS = PREFIX + "/blocks";
+		public static final String SCHEDULE = "https://iodine.tjhsst.edu/ajax/dayschedule/json_exp";
+		public static final String SIGNUP = PREFIX + "/signups/user";
+		public static final String ACTIVITIES = PREFIX + "/activities";
+	}
+
 	public static JSONObject inputStreamToJSON(InputStream inputStream) {
 		try {
 			final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
