@@ -5,8 +5,10 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.el1t.iolite.drawer.AbstractDrawerActivity;
@@ -16,6 +18,7 @@ import com.el1t.iolite.item.Schedule;
 import com.el1t.iolite.item.User;
 import com.el1t.iolite.parser.EighthActivityJsonParser;
 import com.el1t.iolite.parser.EighthBlockJsonParser;
+import com.el1t.iolite.parser.ProfileJsonParser;
 import com.el1t.iolite.parser.ScheduleJsonParser;
 
 import java.io.IOException;
@@ -58,14 +61,20 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		// Check if restoring from previously destroyed instance
 		if (savedInstanceState == null) {
 			final Intent intent = getIntent();
-			mUser = intent.getParcelableExtra("user");
 			activeView = Section.BLOCK;
 
 			// Check if fake information should be used
 			if ((fake = intent.getBooleanExtra("fake", false))) {
 				Log.d(TAG, "Loading test info");
-				// Pretend fake list was received
-				postBlockRequest(getBlockList());
+				try {
+					// Use a test profile
+					mUser = ProfileJsonParser.parse(getAssets().open("testProfile.json"));
+					updateUser();
+					// Pretend block list was received
+					postBlockRequest(EighthBlockJsonParser.parse(getAssets().open("testBlockList.json")));
+				} catch (Exception e) {
+					Log.e(TAG, "Error parsing test JSON files", e);
+				}
 			}
 		} else {
 			mUser = savedInstanceState.getParcelable("user");
@@ -81,19 +90,16 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			}
 		}
 
-		// Set header text
-		if (mUser != null) {
-			((TextView) findViewById(R.id.header_name)).setText(mUser.getShortName());
-			((TextView) findViewById(R.id.header_username)).setText(mUser.getUsername());
-		} else {
-			((TextView) findViewById(R.id.header_name)).setText("Unknown");
-			((TextView) findViewById(R.id.header_username)).setText("Unknown");
-		}
-
 		if (!fake) {
 			// Retrieve authKey from shared preferences
 			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
 			mAuthKey = Utils.getAuthKey(preferences);
+		}
+
+		if (mUser == null) {
+			new Authentication().execute();
+		} else {
+			updateUser();
 		}
 	}
 
@@ -176,17 +182,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		new ClearRequest(BID).execute();
 	}
 
-	// Get a fake list of blocks for debugging
-	private ArrayList<EighthBlock> getBlockList() {
-		try {
-			return EighthBlockJsonParser.parse(getAssets().open("testBlockList.json"));
-		} catch(Exception e) {
-			Log.e(TAG, "Error parsing block XML", e);
-		}
-		// Don't die?
-		return new ArrayList<>();
-	}
-
 	public void refresh() {
 		refresh(false);
 	}
@@ -198,8 +193,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		if (fake) {
 			switch (activeView) {
 				case BLOCK:
-					// Reload offline list
-					postBlockRequest(getBlockList());
 					setTitle("Blocks");
 					break;
 				case SCHEDULE:
@@ -250,6 +243,12 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	// Load more posts/days
 	public void load() {
 		new ScheduleRequest(mScheduleFragment.getLastDay().getTomorrow()).execute(DAYS_TO_LOAD);
+	}
+
+	public void updateUser() {
+		// Set header text
+		((TextView) findViewById(R.id.header_name)).setText(mUser.getShortName());
+		((TextView) findViewById(R.id.header_username)).setText(mUser.getUsername());
 	}
 
 	void logout() {
@@ -309,6 +308,51 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 	}
 
+	// Load student profile data
+	private class Authentication extends AsyncTask<Void, Void, User> {
+		private static final String TAG = "Authentication";
+
+		@Override
+		protected User doInBackground(Void... params) {
+			final User response;
+			final HttpsURLConnection urlConnection;
+			try {
+				urlConnection = (HttpsURLConnection) new URL(Utils.API.PROFILE).openConnection();
+				// Attach authentication
+				urlConnection.setRequestProperty("Authorization", mAuthKey);
+				urlConnection.setUseCaches(false);
+				// Begin connection
+				urlConnection.connect();
+				// Parse JSON from server
+				response = ProfileJsonParser.parse(urlConnection.getInputStream());
+				// Close connection
+				urlConnection.disconnect();
+				return response;
+			} catch (IOException e) {
+				Snackbar.make(findViewById(R.id.container), "Cannot connect to server", Snackbar.LENGTH_SHORT)
+						.setAction("Retry", new View.OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								new Authentication().execute();
+							}
+						}).show();
+			} catch (Exception e) {
+				Snackbar.make(findViewById(R.id.container), "Connection error", Snackbar.LENGTH_SHORT).show();
+				Log.e(TAG, "Connection error.", e);
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(User result) {
+			super.onPostExecute(result);
+			if (result != null) {
+				mUser = result;
+				updateUser();
+			}
+		}
+	}
+
 	// Get list of blocks
 	private class BlockListRequest extends AsyncTask<Void, Void, ArrayList<EighthBlock>> {
 		private static final String TAG = "Block List Connection";
@@ -328,9 +372,16 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 				// Close connection
 				urlConnection.disconnect();
 			} catch (IOException e) {
-				Log.e(TAG, "IO Error", e);
+				Snackbar.make(findViewById(R.id.container), "Cannot connect to server", Snackbar.LENGTH_SHORT)
+						.setAction("Retry", new View.OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								new Authentication().execute();
+							}
+						}).show();
 			} catch (Exception e) {
-				Log.e(TAG, "Connection Error", e);
+				Snackbar.make(findViewById(R.id.container), "Connection error", Snackbar.LENGTH_SHORT).show();
+				Log.e(TAG, "Connection error.", e);
 			}
 			return response;
 		}
@@ -338,9 +389,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		@Override
 		protected void onPostExecute(ArrayList<EighthBlock> result) {
 			super.onPostExecute(result);
-			if (result == null) {
-				expired();
-			} else {
+			if (result != null) {
 				postBlockRequest(result);
 			}
 		}

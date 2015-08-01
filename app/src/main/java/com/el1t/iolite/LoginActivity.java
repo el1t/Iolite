@@ -15,17 +15,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.el1t.iolite.item.User;
-import com.el1t.iolite.parser.ProfileJsonParser;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-// Login request -> Authentication (Grab info) -> Start activity
+// Login request -> Check response -> Start HomeActivity
 public class LoginActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener
 {
 	public static final String FAKE_LOGIN = "fake";
@@ -34,8 +30,8 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
 	private LoginFragment mLoginFragment;
 	private ProgressDialog mProgressDialog;
-	private String login_username;
-	private String login_password;
+	private String mUsername;
+	private String mPassword;
 	private String mAuthKey;
 
 	@Override
@@ -45,13 +41,13 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
 		final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		final boolean remember = preferences.getBoolean("remember", false);
-		final String username = preferences.getString("username", null);
+		mUsername = preferences.getString("username", null);
 		if (savedInstanceState == null) {
 			// Restore saved username
 			mLoginFragment = new LoginFragment();
 			final Bundle args = new Bundle();
 			args.putBoolean("remember", remember);
-			args.putString("username", username);
+			args.putString("username", mUsername);
 			mLoginFragment.setArguments(args);
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, mLoginFragment)
@@ -66,8 +62,9 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 				// Send logout request
 				logout();
 			} else {
-				// Check authentication
-				new Authentication().execute();
+				if (remember) {
+					startHome();
+				}
 			}
 		} else {
 			// Show keyboard
@@ -87,58 +84,53 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		getFragmentManager().putFragment(savedInstanceState, "loginFragment", mLoginFragment);
 	}
 
-	private void checkAuthentication() {
-		new Authentication().execute();
-	}
-
 	// Submit the login request
 	public void submit(String username, String pass) {
 		if (username == null || pass == null) {
-			Log.d(TAG, "Null Username or Password");
+			Log.d(TAG, "Null username or password");
 			return;
 		}
-		login_username = username.trim();
-		login_password = pass;
+		mUsername = username;
+		mPassword = pass;
 		// Check that the fragment is instantiated, since submit can be called before that
 		if (mLoginFragment.isCreated() && !mLoginFragment.isChecked()) {
 			getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
 					.remove("remember")
 					.apply();
 		}
-		if (login_username.toLowerCase().equals(FAKE_LOGIN)) {
-			postRequest(getList(), true);
-		} else if (login_username.isEmpty()) {
-			if (login_password.isEmpty()) {
+		if (mUsername.toLowerCase().equals(FAKE_LOGIN)) {
+			postRequest();
+		} else if (mUsername.isEmpty()) {
+			if (mPassword.isEmpty()) {
 				mLoginFragment.showError(LoginFragment.ErrorType.EMPTY_BOTH);
 			} else {
 				mLoginFragment.showError(LoginFragment.ErrorType.EMPTY_USERNAME);
 			}
-		} else if (login_password.isEmpty()) {
+		} else if (mPassword.isEmpty()) {
 			mLoginFragment.showError(LoginFragment.ErrorType.EMPTY_PASSWORD);
 		} else {
 			new LoginRequest().execute();
 		}
 	}
 
-	// Do after authentication request
-	void postRequest(User user, boolean fake) {
-		if (fake) {
-			Log.d(TAG, "Loading test data");
-		} else {
-			final SharedPreferences.Editor preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
-			if (login_username != null) {
-				preferences.putString("username", login_username);
-			}
-			if (login_password != null) {
-				preferences.putString("password", login_password);
-			}
-			preferences.putBoolean("remember", mLoginFragment.isChecked());
-			preferences.apply();
+	// Do after login request
+	void postRequest() {
+		final SharedPreferences.Editor preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
+		if (mUsername != null) {
+			preferences.putString("username", mUsername);
 		}
+		if (mPassword != null) {
+			preferences.putString("password", mPassword);
+		}
+		preferences.putBoolean("remember", mLoginFragment.isChecked());
+		preferences.apply();
+		startHome();
+	}
+
+	private void startHome() {
 		hideKeyboard();
 		final Intent intent = new Intent(this, HomeActivity.class);
-		intent.putExtra("fake", fake);
-		intent.putExtra("user", user);
+		intent.putExtra("fake", mUsername.toLowerCase().equals(FAKE_LOGIN));
 		startActivity(intent);
 		finish();
 	}
@@ -147,7 +139,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
 				.remove("password")
 				.apply();
-		login_password = null;
+		mPassword = null;
 		mAuthKey = null;
 		Snackbar.make(findViewById(R.id.container), "Logged out", Snackbar.LENGTH_SHORT).show();
 	}
@@ -158,16 +150,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		if (view != null && imm.isAcceptingText()) {
 			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 		}
-	}
-
-	// Get a test info for debugging
-	private User getList() {
-		try {
-			return ProfileJsonParser.parse(getAssets().open("testProfile.json"));
-		} catch(Exception e) {
-			Log.e(TAG, "Error Parsing Block XML", e);
-		}
-		return null;
 	}
 
 	// Login request using HttpPost
@@ -203,7 +185,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		protected Boolean doInBackground(Void... params) {
 			try {
 				mConnection = (HttpsURLConnection) new URL(Utils.API.LOGIN).openConnection();
-				mAuthKey = "Basic " + Base64.encodeToString((login_username + ":" + login_password).getBytes(), Base64.NO_WRAP);
+				mAuthKey = "Basic " + Base64.encodeToString((mUsername + ":" + mPassword).getBytes(), Base64.NO_WRAP);
 				mConnection.setRequestProperty("Authorization", mAuthKey);
 				mConnection.setUseCaches(false);
 				mConnection.connect();
@@ -223,7 +205,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 							.setAction("Retry", new View.OnClickListener() {
 								@Override
 								public void onClick(View v) {
-									submit(login_username, login_password);
+									submit(mUsername, mPassword);
 								}
 							}).show();
 				} else {
@@ -231,7 +213,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 							.setAction("Retry", new View.OnClickListener() {
 								@Override
 								public void onClick(View v) {
-									submit(login_username, login_password);
+									submit(mUsername, mPassword);
 								}
 							}).show();
 				}
@@ -249,93 +231,13 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 			super.onPostExecute(result);
 			mProgressDialog.dismiss();
 			if (result) {
-				checkAuthentication();
+				postRequest();
 			}
 		}
 
 		@Override
 		protected void onCancelled() {
 			Log.d(TAG, "Login cancelled");
-		}
-	}
-
-	// Load student profile data
-	private class Authentication extends AsyncTask<Void, Void, User> {
-		private static final String TAG = "Authentication";
-		private HttpsURLConnection mConnection;
-
-		@Override
-		protected void onPreExecute() {
-			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-				mProgressDialog = new ProgressDialog(LoginActivity.this);
-				mProgressDialog.setMessage("Authenticating");
-				mProgressDialog.setCancelable(true);
-				mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						Log.d(TAG, "Connection Aborted!");
-						// Abort connection on background thread
-						new Thread(new Runnable() {
-							@Override
-							public void run() {
-								mConnection.disconnect();
-							}
-						}).start();
-						cancel(true);
-					}
-				});
-				mProgressDialog.show();
-			}
-		}
-
-		@Override
-		protected User doInBackground(Void... params) {
-			final User response;
-			try {
-				mConnection = (HttpsURLConnection) new URL(Utils.API.PROFILE).openConnection();
-				// Attach authentication
-				mConnection.setRequestProperty("Authorization", mAuthKey);
-				mConnection.setUseCaches(false);
-				// Begin connection
-				mConnection.connect();
-				// Parse JSON from server
-				response = ProfileJsonParser.parse(mConnection.getInputStream());
-				// Close connection
-				mConnection.disconnect();
-				return response;
-			} catch(IOException e) {
-				hideKeyboard();
-				if (isCancelled()) {
-					Snackbar.make(findViewById(R.id.container), "Cancelled", Snackbar.LENGTH_SHORT)
-							.setAction("Retry", new View.OnClickListener() {
-								@Override
-								public void onClick(View v) {
-									checkAuthentication();
-								}
-							}).show();
-				} else {
-					Snackbar.make(findViewById(R.id.container), "Cannot connect to server", Snackbar.LENGTH_SHORT)
-							.setAction("Retry", new View.OnClickListener() {
-								@Override
-								public void onClick(View v) {
-									checkAuthentication();
-								}
-							}).show();
-				}
-			} catch (Exception e) {
-				Snackbar.make(findViewById(R.id.container), "Connection error", Snackbar.LENGTH_SHORT).show();
-				Log.e(TAG, "Connection error.", e);
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(User result) {
-			super.onPostExecute(result);
-			mProgressDialog.dismiss();
-			if (result != null) {
-				postRequest(result, false);
-			}
 		}
 	}
 }
