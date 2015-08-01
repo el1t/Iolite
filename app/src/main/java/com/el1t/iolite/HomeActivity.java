@@ -132,7 +132,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			case R.id.nav_schedule:
 				switchView(Section.SCHEDULE);
 				break;
-//			case 201:
+//			case R.id.nav_settings:
 //				break;
 			case R.id.nav_about:
 				startActivity(new Intent(this, AboutActivity.class));
