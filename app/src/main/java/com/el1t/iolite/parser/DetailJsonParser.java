@@ -1,6 +1,6 @@
 package com.el1t.iolite.parser;
 
-import com.el1t.iolite.Utils;
+import com.el1t.iolite.utils.Utils;
 import com.el1t.iolite.item.EighthActivity;
 
 import org.json.JSONException;

@@ -17,6 +17,7 @@ import android.view.View;
 
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.parser.EighthActivityJsonParser;
+import com.el1t.iolite.utils.Utils;
 
 import org.json.JSONException;
 

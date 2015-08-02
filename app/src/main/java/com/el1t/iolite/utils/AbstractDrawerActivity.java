@@ -1,4 +1,4 @@
-package com.el1t.iolite.drawer;
+package com.el1t.iolite.utils;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

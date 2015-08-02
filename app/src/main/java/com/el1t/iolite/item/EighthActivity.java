@@ -3,7 +3,7 @@ package com.el1t.iolite.item;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.el1t.iolite.Utils;
+import com.el1t.iolite.utils.Utils;
 import com.el1t.iolite.adapter.SignupListAdapter;
 
 /**

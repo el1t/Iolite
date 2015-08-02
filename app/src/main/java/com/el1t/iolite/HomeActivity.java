@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.el1t.iolite.drawer.AbstractDrawerActivity;
+import com.el1t.iolite.utils.AbstractDrawerActivity;
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.item.EighthBlock;
 import com.el1t.iolite.item.Schedule;
@@ -20,6 +20,7 @@ import com.el1t.iolite.parser.EighthActivityJsonParser;
 import com.el1t.iolite.parser.EighthBlockJsonParser;
 import com.el1t.iolite.parser.ProfileJsonParser;
 import com.el1t.iolite.parser.ScheduleJsonParser;
+import com.el1t.iolite.utils.Utils;
 
 import java.io.IOException;
 import java.net.URL;

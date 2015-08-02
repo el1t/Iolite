@@ -1,4 +1,4 @@
-package com.el1t.iolite;
+package com.el1t.iolite.utils;
 
 import android.content.SharedPreferences;
 import android.util.Base64;
