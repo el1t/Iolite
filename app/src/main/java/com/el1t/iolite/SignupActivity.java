@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,13 +16,11 @@ import android.view.View;
 
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.parser.EighthActivityJsonParser;
+import com.el1t.iolite.utils.AbstractRequestActivity;
 import com.el1t.iolite.utils.Utils;
-
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -31,7 +28,7 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Created by El1t on 10/21/14.
  */
-public class SignupActivity extends AppCompatActivity implements SignupFragment.OnFragmentInteractionListener
+public class SignupActivity extends AbstractRequestActivity implements SignupFragment.OnFragmentInteractionListener
 {
 	private static final String TAG = "Signup Activity";
 
@@ -265,10 +262,17 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		return null;
 	}
 
+	protected String getAuthKey() {
+		return mAuthKey;
+	}
+
+	protected View getContainer() {
+		return findViewById(R.id.container);
+	}
+
 	// Retrieve activity list for BID from server
-	private class ActivityListRequest extends AsyncTask<Void, Void, EighthActivity[]> {
+	private class ActivityListRequest extends IonRequest<EighthActivity[]> {
 		private static final String TAG = "ActivityListRequest";
-		private static final String URL = "https://ion.tjhsst.edu/api/blocks/";
 		private int BID;
 
 		public ActivityListRequest(int BID) {
@@ -276,25 +280,15 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		}
 
 		@Override
-		protected EighthActivity[] doInBackground(Void... params) {
-			final HttpsURLConnection urlConnection;
-			EighthActivity[] response = null;
-			try {
-				urlConnection = (HttpsURLConnection) new URL(URL + BID).openConnection();
-				// Add authKey to header
-				urlConnection.setRequestProperty("Authorization", mAuthKey);
-				// Begin connection
-				urlConnection.connect();
-				// Parse xml from server
-				response = EighthActivityJsonParser.parseAll(urlConnection.getInputStream());
-				// Close connection
-				urlConnection.disconnect();
-			} catch (JSONException | ParseException e) {
-				Log.e(TAG, "Parsing error.", e);
-			} catch (IOException e) {
-				Log.e(TAG, "Connection error.", e);
-			}
-			return response;
+		protected String getURL() {
+			return Utils.API.BLOCKS + BID;
+		}
+
+		@Override
+		protected EighthActivity[] doInBackground(HttpsURLConnection urlConnection) throws Exception {
+			urlConnection.connect();
+			// Parse JSON from server
+			return EighthActivityJsonParser.parseAll(urlConnection.getInputStream());
 		}
 
 		@Override
@@ -307,8 +301,8 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 	}
 
 	// Web request for activity signup
-	private class SignupRequest extends AsyncTask<Void, Void, Boolean> {
-		private static final String TAG = "Signup Connection";
+	private class SignupRequest extends IonRequest<Boolean> {
+		private static final String TAG = "SignupRequest";
 		private final String AID;
 		private final String BID;
 
@@ -318,36 +312,28 @@ public class SignupActivity extends AppCompatActivity implements SignupFragment.
 		}
 
 		@Override
-		protected Boolean doInBackground(Void... params) {
-			final HttpsURLConnection urlConnection;
-			try {
-				urlConnection = (HttpsURLConnection) new URL(Utils.API.SIGNUP).openConnection();
-				// Add auth token
-				urlConnection.setRequestProperty("Authorization", mAuthKey);
+		protected String getURL() {
+			return Utils.API.SIGNUP;
+		}
 
-				// Add parameters
-				urlConnection.addRequestProperty("block", BID);
-				urlConnection.addRequestProperty("activity", AID);
+		@Override
+		protected Boolean doInBackground(HttpsURLConnection urlConnection) throws Exception {
+			// Add parameters
+			urlConnection.addRequestProperty("block", BID);
+			urlConnection.addRequestProperty("activity", AID);
 
-				// Send request
-				urlConnection.connect();
-				urlConnection.getInputStream();
-				urlConnection.disconnect();
-				return true;
-			} catch (IOException e) {
-				Log.e(TAG, "Connection error.", e);
-			}
-			return false;
+			// Send request
+			urlConnection.connect();
+			urlConnection.getInputStream();
+			return true;
 		}
 
 		@Override
 		protected void onPostExecute(Boolean result) {
 			super.onPostExecute(result);
 			mTasks.remove(this);
-			if (result) {
+			if (result != null) {
 				showSnackbar(Response.SUCCESS);
-			} else {
-				showSnackbar(Response.FAIL);
 			}
 		}
 	}

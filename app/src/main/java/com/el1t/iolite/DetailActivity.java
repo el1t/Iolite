@@ -2,11 +2,9 @@ package com.el1t.iolite;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -14,11 +12,12 @@ import android.view.View;
 
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.parser.DetailJsonParser;
+import com.el1t.iolite.utils.AbstractRequestActivity;
+import com.el1t.iolite.utils.Utils;
 
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.net.URL;
 import java.text.ParseException;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -26,7 +25,7 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Created by El1t on 7/22/15.
  */
-public class DetailActivity extends AppCompatActivity implements DetailFragment.OnFragmentInteractionListener
+public class DetailActivity extends AbstractRequestActivity implements DetailFragment.OnFragmentInteractionListener
 {
 	private final static String TAG = "Detail Activity";
 	private DetailFragment mDetailFragment;
@@ -116,9 +115,17 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
 		return true;
 	}
 
-	// Get list of blocks
-	private class DetailRequest extends AsyncTask<Void, Void, EighthActivity> {
-		private static final String TAG = "Detail Connection";
+	@Override
+	protected View getContainer() {
+		return findViewById(R.id.container);
+	}
+
+	@Override
+	protected String getAuthKey() {
+		return mAuthKey;
+	}
+
+	private class DetailRequest extends IonRequest<EighthActivity> {
 		private int AID;
 
 		public DetailRequest(int AID) {
@@ -126,27 +133,14 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
 		}
 
 		@Override
-		protected EighthActivity doInBackground(Void... params) {
+		protected String getURL() {
+			return Utils.API.ACTIVITIES + AID;
+		}
 
-			HttpsURLConnection urlConnection;
-			try {
-				urlConnection = (HttpsURLConnection) new URL(Utils.API.ACTIVITIES + AID).openConnection();
-				// Add authKey to header
-				urlConnection.setRequestProperty("Authorization", mAuthKey);
-				// Begin connection
-				urlConnection.connect();
-				// Parse JSON from server
-				final EighthActivity details = DetailJsonParser.parse(urlConnection.getInputStream(),
-						mDetailFragment.getEighth());
-				// Close connection
-				urlConnection.disconnect();
-				return details;
-			} catch (IOException e) {
-				Log.e(TAG, "IO Error", e);
-			} catch (Exception e) {
-				Log.e(TAG, "Connection Error", e);
-			}
-			return null;
+		@Override
+		protected EighthActivity doInBackground(HttpsURLConnection urlConnection) throws Exception {
+			urlConnection.connect();
+			return DetailJsonParser.parse(urlConnection.getInputStream(), mDetailFragment.getEighth());
 		}
 
 		@Override

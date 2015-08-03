@@ -17,20 +17,12 @@ import com.el1t.iolite.R;
 /**
  * Created by El1t on 11/17/14.
  */
-public abstract class AbstractDrawerActivity extends AppCompatActivity implements
+public abstract class AbstractDrawerActivity extends AbstractRequestActivity implements
 		NavigationView.OnNavigationItemSelectedListener
 {
 	private DrawerLayout mDrawerLayout;
 	private NavigationView mNavigationView;
 	private ActionBarDrawerToggle mDrawerToggle;
-
-	public boolean onNavigationItemSelected(MenuItem item) {
-		if (item.isCheckable()) {
-			item.setChecked(true);
-		}
-		mDrawerLayout.closeDrawer(GravityCompat.START);
-		return true;
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +70,15 @@ public abstract class AbstractDrawerActivity extends AppCompatActivity implement
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return mDrawerToggle.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public boolean onNavigationItemSelected(MenuItem item) {
+		if (item.isCheckable()) {
+			item.setChecked(true);
+		}
+		mDrawerLayout.closeDrawer(GravityCompat.START);
+		return true;
 	}
 
 	@Override

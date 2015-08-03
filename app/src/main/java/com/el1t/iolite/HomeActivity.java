@@ -2,28 +2,23 @@ package com.el1t.iolite;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.el1t.iolite.utils.AbstractDrawerActivity;
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.item.EighthBlock;
 import com.el1t.iolite.item.Schedule;
 import com.el1t.iolite.item.User;
-import com.el1t.iolite.parser.EighthActivityJsonParser;
 import com.el1t.iolite.parser.EighthBlockJsonParser;
 import com.el1t.iolite.parser.ProfileJsonParser;
 import com.el1t.iolite.parser.ScheduleJsonParser;
+import com.el1t.iolite.utils.AbstractDrawerActivity;
 import com.el1t.iolite.utils.Utils;
 
-import java.io.IOException;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -153,6 +148,16 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		return super.onNavigationItemSelected(item);
 	}
 
+	@Override
+	protected String getAuthKey() {
+		return mAuthKey;
+	}
+
+	@Override
+	protected View getContainer() {
+		return findViewById(R.id.container);
+	}
+
 	// Switch and refresh view if a new view is selected
 	private void switchView(Section newView) {
 		if (activeView != newView) {
@@ -216,7 +221,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			}
 
 			// Retrieve schedule
-			new ScheduleRequest(Calendar.getInstance().getTime()).execute(INITIAL_DAYS_TO_LOAD);
+			new ScheduleRequest(Calendar.getInstance().getTime(), INITIAL_DAYS_TO_LOAD).execute();
 		} else if (mAuthKey == null) {
 			expired();
 		} else switch (activeView) {
@@ -243,7 +248,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 	// Load more posts/days
 	public void load() {
-		new ScheduleRequest(mScheduleFragment.getLastDay().getTomorrow()).execute(DAYS_TO_LOAD);
+		new ScheduleRequest(mScheduleFragment.getLastDay().getTomorrow(), DAYS_TO_LOAD).execute();
 	}
 
 	public void updateUser() {
@@ -276,7 +281,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			// Create the content view
 			mBlockFragment = new BlockFragment();
 			// Add ArrayList to the ListView in BlockFragment
-			Bundle args = new Bundle();
+			final Bundle args = new Bundle();
 			args.putParcelableArrayList("list", result);
 			mBlockFragment.setArguments(args);
 			// Switch to BlockFragment view, remove LoadingFragment
@@ -310,38 +315,20 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	}
 
 	// Load student profile data
-	private class Authentication extends AsyncTask<Void, Void, User> {
+	private class Authentication extends IonRequest<User> {
 		private static final String TAG = "Authentication";
 
 		@Override
-		protected User doInBackground(Void... params) {
-			final User response;
-			final HttpsURLConnection urlConnection;
-			try {
-				urlConnection = (HttpsURLConnection) new URL(Utils.API.PROFILE).openConnection();
-				// Attach authentication
-				urlConnection.setRequestProperty("Authorization", mAuthKey);
-				urlConnection.setUseCaches(false);
-				// Begin connection
-				urlConnection.connect();
-				// Parse JSON from server
-				response = ProfileJsonParser.parse(urlConnection.getInputStream());
-				// Close connection
-				urlConnection.disconnect();
-				return response;
-			} catch (IOException e) {
-				Snackbar.make(findViewById(R.id.container), "Cannot connect to server", Snackbar.LENGTH_SHORT)
-						.setAction("Retry", new View.OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								new Authentication().execute();
-							}
-						}).show();
-			} catch (Exception e) {
-				Snackbar.make(findViewById(R.id.container), "Connection error", Snackbar.LENGTH_SHORT).show();
-				Log.e(TAG, "Connection error.", e);
-			}
-			return null;
+		protected String getURL() {
+			return Utils.API.PROFILE;
+		}
+
+		@Override
+		protected User doInBackground(HttpsURLConnection urlConnection) throws Exception {
+			// Begin connection
+			urlConnection.connect();
+			// Parse JSON from server
+			return ProfileJsonParser.parse(urlConnection.getInputStream());
 		}
 
 		@Override
@@ -355,36 +342,19 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	}
 
 	// Get list of blocks
-	private class BlockListRequest extends AsyncTask<Void, Void, ArrayList<EighthBlock>> {
+	private class BlockListRequest extends IonRequest<ArrayList<EighthBlock>> {
 		private static final String TAG = "Block List Connection";
 
 		@Override
-		protected ArrayList<EighthBlock> doInBackground(Void... params) {
-			HttpsURLConnection urlConnection;
-			ArrayList<EighthBlock> response = null;
-			try {
-				urlConnection = (HttpsURLConnection) new URL(Utils.API.BLOCKS).openConnection();
-				// Add authKey to header
-				urlConnection.setRequestProperty("Authorization", mAuthKey);
-				// Begin connection
-				urlConnection.connect();
-				// Parse JSON from server
-				response = EighthBlockJsonParser.parse(urlConnection.getInputStream());
-				// Close connection
-				urlConnection.disconnect();
-			} catch (IOException e) {
-				Snackbar.make(findViewById(R.id.container), "Cannot connect to server", Snackbar.LENGTH_SHORT)
-						.setAction("Retry", new View.OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								new Authentication().execute();
-							}
-						}).show();
-			} catch (Exception e) {
-				Snackbar.make(findViewById(R.id.container), "Connection error", Snackbar.LENGTH_SHORT).show();
-				Log.e(TAG, "Connection error.", e);
-			}
-			return response;
+		protected String getURL() {
+			return Utils.API.BLOCKS;
+		}
+
+		protected ArrayList<EighthBlock> doInBackground(HttpsURLConnection urlConnection) throws Exception {
+			// Begin connection
+			urlConnection.connect();
+			// Parse JSON from server
+			return EighthBlockJsonParser.parse(urlConnection.getInputStream());
 		}
 
 		@Override
@@ -396,46 +366,8 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 	}
 
-	// Get list of activity signups
-	private class ActivitySignupListRequest extends AsyncTask<Void, Void, EighthActivity[]> {
-		private static final String TAG = "Block List Connection";
-		private static final String URL = "https://ion.tjhsst.edu/api/signups/user"; // TODO: fix
-
-		@Override
-		protected EighthActivity[] doInBackground(Void... urls) {
-			HttpsURLConnection urlConnection;
-			EighthActivity[] response = null;
-			try {
-				urlConnection = (HttpsURLConnection) new URL(URL).openConnection();
-				// Add authKey to header
-				urlConnection.setRequestProperty("Authorization", mAuthKey);
-				// Begin connection
-				urlConnection.connect();
-				// Parse JSON from server
-				response = EighthActivityJsonParser.parseAll(urlConnection.getInputStream());
-				// Close connection
-				urlConnection.disconnect();
-			} catch (IOException e) {
-				Log.e(TAG, "IO Error", e);
-			} catch (Exception e) {
-				Log.e(TAG, "Connection Error", e);
-			}
-			return response;
-		}
-
-		@Override
-		protected void onPostExecute(EighthActivity[] result) {
-			super.onPostExecute(result);
-			if (result == null) {
-				expired();
-			} else {
-				postBlockRequest(null);
-			}
-		}
-	}
-
 	// Web request for clearing activity
-	private class ClearRequest extends AsyncTask<Void, Void, Boolean> {
+	private class ClearRequest extends IonRequest<Boolean> {
 		private static final String TAG = "Clear Connection";
 		private final String BID;
 
@@ -444,26 +376,20 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 
 		@Override
-		protected Boolean doInBackground(Void... params) {
-			final HttpsURLConnection urlConnection;
-			try {
-				urlConnection = (HttpsURLConnection) new URL(Utils.API.SIGNUP).openConnection();
-				// Add auth token
-				urlConnection.setRequestProperty("Authorization", mAuthKey);
+		protected String getURL() {
+			return Utils.API.SIGNUP;
+		}
 
-				// Add parameters
-				urlConnection.addRequestProperty("block", BID);
-				urlConnection.addRequestProperty("activity", "999");
+		@Override
+		protected Boolean doInBackground(HttpsURLConnection urlConnection) throws Exception {
+			// Add parameters
+			urlConnection.addRequestProperty("block", BID);
+			urlConnection.addRequestProperty("activity", "999");
 
-				// Send request
-				urlConnection.connect();
-				urlConnection.getInputStream();
-				urlConnection.disconnect();
-				return true;
-			} catch (IOException e) {
-				Log.e(TAG, "Connection error.", e);
-			}
-			return false;
+			// Send request
+			urlConnection.connect();
+			urlConnection.getInputStream();
+			return true;
 		}
 
 		@Override
@@ -473,46 +399,39 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 	}
 
-	private class ScheduleRequest extends AsyncTask<Integer, Void, Schedule[]> {
+	private class ScheduleRequest extends IonRequest<Schedule[]> {
 		private static final String TAG = "Schedule Connection";
 		private final DateFormat mFormat = new SimpleDateFormat("yyyyMMdd");
 		private Date mStartDate;
+		private Date mEndDate;
 
-		public ScheduleRequest (Date startDate) {
+		public ScheduleRequest(Date startDate, int days) {
 			mStartDate = startDate;
+			mEndDate = computeDays(days);
 		}
 
-		public ScheduleRequest (String startDate) {
+		public ScheduleRequest(String startDate, int days) {
 			try {
 				mStartDate = mFormat.parse(startDate);
+				mEndDate = computeDays(days);
 			} catch (ParseException e) {
 				Log.e(TAG, "Date Parse Error.", e);
 				mStartDate = null;
+				mEndDate = null;
 			}
 		}
 
 		@Override
-		protected Schedule[] doInBackground(Integer... days) {
-			final Date endDate = computeDays(days[0]);
-			HttpsURLConnection urlConnection = null;
-			Schedule[] response = null;
-			try {
-				urlConnection = (HttpsURLConnection) new URL(Utils.API.SCHEDULE +
-						"?start=" + mFormat.format(mStartDate) + "&end=" + mFormat.format(endDate))
-						.openConnection();
-				// Begin connection
-				urlConnection.connect();
-				// Parse JSON from server
-				response = ScheduleJsonParser.parseAll(Utils.inputStreamToJSON(urlConnection.getInputStream()));
-			} catch (Exception e) {
-				Log.e(TAG, "Error retrieving schedule", e);
-			} finally {
-				if (urlConnection != null) {
-					// Close connection
-					urlConnection.disconnect();
-				}
-			}
-			return response;
+		protected String getURL() {
+			return Utils.API.SCHEDULE + "?start=" + mFormat.format(mStartDate) + "&end=" + mFormat.format(mEndDate);
+		}
+
+		@Override
+		protected Schedule[] doInBackground(HttpsURLConnection urlConnection) throws Exception {
+			// Begin connection
+			urlConnection.connect();
+			// Parse JSON from server
+			return ScheduleJsonParser.parseAll(Utils.inputStreamToJSON(urlConnection.getInputStream()));
 		}
 
 		private Date computeDays(int daysAfter) {

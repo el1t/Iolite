@@ -54,7 +54,7 @@ public class Utils {
 	}
 
 	public static String inputStreamToString(InputStream inputStream) {
-		Scanner s = new java.util.Scanner(inputStream).useDelimiter("\\A");
+		final Scanner s = new java.util.Scanner(inputStream).useDelimiter("\\A");
 		return s.hasNext() ? s.next() : null;
 	}
 
@@ -62,6 +62,14 @@ public class Utils {
 		final String[] generic = new String[array.length()];
 		for (int i = 0; i < generic.length; i++) {
 			generic[i] = (String) array.get(i);
+		}
+		return generic;
+	}
+
+	public static boolean[] JSONArrayToBooleanArray(JSONArray array) throws JSONException {
+		final boolean[] generic = new boolean[array.length()];
+		for (int i = 0; i < generic.length; i++) {
+			generic[i] = (boolean) array.get(i);
 		}
 		return generic;
 	}
@@ -80,10 +88,9 @@ public class Utils {
 		final StringBuilder sb = new StringBuilder();
 		for (String s : array) {
 			if (sb.length() > 0) {
-				sb.append(", ").append(s);
-			} else {
-				sb.append(s);
+				sb.append(", ");
 			}
+			sb.append(s);
 		}
 		return sb.toString();
 	}
