@@ -13,8 +13,8 @@ Tired of using the web interface on your mobile device? Iolite is a native inter
 - [x] Sign up for activities
 - [x] View schedule
 - [x] Search activities
-- [ ] View activity info
-- [ ] View news
+- [x] View activity info
+- [x] View news
 - [ ] Look up students in directory
 - [ ] Notifications
 

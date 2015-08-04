@@ -22,12 +22,14 @@ public class Utils {
 
 	public static class API {
 		private static final String PREFIX = "https://ion.tjhsst.edu/api";
+		private static final String POSTFIX = "?format=json";
 		public static final String LOGIN = PREFIX;
-		public static final String PROFILE = PREFIX + "/profile?format=json";
-		public static final String BLOCKS = PREFIX + "/blocks";
+		public static final String PROFILE = PREFIX + "/profile" + POSTFIX;
+		public static final String BLOCKS = PREFIX + "/blocks" + POSTFIX;
 		public static final String SCHEDULE = "https://iodine.tjhsst.edu/ajax/dayschedule/json_exp";
-		public static final String SIGNUP = PREFIX + "/signups/user";
-		public static final String ACTIVITIES = PREFIX + "/activities";
+		public static final String SIGNUP = PREFIX + "/signups/user" + POSTFIX;
+		public static final String ACTIVITIES = PREFIX + "/activities" + POSTFIX;
+		public static final String NEWS = PREFIX + "/announcements" + POSTFIX;
 	}
 
 	public static JSONObject inputStreamToJSON(InputStream inputStream) {

@@ -11,14 +11,17 @@ import android.widget.TextView;
 
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.item.EighthBlock;
+import com.el1t.iolite.item.NewsPost;
 import com.el1t.iolite.item.Schedule;
 import com.el1t.iolite.item.User;
 import com.el1t.iolite.parser.EighthBlockJsonParser;
+import com.el1t.iolite.parser.NewsJsonParser;
 import com.el1t.iolite.parser.ProfileJsonParser;
 import com.el1t.iolite.parser.ScheduleJsonParser;
 import com.el1t.iolite.utils.AbstractDrawerActivity;
 import com.el1t.iolite.utils.Utils;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,18 +39,23 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		ScheduleFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener
 {
 	private static final String TAG = "Block Activity";
+	private static final String ARG_USER = "user";
+	private static final String ARG_FAKE = "fake";
+	private static final String ARG_ACTIVE_VIEW = "active";
+	private static final String ARG_FRAGMENT = "fragment";
 	public static final int INITIAL_DAYS_TO_LOAD = 14;
 	public static final int DAYS_TO_LOAD = 7;
 
 	private BlockFragment mBlockFragment;
 	private ScheduleFragment mScheduleFragment;
+	private NewsFragment mNewsFragment;
 	private String mAuthKey;
 	private User mUser;
 	private boolean fake;
 	private Section activeView;
 
 	public enum Section {
-		BLOCK, SCHEDULE, LOADING
+		BLOCK, SCHEDULE, NEWS, LOADING
 	}
 
 	@Override
@@ -60,28 +68,29 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			activeView = Section.BLOCK;
 
 			// Check if fake information should be used
-			if ((fake = intent.getBooleanExtra("fake", false))) {
-				Log.d(TAG, "Loading test info");
+			if ((fake = intent.getBooleanExtra(ARG_FAKE, false))) {
+				Log.d(TAG, "Loading test profile");
 				try {
 					// Use a test profile
 					mUser = ProfileJsonParser.parse(getAssets().open("testProfile.json"));
 					updateUser();
-					// Pretend block list was received
-					postBlockRequest(EighthBlockJsonParser.parse(getAssets().open("testBlockList.json")));
 				} catch (Exception e) {
-					Log.e(TAG, "Error parsing test JSON files", e);
+					Log.e(TAG, "Error parsing test profile", e);
 				}
 			}
 		} else {
-			mUser = savedInstanceState.getParcelable("user");
-			fake = savedInstanceState.getBoolean("fake");
-			activeView = Section.valueOf(savedInstanceState.getString("activeView"));
+			mUser = savedInstanceState.getParcelable(ARG_USER);
+			fake = savedInstanceState.getBoolean(ARG_FAKE);
+			activeView = Section.valueOf(savedInstanceState.getString(ARG_ACTIVE_VIEW));
 			switch (activeView) {
 				case BLOCK:
-					mBlockFragment = (BlockFragment) getFragmentManager().getFragment(savedInstanceState, "blockFragment");
+					mBlockFragment = (BlockFragment) getFragmentManager().getFragment(savedInstanceState, ARG_FRAGMENT);
 					break;
 				case SCHEDULE:
-					mScheduleFragment = (ScheduleFragment) getFragmentManager().getFragment(savedInstanceState, "scheduleFragment");
+					mScheduleFragment = (ScheduleFragment) getFragmentManager().getFragment(savedInstanceState, ARG_FRAGMENT);
+					break;
+				case NEWS:
+					mNewsFragment = (NewsFragment) getFragmentManager().getFragment(savedInstanceState, ARG_FRAGMENT);
 					break;
 			}
 		}
@@ -109,17 +118,23 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	@Override
 	protected void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putSerializable("fake", fake);
-		savedInstanceState.putString("activeView", activeView.name());
+		savedInstanceState.putParcelable(ARG_USER, mUser);
+		savedInstanceState.putSerializable(ARG_FAKE, fake);
+		savedInstanceState.putString(ARG_ACTIVE_VIEW, activeView.name());
 		switch (activeView) {
 			case BLOCK:
 				if (mBlockFragment != null) {
-					getFragmentManager().putFragment(savedInstanceState, "blockFragment", mBlockFragment);
+					getFragmentManager().putFragment(savedInstanceState, ARG_FRAGMENT, mBlockFragment);
 				}
 				break;
 			case SCHEDULE:
 				if (mScheduleFragment != null) {
-					getFragmentManager().putFragment(savedInstanceState, "scheduleFragment", mScheduleFragment);
+					getFragmentManager().putFragment(savedInstanceState, ARG_FRAGMENT, mScheduleFragment);
+				}
+				break;
+			case NEWS:
+				if (mNewsFragment != null) {
+					getFragmentManager().putFragment(savedInstanceState, ARG_FRAGMENT, mNewsFragment);
 				}
 				break;
 		}
@@ -133,6 +148,9 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 				break;
 			case R.id.nav_schedule:
 				switchView(Section.SCHEDULE);
+				break;
+			case R.id.nav_news:
+				switchView(Section.NEWS);
 				break;
 //			case R.id.nav_settings:
 //				break;
@@ -197,13 +215,32 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	 */
 	private void refresh(boolean changeView) {
 		if (fake) {
-			switch (activeView) {
-				case BLOCK:
-					setTitle("Blocks");
-					break;
-				case SCHEDULE:
-					setTitle("Schedule");
-					break;
+			try {
+				switch (activeView) {
+					case BLOCK:
+						if (mBlockFragment != null && changeView) {
+							getFragmentManager().beginTransaction()
+									.replace(R.id.container, mBlockFragment)
+									.commit();
+						}
+						postBlockRequest(EighthBlockJsonParser.parse(getAssets().open("testBlockList.json")));
+						setTitle("Blocks");
+						break;
+					case SCHEDULE:
+						setTitle("Schedule");
+						break;
+					case NEWS:
+						if (mNewsFragment != null && changeView) {
+							getFragmentManager().beginTransaction()
+									.replace(R.id.container, mNewsFragment)
+									.commit();
+						}
+						postNewsRequest(NewsJsonParser.parse(getAssets().open("testNewsList.json")));
+						setTitle("News");
+						break;
+				}
+			} catch (Exception e) {
+				Log.e(TAG, "Error loading test data", e);
 			}
 		} else if (activeView == Section.SCHEDULE) {
 			// The schedule uses iodine's api
@@ -212,13 +249,12 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 						.replace(R.id.container, new LoadingFragment())
 						.commit();
 				activeView = Section.LOADING;
-				setTitle("Schedule");
 			} else if (changeView) {
 				getFragmentManager().beginTransaction()
 						.replace(R.id.container, mScheduleFragment)
 						.commit();
-				setTitle("Schedule");
 			}
+			setTitle("Schedule");
 
 			// Retrieve schedule
 			new ScheduleRequest(Calendar.getInstance().getTime(), INITIAL_DAYS_TO_LOAD).execute();
@@ -232,16 +268,28 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 							.replace(R.id.container, new LoadingFragment())
 							.commit();
 					activeView = Section.LOADING;
-					setTitle("Blocks");
 				} else if (changeView) {
 					getFragmentManager().beginTransaction()
 							.replace(R.id.container, mBlockFragment)
 							.commit();
-					setTitle("Blocks");
 				}
-
-				// Retrieve list of bids using authKey
+				setTitle("Blocks");
 				new BlockListRequest().execute();
+				break;
+			case NEWS:
+				// Set loading fragment, if necessary
+				if (mNewsFragment == null) {
+					getFragmentManager().beginTransaction()
+							.replace(R.id.container, new LoadingFragment())
+							.commit();
+					activeView = Section.LOADING;
+				} else if (changeView) {
+					getFragmentManager().beginTransaction()
+							.replace(R.id.container, mNewsFragment)
+							.commit();
+				}
+				setTitle("News");
+				new NewsRequest().execute();
 				break;
 		}
 	}
@@ -311,6 +359,20 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		} else {
 			mScheduleFragment.addSchedules(result);
 			mScheduleFragment.setRefreshing(false);
+		}
+	}
+
+	private void postNewsRequest(NewsPost[] result) {
+		if (mNewsFragment == null) {
+			// Create the content view
+			mNewsFragment = NewsFragment.newInstance(result);
+			getFragmentManager().beginTransaction()
+					.replace(R.id.container, mNewsFragment)
+					.commit();
+			activeView = Section.NEWS;
+		} else {
+			mNewsFragment.update(result);
+			mNewsFragment.setRefreshing(false);
 		}
 	}
 
@@ -449,6 +511,28 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 				Log.e(TAG, "Schedule Listing Aborted");
 			} else {
 				postScheduleRequest(result);
+			}
+		}
+	}
+
+	private class NewsRequest extends IonRequest<NewsPost[]> {
+		@Override
+		protected String getURL() {
+			return Utils.API.NEWS;
+		}
+
+		protected NewsPost[] doInBackground(HttpsURLConnection urlConnection) throws Exception {
+			// Begin connection
+			urlConnection.connect();
+			// Parse JSON from server
+			return NewsJsonParser.parse(urlConnection.getInputStream());
+		}
+
+		@Override
+		protected void onPostExecute(NewsPost[] result) {
+			super.onPostExecute(result);
+			if (result != null) {
+				postNewsRequest(result);
 			}
 		}
 	}
