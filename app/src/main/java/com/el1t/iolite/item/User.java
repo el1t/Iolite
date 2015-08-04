@@ -158,16 +158,8 @@ public class User implements Parcelable
 		return mMobile;
 	}
 
-	public void setMobile(String mobile) {
-		mMobile = mobile;
-	}
-
 	public int getGradYear() {
 		return mGradYear;
-	}
-
-	public void setGradYear(int gradYear) {
-		mGradYear = gradYear;
 	}
 
 	protected User(Parcel in) {
