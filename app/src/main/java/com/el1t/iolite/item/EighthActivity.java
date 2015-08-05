@@ -3,8 +3,8 @@ package com.el1t.iolite.item;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.el1t.iolite.utils.Utils;
 import com.el1t.iolite.adapter.SignupListAdapter;
+import com.el1t.iolite.utils.Utils;
 
 /**
  * Created by El1t on 10/21/14.
@@ -18,7 +18,6 @@ public class EighthActivity implements Parcelable
 	private String name;
 	private String description;
 	private String URL;
-	private String firstChar;
 	private String[] sponsors;
 	private String[] rooms;
 	private boolean restricted;
@@ -37,7 +36,6 @@ public class EighthActivity implements Parcelable
 	                      String[] rooms, boolean restricted, boolean administrative,
 	                      boolean presign, boolean bothblocks, boolean sticky, boolean special,
 	                      boolean cancelled, boolean favorite) {
-		firstChar = name.substring(0, 1).toUpperCase();
 		this.AID = AID;
 		this.BID = BID;
 		this.memberCount = memberCount;
@@ -266,12 +264,24 @@ public class EighthActivity implements Parcelable
 		return Utils.join(rooms);
 	}
 
+	public String getRoomsNoDelim() {
+		return Utils.join(rooms, "");
+	}
+
+	public boolean hasRooms() {
+		return rooms.length > 0;
+	}
+
 	public String[] getSponsorsArray() {
 		return sponsors;
 	}
 
 	public String getSponsors() {
 		return Utils.join(sponsors);
+	}
+
+	public String getSponsorsNoDelim() {
+		return Utils.join(sponsors, "");
 	}
 
 	public boolean hasSponsors() {
@@ -298,10 +308,6 @@ public class EighthActivity implements Parcelable
 		return capacity;
 	}
 
-	public String getFirstChar() {
-		return firstChar;
-	}
-
 	public boolean isHeader() {
 		return header;
 	}
@@ -326,7 +332,6 @@ public class EighthActivity implements Parcelable
 		name = in.readString();
 		description = in.readString();
 		URL = in.readString();
-		firstChar = in.readString();
 		sponsors = in.createStringArray();
 		rooms = in.createStringArray();
 		restricted = in.readByte() != 0;
@@ -354,7 +359,6 @@ public class EighthActivity implements Parcelable
 		dest.writeString(name);
 		dest.writeString(description);
 		dest.writeString(URL);
-		dest.writeString(firstChar);
 		dest.writeStringArray(sponsors);
 		dest.writeStringArray(rooms);
 		dest.writeByte((byte) (restricted ? 1 : 0));

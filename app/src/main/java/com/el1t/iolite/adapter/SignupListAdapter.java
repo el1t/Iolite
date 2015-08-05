@@ -1,7 +1,6 @@
 package com.el1t.iolite.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -40,6 +39,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 	private final Bitmap ICON_LOCK;
 	private final Bitmap ICON_STAR;
 	private final Bitmap ICON_FAVE;
+	private final Bitmap ICON_OKAY;
 
 	// View lookup cache
 	private static class ViewHolder {
@@ -86,9 +86,10 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 
 		// Cache icons
 		ICON_DASH = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_remove_circle_white_48dp);
-		ICON_LOCK = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_lock_circle_white_48dp);
-		ICON_STAR = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_stars_white_48dp);
+		ICON_LOCK = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_lock_white_48dp);
+		ICON_STAR = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_star_rate_white_48dp);
 		ICON_FAVE = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_favorite_circle_white_48dp);
+		ICON_OKAY = BitmapFactory.decodeResource(context.getResources(), R.drawable.abc_btn_check_to_on_mtrl_015);
 	}
 
 	@Override
@@ -119,21 +120,23 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
-		// Set fields
+		// Title
 		viewHolder.title.setText(item.getName());
 		if (!item.isHeader()) {
-			// Show fields
+			// Description
 			if (item.hasDescription()) {
 				viewHolder.description.setText(item.getDescription());
 			} else {
 				viewHolder.description.setText("No description.");
 			}
-			if (item.getRooms().isEmpty()) {
-				viewHolder.room.setVisibility(View.GONE);
-			} else {
+			// Rooms
+			if (item.hasRooms()) {
 				viewHolder.room.setVisibility(View.VISIBLE);
 				viewHolder.room.setText(item.getRooms());
+			} else {
+				viewHolder.room.setVisibility(View.GONE);
 			}
+			// Sponsors
 			if (item.hasSponsors()) {
 				viewHolder.sponsors.setVisibility(View.VISIBLE);
 				// Show dash only if needed
@@ -145,7 +148,6 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 			} else {
 				viewHolder.sponsors.setVisibility(View.GONE);
 			}
-
 			// Capacity bar
 			if (item.getCapacity() > 0) {
 				viewHolder.capacity.setMax(item.getCapacity());
@@ -172,12 +174,10 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 				viewHolder.icon.setImageBitmap(ICON_STAR);
 			} else {
 				color = Colors.GREEN;
-				// Tint background to green when letter is used
-				viewHolder.icon.setImageBitmap(ICON_STAR);
+				viewHolder.icon.setImageBitmap(ICON_OKAY);
 			}
 			// Tint icon
 			viewHolder.circle.setColorFilter(mColors[color.ordinal()]);
-			viewHolder.icon.setColorFilter(mColors[Colors.WHITE.ordinal()]);
 			viewHolder.circle.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
@@ -287,7 +287,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 
 			@Override
 			protected FilterResults performFiltering(CharSequence constraint) {
-				FilterResults results = new FilterResults();
+				final FilterResults results = new FilterResults();
 
 				// Empty constraints display all items
 				if(constraint == null || constraint.length() == 0) {
@@ -295,12 +295,13 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 					results.count = mItems.size();
 				} else {
 					final ArrayList<EighthActivity> FilteredArrayNames = new ArrayList<>();
-					String temp = constraint.toString().toLowerCase();
+					final String temp = constraint.toString().toLowerCase().replace(" ", "");
 					// This should preserve the sort of the items
 					for (EighthActivity item : mItems) {
 						// Match activity name, and room number todo: match sponsors
-						if (!item.isHeader() && (item.getName().toLowerCase().contains(temp) || item.getSponsors().toLowerCase().contains(temp) ||
-								item.getRooms().replace(", ", "").contains(temp.replace(" ", "")))) {
+						if (!item.isHeader() && (item.getName().toLowerCase().replace(" ", "").contains(temp) ||
+								item.getSponsorsNoDelim().toLowerCase().replace(" ", "").contains(temp) ||
+								item.getRoomsNoDelim().toLowerCase().replace(" ", "").contains(temp))) {
 							FilteredArrayNames.add(item);
 						}
 					}
@@ -313,8 +314,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 	}
 
 	// Sort by favorites, alphabetically
-	private class DefaultSortComp implements Comparator<EighthActivity>
-	{
+	private class DefaultSortComp implements Comparator<EighthActivity> {
 		@Override
 		public int compare(EighthActivity e1, EighthActivity e2) {
 			// Compare by name if both or neither are favorites, or return the favorite

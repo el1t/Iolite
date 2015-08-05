@@ -98,10 +98,14 @@ public class Utils {
 	}
 
 	public static String join(String[] array) {
+		return join(array, ", ");
+	}
+
+	public static String join(String[] array, String delim) {
 		final StringBuilder sb = new StringBuilder();
 		for (String s : array) {
 			if (sb.length() > 0) {
-				sb.append(", ");
+				sb.append(delim);
 			}
 			sb.append(s);
 		}
