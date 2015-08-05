@@ -44,13 +44,8 @@ public class ScheduleFragment extends Fragment
 
 		// Check if list was provided from login activity to setup custom ListAdapter
 		final Bundle args = getArguments();
-		if (args != null && args.getParcelableArray("schedule") != null) {
-			Log.d(TAG, "Schedule received");
-			final ArrayList<Schedule> list = new ArrayList<>();
-			list.addAll(Arrays.asList((Schedule[]) args.getParcelableArray("schedule")));
-			mScheduleCardAdapter = new ScheduleCardAdapter(getActivity(), list);
-		} else {
-			Log.e(TAG, "Schedule not received", new IllegalArgumentException());
+		if (args != null) {
+			mScheduleCardAdapter = new ScheduleCardAdapter(getActivity(), (Schedule[]) args.getParcelableArray("schedule"));
 		}
 
 		mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
@@ -61,7 +56,7 @@ public class ScheduleFragment extends Fragment
 				mListener.refresh();
 			}
 		});
-		mSwipeRefreshLayout.setColorSchemeResources(R.color.blue, R.color.red_600,  R.color.amber, R.color.green_600);
+		mSwipeRefreshLayout.setColorSchemeResources(R.color.blue);
 		// TODO: This currently does not show the indicator
 //		mSwipeRefreshLayout.setRefreshing(args != null && args.getBoolean("refreshing", false));
 

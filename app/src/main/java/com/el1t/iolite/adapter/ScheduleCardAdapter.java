@@ -77,8 +77,8 @@ public class ScheduleCardAdapter extends RecyclerView.Adapter<ScheduleCardAdapte
 		}
 	}
 
-	public ScheduleCardAdapter(Context context, ArrayList<Schedule> schedule) {
-		mSchedules = schedule;
+	public ScheduleCardAdapter(Context context, Schedule[] schedule) {
+		mSchedules = new ArrayList<>(Arrays.asList(schedule));
 
 		final Resources resources = context.getResources();
 		mColors = new int[8];
@@ -127,8 +127,10 @@ public class ScheduleCardAdapter extends RecyclerView.Adapter<ScheduleCardAdapte
 	}
 
 	public void addAll(Schedule[] schedules) {
-		mSchedules.addAll(Arrays.asList(schedules));
-		notifyItemRangeInserted(mSchedules.size() - schedules.length, schedules.length);
+		if (schedules != null) {
+			mSchedules.addAll(Arrays.asList(schedules));
+			notifyItemRangeInserted(mSchedules.size() - schedules.length, schedules.length);
+		}
 	}
 
 	public void clear() {

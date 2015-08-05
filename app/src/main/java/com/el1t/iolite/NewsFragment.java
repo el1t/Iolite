@@ -103,11 +103,8 @@ public class NewsFragment extends Fragment {
 		mListener = null;
 	}
 
-	void update(NewsPost[] news) {
+	void updateAdapter(NewsPost[] news) {
 		mNewsCardAdapter.update(news);
-	}
-
-	void setRefreshing(boolean refreshing) {
-		mSwipeRefreshLayout.setRefreshing(refreshing);
+		mSwipeRefreshLayout.setRefreshing(false);
 	}
 }

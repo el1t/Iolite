@@ -47,12 +47,9 @@ public class BlockFragment extends Fragment
 
 		// Check if list was provided from login activity to setup custom ListAdapter
 		final Bundle args = getArguments();
-		final EighthBlock[] items;
-		if (args != null && (items = (EighthBlock[]) args.getParcelableArray("list")) != null) {
-			Log.d(TAG, "Block list received");
-			mAdapter = new BlockListAdapter(inflater.getContext(), items, getActivity());
-		} else {
-			Log.e(TAG, "No list received", new IllegalArgumentException());
+		if (args != null) {
+			mAdapter = new BlockListAdapter(inflater.getContext(),
+					(EighthBlock[]) args.getParcelableArray("list"), getActivity());
 		}
 
 		final RecyclerView blockList = (RecyclerView) rootView.findViewById(R.id.list);
@@ -72,8 +69,7 @@ public class BlockFragment extends Fragment
 				mListener.refresh();
 			}
 		});
-		mSwipeRefreshLayout.setColorSchemeResources(R.color.blue, R.color.red_600,
-				R.color.amber, R.color.green_600);
+		mSwipeRefreshLayout.setColorSchemeResources(R.color.blue);
 
 		return rootView;
 	}

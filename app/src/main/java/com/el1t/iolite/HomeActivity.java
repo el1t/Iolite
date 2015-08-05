@@ -21,11 +21,9 @@ import com.el1t.iolite.parser.ScheduleJsonParser;
 import com.el1t.iolite.utils.AbstractDrawerActivity;
 import com.el1t.iolite.utils.Utils;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -371,8 +369,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 					.commit();
 			activeView = Section.NEWS;
 		} else {
-			mNewsFragment.update(result);
-			mNewsFragment.setRefreshing(false);
+			mNewsFragment.updateAdapter(result);
 		}
 	}
 
@@ -422,9 +419,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		@Override
 		protected void onPostExecute(EighthBlock[] result) {
 			super.onPostExecute(result);
-			if (result != null) {
-				postBlockRequest(result);
-			}
+			postBlockRequest(result);
 		}
 	}
 
@@ -507,11 +502,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		@Override
 		protected void onPostExecute(Schedule[] result) {
 			super.onPostExecute(result);
-			if (result == null) {
-				Log.e(TAG, "Schedule Listing Aborted");
-			} else {
-				postScheduleRequest(result);
-			}
+			postScheduleRequest(result);
 		}
 	}
 
