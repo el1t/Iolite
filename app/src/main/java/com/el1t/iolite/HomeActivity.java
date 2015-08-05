@@ -314,11 +314,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		// This should probably be done in onCreate, without a bundle
 		if (mBlockFragment == null) {
 			// Create the content view
-			mBlockFragment = new BlockFragment();
-			// Add ArrayList to the ListView in BlockFragment
-			final Bundle args = new Bundle();
-			args.putParcelableArray("list", result);
-			mBlockFragment.setArguments(args);
+			mBlockFragment = BlockFragment.newInstance(result);
 			// Switch to BlockFragment view, remove LoadingFragment
 			getFragmentManager().beginTransaction()
 					.replace(R.id.container, mBlockFragment)
@@ -332,10 +328,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	private void postScheduleRequest(Schedule[] result) {
 		if (mScheduleFragment == null) {
 			// Create the content view
-			mScheduleFragment = new ScheduleFragment();
-			final Bundle args = new Bundle();
-			args.putParcelableArray("schedule", result);
-			mScheduleFragment.setArguments(args);
+			mScheduleFragment = ScheduleFragment.newInstance(result);
 			getFragmentManager().beginTransaction()
 					.replace(R.id.container, mScheduleFragment)
 					.commit();

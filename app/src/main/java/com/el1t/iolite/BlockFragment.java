@@ -26,6 +26,7 @@ import com.el1t.iolite.item.EighthBlock;
 public class BlockFragment extends Fragment
 {
 	private static final String TAG = "Block Fragment";
+	private static final String ARG_BLOCKS="blocks";
 
 	private OnFragmentInteractionListener mListener;
 	private BlockListAdapter mAdapter;
@@ -39,18 +40,29 @@ public class BlockFragment extends Fragment
 		void refresh();
 	}
 
+	public static BlockFragment newInstance(EighthBlock[] blocks) {
+		final BlockFragment fragment = new BlockFragment();
+		final Bundle args = new Bundle();
+		args.putParcelableArray(ARG_BLOCKS, blocks);
+		fragment.setArguments(args);
+		return fragment;
+	}
+
 	public BlockFragment() { }
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		final Bundle args = getArguments();
+		if (args != null) {
+			mAdapter = new BlockListAdapter(getActivity(),
+					(EighthBlock[]) args.getParcelableArray(ARG_BLOCKS));
+		}
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View rootView = inflater.inflate(R.layout.fragment_block, container, false);
-
-		// Check if list was provided from login activity to setup custom ListAdapter
-		final Bundle args = getArguments();
-		if (args != null) {
-			mAdapter = new BlockListAdapter(inflater.getContext(),
-					(EighthBlock[]) args.getParcelableArray("list"), getActivity());
-		}
 
 		final RecyclerView blockList = (RecyclerView) rootView.findViewById(R.id.list);
 		mLayoutManager = new LinearLayoutManager(inflater.getContext());

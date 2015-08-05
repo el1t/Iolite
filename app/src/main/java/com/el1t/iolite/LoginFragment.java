@@ -19,10 +19,14 @@ import android.widget.TextView;
  */
 public class LoginFragment extends Fragment
 {
+	private static final String ARG_REMEMBER = "remember";
+	private static final String ARG_USERNAME = "username";
 	private OnFragmentInteractionListener mListener;
-	private TextInputLayout username;
-	private TextInputLayout password;
-	private CheckBox remember;
+	private TextInputLayout usernameInput;
+	private TextInputLayout passwordInput;
+	private CheckBox rememberBox;
+	private String username;
+	private boolean remember;
 
 	public interface OnFragmentInteractionListener {
 		void submit(String username, String password);
@@ -32,17 +36,35 @@ public class LoginFragment extends Fragment
 		EMPTY_USERNAME, EMPTY_PASSWORD, EMPTY_BOTH, INVALID
 	}
 
+	public static LoginFragment newInstance(boolean remember, String username) {
+		final LoginFragment fragment = new LoginFragment();
+		final Bundle args = new Bundle();
+		args.putBoolean(ARG_REMEMBER, remember);
+		args.putString(ARG_USERNAME, username);
+		fragment.setArguments(args);
+		return fragment;
+	}
+
 	public LoginFragment() { }
 
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		final Bundle args = getArguments();
+		if (args != null) {
+			remember = args.getBoolean("remember", false);
+			username = args.getString("username", null);
+		}
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_login
-				, container, false);
+		final View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
 		// Get fields
-		username	= (TextInputLayout) rootView.findViewById(R.id.username);
-		password	= (TextInputLayout) rootView.findViewById(R.id.password);
-		remember    = (CheckBox) rootView.findViewById(R.id.remember);
+		usernameInput = (TextInputLayout) rootView.findViewById(R.id.username);
+		passwordInput = (TextInputLayout) rootView.findViewById(R.id.password);
+		rememberBox = (CheckBox) rootView.findViewById(R.id.remember);
 
 		// Submit button
 		final Button login = (Button) rootView.findViewById(R.id.login);
@@ -52,7 +74,7 @@ public class LoginFragment extends Fragment
 				submit();
 			}
 		});
-		password.getEditText().setOnEditorActionListener(new EditText.OnEditorActionListener() {
+		passwordInput.getEditText().setOnEditorActionListener(new EditText.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -63,17 +85,13 @@ public class LoginFragment extends Fragment
 			}
 		});
 
-		// Restore remembered username
-		final Bundle args = getArguments();
-		if (args != null) {
-			remember.setChecked(args.getBoolean("remember", false));
-			final String name = args.getString("username", null);
-			if (name == null) {
-				username.requestFocus();
-			} else {
-				username.getEditText().setText(name);
-				password.requestFocus();
-			}
+		// Restore stored information
+		rememberBox.setChecked(remember);
+		if (username == null) {
+			usernameInput.requestFocus();
+		} else {
+			usernameInput.getEditText().setText(username);
+			passwordInput.requestFocus();
 		}
 
 		return rootView;
@@ -94,41 +112,41 @@ public class LoginFragment extends Fragment
 	}
 
 	private void submit() {
-		final String un = username.getEditText().getText().toString().trim();
-		final String pw = password.getEditText().getText().toString().trim();
+		final String un = usernameInput.getEditText().getText().toString().trim();
+		final String pw = passwordInput.getEditText().getText().toString().trim();
 		mListener.submit(un, pw);
 	}
 
 	public void showError(ErrorType error) {
 		switch(error) {
 			case EMPTY_USERNAME:
-				username.setError("Empty username");
-				password.setErrorEnabled(false);
+				usernameInput.setError("Empty username");
+				passwordInput.setErrorEnabled(false);
 				break;
 			case EMPTY_PASSWORD:
-				password.setError("Empty password");
-				username.setErrorEnabled(false);
+				passwordInput.setError("Empty password");
+				usernameInput.setErrorEnabled(false);
 				break;
 			case EMPTY_BOTH:
-				username.setError("Empty username");
-				password.setError("Empty password");
+				usernameInput.setError("Empty username");
+				passwordInput.setError("Empty password");
 				break;
 			case INVALID:
-				username.setErrorEnabled(false);
-				password.setError("Invalid username or password");
+				usernameInput.setErrorEnabled(false);
+				passwordInput.setError("Invalid username or password");
 				break;
 		}
 	}
 
 	public boolean isCreated() {
-		return username != null && password != null && remember != null;
+		return usernameInput != null && passwordInput != null && rememberBox != null;
 	}
 
 	public boolean isChecked() {
-		return remember.isChecked();
+		return rememberBox.isChecked();
 	}
 
 	public void setChecked(boolean checked) {
-		remember.setChecked(checked);
+		rememberBox.setChecked(checked);
 	}
 }

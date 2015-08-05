@@ -24,6 +24,7 @@ import java.util.Arrays;
 public class ScheduleFragment extends Fragment
 {
 	private static final String TAG = "Schedule Fragment";
+	private static final String ARG_SCHEDULES = "schedules";
 
 	private OnFragmentInteractionListener mListener;
 	private ScheduleCardAdapter mScheduleCardAdapter;
@@ -36,17 +37,29 @@ public class ScheduleFragment extends Fragment
 		void load();
 	}
 
+	public static ScheduleFragment newInstance(Schedule[] schedules) {
+		final ScheduleFragment fragment = new ScheduleFragment();
+		final Bundle args = new Bundle();
+		args.putParcelableArray(ARG_SCHEDULES, schedules);
+		fragment.setArguments(args);
+		return fragment;
+	}
+
 	public ScheduleFragment() { }
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		final Bundle args = getArguments();
+		if (args != null) {
+			mScheduleCardAdapter = new ScheduleCardAdapter(getActivity(),
+					(Schedule[]) args.getParcelableArray(ARG_SCHEDULES));
+		}
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_schedule, container, false);
-
-		// Check if list was provided from login activity to setup custom ListAdapter
-		final Bundle args = getArguments();
-		if (args != null) {
-			mScheduleCardAdapter = new ScheduleCardAdapter(getActivity(), (Schedule[]) args.getParcelableArray("schedule"));
-		}
 
 		mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
 		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

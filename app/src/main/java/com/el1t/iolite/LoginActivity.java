@@ -45,12 +45,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		final boolean remember = preferences.getBoolean("remember", false);
 		mUsername = preferences.getString("username", null);
 		if (savedInstanceState == null) {
-			// Restore saved username
-			mLoginFragment = new LoginFragment();
-			final Bundle args = new Bundle();
-			args.putBoolean("remember", remember);
-			args.putString("username", mUsername);
-			mLoginFragment.setArguments(args);
+			mLoginFragment = LoginFragment.newInstance(remember, mUsername);
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, mLoginFragment)
 					.commit();

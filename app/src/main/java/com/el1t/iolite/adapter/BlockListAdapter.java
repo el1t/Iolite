@@ -59,8 +59,8 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 		}
 	}
 
-	public BlockListAdapter(Context context, EighthBlock[] items, Activity listener) {
-		mListener = (BlockFragment.OnFragmentInteractionListener) listener;
+	public BlockListAdapter(Activity context, EighthBlock[] items) {
+		mListener = (BlockFragment.OnFragmentInteractionListener) context;
 		mDisplayItems = new ArrayList<>();
 		update(items);
 		mLayoutInflater = LayoutInflater.from(context);
