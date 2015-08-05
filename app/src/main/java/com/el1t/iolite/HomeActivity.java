@@ -322,7 +322,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		finish();
 	}
 
-	private void postBlockRequest(ArrayList<EighthBlock> result) {
+	private void postBlockRequest(EighthBlock[] result) {
 		// Check if creating a new fragment is necessary
 		// This should probably be done in onCreate, without a bundle
 		if (mBlockFragment == null) {
@@ -330,7 +330,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			mBlockFragment = new BlockFragment();
 			// Add ArrayList to the ListView in BlockFragment
 			final Bundle args = new Bundle();
-			args.putParcelableArrayList("list", result);
+			args.putParcelableArray("list", result);
 			mBlockFragment.setArguments(args);
 			// Switch to BlockFragment view, remove LoadingFragment
 			getFragmentManager().beginTransaction()
@@ -338,7 +338,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 					.commit();
 			activeView = Section.BLOCK;
 		} else {
-			mBlockFragment.setListItems(result);
+			mBlockFragment.updateAdapter(result);
 		}
 	}
 
@@ -404,7 +404,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	}
 
 	// Get list of blocks
-	private class BlockListRequest extends IonRequest<ArrayList<EighthBlock>> {
+	private class BlockListRequest extends IonRequest<EighthBlock[]> {
 		private static final String TAG = "Block List Connection";
 
 		@Override
@@ -412,7 +412,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			return Utils.API.BLOCKS;
 		}
 
-		protected ArrayList<EighthBlock> doInBackground(HttpsURLConnection urlConnection) throws Exception {
+		protected EighthBlock[] doInBackground(HttpsURLConnection urlConnection) throws Exception {
 			// Begin connection
 			urlConnection.connect();
 			// Parse JSON from server
@@ -420,7 +420,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<EighthBlock> result) {
+		protected void onPostExecute(EighthBlock[] result) {
 			super.onPostExecute(result);
 			if (result != null) {
 				postBlockRequest(result);
@@ -531,9 +531,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		@Override
 		protected void onPostExecute(NewsPost[] result) {
 			super.onPostExecute(result);
-			if (result != null) {
-				postNewsRequest(result);
-			}
+			postNewsRequest(result);
 		}
 	}
 }

@@ -20,23 +20,23 @@ public class EighthBlockJsonParser {
 	private static final String TAG = "Student Info JSON Parser";
 	private static final DateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-	public static ArrayList<EighthBlock> parse(InputStream in) throws JSONException, ParseException {
+	public static EighthBlock[] parse(InputStream in) throws JSONException, ParseException {
 		return parse(Utils.inputStreamToJSON(in));
 	}
 
-	public static ArrayList<EighthBlock> parse(JSONObject item) throws JSONException, ParseException {
+	public static EighthBlock[] parse(JSONObject item) throws JSONException, ParseException {
 		final JSONArray results = item.getJSONArray("results");
-		final ArrayList<EighthBlock> blocks = new ArrayList<>(item.getInt("count"));
+		final EighthBlock[] blocks = new EighthBlock[results.length()];
 		JSONObject block;
 
 		for (int i = 0; i < results.length(); i++) {
 			block = (JSONObject) results.get(i);
-			blocks.add(new EighthBlock.ItemBuilder()
+			blocks[i] = new EighthBlock.ItemBuilder()
 					.date(mFormat.parse(block.getString("date")))
 					.BID(block.getInt("id"))
 					.type(block.getString("block_letter").charAt(0))
 					.locked(block.getBoolean("locked"))
-					.build());
+					.build();
 		}
 
 		return blocks;

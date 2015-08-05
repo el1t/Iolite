@@ -1,33 +1,35 @@
 package com.el1t.iolite.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.el1t.iolite.BlockFragment;
 import com.el1t.iolite.R;
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.item.EighthBlock;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
  * Created by El1t on 10/24/14.
  */
-public class BlockListAdapter extends ArrayAdapter<EighthBlock>
+public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.ViewHolder>
 {
-	private ArrayList<EighthBlock> mItems;
-	private final BIDSortComp mComp;
+	private EighthBlock[] mItems;
+	private ArrayList<EighthBlock> mDisplayItems;
 	private final LayoutInflater mLayoutInflater;
 	private final int[] mColors;
+	private BlockFragment.OnFragmentInteractionListener mListener;
 
 	public enum Block {
 		A, B, C, D, E, F, G, H, I, J
@@ -38,23 +40,33 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlock>
 	}
 
 	// View lookup cache
-	private static class ViewHolder {
+	public static class ViewHolder extends RecyclerView.ViewHolder {
 		TextView title;
 		TextView sponsors;
 		TextView room;
 		TextView description;
 		ImageView circle;
 		TextView letter;
+
+		public ViewHolder(View itemView) {
+			super(itemView);
+			title = (TextView) itemView.findViewById(R.id.title);
+			sponsors = (TextView) itemView.findViewById(R.id.sponsors);
+			room = (TextView) itemView.findViewById(R.id.room);
+			description = (TextView) itemView.findViewById(R.id.description);
+			circle = (ImageView) itemView.findViewById(R.id.circle);
+			letter = (TextView) itemView.findViewById(R.id.letter);
+		}
 	}
 
-	public BlockListAdapter(Context context, ArrayList<EighthBlock> items) {
-		super(context, 0);
-		mComp = new BIDSortComp();
-		mItems = items;
-		sort();
+	public BlockListAdapter(Context context, EighthBlock[] items, Activity listener) {
+		mListener = (BlockFragment.OnFragmentInteractionListener) listener;
+		mDisplayItems = new ArrayList<>();
+		update(items);
+		mLayoutInflater = LayoutInflater.from(context);
 
 		// Cache colors
-		Resources resources = context.getResources();
+		final Resources resources = context.getResources();
 		mColors = new int[10];
 		mColors[Colors.INDIGO.ordinal()] = resources.getColor(R.color.primary_400);
 		mColors[Colors.LIGHT_BLUE.ordinal()] = resources.getColor(R.color.accent_400);
@@ -65,39 +77,18 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlock>
 		mColors[Colors.DARK_RED.ordinal()] = resources.getColor(R.color.red_600);
 		mColors[Colors.BLACK.ordinal()] = resources.getColor(R.color.primary_text_default_material_light);
 		mColors[Colors.TEXT.ordinal()] = resources.getColor(R.color.secondary_text_default_material_light);
-
-		mLayoutInflater = LayoutInflater.from(context);
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// Cache the views for faster performance
-		ViewHolder viewHolder;
-		final EighthBlock blockItem = getItem(position);
+	public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+		return new ViewHolder(mLayoutInflater.inflate(viewType, viewGroup, false));
+	}
+
+	@Override
+	public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+		final EighthBlock blockItem = mDisplayItems.get(position);
 		final EighthActivity activityItem = blockItem.getEighth();
 
-		if (convertView == null) {
-			// Initialize viewHolder and convertView
-			viewHolder = new ViewHolder();
-			// Save IDs inside ViewHolder and attach the ViewHolder to convertView
-			if (blockItem.isHeader()) {
-				convertView = mLayoutInflater.inflate(R.layout.row_header, parent, false);
-				viewHolder.title = (TextView) convertView.findViewById(R.id.headerName);
-			} else {
-				convertView = mLayoutInflater.inflate(R.layout.row_block, parent, false);
-				viewHolder.title = (TextView) convertView.findViewById(R.id.title);
-				viewHolder.sponsors = (TextView) convertView.findViewById(R.id.sponsors);
-				viewHolder.room = (TextView) convertView.findViewById(R.id.room);
-				viewHolder.description = (TextView) convertView.findViewById(R.id.description);
-				viewHolder.circle = (ImageView) convertView.findViewById(R.id.circle);
-				viewHolder.letter = (TextView) convertView.findViewById(R.id.letter);
-			}
-			convertView.setTag(viewHolder);
-		} else {
-			viewHolder = (ViewHolder) convertView.getTag();
-		}
-
-		// Set fields
 		if (blockItem.isHeader()) {
 			// Note: superscript does not work in header
 			viewHolder.title.setText(blockItem.getDisp());
@@ -179,70 +170,60 @@ public class BlockListAdapter extends ArrayAdapter<EighthBlock>
 			// Tint icon
 			viewHolder.circle.setColorFilter(mColors[color.ordinal()]);
 			viewHolder.letter.setText(letter);
+			viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					final EighthBlock item = mDisplayItems.get(position);
+					mListener.select(item.getBID());
+				}
+			});
 		}
-
-		return convertView;
 	}
 
 	@Override
 	public int getItemViewType(int position) {
-		return getItem(position).isHeader() ? 1 : 0;
+		return mDisplayItems.get(position).isHeader() ? R.layout.row_header : R.layout.row_block;
 	}
 
 	@Override
-	public int getViewTypeCount() {
-		return 2;
+	public int getItemCount() {
+		return mDisplayItems == null ? 0 : mDisplayItems.size();
 	}
 
-	@Override
+//	@Override TODO: set enabled
 	public boolean isEnabled(int position) {
-		return !getItem(position).isHeader();
+		return !mDisplayItems.get(position).isHeader();
 	}
 
-	void sort() {
-		Collections.sort(mItems, mComp);
-		clear();
-		addAll(mItems);
+	public void update(EighthBlock[] items) {
+		mItems = items;
+		mDisplayItems.clear();
+		mDisplayItems.addAll(Arrays.asList(mItems));
 		addHeaders();
 		notifyDataSetChanged();
 	}
 
 	private void addHeaders() {
 		// Count will increment every time a header is added
-		int count = getCount();
+		int count = mItems.length;
 		if (count > 0) {
 			// Dates must be used because blocks can start on any letter
-			Date date = getItem(0).getDate();
+			Date date = mDisplayItems.get(0).getDate();
 			Date nextDate;
-			insert(new EighthBlock(date), 0);
+			mDisplayItems.add(0, new EighthBlock(date));
 			count++;
 			for (int i = 1; i < count; i++) {
-				nextDate = getItem(i).getDate();
+				nextDate = mDisplayItems.get(i).getDate();
 				if (!nextDate.equals(date)) {
 					date = nextDate;
-					insert(new EighthBlock(date), i++);
+					mDisplayItems.add(i++, new EighthBlock(date));
 					count++;
 				}
 			}
 		}
 	}
 
-	public void setListItems(ArrayList<EighthBlock> items) {
-		mItems = items;
-		sort();
-	}
-
-	// Sort by block date and type
-	private class BIDSortComp implements Comparator<EighthBlock>
-	{
-		@Override
-		public int compare(EighthBlock e1, EighthBlock e2) {
-			int cmp = e1.getDate().compareTo(e2.getDate());
-			if (cmp != 0) {
-				return cmp;
-			} else {
-				return e1.getBlock() > e2.getBlock() ? 1 : -1;
-			}
-		}
+	public EighthBlock get(int i) {
+		return mDisplayItems.get(i);
 	}
 }

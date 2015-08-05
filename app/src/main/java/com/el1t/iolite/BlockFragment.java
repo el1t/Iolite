@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -17,8 +20,6 @@ import com.el1t.iolite.adapter.BlockListAdapter;
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.item.EighthBlock;
 
-import java.util.ArrayList;
-
 /**
  * Created by El1t on 10/24/14.
  */
@@ -29,6 +30,7 @@ public class BlockFragment extends Fragment
 	private OnFragmentInteractionListener mListener;
 	private BlockListAdapter mAdapter;
 	private SwipeRefreshLayout mSwipeRefreshLayout;
+	private LinearLayoutManager mLayoutManager;
 
 	public interface OnFragmentInteractionListener {
 		void select(int BID);
@@ -41,34 +43,26 @@ public class BlockFragment extends Fragment
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-		View rootView = inflater.inflate(R.layout.fragment_block,
-				container, false);
+		final View rootView = inflater.inflate(R.layout.fragment_block, container, false);
 
 		// Check if list was provided from login activity to setup custom ListAdapter
 		final Bundle args = getArguments();
-		final ArrayList<EighthBlock> items;
-		if (args != null && (items = args.getParcelableArrayList("list")) != null) {
+		final EighthBlock[] items;
+		if (args != null && (items = (EighthBlock[]) args.getParcelableArray("list")) != null) {
 			Log.d(TAG, "Block list received");
-			mAdapter = new BlockListAdapter(getActivity(), items);
+			mAdapter = new BlockListAdapter(inflater.getContext(), items, getActivity());
 		} else {
 			Log.e(TAG, "No list received", new IllegalArgumentException());
 		}
 
-		final ListView blockList = (ListView) rootView.findViewById(R.id.list);
+		final RecyclerView blockList = (RecyclerView) rootView.findViewById(R.id.list);
+		mLayoutManager = new LinearLayoutManager(inflater.getContext());
+		blockList.setLayoutManager(mLayoutManager);
+		blockList.setItemAnimator(new DefaultItemAnimator());
 		blockList.setAdapter(mAdapter);
 
-		// Select block selection on click
-		blockList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-				final EighthBlock item = (EighthBlock) parent.getItemAtPosition(position);
-				mListener.select(item.getBID());
-			}
-		});
-
 		// Display menu on long click
-		registerForContextMenu(blockList);
+//		registerForContextMenu(blockList);
 
 		mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
 		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -78,7 +72,8 @@ public class BlockFragment extends Fragment
 				mListener.refresh();
 			}
 		});
-		mSwipeRefreshLayout.setColorSchemeResources(R.color.blue, R.color.red_600,R.color.amber, R.color.green_600);
+		mSwipeRefreshLayout.setColorSchemeResources(R.color.blue, R.color.red_600,
+				R.color.amber, R.color.green_600);
 
 		return rootView;
 	}
@@ -123,7 +118,7 @@ public class BlockFragment extends Fragment
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-		final EighthBlock blockItem = mAdapter.getItem(info.position);
+		final EighthBlock blockItem = mAdapter.get(info.position);
 		switch (item.getItemId()) {
 			case R.id.context_select:
 				mListener.select(blockItem.getBID());
@@ -139,8 +134,8 @@ public class BlockFragment extends Fragment
 		}
 	}
 
-	void setListItems(ArrayList<EighthBlock> items) {
-		mAdapter.setListItems(items);
+	void updateAdapter(EighthBlock[] items) {
+		mAdapter.update(items);
 		mSwipeRefreshLayout.setRefreshing(false);
 	}
 }

@@ -104,7 +104,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 			// Save IDs inside ViewHolder and attach the ViewHolder to convertView
 			if (item.isHeader()) {
 				convertView = mLayoutInflater.inflate(R.layout.row_header, parent, false);
-				viewHolder.title = (TextView) convertView.findViewById(R.id.headerName);
+				viewHolder.title = (TextView) convertView.findViewById(R.id.title);
 			} else {
 				convertView = mLayoutInflater.inflate(R.layout.row_signup, parent, false);
 				viewHolder.title = (TextView) convertView.findViewById(R.id.title);

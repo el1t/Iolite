@@ -48,11 +48,8 @@ public class NewsFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		final Bundle args = getArguments();
-		final NewsPost[] newsPosts;
-		if (args != null && (newsPosts = (NewsPost[]) args.getParcelableArray(ARG_NEWS)) != null) {
-			mNewsCardAdapter = new NewsCardAdapter(getActivity(), newsPosts);
-		} else {
-			Log.e(TAG, "News not received", new IllegalArgumentException());
+		if (args != null) {
+			mNewsCardAdapter = new NewsCardAdapter(getActivity(), (NewsPost[]) args.getParcelableArray(ARG_NEWS));
 		}
 	}
 

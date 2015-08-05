@@ -27,7 +27,7 @@ public abstract class AbstractRequestActivity extends AppCompatActivity {
 
 		/**
 		 * Get the URL to open a connection to
-		 * @return A valid URL, preferably from Utils.API
+		 * @return A valid URL, preferably from {@link com.el1t.iolite.utils.Utils.API}
 		 */
 		protected abstract String getURL();
 
@@ -68,8 +68,8 @@ public abstract class AbstractRequestActivity extends AppCompatActivity {
 		}
 
 		/**
-		 * A wrapped version of doInBackground(Void... params) that will handle specific exceptions
-		 * @param urlConnection A connection to the URL specified by getURL(). It is not connected
+		 * A wrapped version of {@link #doInBackground(Void...)} that will handle specific exceptions
+		 * @param urlConnection A connection to the URL specified by {@link #getURL()}. It is not connected
 		 *                      initially, but disconnection is handled automatically.
 		 * @return T Result of operation
 		 * @throws Exception IOException, JSONException, and ParseException are expected

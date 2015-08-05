@@ -63,7 +63,9 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
 	}
 
 	public void update(NewsPost[] news) {
-		mNewsPosts = news;
-		notifyDataSetChanged();
+		if (news != null) {
+			mNewsPosts = news;
+			notifyDataSetChanged();
+		}
 	}
 }
