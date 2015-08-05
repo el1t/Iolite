@@ -134,7 +134,7 @@ public class DetailActivity extends AbstractRequestActivity implements DetailFra
 
 		@Override
 		protected String getURL() {
-			return Utils.API.ACTIVITIES + AID;
+			return Utils.API.activity(AID);
 		}
 
 		@Override

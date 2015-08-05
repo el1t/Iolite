@@ -51,14 +51,7 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 		mTasks = new ArrayList<>();
 
 		// Check if restoring from previously destroyed instance that matches the BID
-		if (savedInstanceState == null || BID != savedInstanceState.getInt("BID")) {
-			// Check if fake information should be used
-			if (fake = intent.getBooleanExtra("fake", false)) {
-				Log.d(TAG, "Loading fake info");
-				// Pretend fake list was received
-				postRequest(getList());
-			}
-		} else {
+		if (savedInstanceState != null && BID == savedInstanceState.getInt("BID")) {
 			fake = savedInstanceState.getBoolean("fake");
 			mSignupFragment = (SignupFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
 		}
@@ -281,7 +274,7 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 
 		@Override
 		protected String getURL() {
-			return Utils.API.BLOCKS + BID;
+			return Utils.API.block(BID);
 		}
 
 		@Override
