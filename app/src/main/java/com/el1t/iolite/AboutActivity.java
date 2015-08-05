@@ -6,6 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.el1t.iolite.utils.Utils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,8 +19,10 @@ import java.io.InputStreamReader;
 public class AboutActivity extends AppCompatActivity implements AboutFragment.OnFragmentInteractionListener
 {
 	private final static String TAG = "About Activity";
+	private final static String ARG_FRAGMENT = "fragment";
+	private final static String ARG_LICENSE_SHOWING = "showing";
 	private AboutFragment mAboutFragment;
-	private LicenseFragment mLicenseFragment;
+	private AboutFragment mLicenseFragment;
 	private boolean licenseShowing;
 
 	@Override
@@ -33,7 +37,12 @@ public class AboutActivity extends AppCompatActivity implements AboutFragment.On
 					.replace(R.id.container, mAboutFragment)
 					.commit();
 		} else {
-			mAboutFragment = (AboutFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
+			licenseShowing = savedInstanceState.getBoolean(ARG_LICENSE_SHOWING);
+			if (licenseShowing) {
+				mLicenseFragment = (AboutFragment) getFragmentManager().getFragment(savedInstanceState, ARG_FRAGMENT);
+			} else {
+				mAboutFragment = (AboutFragment) getFragmentManager().getFragment(savedInstanceState, ARG_FRAGMENT);
+			}
 		}
 
 		// Use material design toolbar
@@ -42,6 +51,19 @@ public class AboutActivity extends AppCompatActivity implements AboutFragment.On
 			setSupportActionBar(toolbar);
 		}
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putBoolean(ARG_LICENSE_SHOWING, licenseShowing);
+		if (licenseShowing) {
+			if (mLicenseFragment != null) {
+				getFragmentManager().putFragment(savedInstanceState, ARG_FRAGMENT, mLicenseFragment);
+			}
+		} else if (mAboutFragment != null) {
+			getFragmentManager().putFragment(savedInstanceState, ARG_FRAGMENT, mAboutFragment);
+		}
 	}
 
 	// When back button in actionbar is activated
@@ -67,30 +89,16 @@ public class AboutActivity extends AppCompatActivity implements AboutFragment.On
 					.commit();
 		} else {
 			if (mLicenseFragment == null) {
-				mLicenseFragment = new LicenseFragment();
-				mLicenseFragment.setArguments(getLicense());
+				try {
+					mLicenseFragment = AboutFragment.newInstance(Utils.inputStreamToString(getAssets().open("license.txt")));
+				} catch (IOException e) {
+					Log.e(TAG, "Error parsing license", e);
+				}
 			}
 			getFragmentManager().beginTransaction()
 					.replace(R.id.container, mLicenseFragment)
 					.commit();
 		}
 		licenseShowing = !licenseShowing;
-	}
-
-	private Bundle getLicense() {
-		final Bundle bundle = new Bundle();
-		try {
-			// Read license into CharSequence
-			final InputStream stream = getAssets().open("license.txt");
-			final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-			final StringBuilder total = new StringBuilder(stream.available());
-			for (String line = reader.readLine(); line != null; line = reader.readLine()) {
-				total.append(line).append('\n');
-			}
-			bundle.putCharSequence("license", total);
-		} catch (IOException e) {
-			Log.e(TAG, "Error parsing license", e);
-		}
-		return bundle;
 	}
 }

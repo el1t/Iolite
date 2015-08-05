@@ -52,8 +52,8 @@ public class LoginFragment extends Fragment
 		super.onCreate(savedInstanceState);
 		final Bundle args = getArguments();
 		if (args != null) {
-			remember = args.getBoolean("remember", false);
-			username = args.getString("username", null);
+			remember = args.getBoolean("remember");
+			username = args.getString("username");
 		}
 	}
 
