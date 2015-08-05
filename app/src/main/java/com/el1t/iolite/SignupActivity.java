@@ -51,9 +51,13 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 		mTasks = new ArrayList<>();
 
 		// Check if restoring from previously destroyed instance that matches the BID
-		if (savedInstanceState != null && BID == savedInstanceState.getInt("BID")) {
+		if (savedInstanceState == null) {
+			fake = intent.getBooleanExtra("fake", false);
+		} else {
 			fake = savedInstanceState.getBoolean("fake");
-			mSignupFragment = (SignupFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
+			if (BID == savedInstanceState.getInt("BID")) {
+				mSignupFragment = (SignupFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
+			}
 		}
 
 		// Retrieve authKey from shared preferences
@@ -200,17 +204,13 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 	private void postRequest(EighthActivity[] result) {
 		if (mSignupFragment == null) {
 			// Create the content view
-			mSignupFragment = new SignupFragment();
-			// Add ArrayList to the ListView in BlockFragment
-			final Bundle args = new Bundle();
-			args.putParcelableArray("list", result);
-			mSignupFragment.setArguments(args);
+			mSignupFragment = SignupFragment.newInstance(result);
 			// Switch to BlockFragment view, remove LoadingFragment
 			getFragmentManager().beginTransaction()
 					.replace(R.id.container, mSignupFragment)
 					.commit();
 		} else {
-			mSignupFragment.setListItems(result);
+			mSignupFragment.updateAdapter(result);
 		}
 	}
 

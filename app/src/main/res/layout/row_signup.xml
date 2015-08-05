@@ -12,6 +12,7 @@
 		android:layout_height="match_parent"
 		android:indeterminate="false"
 		android:progress="0"
+		android:focusable="false"
 		android:progressDrawable="@drawable/progressbar_listview"
 		android:background="@android:color/transparent"
 		android:id="@+id/capacity"/>
@@ -28,6 +29,8 @@
 			android:layout_marginRight="@dimen/activity_horizontal_margin"
 			android:layout_marginEnd="@dimen/activity_horizontal_margin"
 			android:src="@drawable/activity_letter"
+			android:clickable="true"
+			android:background="?attr/selectableItemBackgroundBorderless"
 			tools:ignore="ContentDescription"/>
 
 		<ImageView
@@ -37,17 +40,6 @@
 			android:scaleType="center"
 			android:src="@drawable/activity_letter"
 			tools:ignore="ContentDescription"/>
-
-		<TextView
-			android:id="@+id/letter"
-			android:layout_width="40dp"
-			android:layout_height="40dp"
-			android:gravity="center"
-			android:fontFamily="sans-serif-light"
-			android:includeFontPadding="false"
-			android:textColor="@color/background"
-			android:textSize="25dp"
-			tools:ignore="SpUsage" />
 
 		<!-- Information -->
 		<!-- Title -->

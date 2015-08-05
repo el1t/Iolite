@@ -49,7 +49,6 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 		TextView description;
 		ImageView circle;
 		ImageView icon;
-		TextView letter;
 		ProgressBar capacity;
 	}
 
@@ -114,7 +113,6 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 				viewHolder.capacity = (ProgressBar) convertView.findViewById(R.id.capacity);
 				viewHolder.circle = (ImageView) convertView.findViewById(R.id.circle);
 				viewHolder.icon = (ImageView) convertView.findViewById(R.id.icon);
-				viewHolder.letter = (TextView) convertView.findViewById(R.id.letter);
 			}
 			convertView.setTag(viewHolder);
 		} else {
@@ -152,13 +150,14 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 			if (item.getCapacity() > 0) {
 				viewHolder.capacity.setMax(item.getCapacity());
 				viewHolder.capacity.setProgress(item.getMemberCount());
+				viewHolder.capacity.setAlpha(0.05f);
 				viewHolder.capacity.setVisibility(View.VISIBLE);
 			} else {
 				viewHolder.capacity.setVisibility(View.GONE);
 			}
 
 			// Set color
-			Colors color = null;
+			final Colors color;
 			if (item.isCancelled()) {
 				color = Colors.RED;
 				viewHolder.icon.setImageBitmap(ICON_DASH);
@@ -172,19 +171,13 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 				color = Colors.ORANGE;
 				viewHolder.icon.setImageBitmap(ICON_STAR);
 			} else {
+				color = Colors.GREEN;
 				// Tint background to green when letter is used
-				viewHolder.circle.setColorFilter(mColors[Colors.GREEN.ordinal()]);
-				viewHolder.icon.setVisibility(View.INVISIBLE);
-				viewHolder.letter.setText(item.getFirstChar());
-				viewHolder.letter.setVisibility(View.VISIBLE);
+				viewHolder.icon.setImageBitmap(ICON_STAR);
 			}
-			// Tint icon if icon is used
-			if (color != null) {
-				viewHolder.circle.setColorFilter(mColors[Colors.WHITE.ordinal()]);
-				viewHolder.icon.setColorFilter(mColors[color.ordinal()]);
-				viewHolder.icon.setVisibility(View.VISIBLE);
-				viewHolder.letter.setVisibility(View.INVISIBLE);
-			}
+			// Tint icon
+			viewHolder.circle.setColorFilter(mColors[color.ordinal()]);
+			viewHolder.icon.setColorFilter(mColors[Colors.WHITE.ordinal()]);
 			viewHolder.circle.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
@@ -223,7 +216,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 	}
 
 	// Sort items and add to both lists
-	public void setListItems(EighthActivity[] items) {
+	public void update(EighthActivity[] items) {
 		mItems.clear();
 		mItems.addAll(Arrays.asList(items));
 		sort();

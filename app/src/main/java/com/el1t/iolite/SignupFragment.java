@@ -24,6 +24,7 @@ import com.el1t.iolite.item.EighthActivity;
 public class SignupFragment extends Fragment
 {
 	private static final String TAG = "Signup Fragment";
+	private static final String ARG_ACTIVITIES = "activities";
 
 	private OnFragmentInteractionListener mListener;
 	private SignupListAdapter mAdapter;
@@ -36,6 +37,14 @@ public class SignupFragment extends Fragment
 		void refresh();
 	}
 
+	public static SignupFragment newInstance(EighthActivity[] activities) {
+		final SignupFragment fragment = new SignupFragment();
+		final Bundle args = new Bundle();
+		args.putParcelableArray(ARG_ACTIVITIES, activities);
+		fragment.setArguments(args);
+		return fragment;
+	}
+
 	public SignupFragment() { }
 
 	@Override
@@ -45,7 +54,7 @@ public class SignupFragment extends Fragment
 		// Check if list was provided to setup custom ListAdapter
 		final Bundle args = getArguments();
 		final EighthActivity[] items;
-		if (args != null && (items = (EighthActivity[]) args.getParcelableArray("list")) != null) {
+		if (args != null && (items = (EighthActivity[]) args.getParcelableArray(ARG_ACTIVITIES)) != null) {
 			Log.d(TAG, "Activity list received");
 			mAdapter = new SignupListAdapter(getActivity(), items);
 		} else {
@@ -147,8 +156,8 @@ public class SignupFragment extends Fragment
 		mAdapter.sort();
 	}
 
-	void setListItems(EighthActivity[] items) {
-		mAdapter.setListItems(items);
+	void updateAdapter(EighthActivity[] items) {
+		mAdapter.update(items);
 		mSwipeRefreshLayout.setRefreshing(false);
 	}
 

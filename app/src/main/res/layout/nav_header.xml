@@ -15,7 +15,6 @@
 		android:layout_height="64dp"
 		android:scaleType="centerCrop"
 		android:background="@drawable/circle"
-		android:src="@drawable/drawer_background"
 		android:elevation="1dp"
 		tools:ignore="ContentDescription" />
 	<!-- Real name -->
