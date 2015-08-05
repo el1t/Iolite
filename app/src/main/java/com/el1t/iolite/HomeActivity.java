@@ -240,24 +240,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			} catch (Exception e) {
 				Log.e(TAG, "Error loading test data", e);
 			}
-		} else if (activeView == Section.SCHEDULE) {
-			// The schedule uses iodine's api
-			if (mScheduleFragment == null) {
-				getFragmentManager().beginTransaction()
-						.replace(R.id.container, new LoadingFragment())
-						.commit();
-				activeView = Section.LOADING;
-			} else if (changeView) {
-				getFragmentManager().beginTransaction()
-						.replace(R.id.container, mScheduleFragment)
-						.commit();
-			}
-			setTitle("Schedule");
-
-			// Retrieve schedule
-			new ScheduleRequest(Calendar.getInstance().getTime(), INITIAL_DAYS_TO_LOAD).execute();
-		} else if (mAuthKey == null) {
-			expired();
 		} else switch (activeView) {
 			case BLOCK:
 				// Set loading fragment, if necessary
@@ -273,6 +255,21 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 				}
 				setTitle("Blocks");
 				new BlockListRequest().execute();
+				break;
+			case SCHEDULE:
+				// The schedule uses iodine's api
+				if (mScheduleFragment == null) {
+					getFragmentManager().beginTransaction()
+							.replace(R.id.container, new LoadingFragment())
+							.commit();
+					activeView = Section.LOADING;
+				} else if (changeView) {
+					getFragmentManager().beginTransaction()
+							.replace(R.id.container, mScheduleFragment)
+							.commit();
+				}
+				setTitle("Schedule");
+				new ScheduleRequest(Calendar.getInstance().getTime(), INITIAL_DAYS_TO_LOAD).execute();
 				break;
 			case NEWS:
 				// Set loading fragment, if necessary
@@ -308,14 +305,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		// Start login activity
 		final Intent intent = new Intent(this, LoginActivity.class);
 		intent.putExtra("logout", true);
-		startActivity(intent);
-		finish();
-	}
-
-	void expired() {
-		mAuthKey = null;
-		final Intent intent = new Intent(this, LoginActivity.class);
-		intent.putExtra("expired", true);
 		startActivity(intent);
 		finish();
 	}

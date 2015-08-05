@@ -63,10 +63,8 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 			if (getIntent().getBooleanExtra("logout", false)) {
 				// Send logout request
 				logout();
-			} else {
-				if (remember) {
-					startHome();
-				}
+			} else if (remember) {
+				startHome();
 			}
 		} else {
 			// Show keyboard
