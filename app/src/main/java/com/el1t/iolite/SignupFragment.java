@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -21,8 +20,7 @@ import com.el1t.iolite.item.EighthActivity;
 /**
  * Created by El1t on 10/21/14.
  */
-public class SignupFragment extends Fragment
-{
+public class SignupFragment extends Fragment {
 	private static final String TAG = "Signup Fragment";
 	private static final String ARG_ACTIVITIES = "activities";
 
@@ -44,8 +42,6 @@ public class SignupFragment extends Fragment
 		fragment.setArguments(args);
 		return fragment;
 	}
-
-	public SignupFragment() { }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

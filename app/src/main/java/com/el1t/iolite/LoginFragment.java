@@ -17,8 +17,7 @@ import android.widget.TextView;
 /**
  * Created by El1t on 10/20/14.
  */
-public class LoginFragment extends Fragment
-{
+public class LoginFragment extends Fragment {
 	private static final String ARG_REMEMBER = "remember";
 	private static final String ARG_USERNAME = "username";
 	private OnFragmentInteractionListener mListener;
@@ -44,8 +43,6 @@ public class LoginFragment extends Fragment
 		fragment.setArguments(args);
 		return fragment;
 	}
-
-	public LoginFragment() { }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -118,7 +115,7 @@ public class LoginFragment extends Fragment
 	}
 
 	public void showError(ErrorType error) {
-		switch(error) {
+		switch (error) {
 			case EMPTY_USERNAME:
 				usernameInput.setError("Empty username");
 				passwordInput.setErrorEnabled(false);

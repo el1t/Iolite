@@ -6,7 +6,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -18,8 +17,7 @@ import com.el1t.iolite.R;
  * Created by El1t on 11/17/14.
  */
 public abstract class AbstractDrawerActivity extends AbstractRequestActivity implements
-		NavigationView.OnNavigationItemSelectedListener
-{
+		NavigationView.OnNavigationItemSelectedListener {
 	private DrawerLayout mDrawerLayout;
 	private NavigationView mNavigationView;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -43,7 +41,7 @@ public abstract class AbstractDrawerActivity extends AbstractRequestActivity imp
 		getSupportActionBar().setHomeButtonEnabled(true);
 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.action_drawer_close,
-												  R.string.action_drawer_close) {
+				R.string.action_drawer_close) {
 			public void onDrawerClosed(View view) {
 				invalidateOptionsMenu();
 			}
@@ -86,8 +84,7 @@ public abstract class AbstractDrawerActivity extends AbstractRequestActivity imp
 		if (keyCode == KeyEvent.KEYCODE_MENU) {
 			if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
 				mDrawerLayout.closeDrawer(GravityCompat.START);
-			}
-			else {
+			} else {
 				mDrawerLayout.openDrawer(GravityCompat.START);
 			}
 			return true;

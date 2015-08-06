@@ -16,8 +16,7 @@ import java.util.Date;
 /**
  * Created by El1t on 8/4/15.
  */
-public class NewsJsonParser
-{
+public class NewsJsonParser {
 	private static final String TAG = "News JSON Parser";
 	private static final DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 

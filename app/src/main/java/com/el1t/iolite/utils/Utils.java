@@ -71,7 +71,7 @@ public class Utils {
 		return s.hasNext() ? s.next() : null;
 	}
 
-	public static String[] JSONArrayToStringArray(JSONArray array) throws JSONException{
+	public static String[] JSONArrayToStringArray(JSONArray array) throws JSONException {
 		final String[] generic = new String[array.length()];
 		for (int i = 0; i < generic.length; i++) {
 			generic[i] = (String) array.get(i);

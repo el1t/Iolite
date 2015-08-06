@@ -24,8 +24,7 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 // Login request -> Check response -> Start HomeActivity
-public class LoginActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener
-{
+public class LoginActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener {
 	public static final String FAKE_LOGIN = "fake";
 	public static final String PREFS_NAME = "LOGIN";
 	private static final String TAG = "Login Activity";

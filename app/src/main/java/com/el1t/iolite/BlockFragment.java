@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -23,10 +22,9 @@ import com.el1t.iolite.item.EighthBlock;
 /**
  * Created by El1t on 10/24/14.
  */
-public class BlockFragment extends Fragment
-{
+public class BlockFragment extends Fragment {
 	private static final String TAG = "Block Fragment";
-	private static final String ARG_BLOCKS="blocks";
+	private static final String ARG_BLOCKS = "blocks";
 
 	private OnFragmentInteractionListener mListener;
 	private BlockListAdapter mAdapter;
@@ -47,8 +45,6 @@ public class BlockFragment extends Fragment
 		fragment.setArguments(args);
 		return fragment;
 	}
-
-	public BlockFragment() { }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

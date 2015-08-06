@@ -9,8 +9,7 @@ import com.el1t.iolite.utils.Utils;
 /**
  * Created by El1t on 10/21/14.
  */
-public class EighthActivity implements Parcelable
-{
+public class EighthActivity implements Parcelable {
 	private int AID;
 	private int BID;
 	private int memberCount;
@@ -63,7 +62,7 @@ public class EighthActivity implements Parcelable
 	public EighthActivity(String name, SignupListAdapter.ActivityHeaderType headerType) {
 		this.header = true;
 		this.name = name;
-		switch(headerType) {
+		switch (headerType) {
 			case FAVORITE:
 				favorite = true;
 				break;
@@ -96,7 +95,8 @@ public class EighthActivity implements Parcelable
 		private boolean favorite;
 		private EighthActivity activity;
 
-		public EighthActivityBuilder() { }
+		public EighthActivityBuilder() {
+		}
 
 		public EighthActivityBuilder(EighthActivity activity) {
 			this.activity = activity;

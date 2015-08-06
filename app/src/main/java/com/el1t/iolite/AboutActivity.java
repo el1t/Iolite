@@ -8,16 +8,12 @@ import android.view.MenuItem;
 
 import com.el1t.iolite.utils.Utils;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
  * Created by El1t on 11/19/14.
  */
-public class AboutActivity extends AppCompatActivity implements AboutFragment.OnFragmentInteractionListener
-{
+public class AboutActivity extends AppCompatActivity implements AboutFragment.OnFragmentInteractionListener {
 	private final static String TAG = "About Activity";
 	private final static String ARG_FRAGMENT = "fragment";
 	private final static String ARG_LICENSE_SHOWING = "showing";
@@ -47,7 +43,7 @@ public class AboutActivity extends AppCompatActivity implements AboutFragment.On
 
 		// Use material design toolbar
 		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		if(toolbar != null) {
+		if (toolbar != null) {
 			setSupportActionBar(toolbar);
 		}
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);

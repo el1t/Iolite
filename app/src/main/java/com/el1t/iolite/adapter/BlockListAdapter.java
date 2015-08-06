@@ -1,7 +1,6 @@
 package com.el1t.iolite.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
@@ -23,8 +22,7 @@ import java.util.Date;
 /**
  * Created by El1t on 10/24/14.
  */
-public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.ViewHolder>
-{
+public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.ViewHolder> {
 	private EighthBlock[] mItems;
 	private ArrayList<EighthBlock> mDisplayItems;
 	private final LayoutInflater mLayoutInflater;
@@ -158,7 +156,7 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 		} else if (activityItem != null && activityItem.isCancelled()) {
 			color = Colors.DARK_RED;
 		} else {
-			switch(Block.valueOf(letter)) {
+			switch (Block.valueOf(letter)) {
 				case A:
 					color = Colors.INDIGO;
 					break;

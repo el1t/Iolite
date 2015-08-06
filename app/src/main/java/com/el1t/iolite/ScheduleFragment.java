@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +14,10 @@ import android.view.ViewGroup;
 import com.el1t.iolite.adapter.ScheduleCardAdapter;
 import com.el1t.iolite.item.Schedule;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /**
  * Created by El1t on 12/11/14.
  */
-public class ScheduleFragment extends Fragment
-{
+public class ScheduleFragment extends Fragment {
 	private static final String TAG = "Schedule Fragment";
 	private static final String ARG_SCHEDULES = "schedules";
 
@@ -44,8 +39,6 @@ public class ScheduleFragment extends Fragment
 		fragment.setArguments(args);
 		return fragment;
 	}
-
-	public ScheduleFragment() { }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

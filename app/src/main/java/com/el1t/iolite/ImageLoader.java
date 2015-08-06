@@ -14,8 +14,7 @@ import java.lang.ref.WeakReference;
 /**
  * Created by El1t on 11/3/14.
  */
-public class ImageLoader
-{
+public class ImageLoader {
 	private final Context mContext;
 
 	public ImageLoader(Context context) {

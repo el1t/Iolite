@@ -15,8 +15,7 @@ import com.el1t.iolite.item.EighthActivity;
 /**
  * Created by El1t on 7/25/15.
  */
-public class DetailCardAdapter extends RecyclerView.Adapter<DetailCardAdapter.ViewHolder>
-{
+public class DetailCardAdapter extends RecyclerView.Adapter<DetailCardAdapter.ViewHolder> {
 	private final LayoutInflater mLayoutInflater;
 	private EighthActivity mEighthActivity;
 
@@ -70,7 +69,7 @@ public class DetailCardAdapter extends RecyclerView.Adapter<DetailCardAdapter.Vi
 		// Set fields
 		final Types type = Types.values()[i];
 		viewHolder.title.setText(type.toString());
-		switch(type) {
+		switch (type) {
 			case STATUS:
 				break;
 			case DESCRIPTION:

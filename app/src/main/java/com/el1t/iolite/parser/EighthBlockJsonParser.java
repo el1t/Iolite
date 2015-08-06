@@ -1,7 +1,7 @@
 package com.el1t.iolite.parser;
 
-import com.el1t.iolite.utils.Utils;
 import com.el1t.iolite.item.EighthBlock;
+import com.el1t.iolite.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 /**
  * Created by El1t on 7/21/15.

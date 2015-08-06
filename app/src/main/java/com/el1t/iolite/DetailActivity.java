@@ -25,8 +25,7 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Created by El1t on 7/22/15.
  */
-public class DetailActivity extends AbstractRequestActivity implements DetailFragment.OnFragmentInteractionListener
-{
+public class DetailActivity extends AbstractRequestActivity implements DetailFragment.OnFragmentInteractionListener {
 	private final static String TAG = "Detail Activity";
 	private DetailFragment mDetailFragment;
 	private String mAuthKey;

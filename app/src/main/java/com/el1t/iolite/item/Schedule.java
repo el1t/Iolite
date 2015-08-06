@@ -9,8 +9,7 @@ import java.util.Date;
 /**
  * Created by El1t on 12/11/14.
  */
-public class Schedule implements Parcelable, Comparable<Schedule>
-{
+public class Schedule implements Parcelable, Comparable<Schedule> {
 	private String day;
 	private Date date;
 	private String type;
@@ -20,12 +19,12 @@ public class Schedule implements Parcelable, Comparable<Schedule>
 	private String times;
 
 	/**
-	 * @param day Date (e.g. Monday, February 29)
-	 * @param type Day color (e.g. Blue)
+	 * @param day       Date (e.g. Monday, February 29)
+	 * @param type      Day color (e.g. Blue)
 	 * @param yesterday Date code for previous day (e.g. 20150101)
-	 * @param tomorrow Date code for next day (e.g. 20150103)
-	 * @param blocks Names of the blocks
-	 * @param times Time intervals for blocks
+	 * @param tomorrow  Date code for next day (e.g. 20150103)
+	 * @param blocks    Names of the blocks
+	 * @param times     Time intervals for blocks
 	 */
 	public Schedule(String day, Date date, String type, String yesterday, String tomorrow, String blocks, String times) {
 		this.day = day;

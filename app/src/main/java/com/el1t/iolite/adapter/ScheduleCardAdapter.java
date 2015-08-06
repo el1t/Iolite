@@ -18,8 +18,7 @@ import java.util.Arrays;
 /**
  * Created by El1t on 12/16/14.
  */
-public class ScheduleCardAdapter extends RecyclerView.Adapter<ScheduleCardAdapter.ViewHolder>
-{
+public class ScheduleCardAdapter extends RecyclerView.Adapter<ScheduleCardAdapter.ViewHolder> {
 	private final LayoutInflater mLayoutInflater;
 	private ArrayList<Schedule> mSchedules;
 	private int[] mColors;

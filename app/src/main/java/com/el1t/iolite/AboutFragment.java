@@ -11,8 +11,7 @@ import android.widget.TextView;
 /**
  * Created by El1t on 11/19/14.
  */
-public class AboutFragment extends Fragment
-{
+public class AboutFragment extends Fragment {
 	private static final String ARG_LICENSE = "license";
 	private OnFragmentInteractionListener mListener;
 	private String license;
@@ -23,6 +22,7 @@ public class AboutFragment extends Fragment
 
 	/**
 	 * Used for creating a license display
+	 *
 	 * @param license License to display
 	 * @return Fragment with license as bundled argument
 	 */

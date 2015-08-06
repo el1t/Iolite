@@ -9,10 +9,7 @@ import android.view.ViewGroup;
 /**
  * Created by El1t on 10/25/14.
  */
-public class LoadingFragment extends Fragment
-{
-	public LoadingFragment() { }
-
+public class LoadingFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_loading, container, false);

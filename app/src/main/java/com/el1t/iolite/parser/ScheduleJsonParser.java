@@ -15,8 +15,7 @@ import java.util.Iterator;
 /**
  * Created by El1t on 12/11/14.
  */
-public class ScheduleJsonParser
-{
+public class ScheduleJsonParser {
 	private static final String TAG = "Schedule JSON Parser";
 	private static final DateFormat mFormat = new SimpleDateFormat("yyyyMMdd");
 

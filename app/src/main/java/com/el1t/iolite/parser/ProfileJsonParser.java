@@ -1,7 +1,7 @@
 package com.el1t.iolite.parser;
 
-import com.el1t.iolite.utils.Utils;
 import com.el1t.iolite.item.User;
+import com.el1t.iolite.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,8 +12,7 @@ import java.text.ParseException;
 /**
  * Created by El1t on 12/11/14.
  */
-public class ProfileJsonParser
-{
+public class ProfileJsonParser {
 	private static final String TAG = "Profile JSON Parser";
 
 	public static User parse(InputStream in) throws JSONException, ParseException {

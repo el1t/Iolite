@@ -28,8 +28,7 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Created by El1t on 10/21/14.
  */
-public class SignupActivity extends AbstractRequestActivity implements SignupFragment.OnFragmentInteractionListener
-{
+public class SignupActivity extends AbstractRequestActivity implements SignupFragment.OnFragmentInteractionListener {
 	private static final String TAG = "Signup Activity";
 	private static final String ARG_FAKE = "fake";
 	private static final String ARG_BID = "bid";
@@ -146,7 +145,7 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 	public void submit(EighthActivity item) {
 		// Perform checks before submission
 		// Note that server performs checks as well
-		 if (item.isCancelled()) {
+		if (item.isCancelled()) {
 			showSnackbar(Response.CANCELLED);
 		} else if (item.isFull()) {
 			showSnackbar(Response.CAPACITY);
@@ -168,7 +167,7 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 	// Notify the user of server response
 	void showSnackbar(Response result) {
 		final String message;
-		switch(result) {
+		switch (result) {
 			case SUCCESS:
 				// TODO: Pass success to home activity
 				Log.d(TAG, "Sign up success");

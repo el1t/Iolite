@@ -1,7 +1,7 @@
 package com.el1t.iolite.parser;
 
-import com.el1t.iolite.utils.Utils;
 import com.el1t.iolite.item.EighthActivity;
+import com.el1t.iolite.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,8 +13,7 @@ import java.util.Iterator;
 /**
  * Created by El1t on 7/25/15.
  */
-public class EighthActivityJsonParser
-{
+public class EighthActivityJsonParser {
 	private static final String TAG = "Activity JSON Parser";
 	private final int BID;
 

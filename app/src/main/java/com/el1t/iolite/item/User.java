@@ -4,14 +4,12 @@ import android.location.Address;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 /**
  * Created by El1t on 11/22/2014.
  */
-public class User implements Parcelable
-{
+public class User implements Parcelable {
 	private String mUID; // UID is an integer, but only used as a string
 	private String mUsername;
 	private String[] mName;
@@ -42,7 +40,7 @@ public class User implements Parcelable
 
 		public UserBuilder() {
 			this.address = new Address(Locale.ENGLISH);
-			this.name = new String[] {"", "", ""};
+			this.name = new String[]{"", "", ""};
 		}
 
 		public UserBuilder UID(String UID) {

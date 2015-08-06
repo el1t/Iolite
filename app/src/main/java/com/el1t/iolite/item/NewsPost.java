@@ -3,7 +3,6 @@ package com.el1t.iolite.item;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.Spanned;
 
 import java.text.DateFormat;
@@ -13,8 +12,7 @@ import java.util.Date;
 /**
  * Created by El1t on 8/4/15.
  */
-public class NewsPost implements Parcelable
-{
+public class NewsPost implements Parcelable {
 	private String URL;
 	private int ID;
 	private String title;
@@ -97,6 +95,7 @@ public class NewsPost implements Parcelable
 
 		/**
 		 * Fix unusual characters present in news
+		 *
 		 * @param malformedString Raw string from API request
 		 * @return Cleaned string
 		 */

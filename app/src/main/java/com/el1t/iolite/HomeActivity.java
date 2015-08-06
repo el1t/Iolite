@@ -34,8 +34,7 @@ import javax.net.ssl.HttpsURLConnection;
  */
 
 public class HomeActivity extends AbstractDrawerActivity implements BlockFragment.OnFragmentInteractionListener,
-		ScheduleFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener
-{
+		ScheduleFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 	private static final String TAG = "Block Activity";
 	private static final String ARG_USER = "user";
 	private static final String ARG_FAKE = "fake";

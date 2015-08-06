@@ -17,7 +17,7 @@ Following these style guidelines will increase the chance that your pull request
 * Use camelCasing in Java files, including naming
 * Use an empty line between methods
 * Use spaces between operands
-* Do not add a newline before `{`, unless declaring a class
+* Use a space—not a newline—before `{`
 * Prefix class variables with `m`
 * Tag overridden methods with `@Override`
 * Keep overridden methods at the top of the file

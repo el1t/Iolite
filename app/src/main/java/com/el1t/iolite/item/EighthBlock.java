@@ -14,8 +14,7 @@ import java.util.Date;
 /**
  * Created by El1t on 10/24/14.
  */
-public class EighthBlock implements Parcelable
-{
+public class EighthBlock implements Parcelable {
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEEE, MMMM d");
 	private EighthActivity activity;
 	private Date date;

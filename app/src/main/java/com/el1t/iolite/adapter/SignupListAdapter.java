@@ -26,10 +26,7 @@ import java.util.Comparator;
 /**
  * Created by El1t on 10/21/14.
  */
-public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements Filterable
-{
-	// This is to hold all items without filtering
-	ArrayList<EighthActivity> mItems;
+public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements Filterable {
 	private final ArrayList<EighthActivity> headers;
 	private final DefaultSortComp mComp;
 	private final LayoutInflater mLayoutInflater;
@@ -40,6 +37,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 	private final Bitmap ICON_STAR;
 	private final Bitmap ICON_FAVE;
 	private final Bitmap ICON_OKAY;
+	ArrayList<EighthActivity> mItems;
 
 	// View lookup cache
 	private static class ViewHolder {
@@ -81,12 +79,12 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 		// Cache colors
 		final Resources resources = context.getResources();
 		mColors = new int[6];
-		mColors[Colors.RED.ordinal()]           = resources.getColor(R.color.red_400);
-		mColors[Colors.DEEP_ORANGE.ordinal()]   = resources.getColor(R.color.deep_orange_400);
-		mColors[Colors.PINK.ordinal()]          = resources.getColor(R.color.pink_400);
-		mColors[Colors.ORANGE.ordinal()]        = resources.getColor(R.color.orange_400);
-		mColors[Colors.GREEN.ordinal()]         = resources.getColor(R.color.green_400);
-		mColors[Colors.WHITE.ordinal()]         = resources.getColor(R.color.background);
+		mColors[Colors.RED.ordinal()] = resources.getColor(R.color.red_400);
+		mColors[Colors.DEEP_ORANGE.ordinal()] = resources.getColor(R.color.deep_orange_400);
+		mColors[Colors.PINK.ordinal()] = resources.getColor(R.color.pink_400);
+		mColors[Colors.ORANGE.ordinal()] = resources.getColor(R.color.orange_400);
+		mColors[Colors.GREEN.ordinal()] = resources.getColor(R.color.green_400);
+		mColors[Colors.WHITE.ordinal()] = resources.getColor(R.color.background);
 
 		// Cache icons
 		ICON_DASH = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_remove_circle_white_48dp);
@@ -267,7 +265,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 
 	// Assumes mItems is already sorted
 	public void restore() {
-		if(getCount() == 0 && mItems != null) {
+		if (getCount() == 0 && mItems != null) {
 			addAll(mItems);
 			addHeaders();
 			notifyDataSetChanged();
@@ -293,7 +291,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 				final FilterResults results = new FilterResults();
 
 				// Empty constraints display all items
-				if(constraint == null || constraint.length() == 0) {
+				if (constraint == null || constraint.length() == 0) {
 					results.values = mItems;
 					results.count = mItems.size();
 				} else {

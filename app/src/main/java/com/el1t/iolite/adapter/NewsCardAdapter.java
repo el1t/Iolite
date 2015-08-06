@@ -14,8 +14,7 @@ import com.el1t.iolite.item.NewsPost;
 /**
  * Created by El1t on 8/4/15.
  */
-public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHolder>
-{
+public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHolder> {
 	private final LayoutInflater mLayoutInflater;
 	private NewsPost[] mNewsPosts;
 
