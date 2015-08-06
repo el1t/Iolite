@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		mUsername = username;
 		mPassword = pass;
 		// Check that the fragment is instantiated, since submit can be called before that
-		if (mLoginFragment.isCreated() && !mLoginFragment.isChecked()) {
+		if (!mLoginFragment.isChecked()) {
 			getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
 					.remove("remember")
 					.apply();

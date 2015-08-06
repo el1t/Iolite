@@ -100,7 +100,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 
 		if (mUser == null) {
-			new Authentication().execute();
+			new ProfileRequest().execute();
 		} else {
 			updateUser();
 		}
@@ -333,11 +333,13 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 					.replace(R.id.container, mScheduleFragment)
 					.commit();
 			activeView = Section.SCHEDULE;
-		} else if (result.length == INITIAL_DAYS_TO_LOAD) {
-			mScheduleFragment.reset(result);
-			mScheduleFragment.setRefreshing(false);
 		} else {
-			mScheduleFragment.addSchedules(result);
+			if (result != null) {
+				if (result.length == INITIAL_DAYS_TO_LOAD) {
+					mScheduleFragment.clear();
+				}
+				mScheduleFragment.addSchedules(result);
+			}
 			mScheduleFragment.setRefreshing(false);
 		}
 	}
@@ -356,9 +358,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	}
 
 	// Load student profile data
-	private class Authentication extends IonRequest<User> {
-		private static final String TAG = "Authentication";
-
+	private class ProfileRequest extends IonRequest<User> {
 		@Override
 		protected String getURL() {
 			return Utils.API.PROFILE;
@@ -384,8 +384,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 	// Get list of blocks
 	private class BlockListRequest extends IonRequest<EighthBlock[]> {
-		private static final String TAG = "Block List Connection";
-
 		@Override
 		protected String getURL() {
 			return Utils.API.BLOCKS;
@@ -407,7 +405,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 	// Web request for clearing activity
 	private class ClearRequest extends IonRequest<Boolean> {
-		private static final String TAG = "Clear Connection";
 		private final String BID;
 
 		public ClearRequest(int BID) {

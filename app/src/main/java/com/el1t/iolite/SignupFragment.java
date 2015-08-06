@@ -48,19 +48,19 @@ public class SignupFragment extends Fragment
 	public SignupFragment() { }
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_signup, container, false);
-
+	public void onCreate(Bundle savedInstanceState) {
 		// Check if list was provided to setup custom ListAdapter
 		final Bundle args = getArguments();
-		final EighthActivity[] items;
-		if (args != null && (items = (EighthActivity[]) args.getParcelableArray(ARG_ACTIVITIES)) != null) {
-			Log.d(TAG, "Activity list received");
-			mAdapter = new SignupListAdapter(getActivity(), items);
+		if (args != null) {
+			mAdapter = new SignupListAdapter(getActivity(), (EighthActivity[]) args.getParcelableArray(ARG_ACTIVITIES));
 		} else {
 			throw new IllegalArgumentException();
 		}
+	}
 
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		final View rootView = inflater.inflate(R.layout.fragment_signup, container, false);
 		final ListView activityList = (ListView) rootView.findViewById(R.id.activity_list);
 		activityList.setAdapter(mAdapter);
 
@@ -84,8 +84,7 @@ public class SignupFragment extends Fragment
 				mListener.refresh();
 			}
 		});
-		mSwipeRefreshLayout.setColorSchemeResources(R.color.blue, R.color.red_600,
-				R.color.amber, R.color.green_600);
+		mSwipeRefreshLayout.setColorSchemeResources(R.color.blue);
 
 		return rootView;
 	}

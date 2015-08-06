@@ -78,7 +78,11 @@ public class ScheduleCardAdapter extends RecyclerView.Adapter<ScheduleCardAdapte
 	}
 
 	public ScheduleCardAdapter(Context context, Schedule[] schedule) {
-		mSchedules = new ArrayList<>(Arrays.asList(schedule));
+		if (schedule == null) {
+			mSchedules = null;
+		} else {
+			mSchedules = new ArrayList<>(Arrays.asList(schedule));
+		}
 
 		final Resources resources = context.getResources();
 		mColors = new int[8];

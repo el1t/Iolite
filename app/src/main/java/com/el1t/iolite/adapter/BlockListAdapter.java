@@ -51,17 +51,21 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 		public ViewHolder(View itemView) {
 			super(itemView);
 			title = (TextView) itemView.findViewById(R.id.title);
-			sponsors = (TextView) itemView.findViewById(R.id.sponsors);
-			room = (TextView) itemView.findViewById(R.id.room);
-			description = (TextView) itemView.findViewById(R.id.description);
-			circle = (ImageView) itemView.findViewById(R.id.circle);
-			letter = (TextView) itemView.findViewById(R.id.letter);
+			// If inflating R.layout.row_block
+			if (itemView.getId() == R.id.container) {
+				sponsors = (TextView) itemView.findViewById(R.id.sponsors);
+				room = (TextView) itemView.findViewById(R.id.room);
+				description = (TextView) itemView.findViewById(R.id.description);
+				circle = (ImageView) itemView.findViewById(R.id.circle);
+				letter = (TextView) itemView.findViewById(R.id.letter);
+			}
 		}
 	}
 
 	public BlockListAdapter(Activity context, EighthBlock[] items) {
 		mListener = (BlockFragment.OnFragmentInteractionListener) context;
 		mDisplayItems = new ArrayList<>();
+		mItems = null;
 		update(items);
 		mLayoutInflater = LayoutInflater.from(context);
 
@@ -89,95 +93,92 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 		final EighthBlock blockItem = mDisplayItems.get(position);
 		final EighthActivity activityItem = blockItem.getEighth();
 
-		if (blockItem.isHeader()) {
+		if (viewHolder.getItemViewType() == R.layout.row_header) {
 			// Note: superscript does not work in header
 			viewHolder.title.setText(blockItem.getDisp());
-		} else {
-			Colors color;
-			if (activityItem != null) {
-				viewHolder.title.setText(activityItem.getName());
-				final float alpha;
+			return;
+		}
+		Colors color;
+		if (activityItem != null) {
+			final float alpha;
+			viewHolder.title.setText(activityItem.getName());
 
-				if (activityItem.getAID() == 999) {
-					// Hide empty fields
-					viewHolder.sponsors.setVisibility(View.GONE);
+			if (activityItem.getAID() == 999) {
+				// Hide empty fields
+				viewHolder.sponsors.setVisibility(View.GONE);
+				viewHolder.room.setVisibility(View.GONE);
+				viewHolder.description.setText("Please select an activity.");
+
+				// Format title
+				viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+				color = Colors.BLACK;
+				alpha = 1f;
+			} else {
+				// Show fields
+				if (activityItem.getRooms().isEmpty()) {
 					viewHolder.room.setVisibility(View.GONE);
-					viewHolder.description.setText("Please select an activity.");
+				} else {
+					viewHolder.room.setVisibility(View.VISIBLE);
+					viewHolder.room.setText(activityItem.getRooms());
+				}
+				if (activityItem.hasSponsors()) {
+					viewHolder.sponsors.setVisibility(View.VISIBLE);
+					// Show dash only if needed
+					if (viewHolder.room.getVisibility() == View.VISIBLE) {
+						viewHolder.sponsors.setText("—" + activityItem.getSponsors());
+					} else {
+						viewHolder.sponsors.setText(activityItem.getSponsors());
+					}
+				} else {
+					viewHolder.sponsors.setVisibility(View.GONE);
+				}
 
-					// Format title
+				// Format title
+				if (activityItem.isCancelled()) {
 					viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-					color = Colors.BLACK;
+					viewHolder.description.setText("Cancelled!");
+					color = Colors.DARK_RED;
 					alpha = 1f;
 				} else {
-					// Show fields
-					if (activityItem.getRooms().isEmpty()) {
-						viewHolder.room.setVisibility(View.GONE);
-					} else {
-						viewHolder.room.setVisibility(View.VISIBLE);
-						viewHolder.room.setText(activityItem.getRooms());
-					}
-					if (activityItem.hasSponsors()) {
-						viewHolder.sponsors.setVisibility(View.VISIBLE);
-						// Show dash only if needed
-						if (viewHolder.room.getVisibility() == View.VISIBLE) {
-							viewHolder.sponsors.setText("—" + activityItem.getSponsors());
-						} else {
-							viewHolder.sponsors.setText(activityItem.getSponsors());
-						}
-					} else {
-						viewHolder.sponsors.setVisibility(View.GONE);
-					}
-					if (activityItem.hasDescription()) {
-						viewHolder.description.setText(activityItem.getDescription());
-					} else {
-						viewHolder.description.setText("No description.");
-					}
-
-					// Format title
-					if (activityItem.isCancelled()) {
-						viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-						viewHolder.description.setText("Cancelled!");
-						color = Colors.DARK_RED;
-						alpha = 1f;
-					} else {
-						viewHolder.title.setTypeface(Typeface.SANS_SERIF);
-						color = Colors.BLACK;
-						alpha = .87f;
-					}
-				}
-				viewHolder.title.setTextColor(mColors[color.ordinal()]);
-				viewHolder.title.setAlpha(alpha);
-			}
-
-			// Set color of circle
-			final String letter = String.valueOf(blockItem.getBlock());
-			if (blockItem.isLocked()) {
-				color = Colors.RED;
-			} else if (activityItem != null && activityItem.isCancelled()) {
-				color = Colors.DARK_RED;
-			} else {
-				switch(Block.valueOf(letter)) {
-					case A:
-						color = Colors.INDIGO;
-						break;
-					case B:
-						color = Colors.LIGHT_BLUE;
-						break;
-					default:
-						color = Colors.GREY;
+					viewHolder.title.setTypeface(Typeface.SANS_SERIF);
+					// Set description
+					viewHolder.description.setText(activityItem.getDescription());
+					color = Colors.BLACK;
+					alpha = .87f;
 				}
 			}
-			// Tint icon
-			viewHolder.circle.setColorFilter(mColors[color.ordinal()]);
-			viewHolder.letter.setText(letter);
-			viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					final EighthBlock item = mDisplayItems.get(position);
-					mListener.select(item.getBID());
-				}
-			});
+			viewHolder.title.setTextColor(mColors[color.ordinal()]);
+			viewHolder.title.setAlpha(alpha);
 		}
+
+		// Set color of circle
+		final String letter = String.valueOf(blockItem.getBlock());
+		if (blockItem.isLocked()) {
+			color = Colors.RED;
+		} else if (activityItem != null && activityItem.isCancelled()) {
+			color = Colors.DARK_RED;
+		} else {
+			switch(Block.valueOf(letter)) {
+				case A:
+					color = Colors.INDIGO;
+					break;
+				case B:
+					color = Colors.LIGHT_BLUE;
+					break;
+				default:
+					color = Colors.GREY;
+			}
+		}
+		// Tint icon
+		viewHolder.circle.setColorFilter(mColors[color.ordinal()]);
+		viewHolder.letter.setText(letter);
+		viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				final EighthBlock item = mDisplayItems.get(position);
+				mListener.select(item.getBID());
+			}
+		});
 	}
 
 	@Override
@@ -190,17 +191,14 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 		return mDisplayItems == null ? 0 : mDisplayItems.size();
 	}
 
-//	@Override TODO: set enabled
-	public boolean isEnabled(int position) {
-		return !mDisplayItems.get(position).isHeader();
-	}
-
 	public void update(EighthBlock[] items) {
-		mItems = items;
-		mDisplayItems.clear();
-		mDisplayItems.addAll(Arrays.asList(mItems));
-		addHeaders();
-		notifyDataSetChanged();
+		if (items != null) {
+			mItems = items;
+			mDisplayItems.clear();
+			mDisplayItems.addAll(Arrays.asList(mItems));
+			addHeaders();
+			notifyDataSetChanged();
+		}
 	}
 
 	private void addHeaders() {

@@ -32,16 +32,20 @@ public class EighthActivity implements Parcelable
 	private boolean header;
 
 	public EighthActivity(int AID, int BID, int memberCount, int capacity, String name,
-	                      String description, String URL, String[] sponsors,
-	                      String[] rooms, boolean restricted, boolean administrative,
-	                      boolean presign, boolean bothblocks, boolean sticky, boolean special,
-	                      boolean cancelled, boolean favorite) {
+	                      String description, String URL, String[] sponsors, String[] rooms,
+	                      boolean restricted, boolean administrative, boolean presign,
+	                      boolean bothblocks, boolean sticky, boolean special, boolean cancelled,
+	                      boolean favorite) {
 		this.AID = AID;
 		this.BID = BID;
 		this.memberCount = memberCount;
 		this.capacity = capacity;
 		this.name = name;
-		this.description = description;
+		if (description == null || description.isEmpty()) {
+			this.description = "No description.";
+		} else {
+			this.description = description;
+		}
 		this.URL = URL;
 		this.sponsors = sponsors;
 		this.rooms = rooms;
@@ -125,7 +129,7 @@ public class EighthActivity implements Parcelable
 
 		public EighthActivityBuilder description(String description) {
 			if (description.toLowerCase().equals("no description available")) {
-				this.description = "";
+				this.description = null;
 			} else {
 				this.description = description.trim();
 			}
@@ -313,7 +317,7 @@ public class EighthActivity implements Parcelable
 	}
 
 	public boolean hasDescription() {
-		return !description.isEmpty();
+		return !description.equals("No description.");
 	}
 
 	public boolean isFull() {

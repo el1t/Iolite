@@ -114,9 +114,8 @@ public class ScheduleFragment extends Fragment
 		mSwipeRefreshLayout.clearAnimation();
 	}
 
-	void reset(Schedule[] schedules) {
+	void clear() {
 		mScheduleCardAdapter.clear();
-		mScheduleCardAdapter.addAll(schedules);
 	}
 
 	void addSchedules(Schedule[] schedules) {

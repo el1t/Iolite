@@ -70,8 +70,12 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 		headers.add(new EighthActivity("Activities", ActivityHeaderType.GENERAL));
 
 		mComp = new DefaultSortComp();
-		mItems = new ArrayList<>(Arrays.asList(items));
-		sort();
+		if (items == null) {
+			mItems = null;
+		} else {
+			mItems = new ArrayList<>(Arrays.asList(items));
+			sort();
+		}
 		mLayoutInflater = LayoutInflater.from(context);
 
 		// Cache colors
@@ -124,11 +128,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 		viewHolder.title.setText(item.getName());
 		if (!item.isHeader()) {
 			// Description
-			if (item.hasDescription()) {
-				viewHolder.description.setText(item.getDescription());
-			} else {
-				viewHolder.description.setText("No description.");
-			}
+			viewHolder.description.setText(item.getDescription());
 			// Rooms
 			if (item.hasRooms()) {
 				viewHolder.room.setVisibility(View.VISIBLE);
@@ -217,9 +217,11 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 
 	// Sort items and add to both lists
 	public void update(EighthActivity[] items) {
-		mItems.clear();
-		mItems.addAll(Arrays.asList(items));
-		sort();
+		if (items != null) {
+			mItems.clear();
+			mItems.addAll(Arrays.asList(items));
+			sort();
+		}
 	}
 
 	private void addHeaders() {

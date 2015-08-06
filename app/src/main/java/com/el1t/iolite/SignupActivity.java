@@ -288,7 +288,6 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 		protected void onPostExecute(EighthActivity[] result) {
 			super.onPostExecute(result);
 			mTasks.remove(this);
-			// Add ArrayList to the ListView in SignupFragment
 			postRequest(result);
 		}
 	}
