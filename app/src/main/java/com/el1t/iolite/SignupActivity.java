@@ -31,6 +31,9 @@ import javax.net.ssl.HttpsURLConnection;
 public class SignupActivity extends AbstractRequestActivity implements SignupFragment.OnFragmentInteractionListener
 {
 	private static final String TAG = "Signup Activity";
+	private static final String ARG_FAKE = "fake";
+	private static final String ARG_BID = "bid";
+	private static final String ARG_FRAGMENT = "fragment";
 
 	private SignupFragment mSignupFragment;
 	private int BID;
@@ -54,9 +57,9 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 		if (savedInstanceState == null) {
 			fake = intent.getBooleanExtra("fake", false);
 		} else {
-			fake = savedInstanceState.getBoolean("fake");
-			if (BID == savedInstanceState.getInt("BID")) {
-				mSignupFragment = (SignupFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
+			fake = savedInstanceState.getBoolean(ARG_FAKE);
+			if (BID == savedInstanceState.getInt(ARG_BID)) {
+				mSignupFragment = (SignupFragment) getFragmentManager().getFragment(savedInstanceState, ARG_FRAGMENT);
 			}
 		}
 
@@ -84,14 +87,14 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 	@Override
 	protected void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putInt("BID", BID);
-		savedInstanceState.putBoolean("fake", fake);
-		getFragmentManager().putFragment(savedInstanceState, "fragment", mSignupFragment);
+		savedInstanceState.putInt(ARG_BID, BID);
+		savedInstanceState.putBoolean(ARG_FAKE, fake);
+		getFragmentManager().putFragment(savedInstanceState, ARG_FRAGMENT, mSignupFragment);
 	}
 
 	@Override
 	public void onDestroy() {
-		// Try to cancel tasks when destroying
+		// Try to cancel running tasks
 		for (AsyncTask a : mTasks) {
 			a.cancel(true);
 		}
@@ -132,8 +135,6 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 						.add(R.id.container, new LoadingFragment())
 						.commit();
 			}
-
-			// Retrieve list for bid using cookies
 			mTasks.add(new ActivityListRequest(BID).execute());
 		} else {
 			// Reload offline list
@@ -166,38 +167,44 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 
 	// Notify the user of server response
 	void showSnackbar(Response result) {
+		final String message;
 		switch(result) {
 			case SUCCESS:
 				// TODO: Pass success to home activity
 				Log.d(TAG, "Sign up success");
 				finish();
-				break;
+				return;
 			case CAPACITY:
-				Snackbar.make(findViewById(R.id.container), "Capacity exceeded", Snackbar.LENGTH_SHORT).show();
+				message = "Capacity exceeded";
 				Log.d(TAG, "Capacity exceeded");
 				break;
 			case RESTRICTED:
-				Snackbar.make(findViewById(R.id.container), "Activity restricted", Snackbar.LENGTH_SHORT).show();
+				message = "Activity restricted";
 				Log.d(TAG, "Restricted activity");
 				break;
 			case CANCELLED:
-				Snackbar.make(findViewById(R.id.container), "Activity cancelled", Snackbar.LENGTH_SHORT).show();
+				message = "Activity cancelled";
 				Log.d(TAG, "Cancelled activity");
 				break;
 			case PRESIGN:
-				Snackbar.make(findViewById(R.id.container), "Activity signup not open yet", Snackbar.LENGTH_SHORT).show();
+				message = "Activity signup not open yet";
 				Log.d(TAG, "Presign activity");
 				break;
 			case ATTENDANCE_TAKEN:
-				Snackbar.make(findViewById(R.id.container), "Signup closed", Snackbar.LENGTH_SHORT).show();
+				message = "Signup closed";
 				Log.d(TAG, "Attendance taken");
 				break;
 			case FAIL:
 				// TODO: Make this error message reflect the actual error
-				Snackbar.make(findViewById(R.id.container), "Fatal error", Snackbar.LENGTH_SHORT).show();
+				message = "Fatal error";
 				Log.w(TAG, "Sign up failure");
 				break;
+			default:
+				message = "Something went wrong...";
+				Log.e(TAG, "Unknown response", new IllegalArgumentException());
+				break;
 		}
+		Snackbar.make(findViewById(R.id.container), message, Snackbar.LENGTH_SHORT).show();
 	}
 
 	// Do after getting list of activities
@@ -263,7 +270,7 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 		return findViewById(R.id.container);
 	}
 
-	// Retrieve activity list for BID from server
+	// Retrieve activity list for BID
 	private class ActivityListRequest extends IonRequest<EighthActivity[]> {
 		private static final String TAG = "ActivityListRequest";
 		private int BID;
@@ -292,9 +299,8 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 		}
 	}
 
-	// Web request for activity signup
+	// Request sign-up for specified activity
 	private class SignupRequest extends IonRequest<Boolean> {
-		private static final String TAG = "SignupRequest";
 		private final String AID;
 		private final String BID;
 

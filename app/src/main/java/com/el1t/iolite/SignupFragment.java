@@ -138,17 +138,18 @@ public class SignupFragment extends Fragment
 		switch (item.getItemId()) {
 			case R.id.context_select:
 				mListener.submit(activityItem);
-				return true;
+				break;
 			case R.id.context_info:
 				mListener.viewDetails(activityItem);
-				return true;
+				break;
 			case R.id.context_favorite:
 				mListener.favorite(activityItem.getAID(), activityItem.getBID(), activityItem);
 				mAdapter.sort();
-				return true;
+				break;
 			default:
 				return super.onContextItemSelected(item);
 		}
+		return true;
 	}
 
 	public void updateAdapter() {

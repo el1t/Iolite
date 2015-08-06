@@ -269,6 +269,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 	public void restore() {
 		if(getCount() == 0 && mItems != null) {
 			addAll(mItems);
+			addHeaders();
 			notifyDataSetChanged();
 		}
 	}
