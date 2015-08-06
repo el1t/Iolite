@@ -45,7 +45,7 @@ public class SignupFragment extends Fragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// Check if list was provided to setup custom ListAdapter
+		super.onCreate(savedInstanceState);
 		final Bundle args = getArguments();
 		if (args != null) {
 			mAdapter = new SignupListAdapter(getActivity(), (EighthActivity[]) args.getParcelableArray(ARG_ACTIVITIES));

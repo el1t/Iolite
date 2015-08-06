@@ -126,7 +126,10 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 	}
 
 	public void refresh() {
-		if (!fake) {
+		if (fake) {
+			// Reload offline list
+			postRequest(getList());
+		} else {
 			// Set loading fragment, if necessary
 			if (mSignupFragment == null) {
 				// Set loading fragment
@@ -135,9 +138,6 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 						.commit();
 			}
 			mTasks.add(new ActivityListRequest(BID).execute());
-		} else {
-			// Reload offline list
-			postRequest(getList());
 		}
 	}
 
