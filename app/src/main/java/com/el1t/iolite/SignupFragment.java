@@ -43,6 +43,10 @@ public class SignupFragment extends Fragment {
 		return fragment;
 	}
 
+	public SignupFragment() {
+		// Required empty public constructor
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -41,6 +41,10 @@ public class NewsFragment extends Fragment {
 		return fragment;
 	}
 
+	public NewsFragment() {
+		// Required empty public constructor
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

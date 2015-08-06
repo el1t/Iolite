@@ -46,6 +46,10 @@ public class BlockFragment extends Fragment {
 		return fragment;
 	}
 
+	public BlockFragment() {
+		// Required empty public constructor
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
