@@ -101,7 +101,7 @@ public class NewsPost implements Parcelable {
 		 */
 		private String fix(String malformedString) {
 			return malformedString.replace("â€“", ":")
-					.replace("â€™", "'")
+					.replace("â€™", "&#39;")
 					.replaceAll("(â€.|Â)", "")
 					.trim();
 		}
@@ -127,6 +127,10 @@ public class NewsPost implements Parcelable {
 
 	public Spanned getTitle() {
 		return Html.fromHtml(title);
+	}
+
+	public String getContent() {
+		return content;
 	}
 
 	public Spanned getTrimmedContent() {

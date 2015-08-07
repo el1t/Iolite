@@ -225,30 +225,23 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 		// Note: the server uses the UID field as the AID in its API
 		// Sending the BID is useless, but it is required by the server
 		mTasks.add(new ServerRequest("eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID).execute());
+		final String message;
 		if (item.changeFavorite()) {
-			Snackbar.make(findViewById(R.id.container), "Favorited", Snackbar.LENGTH_SHORT)
-					.setAction("Undo", new View.OnClickListener() {
-						@Override
-						public void onClick(View view) {
-							mTasks.add(new ServerRequest("eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID)
-									.execute());
-							item.changeFavorite();
-							mSignupFragment.updateAdapter();
-						}
-					}).show();
+			message = "Favorited";
 		} else {
-			Snackbar.make(findViewById(R.id.container), "Unfavorited", Snackbar.LENGTH_SHORT)
-					.setAction("Undo", new View.OnClickListener() {
-						@Override
-						public void onClick(View view) {
-							mTasks.add(new ServerRequest("eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID)
-									.execute());
-							item.changeFavorite();
-							mSignupFragment.updateAdapter();
-						}
-					}).show();
+			message = "Unfavorited";
 		}
-		Log.d(TAG, "Favorited AID " + AID);
+		Snackbar.make(findViewById(R.id.container), message, Snackbar.LENGTH_SHORT)
+				.setAction("Undo", new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						mTasks.add(new ServerRequest("eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID)
+								.execute());
+						item.changeFavorite();
+						mSignupFragment.updateAdapter();
+					}
+				}).show();
+		Log.d(TAG, message + " AID " + AID);
 	}
 
 	// Get a fake list of activities for debugging

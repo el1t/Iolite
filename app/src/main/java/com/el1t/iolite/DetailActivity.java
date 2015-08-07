@@ -7,7 +7,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.el1t.iolite.item.EighthActivity;
@@ -105,13 +104,6 @@ public class DetailActivity extends AbstractRequestActivity implements DetailFra
 		savedInstanceState.putInt("AID", AID);
 		savedInstanceState.putSerializable("fake", fake);
 		getFragmentManager().putFragment(savedInstanceState, "detailFragment", mDetailFragment);
-	}
-
-	// When back button in actionbar is activated
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		finish();
-		return true;
 	}
 
 	@Override

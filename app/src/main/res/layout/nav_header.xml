@@ -14,7 +14,9 @@
 		android:layout_width="64dp"
 		android:layout_height="64dp"
 		android:scaleType="centerCrop"
-		android:background="@drawable/circle"
+		android:src="@drawable/circle"
+		android:clickable="true"
+		android:background="?attr/selectableItemBackgroundBorderless"
 		android:elevation="1dp"
 		tools:ignore="ContentDescription" />
 	<!-- Real name -->

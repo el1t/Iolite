@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.el1t.iolite.adapter.NewsCardAdapter;
 import com.el1t.iolite.item.NewsPost;
+import com.el1t.iolite.utils.RecyclerItemClickListener;
 
 /**
  * Created by El1t on 8/4/15.
@@ -21,10 +22,15 @@ public class NewsFragment extends Fragment {
 	private static final String TAG = "Schedule Fragment";
 	private static final String ARG_NEWS = "news";
 
-	private ScheduleFragment.OnFragmentInteractionListener mListener;
+	private OnFragmentInteractionListener mListener;
 	private NewsCardAdapter mNewsCardAdapter;
 	private SwipeRefreshLayout mSwipeRefreshLayout;
 	private LinearLayoutManager mLayoutManager;
+
+	public interface OnFragmentInteractionListener {
+		void refresh();
+		void select(NewsPost post, View view);
+	}
 
 	/**
 	 * Use this factory method to create a new instance of
@@ -73,6 +79,15 @@ public class NewsFragment extends Fragment {
 		newsList.setLayoutManager(mLayoutManager);
 		newsList.setItemAnimator(new DefaultItemAnimator());
 		newsList.setAdapter(mNewsCardAdapter);
+		RecyclerItemClickListener.attachTo(newsList, inflater.getContext(),
+				new RecyclerItemClickListener.OnItemClickListener() {
+			@Override
+			public void onItemClick(View view, int position) {
+				if (position >= 0) {
+					mListener.select(mNewsCardAdapter.get(position), view);
+				}
+			}
+		});
 
 		return rootView;
 	}
@@ -83,7 +98,7 @@ public class NewsFragment extends Fragment {
 		// This makes sure that the container activity has implemented
 		// the callback interface. If not, it throws an exception
 		try {
-			mListener = (ScheduleFragment.OnFragmentInteractionListener) activity;
+			mListener = (OnFragmentInteractionListener) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
 					+ " must implement OnFragmentInteractionListener");

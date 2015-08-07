@@ -7,7 +7,7 @@
 	android:layout_height="wrap_content"
 	android:layout_margin="8dp"
 	android:clickable="true"
-	android:background="?attr/selectableItemBackground"
+	android:foreground="?attr/selectableItemBackground"
 	card_view:cardCornerRadius="4dp">
 	<RelativeLayout
 		android:id="@+id/container"

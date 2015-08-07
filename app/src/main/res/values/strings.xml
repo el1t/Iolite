@@ -8,9 +8,13 @@
 	<string name="field_password">Password</string>
 
 	<string name="view_about">About</string>
-	<string name="view_home">Home</string>
 	<string name="view_activity">Activities</string>
 	<string name="view_activity_details">Activity Details</string>
+	<string name="view_block">Blocks</string>
+	<string name="view_home">Home</string>
+	<string name="view_news">News</string>
+	<string name="view_news_details"/>
+	<string name="view_schedule">Schedule</string>
 
 	<string name="nav_blocks">Eighth</string>
 	<string name="nav_schedule">Schedule</string>
@@ -29,6 +33,9 @@
 	<string name="dialog_cancel">Cancel</string>
 	<string name="dialog_continue">Continue</string>
 
+	<string name="transition_news">NEWS_TRANSITION</string>
+
 	<string name="contributors">Thanks to: Timothy Cyrus and Rushi Shah</string>
 	<string name="license">VIEW LICENSE</string>
+	<string name="title_activity_news_detail">NewsDetailActivity</string>
 </resources>

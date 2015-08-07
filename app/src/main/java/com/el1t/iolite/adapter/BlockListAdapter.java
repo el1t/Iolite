@@ -87,7 +87,7 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 	}
 
 	@Override
-	public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+	public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
 		final EighthBlock blockItem = mDisplayItems.get(position);
 		final EighthActivity activityItem = blockItem.getEighth();
 

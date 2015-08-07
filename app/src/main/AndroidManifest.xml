@@ -53,11 +53,19 @@
 		<activity
 			android:name="com.el1t.iolite.DetailActivity"
 			android:label="@string/view_activity_details"
+			android:parentActivityName=".HomeActivity"
+			android:launchMode="singleTop"
+			android:configChanges="orientation|screenSize" />
+		<activity
+			android:name="com.el1t.iolite.NewsDetailActivity"
+			android:label="@string/view_news_details"
+			android:parentActivityName=".HomeActivity"
 			android:launchMode="singleTop"
 			android:configChanges="orientation|screenSize" />
 		<activity
 			android:name="com.el1t.iolite.AboutActivity"
 			android:label="@string/view_about"
+			android:parentActivityName=".HomeActivity"
 			android:launchMode="singleTop"
 			android:configChanges="orientation|screenSize" />
 	</application>

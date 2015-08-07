@@ -67,4 +67,8 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
 			notifyDataSetChanged();
 		}
 	}
+
+	public NewsPost get(int position) {
+		return mNewsPosts[position];
+	}
 }

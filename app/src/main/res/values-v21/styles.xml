@@ -1,0 +1,25 @@
+<resources>
+
+	<!-- Base application theme. -->
+	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+		<item name="colorPrimary">@color/primary</item>
+		<item name="colorPrimaryDark">@color/primary_dark</item>
+		<item name="colorAccent">@color/light_blue</item>
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowActionModeOverlay">true</item>
+		<item name="android:windowContentTransitions">true</item>
+		<item name="android:windowActivityTransitions">true</item>
+	</style>
+
+	<!-- Dark application theme. -->
+	<style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
+		<item name="colorPrimary">@color/primary</item>
+		<item name="colorPrimaryDark">@color/primary_dark</item>
+		<item name="colorAccent">@color/light_blue</item>
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowActionModeOverlay">true</item>
+		<item name="android:windowContentTransitions">true</item>
+		<item name="android:windowActivityTransitions">true</item>
+	</style>
+
+</resources>

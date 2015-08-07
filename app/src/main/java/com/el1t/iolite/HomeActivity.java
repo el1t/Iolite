@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +36,8 @@ import javax.net.ssl.HttpsURLConnection;
  */
 
 public class HomeActivity extends AbstractDrawerActivity implements BlockFragment.OnFragmentInteractionListener,
-		ScheduleFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
+		ScheduleFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener,
+		NewsFragment.OnFragmentInteractionListener {
 	private static final String TAG = "Block Activity";
 	private static final String ARG_USER = "user";
 	private static final String ARG_FAKE = "fake";
@@ -188,6 +191,14 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		intent.putExtra("BID", BID);
 		intent.putExtra("fake", fake);
 		startActivity(intent);
+	}
+
+	public void select(NewsPost post, View view) {
+		final Intent intent = new Intent(this, NewsDetailActivity.class);
+		final ActivityOptionsCompat options =
+				ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, getString(R.string.transition_news));
+		intent.putExtra("post", post);
+		ActivityCompat.startActivity(this, intent, options.toBundle());
 	}
 
 	// Display details for activity

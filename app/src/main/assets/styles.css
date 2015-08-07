@@ -1,0 +1,20 @@
+html {
+	background: #F5F5F5;
+	padding: 1rem;
+	font-size: 1rem !important;
+}
+
+a {
+	color: #2196F3;
+}
+a:visited {
+	color: #673AB7;
+}
+a:focus {
+	color: #2196F3;
+}
+
+p {
+	color: black !important;
+	opacity: 0.87;
+}

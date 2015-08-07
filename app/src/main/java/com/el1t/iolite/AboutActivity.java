@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 
 import com.el1t.iolite.utils.Utils;
 
@@ -60,13 +59,6 @@ public class AboutActivity extends AppCompatActivity implements AboutFragment.On
 		} else if (mAboutFragment != null) {
 			getFragmentManager().putFragment(savedInstanceState, ARG_FRAGMENT, mAboutFragment);
 		}
-	}
-
-	// When back button in actionbar is activated
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		onBackPressed();
-		return true;
 	}
 
 	@Override
