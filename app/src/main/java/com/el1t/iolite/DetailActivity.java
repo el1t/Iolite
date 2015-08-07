@@ -7,6 +7,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.el1t.iolite.item.EighthActivity;
@@ -104,6 +105,15 @@ public class DetailActivity extends AbstractRequestActivity implements DetailFra
 		savedInstanceState.putInt("AID", AID);
 		savedInstanceState.putSerializable("fake", fake);
 		getFragmentManager().putFragment(savedInstanceState, "detailFragment", mDetailFragment);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			onBackPressed();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
