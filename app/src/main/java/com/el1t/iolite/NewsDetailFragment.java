@@ -15,7 +15,6 @@ import com.el1t.iolite.utils.Utils;
 
 import java.io.IOException;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the

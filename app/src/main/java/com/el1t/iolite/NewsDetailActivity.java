@@ -8,7 +8,6 @@ import android.view.MenuItem;
 
 import com.el1t.iolite.item.NewsPost;
 
-
 public class NewsDetailActivity extends AppCompatActivity implements NewsDetailFragment.OnFragmentInteractionListener {
 	private static final String TAG = "NewsDetailActivity";
 	private static final String ARG_NEWS_POST = "post";

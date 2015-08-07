@@ -30,7 +30,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 	private final ArrayList<EighthActivity> headers;
 	private final DefaultSortComp mComp;
 	private final LayoutInflater mLayoutInflater;
-	private final SignupFragment.OnFragmentInteractionListener mContext;
+	private final SignupFragment.OnFragmentInteractionListener mListener;
 	private final int[] mColors;
 	private final Bitmap ICON_DASH;
 	private final Bitmap ICON_LOCK;
@@ -60,7 +60,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 
 	public SignupListAdapter(Activity context, EighthActivity[] items) {
 		super(context, 0);
-		mContext = (SignupFragment.OnFragmentInteractionListener) context;
+		mListener = (SignupFragment.OnFragmentInteractionListener) context;
 		// Headers
 		headers = new ArrayList<>(items.length + 3);
 		headers.add(new EighthActivity("Favorites", ActivityHeaderType.FAVORITE));
@@ -179,7 +179,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 			viewHolder.circle.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					mContext.viewDetails(item);
+					mListener.viewDetails(item);
 				}
 			});
 		}

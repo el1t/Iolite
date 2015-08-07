@@ -27,7 +27,7 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 	private ArrayList<EighthBlock> mDisplayItems;
 	private final LayoutInflater mLayoutInflater;
 	private final int[] mColors;
-	private BlockFragment.OnFragmentInteractionListener mListener;
+	private final BlockFragment.OnFragmentInteractionListener mListener;
 
 	public enum Block {
 		A, B, C, D, E, F, G, H, I, J
@@ -111,6 +111,12 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 				viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
 				color = Colors.BLACK;
 				alpha = 1f;
+				viewHolder.circle.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						mListener.select(blockItem.getBID());
+					}
+				});
 			} else {
 				// Show fields
 				if (activityItem.getRooms().isEmpty()) {
@@ -144,6 +150,12 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 					color = Colors.BLACK;
 					alpha = .87f;
 				}
+				viewHolder.circle.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						mListener.viewDetails(activityItem);
+					}
+				});
 			}
 			viewHolder.title.setTextColor(mColors[color.ordinal()]);
 			viewHolder.title.setAlpha(alpha);
@@ -170,13 +182,6 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 		// Tint icon
 		viewHolder.circle.setColorFilter(mColors[color.ordinal()]);
 		viewHolder.letter.setText(letter);
-		viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				final EighthBlock item = mDisplayItems.get(position);
-				mListener.select(item.getBID());
-			}
-		});
 	}
 
 	@Override

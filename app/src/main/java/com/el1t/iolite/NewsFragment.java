@@ -81,13 +81,13 @@ public class NewsFragment extends Fragment {
 		newsList.setAdapter(mNewsCardAdapter);
 		RecyclerItemClickListener.attachTo(newsList, inflater.getContext(),
 				new RecyclerItemClickListener.OnItemClickListener() {
-			@Override
-			public void onItemClick(View view, int position) {
-				if (position >= 0) {
-					mListener.select(mNewsCardAdapter.get(position), view);
-				}
-			}
-		});
+					@Override
+					public void onItemClick(View view, int position) {
+						if (position >= 0) {
+							mListener.select(mNewsCardAdapter.get(position), view);
+						}
+					}
+				});
 
 		return rootView;
 	}

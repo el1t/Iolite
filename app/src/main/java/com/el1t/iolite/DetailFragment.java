@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import com.el1t.iolite.adapter.DetailCardAdapter;
 import com.el1t.iolite.item.EighthActivity;
 
-
 /**
  * Activities that contain this fragment must implement the
  * {@link DetailFragment.OnFragmentInteractionListener} interface

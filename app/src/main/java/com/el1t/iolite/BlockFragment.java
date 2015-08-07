@@ -7,17 +7,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.el1t.iolite.adapter.BlockListAdapter;
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.item.EighthBlock;
+import com.el1t.iolite.utils.RecyclerItemClickListener;
 
 /**
  * Created by El1t on 10/24/14.
@@ -69,9 +66,15 @@ public class BlockFragment extends Fragment {
 		blockList.setLayoutManager(mLayoutManager);
 		blockList.setItemAnimator(new DefaultItemAnimator());
 		blockList.setAdapter(mAdapter);
-
-		// Display menu on long click
-//		registerForContextMenu(blockList);
+		RecyclerItemClickListener.attachTo(blockList, inflater.getContext(),
+				new RecyclerItemClickListener.OnItemClickListener() {
+					@Override
+					public void onItemClick(View view, int position) {
+						if (position >= 0) {
+							mListener.select(mAdapter.get(position).getBID());
+						}
+					}
+				});
 
 		mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
 		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -106,40 +109,6 @@ public class BlockFragment extends Fragment {
 		// Stop refreshing animation to fix overlay bug
 		mSwipeRefreshLayout.setRefreshing(false);
 		mSwipeRefreshLayout.clearAnimation();
-	}
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-	                                ContextMenu.ContextMenuInfo menuInfo) {
-		final AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
-		final EighthBlock item = (EighthBlock) ((ListView) v).getItemAtPosition(acmi.position);
-		if (item.getEighth() != null) {
-			getActivity().getMenuInflater().inflate(R.menu.context_menu_block, menu);
-			if (item.getEighth().getAID() == 999) {
-				menu.findItem(R.id.context_info).setVisible(false);
-				menu.findItem(R.id.context_clear).setVisible(false);
-			}
-			super.onCreateContextMenu(menu, v, menuInfo);
-		}
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-		final EighthBlock blockItem = mAdapter.get(info.position);
-		switch (item.getItemId()) {
-			case R.id.context_select:
-				mListener.select(blockItem.getBID());
-				return true;
-			case R.id.context_info:
-				mListener.viewDetails(blockItem.getEighth());
-				return true;
-			case R.id.context_clear:
-				mListener.clear(blockItem.getBID());
-				return true;
-			default:
-				return super.onContextItemSelected(item);
-		}
 	}
 
 	void updateAdapter(EighthBlock[] items) {
