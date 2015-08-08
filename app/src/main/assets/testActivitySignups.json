@@ -1,107 +1,107 @@
 [
-  {
-    "id": 110,
-    "block": {
-      "date": "2015-09-02",
-      "url": "https://ion.tjhsst.edu/api/blocks/2793",
-      "id": 2793
-    },
-    "activity": {
-      "url": "https://ion.tjhsst.edu/api/activities/1033",
-      "id": 1033,
-      "title": "HR Harris (R) (S)"
-    },
-    "scheduled_activity": 36604,
-    "user": 12345
-  },
-  {
-    "id": 1925,
-    "block": {
-      "date": "2015-09-02",
-      "url": "https://ion.tjhsst.edu/api/blocks/2794",
-      "id": 2794
-    },
-    "activity": {
-      "url": "https://ion.tjhsst.edu/api/activities/1033",
-      "id": 1033,
-      "title": "HR Harris (R) (S)"
-    },
-    "scheduled_activity": 36605,
-    "user": 12345
-  },
-  {
-    "id": 3740,
-    "block": {
-      "date": "2015-09-04",
-      "url": "https://ion.tjhsst.edu/api/blocks/2795",
-      "id": 2795
-    },
-    "activity": {
-      "url": "https://ion.tjhsst.edu/api/activities/1033",
-      "id": 1033,
-      "title": "HR Harris (R) (S)"
-    },
-    "scheduled_activity": 36606,
-    "user": 12345
-  },
-  {
-    "id": 16962,
-    "block": {
-      "date": "2015-06-26",
-      "url": "https://ion.tjhsst.edu/api/blocks/2825",
-      "id": 2825
-    },
-    "activity": {
-      "url": "https://ion.tjhsst.edu/api/activities/149",
-      "id": 149,
-      "title": "Ballroom Dance Club"
-    },
-    "scheduled_activity": 38689,
-    "user": 12345
-  },
-  {
-    "id": 13092,
-    "block": {
-      "date": "2015-06-19",
-      "url": "https://ion.tjhsst.edu/api/blocks/3012",
-      "id": 3012
-    },
-    "activity": {
-      "url": "https://ion.tjhsst.edu/api/activities/3069",
-      "id": 3069,
-      "title": "Last Day - Activities - 10:10 - 11:20"
-    },
-    "scheduled_activity": 50595,
-    "user": 12345
-  },
-  {
-    "id": 14911,
-    "block": {
-      "date": "2015-06-19",
-      "url": "https://ion.tjhsst.edu/api/blocks/3013",
-      "id": 3013
-    },
-    "activity": {
-      "url": "https://ion.tjhsst.edu/api/activities/3069",
-      "id": 3069,
-      "title": "Last Day - Activities - 11:30 - 12:40"
-    },
-    "scheduled_activity": 50596,
-    "user": 12345
-  },
-  {
-    "id": 16730,
-    "block": {
-      "date": "2015-06-19",
-      "url": "https://ion.tjhsst.edu/api/blocks/3011",
-      "id": 3011
-    },
-    "activity": {
-      "url": "https://ion.tjhsst.edu/api/activities/3070",
-      "id": 3070,
-      "title": "Last Day - Visit Teachers - 8:50 - 10:00"
-    },
-    "scheduled_activity": 50597,
-    "user": 12345
-  }
+	{
+		"id": 110,
+		"block": {
+			"date": "2015-09-02",
+			"url": "https://ion.tjhsst.edu/api/blocks/2793",
+			"id": 2793
+		},
+		"activity": {
+			"url": "https://ion.tjhsst.edu/api/activities/1033",
+			"id": 1033,
+			"title": "HR Harris (R) (S)"
+		},
+		"scheduled_activity": 36604,
+		"user": 12345
+	},
+	{
+		"id": 1925,
+		"block": {
+			"date": "2015-09-02",
+			"url": "https://ion.tjhsst.edu/api/blocks/2794",
+			"id": 2794
+		},
+		"activity": {
+			"url": "https://ion.tjhsst.edu/api/activities/1033",
+			"id": 1033,
+			"title": "HR Harris (R) (S)"
+		},
+		"scheduled_activity": 36605,
+		"user": 12345
+	},
+	{
+		"id": 3740,
+		"block": {
+			"date": "2015-09-04",
+			"url": "https://ion.tjhsst.edu/api/blocks/2795",
+			"id": 2795
+		},
+		"activity": {
+			"url": "https://ion.tjhsst.edu/api/activities/1033",
+			"id": 1033,
+			"title": "HR Harris (R) (S)"
+		},
+		"scheduled_activity": 36606,
+		"user": 12345
+	},
+	{
+		"id": 16962,
+		"block": {
+			"date": "2015-06-26",
+			"url": "https://ion.tjhsst.edu/api/blocks/2825",
+			"id": 2825
+		},
+		"activity": {
+			"url": "https://ion.tjhsst.edu/api/activities/149",
+			"id": 149,
+			"title": "Ballroom Dance Club"
+		},
+		"scheduled_activity": 38689,
+		"user": 12345
+	},
+	{
+		"id": 13092,
+		"block": {
+			"date": "2015-06-19",
+			"url": "https://ion.tjhsst.edu/api/blocks/3012",
+			"id": 3012
+		},
+		"activity": {
+			"url": "https://ion.tjhsst.edu/api/activities/3069",
+			"id": 3069,
+			"title": "Last Day - Activities - 10:10 - 11:20"
+		},
+		"scheduled_activity": 50595,
+		"user": 12345
+	},
+	{
+		"id": 14911,
+		"block": {
+			"date": "2015-06-19",
+			"url": "https://ion.tjhsst.edu/api/blocks/3013",
+			"id": 3013
+		},
+		"activity": {
+			"url": "https://ion.tjhsst.edu/api/activities/3069",
+			"id": 3069,
+			"title": "Last Day - Activities - 11:30 - 12:40"
+		},
+		"scheduled_activity": 50596,
+		"user": 12345
+	},
+	{
+		"id": 16730,
+		"block": {
+			"date": "2015-06-19",
+			"url": "https://ion.tjhsst.edu/api/blocks/3011",
+			"id": 3011
+		},
+		"activity": {
+			"url": "https://ion.tjhsst.edu/api/activities/3070",
+			"id": 3070,
+			"title": "Last Day - Visit Teachers - 8:50 - 10:00"
+		},
+		"scheduled_activity": 50597,
+		"user": 12345
+	}
 ]

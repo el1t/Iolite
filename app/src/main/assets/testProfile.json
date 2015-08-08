@@ -1,99 +1,99 @@
 {
-  "id": 12345,
-  "ion_username": "2015taccount",
-  "sex": "M",
-  "title": "Mr.",
-  "display_name": "Test Data Account",
-  "full_name": "Test Account",
-  "short_name": "Test",
-  "first_name": "Test",
-  "middle_name": "Data",
-  "last_name": "Account",
-  "common_name": "Test Account",
-  "nickname": null,
-  "tj_email": "2015taccount@tjhsst.edu",
-  "emails": [
-    "a@b.com",
-    "b@c.com"
-  ],
-  "grade": {
-    "number": 13,
-    "name": "graduate"
-  },
-  "graduation_year": 2015,
-  "birthday": "2015-01-01T00:00:00",
-  "user_type": "tjhsstStudent",
-  "home_phone": "1234567890",
-  "mobile_phone": "0987654321",
-  "other_phones": null,
-  "webpages": null,
-  "counselor": {
-    "id": 22,
-    "url": "https://ion.tjhsst.edu/api/profile/22",
-    "user_type": "tjhsstTeacher",
-    "full_name": "Valerie Palmer",
-    "last_name": "Palmer"
-  },
-  "address": {
-    "street": "1234 Muffin Ln",
-    "city": "City",
-    "state": "VA",
-    "postal_code": "12345"
-  },
-  "is_eighth_admin": false,
-  "is_announcements_admin": false,
-  "is_teacher": false,
-  "is_student": true,
-  "classes": [
-    {
-      "section_id": "3199J2-01",
-      "url": "https://ion.tjhsst.edu/api/classes/3199J2-01",
-      "name": "Mobile App Develop"
-    },
-    {
-      "section_id": "3199J1-02",
-      "url": "https://ion.tjhsst.edu/api/classes/3199J1-02",
-      "name": "Web App Develop"
-    },
-    {
-      "section_id": "4220T1-02",
-      "url": "https://ion.tjhsst.edu/api/classes/4220T1-02",
-      "name": "Geosystems"
-    },
-    {
-      "section_id": "319204-03",
-      "url": "https://ion.tjhsst.edu/api/classes/319204-03",
-      "name": "AP Statistics"
-    },
-    {
-      "section_id": "280304-04",
-      "url": "https://ion.tjhsst.edu/api/classes/280304-04",
-      "name": "AP Macroeconomics"
-    },
-    {
-      "section_id": "280204-04",
-      "url": "https://ion.tjhsst.edu/api/classes/280204-04",
-      "name": "AP Microeconomics"
-    },
-    {
-      "section_id": "244504-03",
-      "url": "https://ion.tjhsst.edu/api/classes/244504-03",
-      "name": "AP Government"
-    },
-    {
-      "section_id": "3199T3-03",
-      "url": "https://ion.tjhsst.edu/api/classes/3199T3-03",
-      "name": "Comp Systems Res"
-    },
-    {
-      "section_id": "119604-05",
-      "url": "https://ion.tjhsst.edu/api/classes/119604-05",
-      "name": "AP English Lan/Com"
-    },
-    {
-      "section_id": "001564-12",
-      "url": "https://ion.tjhsst.edu/api/classes/001564-12",
-      "name": "Homeroom Grade 12"
-    }
-  ]
+	"id": 12345,
+	"ion_username": "2015taccount",
+	"sex": "M",
+	"title": "Mr.",
+	"display_name": "Test Data Account",
+	"full_name": "Test Account",
+	"short_name": "Test",
+	"first_name": "Test",
+	"middle_name": "Data",
+	"last_name": "Account",
+	"common_name": "Test Account",
+	"nickname": null,
+	"tj_email": "2015taccount@tjhsst.edu",
+	"emails": [
+		"a@b.com",
+		"b@c.com"
+	],
+	"grade": {
+		"number": 13,
+		"name": "graduate"
+	},
+	"graduation_year": 2015,
+	"birthday": "2015-01-01T00:00:00",
+	"user_type": "tjhsstStudent",
+	"home_phone": "1234567890",
+	"mobile_phone": "0987654321",
+	"other_phones": null,
+	"webpages": null,
+	"counselor": {
+		"id": 22,
+		"url": "https://ion.tjhsst.edu/api/profile/22",
+		"user_type": "tjhsstTeacher",
+		"full_name": "Valerie Palmer",
+		"last_name": "Palmer"
+	},
+	"address": {
+		"street": "1234 Muffin Ln",
+		"city": "City",
+		"state": "VA",
+		"postal_code": "12345"
+	},
+	"is_eighth_admin": false,
+	"is_announcements_admin": false,
+	"is_teacher": false,
+	"is_student": true,
+	"classes": [
+		{
+			"section_id": "3199J2-01",
+			"url": "https://ion.tjhsst.edu/api/classes/3199J2-01",
+			"name": "Mobile App Develop"
+		},
+		{
+			"section_id": "3199J1-02",
+			"url": "https://ion.tjhsst.edu/api/classes/3199J1-02",
+			"name": "Web App Develop"
+		},
+		{
+			"section_id": "4220T1-02",
+			"url": "https://ion.tjhsst.edu/api/classes/4220T1-02",
+			"name": "Geosystems"
+		},
+		{
+			"section_id": "319204-03",
+			"url": "https://ion.tjhsst.edu/api/classes/319204-03",
+			"name": "AP Statistics"
+		},
+		{
+			"section_id": "280304-04",
+			"url": "https://ion.tjhsst.edu/api/classes/280304-04",
+			"name": "AP Macroeconomics"
+		},
+		{
+			"section_id": "280204-04",
+			"url": "https://ion.tjhsst.edu/api/classes/280204-04",
+			"name": "AP Microeconomics"
+		},
+		{
+			"section_id": "244504-03",
+			"url": "https://ion.tjhsst.edu/api/classes/244504-03",
+			"name": "AP Government"
+		},
+		{
+			"section_id": "3199T3-03",
+			"url": "https://ion.tjhsst.edu/api/classes/3199T3-03",
+			"name": "Comp Systems Res"
+		},
+		{
+			"section_id": "119604-05",
+			"url": "https://ion.tjhsst.edu/api/classes/119604-05",
+			"name": "AP English Lan/Com"
+		},
+		{
+			"section_id": "001564-12",
+			"url": "https://ion.tjhsst.edu/api/classes/001564-12",
+			"name": "Homeroom Grade 12"
+		}
+	]
 }
