@@ -16,7 +16,7 @@ import com.el1t.iolite.R;
 /**
  * Created by El1t on 11/17/14.
  */
-public abstract class AbstractDrawerActivity extends AbstractRequestActivity implements
+public abstract class AbstractDrawerActivity extends RequestActivity implements
 		NavigationView.OnNavigationItemSelectedListener {
 	private DrawerLayout mDrawerLayout;
 	private NavigationView mNavigationView;

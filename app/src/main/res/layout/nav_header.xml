@@ -17,8 +17,16 @@
 		android:src="@drawable/circle"
 		android:clickable="true"
 		android:background="?attr/selectableItemBackgroundBorderless"
+		android:tint="@color/blue"
 		android:elevation="1dp"
 		tools:ignore="ContentDescription" />
+	<ImageView
+		android:layout_width="48dp"
+		android:layout_height="48dp"
+		android:layout_margin="8dp"
+		android:scaleType="center"
+		android:elevation="3dp"
+		android:src="@drawable/ic_person_white_48dp"/>
 	<!-- Real name -->
 	<TextView
 		android:id="@+id/header_name"

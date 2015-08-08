@@ -26,7 +26,6 @@ import javax.net.ssl.HttpsURLConnection;
 // Login request -> Check response -> Start HomeActivity
 public class LoginActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener {
 	public static final String FAKE_LOGIN = "fake";
-	public static final String PREFS_NAME = "LOGIN";
 	private static final String TAG = "Login Activity";
 
 	private LoginFragment mLoginFragment;
@@ -40,13 +39,13 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
-		final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+		final SharedPreferences preferences = getSharedPreferences(Utils.PREFS_NAME, MODE_PRIVATE);
 		final boolean remember = preferences.getBoolean("remember", false);
 		mUsername = preferences.getString("username", null);
 		if (savedInstanceState == null) {
 			mLoginFragment = LoginFragment.newInstance(remember, mUsername);
 			getFragmentManager().beginTransaction()
-					.add(R.id.container, mLoginFragment)
+					.replace(R.id.container, mLoginFragment)
 					.commit();
 		} else {
 			mLoginFragment = (LoginFragment) getFragmentManager().getFragment(savedInstanceState, "loginFragment");
@@ -88,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 		mPassword = pass;
 		// Check that the fragment is instantiated, since submit can be called before that
 		if (!mLoginFragment.isChecked()) {
-			getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
+			getSharedPreferences(Utils.PREFS_NAME, MODE_PRIVATE).edit()
 					.remove("remember")
 					.apply();
 		}
@@ -109,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
 	// Do after login request
 	void postRequest() {
-		final SharedPreferences.Editor preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
+		final SharedPreferences.Editor preferences = getSharedPreferences(Utils.PREFS_NAME, MODE_PRIVATE).edit();
 		if (mUsername != null) {
 			preferences.putString("username", mUsername);
 		}
@@ -130,7 +129,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 	}
 
 	private void logout() {
-		getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
+		getSharedPreferences(Utils.PREFS_NAME, MODE_PRIVATE).edit()
 				.remove("password")
 				.apply();
 		mPassword = null;

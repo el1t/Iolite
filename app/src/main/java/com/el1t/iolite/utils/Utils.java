@@ -19,6 +19,7 @@ import java.util.Scanner;
  */
 public class Utils {
 	public static final String TAG = "Utils";
+	public static final String PREFS_NAME = "LOGIN";
 
 	public static class API {
 		private static final String PREFIX = "https://ion.tjhsst.edu/api";

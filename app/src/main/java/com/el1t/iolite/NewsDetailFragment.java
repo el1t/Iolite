@@ -67,6 +67,7 @@ public class NewsDetailFragment extends Fragment {
 		final View rootView = inflater.inflate(R.layout.fragment_news_detail, container, false);
 		((TextView) rootView.findViewById(R.id.title)).setText(mNewsPost.getTitle());
 		((TextView) rootView.findViewById(R.id.author)).setText(mNewsPost.getAuthor());
+		((TextView) rootView.findViewById(R.id.date)).setText(mNewsPost.getDateString());
 		try {
 			((WebView) rootView.findViewById(R.id.web)).loadData("<style>" +
 					Utils.inputStreamToString(getActivity().getAssets().open("styles.css")) + "</style>"

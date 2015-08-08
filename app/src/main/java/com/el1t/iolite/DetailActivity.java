@@ -1,7 +1,6 @@
 package com.el1t.iolite;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
@@ -12,7 +11,7 @@ import android.view.View;
 
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.parser.DetailJsonParser;
-import com.el1t.iolite.utils.AbstractRequestActivity;
+import com.el1t.iolite.utils.RequestActivity;
 import com.el1t.iolite.utils.Utils;
 
 import org.json.JSONException;
@@ -25,10 +24,9 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Created by El1t on 7/22/15.
  */
-public class DetailActivity extends AbstractRequestActivity implements DetailFragment.OnFragmentInteractionListener {
+public class DetailActivity extends RequestActivity implements DetailFragment.OnFragmentInteractionListener {
 	private final static String TAG = "Detail Activity";
 	private DetailFragment mDetailFragment;
-	private String mAuthKey;
 	private int AID;
 	private boolean fake;
 
@@ -74,12 +72,6 @@ public class DetailActivity extends AbstractRequestActivity implements DetailFra
 			setSupportActionBar(toolbar);
 		}
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-		if (!fake) {
-			// Retrieve authKey from shared preferences
-			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
-			mAuthKey = Utils.getAuthKey(preferences);
-		}
 	}
 
 	@Override
@@ -114,16 +106,6 @@ public class DetailActivity extends AbstractRequestActivity implements DetailFra
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected View getContainer() {
-		return findViewById(R.id.container);
-	}
-
-	@Override
-	protected String getAuthKey() {
-		return mAuthKey;
 	}
 
 	private class DetailRequest extends IonRequest<EighthActivity> {

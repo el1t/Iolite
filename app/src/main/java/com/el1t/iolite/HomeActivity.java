@@ -1,7 +1,6 @@
 package com.el1t.iolite;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -49,7 +48,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	private BlockFragment mBlockFragment;
 	private ScheduleFragment mScheduleFragment;
 	private NewsFragment mNewsFragment;
-	private String mAuthKey;
 	private User mUser;
 	private boolean fake;
 	private Section activeView;
@@ -93,12 +91,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 					mNewsFragment = (NewsFragment) getFragmentManager().getFragment(savedInstanceState, ARG_FRAGMENT);
 					break;
 			}
-		}
-
-		if (!fake) {
-			// Retrieve authKey from shared preferences
-			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
-			mAuthKey = Utils.getAuthKey(preferences);
 		}
 
 		if (mUser == null) {
@@ -164,16 +156,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 				return false;
 		}
 		return super.onNavigationItemSelected(item);
-	}
-
-	@Override
-	protected String getAuthKey() {
-		return mAuthKey;
-	}
-
-	@Override
-	protected View getContainer() {
-		return findViewById(R.id.container);
 	}
 
 	// Switch and refresh view if a new view is selected
@@ -311,7 +293,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	}
 
 	void logout() {
-		mAuthKey = null;
 		// Start login activity
 		final Intent intent = new Intent(this, LoginActivity.class);
 		intent.putExtra("logout", true);

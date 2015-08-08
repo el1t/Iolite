@@ -87,11 +87,11 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 		mColors[Colors.WHITE.ordinal()] = resources.getColor(R.color.background);
 
 		// Cache icons
-		ICON_DASH = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_remove_circle_white_48dp);
-		ICON_LOCK = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_lock_white_48dp);
-		ICON_STAR = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_star_rate_white_48dp);
-		ICON_FAVE = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_favorite_circle_white_48dp);
-		ICON_OKAY = BitmapFactory.decodeResource(context.getResources(), R.drawable.abc_btn_check_to_on_mtrl_015);
+		ICON_DASH = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_remove_white_24dp);
+		ICON_LOCK = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_lock_white_24dp);
+		ICON_STAR = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_star_white_24dp);
+		ICON_FAVE = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_favorite_white_24dp);
+		ICON_OKAY = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_done_white_24dp);
 	}
 
 	@Override

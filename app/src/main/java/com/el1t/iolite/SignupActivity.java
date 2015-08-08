@@ -16,7 +16,7 @@ import android.view.View;
 
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.parser.EighthActivityJsonParser;
-import com.el1t.iolite.utils.AbstractRequestActivity;
+import com.el1t.iolite.utils.RequestActivity;
 import com.el1t.iolite.utils.Utils;
 
 import java.io.IOException;
@@ -28,7 +28,7 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Created by El1t on 10/21/14.
  */
-public class SignupActivity extends AbstractRequestActivity implements SignupFragment.OnFragmentInteractionListener {
+public class SignupActivity extends RequestActivity implements SignupFragment.OnFragmentInteractionListener {
 	private static final String TAG = "Signup Activity";
 	private static final String ARG_FAKE = "fake";
 	private static final String ARG_BID = "bid";
@@ -36,7 +36,6 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 
 	private SignupFragment mSignupFragment;
 	private int BID;
-	private String mAuthKey;
 	private boolean fake;
 	private ArrayList<AsyncTask> mTasks;
 
@@ -60,12 +59,6 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 			if (BID == savedInstanceState.getInt(ARG_BID)) {
 				mSignupFragment = (SignupFragment) getFragmentManager().getFragment(savedInstanceState, ARG_FRAGMENT);
 			}
-		}
-
-		// Retrieve authKey from shared preferences
-		if (!fake) {
-			final SharedPreferences preferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
-			mAuthKey = Utils.getAuthKey(preferences);
 		}
 
 		// Use material design toolbar
@@ -252,14 +245,6 @@ public class SignupActivity extends AbstractRequestActivity implements SignupFra
 			Log.e(TAG, "Error parsing activity xml", e);
 		}
 		return null;
-	}
-
-	protected String getAuthKey() {
-		return mAuthKey;
-	}
-
-	protected View getContainer() {
-		return findViewById(R.id.container);
 	}
 
 	// Retrieve activity list for BID
