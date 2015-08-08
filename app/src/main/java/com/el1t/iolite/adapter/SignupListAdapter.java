@@ -36,7 +36,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 	private final Bitmap ICON_LOCK;
 	private final Bitmap ICON_STAR;
 	private final Bitmap ICON_FAVE;
-	private final Bitmap ICON_OKAY;
+	private final Bitmap ICON_DONE;
 	ArrayList<EighthActivity> mItems;
 
 	// View lookup cache
@@ -91,7 +91,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 		ICON_LOCK = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_lock_white_24dp);
 		ICON_STAR = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_star_white_24dp);
 		ICON_FAVE = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_favorite_white_24dp);
-		ICON_OKAY = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_done_white_24dp);
+		ICON_DONE = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_done_white_24dp);
 	}
 
 	@Override
@@ -172,7 +172,7 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 				viewHolder.icon.setImageBitmap(ICON_STAR);
 			} else {
 				color = Colors.GREEN;
-				viewHolder.icon.setImageBitmap(ICON_OKAY);
+				viewHolder.icon.setImageBitmap(ICON_DONE);
 			}
 			// Tint icon
 			viewHolder.circle.setColorFilter(mColors[color.ordinal()]);
