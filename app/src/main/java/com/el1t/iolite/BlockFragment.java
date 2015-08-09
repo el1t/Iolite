@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import com.el1t.iolite.adapter.BlockListAdapter;
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.item.EighthBlock;
-import com.el1t.iolite.utils.RecyclerItemClickListener;
 
 /**
  * Created by El1t on 10/24/14.
@@ -66,15 +65,6 @@ public class BlockFragment extends Fragment {
 		blockList.setLayoutManager(mLayoutManager);
 		blockList.setItemAnimator(new DefaultItemAnimator());
 		blockList.setAdapter(mAdapter);
-		RecyclerItemClickListener.attachTo(blockList, inflater.getContext(),
-				new RecyclerItemClickListener.OnItemClickListener() {
-					@Override
-					public void onItemClick(View view, int position) {
-						if (position >= 0) {
-							mListener.select(mAdapter.get(position).getBID());
-						}
-					}
-				});
 
 		mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
 		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

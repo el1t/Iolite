@@ -4,14 +4,15 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.el1t.iolite.R;
@@ -20,15 +21,12 @@ import com.el1t.iolite.item.EighthActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * Created by El1t on 10/21/14.
  */
-public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements Filterable {
-	private final ArrayList<EighthActivity> headers;
-	private final DefaultSortComp mComp;
+public class SignupListAdapter extends RecyclerView.Adapter<SignupListAdapter.ViewHolder> implements Filterable {
+	private final ArrayList<EighthActivity> mItemList;
 	private final LayoutInflater mLayoutInflater;
 	private final SignupFragment.OnFragmentInteractionListener mListener;
 	private final int[] mColors;
@@ -37,10 +35,10 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 	private final Bitmap ICON_STAR;
 	private final Bitmap ICON_FAVE;
 	private final Bitmap ICON_DONE;
-	ArrayList<EighthActivity> mItems;
+	private EighthActivity[] mItems;
 
 	// View lookup cache
-	private static class ViewHolder {
+	public static class ViewHolder extends RecyclerView.ViewHolder {
 		TextView title;
 		TextView room;
 		TextView sponsors;
@@ -48,6 +46,22 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 		ImageView circle;
 		ImageView icon;
 		ProgressBar capacity;
+		RelativeLayout container;
+
+		public ViewHolder(View itemView) {
+			super(itemView);
+			title = (TextView) itemView.findViewById(R.id.title);
+			// If inflating R.layout.row_block
+			if (itemView.getId() == R.id.container) {
+				room = (TextView) itemView.findViewById(R.id.room);
+				sponsors = (TextView) itemView.findViewById(R.id.sponsors);
+				description = (TextView) itemView.findViewById(R.id.description);
+				circle = (ImageView) itemView.findViewById(R.id.circle);
+				icon = (ImageView) itemView.findViewById(R.id.icon);
+				capacity = (ProgressBar) itemView.findViewById(R.id.capacity);
+				container = (RelativeLayout) itemView.findViewById(R.id.content);
+			}
+		}
 	}
 
 	public enum ActivityHeaderType {
@@ -55,25 +69,18 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 	}
 
 	public enum Colors {
-		RED, DEEP_ORANGE, PINK, ORANGE, GREEN, WHITE
+		RED, DEEP_ORANGE, PINK, ORANGE, GREEN, GREY
 	}
 
 	public SignupListAdapter(Activity context, EighthActivity[] items) {
-		super(context, 0);
 		mListener = (SignupFragment.OnFragmentInteractionListener) context;
-		// Headers
-		headers = new ArrayList<>(items.length + 3);
-		headers.add(new EighthActivity("Favorites", ActivityHeaderType.FAVORITE));
-		headers.add(new EighthActivity("Special", ActivityHeaderType.SPECIAL));
-		headers.add(new EighthActivity("Activities", ActivityHeaderType.GENERAL));
-
-		mComp = new DefaultSortComp();
-		if (items == null) {
-			mItems = null;
+		if (items == null || items.length < 10) {
+			mItemList = new ArrayList<>();
 		} else {
-			mItems = new ArrayList<>(Arrays.asList(items));
-			sort();
+			mItemList = new ArrayList<>(items.length);
 		}
+		mItems = null;
+		update(items);
 		mLayoutInflater = LayoutInflater.from(context);
 
 		// Cache colors
@@ -84,192 +91,106 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 		mColors[Colors.PINK.ordinal()] = resources.getColor(R.color.pink_400);
 		mColors[Colors.ORANGE.ordinal()] = resources.getColor(R.color.orange_400);
 		mColors[Colors.GREEN.ordinal()] = resources.getColor(R.color.green_400);
-		mColors[Colors.WHITE.ordinal()] = resources.getColor(R.color.background);
+		mColors[Colors.GREY.ordinal()] = resources.getColor(R.color.grey_400);
 
 		// Cache icons
-		ICON_DASH = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_remove_white_24dp);
-		ICON_LOCK = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_lock_white_24dp);
-		ICON_STAR = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_star_white_24dp);
-		ICON_FAVE = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_favorite_white_24dp);
-		ICON_DONE = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_done_white_24dp);
+		ICON_DASH = BitmapFactory.decodeResource(resources, R.drawable.ic_remove_white_24dp);
+		ICON_LOCK = BitmapFactory.decodeResource(resources, R.drawable.ic_lock_white_24dp);
+		ICON_STAR = BitmapFactory.decodeResource(resources, R.drawable.ic_star_white_24dp);
+		ICON_FAVE = BitmapFactory.decodeResource(resources, R.drawable.ic_favorite_white_24dp);
+		ICON_DONE = BitmapFactory.decodeResource(resources, R.drawable.ic_done_white_24dp);
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// Cache the views for faster performance
-		final ViewHolder viewHolder;
-		final EighthActivity item = getItem(position);
+	public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+		return new ViewHolder(mLayoutInflater.inflate(viewType, viewGroup, false));
+	}
 
-		if (convertView == null) {
-			// Initialize viewHolder and convertView
-			viewHolder = new ViewHolder();
-			// Save IDs inside ViewHolder and attach the ViewHolder to convertView
-			if (item.isHeader()) {
-				convertView = mLayoutInflater.inflate(R.layout.row_header, parent, false);
-				viewHolder.title = (TextView) convertView.findViewById(R.id.title);
-			} else {
-				convertView = mLayoutInflater.inflate(R.layout.row_signup, parent, false);
-				viewHolder.title = (TextView) convertView.findViewById(R.id.title);
-				viewHolder.room = (TextView) convertView.findViewById(R.id.room);
-				viewHolder.sponsors = (TextView) convertView.findViewById(R.id.sponsors);
-				viewHolder.description = (TextView) convertView.findViewById(R.id.description);
-				viewHolder.capacity = (ProgressBar) convertView.findViewById(R.id.capacity);
-				viewHolder.circle = (ImageView) convertView.findViewById(R.id.circle);
-				viewHolder.icon = (ImageView) convertView.findViewById(R.id.icon);
-			}
-			convertView.setTag(viewHolder);
-		} else {
-			viewHolder = (ViewHolder) convertView.getTag();
-		}
-
+	@Override
+	public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
+		final EighthActivity item = mItemList.get(position);
 		// Title
 		viewHolder.title.setText(item.getName());
-		if (!item.isHeader()) {
-			// Description
-			viewHolder.description.setText(item.getDescription());
-			// Rooms
-			if (item.hasRooms()) {
-				viewHolder.room.setVisibility(View.VISIBLE);
-				viewHolder.room.setText(item.getRooms());
+		if (viewHolder.getItemViewType() == R.layout.row_header) {
+			// Do nothing else
+			return;
+		}
+		// Description
+		viewHolder.description.setText(item.getDescription());
+		// Rooms
+		if (item.hasRooms()) {
+			viewHolder.room.setVisibility(View.VISIBLE);
+			viewHolder.room.setText(item.getRooms());
+		} else {
+			viewHolder.room.setVisibility(View.GONE);
+		}
+		// Sponsors
+		if (item.hasSponsors()) {
+			viewHolder.sponsors.setVisibility(View.VISIBLE);
+			// Show dash only if needed
+			if (viewHolder.room.getVisibility() == View.VISIBLE) {
+				viewHolder.sponsors.setText("—" + item.getSponsors());
 			} else {
-				viewHolder.room.setVisibility(View.GONE);
+				viewHolder.sponsors.setText(item.getSponsors());
 			}
-			// Sponsors
-			if (item.hasSponsors()) {
-				viewHolder.sponsors.setVisibility(View.VISIBLE);
-				// Show dash only if needed
-				if (viewHolder.room.getVisibility() == View.VISIBLE) {
-					viewHolder.sponsors.setText("—" + item.getSponsors());
-				} else {
-					viewHolder.sponsors.setText(item.getSponsors());
-				}
-			} else {
-				viewHolder.sponsors.setVisibility(View.GONE);
-			}
-			// Capacity bar
-			if (item.getCapacity() > 0) {
-				viewHolder.capacity.setMax(item.getCapacity());
-				viewHolder.capacity.setProgress(item.getMemberCount());
-				viewHolder.capacity.setAlpha(0.05f);
-				viewHolder.capacity.setVisibility(View.VISIBLE);
-			} else {
-				viewHolder.capacity.setVisibility(View.GONE);
-			}
-
-			// Set color
-			final Colors color;
-			if (item.isCancelled()) {
-				color = Colors.RED;
-				viewHolder.icon.setImageBitmap(ICON_DASH);
-			} else if (item.isRestricted()) {
-				color = Colors.DEEP_ORANGE;
-				viewHolder.icon.setImageBitmap(ICON_LOCK);
-			} else if (item.isFavorite()) {
-				color = Colors.PINK;
-				viewHolder.icon.setImageBitmap(ICON_FAVE);
-			} else if (item.isSpecial()) {
-				color = Colors.ORANGE;
-				viewHolder.icon.setImageBitmap(ICON_STAR);
-			} else {
-				color = Colors.GREEN;
-				viewHolder.icon.setImageBitmap(ICON_DONE);
-			}
-			// Tint icon
-			viewHolder.circle.setColorFilter(mColors[color.ordinal()]);
-			viewHolder.circle.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					mListener.viewDetails(item);
-				}
-			});
+		} else {
+			viewHolder.sponsors.setVisibility(View.GONE);
+		}
+		// Capacity bar
+		if (item.getCapacity() > 0) {
+			viewHolder.capacity.setMax(item.getCapacity());
+			viewHolder.capacity.setProgress(item.getMemberCount());
+			viewHolder.capacity.setAlpha(0.05f);
+			viewHolder.capacity.setVisibility(View.VISIBLE);
+		} else {
+			viewHolder.capacity.setVisibility(View.GONE);
 		}
 
-		return convertView;
+		// Set color
+		final Colors color;
+		if (item.isCancelled()) {
+			color = Colors.RED;
+			viewHolder.icon.setImageBitmap(ICON_DASH);
+		} else if (item.isRestricted()) {
+			color = Colors.DEEP_ORANGE;
+			viewHolder.icon.setImageBitmap(ICON_LOCK);
+		} else if (item.isFavorite()) {
+			color = Colors.PINK;
+			viewHolder.icon.setImageBitmap(ICON_FAVE);
+		} else if (item.isSpecial()) {
+			color = Colors.ORANGE;
+			viewHolder.icon.setImageBitmap(ICON_STAR);
+		} else if (item.isFull()) {
+			color = Colors.GREY;
+			viewHolder.icon.setImageBitmap(ICON_LOCK);
+		} else {
+			color = Colors.GREEN;
+			viewHolder.icon.setImageBitmap(ICON_DONE);
+		}
+		// Tint icon
+		viewHolder.circle.setColorFilter(mColors[color.ordinal()]);
+		viewHolder.circle.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mListener.viewDetails(item);
+			}
+		});
+		viewHolder.container.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mListener.submit(item);
+			}
+		});
 	}
 
 	@Override
 	public int getItemViewType(int position) {
-		return getItem(position).isHeader() ? 1 : 0;
+		return mItemList.get(position).isHeader() ? R.layout.row_header : R.layout.row_signup;
 	}
 
 	@Override
-	public int getViewTypeCount() {
-		return 2;
-	}
-
-	@Override
-	public boolean isEnabled(int position) {
-		return !getItem(position).isHeader();
-	}
-
-	/**
-	 * Sorts mItems, adds headers, and puts them into the view
-	 */
-	public void sort() {
-		Collections.sort(mItems, mComp);
-		clear();
-		addAll(mItems);
-		addHeaders();
-		notifyDataSetChanged();
-	}
-
-	// Sort items and add to both lists
-	public void update(EighthActivity[] items) {
-		if (items != null) {
-			mItems.clear();
-			mItems.addAll(Arrays.asList(items));
-			sort();
-		}
-	}
-
-	private void addHeaders() {
-		ActivityHeaderType index = ActivityHeaderType.FAVORITE;
-		EighthActivity item;
-		int count = getCount();
-		for (int i = 0; i < count; i++) {
-			item = getItem(i);
-			switch (index) {
-				case FAVORITE:
-					if (item.isFavorite()) {
-						insert(headers.get(index.ordinal()), i);
-						index = ActivityHeaderType.SPECIAL;
-						continue;
-					} else {
-						// Skip if no favorites
-						i--;
-						index = ActivityHeaderType.SPECIAL;
-					}
-					break;
-				case SPECIAL:
-					if (!item.isFavorite()) {
-						if (item.isSpecial()) {
-							insert(headers.get(index.ordinal()), i);
-							index = ActivityHeaderType.GENERAL;
-						} else {
-							// Skip if no special activities
-							i--;
-							index = ActivityHeaderType.GENERAL;
-						}
-						continue;
-					}
-					break;
-				case GENERAL:
-					if (!(item.isFavorite() || item.isSpecial())) {
-						insert(headers.get(index.ordinal()), i);
-						return;
-					}
-					break;
-			}
-		}
-	}
-
-	// Assumes mItems is already sorted
-	public void restore() {
-		if (getCount() == 0 && mItems != null) {
-			addAll(mItems);
-			addHeaders();
-			notifyDataSetChanged();
-		}
+	public int getItemCount() {
+		return mItemList.size();
 	}
 
 	@Override
@@ -278,9 +199,9 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void publishResults(CharSequence constraint, FilterResults results) {
-				clear();
+				mItemList.clear();
 				if (results.count != 0) {
-					addAll((ArrayList<EighthActivity>) results.values);
+					mItemList.addAll((ArrayList<EighthActivity>) results.values);
 					addHeaders();
 				}
 				notifyDataSetChanged();
@@ -291,18 +212,19 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 				final FilterResults results = new FilterResults();
 
 				// Empty constraints display all items
-				if (constraint == null || constraint.length() == 0) {
+				final String temp;
+				if (constraint == null || (temp = constraint.toString()).isEmpty()) {
 					results.values = mItems;
-					results.count = mItems.size();
+					results.count = mItems.length;
 				} else {
 					final ArrayList<EighthActivity> FilteredArrayNames = new ArrayList<>();
-					final String temp = constraint.toString().toLowerCase().replace(" ", "");
+					final String arg = temp.toLowerCase().replace(" ", "");
 					// This should preserve the sort of the items
 					for (EighthActivity item : mItems) {
 						// Match activity name, and room number todo: match sponsors
-						if (!item.isHeader() && (item.getName().toLowerCase().replace(" ", "").contains(temp) ||
-								item.getSponsorsNoDelim().toLowerCase().replace(" ", "").contains(temp) ||
-								item.getRoomsNoDelim().toLowerCase().replace(" ", "").contains(temp))) {
+						if (!item.isHeader() && (item.getName().toLowerCase().replace(" ", "").contains(arg) ||
+								item.getSponsorsNoDelim().toLowerCase().replace(" ", "").contains(arg) ||
+								item.getRoomsNoDelim().toLowerCase().replace(" ", "").contains(arg))) {
 							FilteredArrayNames.add(item);
 						}
 					}
@@ -314,25 +236,62 @@ public class SignupListAdapter extends ArrayAdapter<EighthActivity> implements F
 		};
 	}
 
-	// Sort by favorites, alphabetically
-	private class DefaultSortComp implements Comparator<EighthActivity> {
-		@Override
-		public int compare(EighthActivity e1, EighthActivity e2) {
-			// Compare by name if both or neither are favorites, or return the favorite
-			if (e1.isFavorite()) {
-				if (e2.isFavorite())
-					return e1.getName().compareToIgnoreCase(e2.getName());
-				return -1;
-			}
-			if (e2.isFavorite())
-				return 1;
-
-			// Check for special
-			if (!(e1.isSpecial() ^ e2.isSpecial()))
-				return e1.getName().compareToIgnoreCase(e2.getName());
-			if (e1.isSpecial())
-				return -1;
-			return 1;
+	/**
+	 * Sorts mItems, adds headers, and puts them into the view
+	 */
+	public void update(EighthActivity[] items) {
+		if (items != null) {
+			mItems = items;
+			Arrays.sort(mItems);
+			mItemList.clear();
+			mItemList.addAll(Arrays.asList(mItems));
+			addHeaders();
+			notifyDataSetChanged();
 		}
+	}
+
+	private void addHeaders() {
+		ActivityHeaderType index = ActivityHeaderType.FAVORITE;
+		EighthActivity item;
+		int count = mItems.length;
+		for (int i = 0; i < count; i++) {
+			item = mItemList.get(i);
+			switch (index) {
+				case FAVORITE:
+					if (item.isFavorite()) {
+						mItemList.add(i, new EighthActivity("Favorites", ActivityHeaderType.FAVORITE));
+						index = ActivityHeaderType.SPECIAL;
+						continue;
+					} else {
+						// Skip if no favorites
+						i--;
+						index = ActivityHeaderType.SPECIAL;
+					}
+					break;
+				case SPECIAL:
+					if (!item.isFavorite()) {
+						if (item.isSpecial()) {
+							mItemList.add(i, new EighthActivity("Special", ActivityHeaderType.SPECIAL));
+							index = ActivityHeaderType.GENERAL;
+						} else {
+							// Skip if no special activities
+							i--;
+							index = ActivityHeaderType.GENERAL;
+						}
+						continue;
+					}
+					break;
+				case GENERAL:
+					if (!(item.isFavorite() || item.isSpecial())) {
+						mItemList.add(i, new EighthActivity("Activities", ActivityHeaderType.GENERAL));
+						return;
+					}
+					break;
+			}
+		}
+	}
+
+	public EighthActivity get(int position) {
+		return mItemList.get(position);
 	}
 }

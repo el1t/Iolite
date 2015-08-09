@@ -1,6 +1,6 @@
 package com.el1t.iolite.adapter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.el1t.iolite.NewsFragment;
 import com.el1t.iolite.R;
 import com.el1t.iolite.item.NewsPost;
 
@@ -16,6 +17,7 @@ import com.el1t.iolite.item.NewsPost;
  */
 public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHolder> {
 	private final LayoutInflater mLayoutInflater;
+	private NewsFragment.OnFragmentInteractionListener mListener;
 	private NewsPost[] mNewsPosts;
 
 	// View lookup cache
@@ -36,7 +38,8 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
 		}
 	}
 
-	public NewsCardAdapter(Context context, NewsPost[] eighthActivity) {
+	public NewsCardAdapter(Activity context, NewsPost[] eighthActivity) {
+		mListener = (NewsFragment.OnFragmentInteractionListener) context;
 		mLayoutInflater = LayoutInflater.from(context);
 		mNewsPosts = eighthActivity;
 	}
@@ -54,6 +57,12 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
 		viewHolder.content.setText(post.getTrimmedContent());
 		viewHolder.author.setText("Posted by: " + post.getAuthor());
 		viewHolder.date.setText(post.getDateString());
+		viewHolder.card.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mListener.select(post, view);
+			}
+		});
 	}
 
 	@Override

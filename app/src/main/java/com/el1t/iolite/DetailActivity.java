@@ -26,7 +26,12 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class DetailActivity extends RequestActivity implements DetailFragment.OnFragmentInteractionListener {
 	private final static String TAG = "Detail Activity";
+	private final static String ARG_AID = "aid";
+	private final static String ARG_FAKE = "fake";
+	private final static String ARG_FRAGMENT = "fragment";
+	private final static String ARG_EIGHTH_ACTIVITY = "activity";
 	private DetailFragment mDetailFragment;
+	private EighthActivity mEighthActivity;
 	private int AID;
 	private boolean fake;
 
@@ -38,31 +43,33 @@ public class DetailActivity extends RequestActivity implements DetailFragment.On
 		// Check if restoring from previously destroyed instance
 		if (savedInstanceState == null) {
 			final Intent intent = getIntent();
-			final EighthActivity activityItem = intent.getParcelableExtra("activity");
-			if (activityItem == null) {
+			mEighthActivity = intent.getParcelableExtra(ARG_EIGHTH_ACTIVITY);
+			if (mEighthActivity == null) {
 				Log.e(TAG, "Missing EighthActivity", new IllegalArgumentException());
 			} else {
-				AID = activityItem.getAID();
-				((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar)).setTitle(activityItem.getName());
-				mDetailFragment = DetailFragment.newInstance(activityItem);
+				AID = mEighthActivity.getAID();
+				((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar)).setTitle(mEighthActivity.getName());
+				mDetailFragment = DetailFragment.newInstance(mEighthActivity);
 				getFragmentManager().beginTransaction()
 						.replace(R.id.container, mDetailFragment)
 						.commit();
 			}
 
 			// Check if fake information should be used
-			fake = intent.getBooleanExtra("fake", false);
+			fake = intent.getBooleanExtra(ARG_FAKE, false);
 		} else {
-			AID = savedInstanceState.getInt("AID");
-			fake = savedInstanceState.getBoolean("fake");
-			mDetailFragment = (DetailFragment) getFragmentManager().getFragment(savedInstanceState, "fragment");
+			AID = savedInstanceState.getInt(ARG_AID);
+			fake = savedInstanceState.getBoolean(ARG_FAKE);
+			mDetailFragment = (DetailFragment) getFragmentManager().getFragment(savedInstanceState, ARG_FRAGMENT);
+			mEighthActivity = savedInstanceState.getParcelable(ARG_EIGHTH_ACTIVITY);
 		}
 
 		// Bind FAB click
 		findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Snackbar.make(findViewById(R.id.container), "Noticed", Snackbar.LENGTH_SHORT).show();
+				Snackbar.make(findViewById(R.id.container), "Sorry, not implemented yet", Snackbar.LENGTH_SHORT).show();
+				// TODO: favorite();
 			}
 		});
 
@@ -94,9 +101,10 @@ public class DetailActivity extends RequestActivity implements DetailFragment.On
 	@Override
 	protected void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putInt("AID", AID);
-		savedInstanceState.putSerializable("fake", fake);
-		getFragmentManager().putFragment(savedInstanceState, "detailFragment", mDetailFragment);
+		savedInstanceState.putInt(ARG_AID, AID);
+		savedInstanceState.putBoolean(ARG_FAKE, fake);
+		getFragmentManager().putFragment(savedInstanceState, ARG_FRAGMENT, mDetailFragment);
+		savedInstanceState.putParcelable(ARG_EIGHTH_ACTIVITY, mEighthActivity);
 	}
 
 	@Override
@@ -106,6 +114,27 @@ public class DetailActivity extends RequestActivity implements DetailFragment.On
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	// Favorite an activity
+	public void favorite() {
+		// Note: the server uses the UID field as the AID in its API
+		new FavoriteRequest().execute();
+		final String message;
+		if (mEighthActivity.changeFavorite()) {
+			message = "Favorited";
+		} else {
+			message = "Unfavorited";
+		}
+		Snackbar.make(findViewById(R.id.container), message, Snackbar.LENGTH_SHORT)
+				.setAction("Undo", new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						new FavoriteRequest().execute();
+						mEighthActivity.changeFavorite();
+					}
+				}).show();
+		Log.d(TAG, message + " AID " + AID);
 	}
 
 	private class DetailRequest extends IonRequest<EighthActivity> {
@@ -132,6 +161,21 @@ public class DetailActivity extends RequestActivity implements DetailFragment.On
 			if (result != null) {
 				mDetailFragment.update(result);
 			}
+		}
+	}
+
+	private class FavoriteRequest extends IonRequest<Boolean> {
+		@Override
+		protected String getURL() {
+			return "https://iodine.tjhsst.edu/eighth/vcp_schedule/favorite/uid/" + AID
+					+ "/bids/1234"; // TODO: switch to ion
+		}
+
+		@Override
+		protected Boolean doInBackground(HttpsURLConnection urlConnection) throws Exception {
+			urlConnection.connect();
+			urlConnection.getInputStream();
+			return true;
 		}
 	}
 }

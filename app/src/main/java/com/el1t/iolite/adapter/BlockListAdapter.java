@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.el1t.iolite.BlockFragment;
@@ -24,7 +25,7 @@ import java.util.Date;
  */
 public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.ViewHolder> {
 	private EighthBlock[] mItems;
-	private ArrayList<EighthBlock> mDisplayItems;
+	private final ArrayList<EighthBlock> mItemList;
 	private final LayoutInflater mLayoutInflater;
 	private final int[] mColors;
 	private final BlockFragment.OnFragmentInteractionListener mListener;
@@ -45,6 +46,7 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 		TextView description;
 		ImageView circle;
 		TextView letter;
+		RelativeLayout container;
 
 		public ViewHolder(View itemView) {
 			super(itemView);
@@ -56,13 +58,14 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 				description = (TextView) itemView.findViewById(R.id.description);
 				circle = (ImageView) itemView.findViewById(R.id.circle);
 				letter = (TextView) itemView.findViewById(R.id.letter);
+				container = (RelativeLayout) itemView.findViewById(R.id.container);
 			}
 		}
 	}
 
 	public BlockListAdapter(Activity context, EighthBlock[] items) {
 		mListener = (BlockFragment.OnFragmentInteractionListener) context;
-		mDisplayItems = new ArrayList<>();
+		mItemList = new ArrayList<>();
 		mItems = null;
 		update(items);
 		mLayoutInflater = LayoutInflater.from(context);
@@ -88,7 +91,7 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 
 	@Override
 	public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-		final EighthBlock blockItem = mDisplayItems.get(position);
+		final EighthBlock blockItem = mItemList.get(position);
 		final EighthActivity activityItem = blockItem.getEighth();
 
 		if (viewHolder.getItemViewType() == R.layout.row_header) {
@@ -182,23 +185,29 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 		// Tint icon
 		viewHolder.circle.setColorFilter(mColors[color.ordinal()]);
 		viewHolder.letter.setText(letter);
+		viewHolder.container.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mListener.select(blockItem.getBID());
+			}
+		});
 	}
 
 	@Override
 	public int getItemViewType(int position) {
-		return mDisplayItems.get(position).isHeader() ? R.layout.row_header : R.layout.row_block;
+		return mItemList.get(position).isHeader() ? R.layout.row_header : R.layout.row_block;
 	}
 
 	@Override
 	public int getItemCount() {
-		return mDisplayItems == null ? 0 : mDisplayItems.size();
+		return mItemList.size();
 	}
 
 	public void update(EighthBlock[] items) {
 		if (items != null) {
 			mItems = items;
-			mDisplayItems.clear();
-			mDisplayItems.addAll(Arrays.asList(mItems));
+			mItemList.clear();
+			mItemList.addAll(Arrays.asList(mItems));
 			addHeaders();
 			notifyDataSetChanged();
 		}
@@ -209,15 +218,15 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 		int count = mItems.length;
 		if (count > 0) {
 			// Dates must be used because blocks can start on any letter
-			Date date = mDisplayItems.get(0).getDate();
+			Date date = mItemList.get(0).getDate();
 			Date nextDate;
-			mDisplayItems.add(0, new EighthBlock(date));
+			mItemList.add(0, new EighthBlock(date));
 			count++;
 			for (int i = 1; i < count; i++) {
-				nextDate = mDisplayItems.get(i).getDate();
+				nextDate = mItemList.get(i).getDate();
 				if (!nextDate.equals(date)) {
 					date = nextDate;
-					mDisplayItems.add(i++, new EighthBlock(date));
+					mItemList.add(i++, new EighthBlock(date));
 					count++;
 				}
 			}
@@ -225,6 +234,6 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 	}
 
 	public EighthBlock get(int i) {
-		return mDisplayItems.get(i);
+		return mItemList.get(i);
 	}
 }

@@ -4,7 +4,7 @@
 	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorPrimaryDark">@color/primary_dark</item>
-		<item name="colorAccent">@color/light_blue</item>
+		<item name="colorAccent">@color/accent_400</item>
 		<item name="android:windowNoTitle">true</item>
 		<item name="android:windowActionModeOverlay">true</item>
 	</style>
@@ -13,7 +13,7 @@
 	<style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorPrimaryDark">@color/primary_dark</item>
-		<item name="colorAccent">@color/light_blue</item>
+		<item name="colorAccent">@color/accent_400</item>
 		<item name="android:windowNoTitle">true</item>
 		<item name="android:windowActionModeOverlay">true</item>
 	</style>

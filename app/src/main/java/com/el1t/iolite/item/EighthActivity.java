@@ -2,6 +2,7 @@ package com.el1t.iolite.item;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.el1t.iolite.adapter.SignupListAdapter;
 import com.el1t.iolite.utils.Utils;
@@ -9,7 +10,7 @@ import com.el1t.iolite.utils.Utils;
 /**
  * Created by El1t on 10/21/14.
  */
-public class EighthActivity implements Parcelable {
+public class EighthActivity implements Parcelable, Comparable<EighthActivity> {
 	private int AID;
 	private int BID;
 	private int memberCount;
@@ -326,6 +327,28 @@ public class EighthActivity implements Parcelable {
 
 	public boolean changeFavorite() {
 		return favorite = !favorite;
+	}
+
+	public int compareTo(@NonNull EighthActivity other) {
+		// Compare by name if both or neither are favorites, or return the favorite
+		if (favorite) {
+			if (other.favorite) {
+				return name.compareToIgnoreCase(other.name);
+			}
+			return -1;
+		}
+		if (other.favorite) {
+			return 1;
+		}
+
+		// Check for special
+		if (!(special ^ other.special)) {
+			return name.compareToIgnoreCase(other.name);
+		}
+		if (special) {
+			return -1;
+		}
+		return 1;
 	}
 
 	protected EighthActivity(Parcel in) {

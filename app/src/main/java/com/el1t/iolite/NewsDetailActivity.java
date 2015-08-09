@@ -2,9 +2,11 @@ package com.el1t.iolite;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.el1t.iolite.item.NewsPost;
 
@@ -29,6 +31,13 @@ public class NewsDetailActivity extends AppCompatActivity implements NewsDetailF
 		} else {
 			mNewsDetailFragment = (NewsDetailFragment) getFragmentManager().getFragment(savedInstanceState, ARG_FRAGMENT);
 		}
+
+		findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Snackbar.make(findViewById(R.id.container), "Sorry, not implemented yet", Snackbar.LENGTH_SHORT).show();
+			}
+		});
 
 		// Use material design toolbar
 		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

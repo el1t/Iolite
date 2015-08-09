@@ -3,7 +3,6 @@ package com.el1t.iolite;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -12,15 +11,12 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.parser.EighthActivityJsonParser;
 import com.el1t.iolite.utils.RequestActivity;
 import com.el1t.iolite.utils.Utils;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -213,30 +209,6 @@ public class SignupActivity extends RequestActivity implements SignupFragment.On
 		}
 	}
 
-	// Favorite an activity
-	public void favorite(final int AID, final int BID, final EighthActivity item) {
-		// Note: the server uses the UID field as the AID in its API
-		// Sending the BID is useless, but it is required by the server
-		mTasks.add(new ServerRequest("eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID).execute());
-		final String message;
-		if (item.changeFavorite()) {
-			message = "Favorited";
-		} else {
-			message = "Unfavorited";
-		}
-		Snackbar.make(findViewById(R.id.container), message, Snackbar.LENGTH_SHORT)
-				.setAction("Undo", new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						mTasks.add(new ServerRequest("eighth/vcp_schedule/favorite/uid/" + AID + "/bids/" + BID)
-								.execute());
-						item.changeFavorite();
-						mSignupFragment.updateAdapter();
-					}
-				}).show();
-		Log.d(TAG, message + " AID " + AID);
-	}
-
 	// Get a fake list of activities for debugging
 	private EighthActivity[] getList() {
 		try {
@@ -310,41 +282,6 @@ public class SignupActivity extends RequestActivity implements SignupFragment.On
 			if (result != null) {
 				showSnackbar(Response.SUCCESS);
 			}
-		}
-	}
-
-	// Ping the server, discard response and do nothing afterwards
-	private class ServerRequest extends AsyncTask<Void, Void, Boolean> {
-		private static final String TAG = "Server Ping";
-		private static final String URL = "https://iodine.tjhsst.edu/"; // TODO: switch to ion
-		private final String domain;
-
-		public ServerRequest(String domain) {
-			this.domain = domain;
-		}
-
-		@Override
-		protected Boolean doInBackground(Void... params) {
-			final HttpsURLConnection urlConnection;
-			try {
-				urlConnection = (HttpsURLConnection) new URL(URL + domain).openConnection();
-				// Add auth token
-				urlConnection.setRequestProperty("Authorization", mAuthKey);
-				// Begin connection
-				urlConnection.connect();
-				urlConnection.getInputStream();
-				// Close connection
-				urlConnection.disconnect();
-				return true;
-			} catch (IOException e) {
-				Log.e(TAG, "Connection error.", e);
-			}
-			return false;
-		}
-
-		@Override
-		protected void onPostExecute(Boolean result) {
-			mTasks.remove(this);
 		}
 	}
 }
