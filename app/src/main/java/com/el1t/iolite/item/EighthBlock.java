@@ -67,6 +67,10 @@ public class EighthBlock implements Parcelable {
 		}
 	}
 
+	public void setEighth(EighthActivity activity) {
+		this.activity = activity;
+	}
+
 	public EighthActivity getEighth() {
 		return activity;
 	}

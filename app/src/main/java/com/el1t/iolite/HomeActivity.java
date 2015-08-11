@@ -19,6 +19,7 @@ import com.el1t.iolite.parser.EighthBlockJsonParser;
 import com.el1t.iolite.parser.NewsJsonParser;
 import com.el1t.iolite.parser.ProfileJsonParser;
 import com.el1t.iolite.parser.ScheduleJsonParser;
+import com.el1t.iolite.parser.UserBlockJsonParser;
 import com.el1t.iolite.utils.AbstractDrawerActivity;
 import com.el1t.iolite.utils.Utils;
 
@@ -380,6 +381,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			return Utils.API.BLOCKS;
 		}
 
+		@Override
 		protected EighthBlock[] doInBackground(HttpsURLConnection urlConnection) throws Exception {
 			// Begin connection
 			urlConnection.connect();
@@ -391,6 +393,27 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		protected void onPostExecute(EighthBlock[] result) {
 			super.onPostExecute(result);
 			postBlockRequest(result);
+			if (result != null) {
+				new UserBlockRequest().execute();
+			}
+		}
+	}
+
+	private class UserBlockRequest extends IonRequest<EighthActivity[]> {
+		@Override
+		protected String getURL() {
+			return Utils.API.SIGNUP;
+		}
+
+		protected EighthActivity[] doInBackground(HttpsURLConnection urlConnection) throws Exception {
+			urlConnection.connect();
+			return UserBlockJsonParser.parse(urlConnection.getInputStream());
+		}
+
+		@Override
+		protected void onPostExecute(EighthActivity[] result) {
+			super.onPostExecute(result);
+			mBlockFragment.updateAdapter(result);
 		}
 	}
 

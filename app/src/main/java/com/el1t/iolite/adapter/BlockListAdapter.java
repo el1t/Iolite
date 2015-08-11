@@ -100,10 +100,23 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 			return;
 		}
 		Colors color;
-		if (activityItem != null) {
-			final float alpha;
-			viewHolder.title.setText(activityItem.getName());
+		if (activityItem == null) {
+			viewHolder.title.setText("Loading");
+			viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.ITALIC);
+			viewHolder.title.setTextColor(mColors[Colors.BLACK.ordinal()]);
+			viewHolder.title.setAlpha(.87f);
 
+			viewHolder.sponsors.setVisibility(View.GONE);
+			viewHolder.room.setVisibility(View.GONE);
+			viewHolder.description.setText("");
+			viewHolder.circle.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					mListener.select(blockItem.getBID());
+				}
+			});
+		} else {
+			final float alpha;
 			if (activityItem.getAID() == 999) {
 				// Hide empty fields
 				viewHolder.sponsors.setVisibility(View.GONE);
@@ -111,6 +124,7 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 				viewHolder.description.setText("Please select an activity.");
 
 				// Format title
+				viewHolder.title.setText("No Activity Selected");
 				viewHolder.title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
 				color = Colors.BLACK;
 				alpha = 1f;
@@ -121,12 +135,13 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 					}
 				});
 			} else {
+				viewHolder.title.setText(activityItem.getName());
 				// Show fields
-				if (activityItem.getRooms().isEmpty()) {
-					viewHolder.room.setVisibility(View.GONE);
-				} else {
+				if (activityItem.hasRooms()) {
 					viewHolder.room.setVisibility(View.VISIBLE);
 					viewHolder.room.setText(activityItem.getRooms());
+				} else {
+					viewHolder.room.setVisibility(View.GONE);
 				}
 				if (activityItem.hasSponsors()) {
 					viewHolder.sponsors.setVisibility(View.VISIBLE);
@@ -204,13 +219,27 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 	}
 
 	public void update(EighthBlock[] items) {
-		if (items != null) {
-			mItems = items;
-			mItemList.clear();
-			mItemList.addAll(Arrays.asList(mItems));
-			addHeaders();
-			notifyDataSetChanged();
+		mItems = items;
+		mItemList.clear();
+		mItemList.addAll(Arrays.asList(mItems));
+		addHeaders();
+		notifyDataSetChanged();
+	}
+
+	public void update(EighthActivity[] items) {
+		// Shrink search space if mItems is assumed sorted
+		int itemIndex = 0;
+		for (EighthActivity item : items) {
+			for (; itemIndex < mItems.length; itemIndex++) {
+				if (mItems[itemIndex].getBID() == item.getBID()) {
+					mItems[itemIndex++].setEighth(item);
+					break;
+				} else {
+					mItems[itemIndex].setEighth(new EighthActivity.EighthActivityBuilder().AID(999).build());
+				}
+			}
 		}
+		notifyDataSetChanged();
 	}
 
 	private void addHeaders() {

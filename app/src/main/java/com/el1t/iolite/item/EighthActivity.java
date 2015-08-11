@@ -274,7 +274,7 @@ public class EighthActivity implements Parcelable, Comparable<EighthActivity> {
 	}
 
 	public boolean hasRooms() {
-		return rooms.length > 0;
+		return rooms != null && rooms.length > 0;
 	}
 
 	public String[] getSponsorsArray() {
@@ -290,7 +290,7 @@ public class EighthActivity implements Parcelable, Comparable<EighthActivity> {
 	}
 
 	public boolean hasSponsors() {
-		return !(sponsors.length == 0 || sponsors[0].equals("CANCELLED"));
+		return !(sponsors == null || sponsors.length == 0 || sponsors[0].equals("CANCELLED"));
 	}
 
 	public int getBID() {
@@ -318,7 +318,7 @@ public class EighthActivity implements Parcelable, Comparable<EighthActivity> {
 	}
 
 	public boolean hasDescription() {
-		return !description.equals("No description.");
+		return !(description == null || description.equals("No description."));
 	}
 
 	public boolean isFull() {

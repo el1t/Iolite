@@ -67,6 +67,29 @@ public class Utils {
 		return null;
 	}
 
+	public static JSONArray inputStreamToJSONArray(InputStream inputStream) {
+		try {
+			final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+			final StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				sb.append(line).append("\n");
+			}
+			return new JSONArray(sb.toString());
+		} catch (IOException | JSONException e) {
+			Log.e(TAG, "Exception", e);
+		} finally {
+			try {
+				if (inputStream != null) {
+					inputStream.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
 	public static String inputStreamToString(InputStream inputStream) {
 		final Scanner s = new java.util.Scanner(inputStream).useDelimiter("\\A");
 		return s.hasNext() ? s.next() : null;

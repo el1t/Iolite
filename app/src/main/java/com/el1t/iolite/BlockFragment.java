@@ -102,7 +102,17 @@ public class BlockFragment extends Fragment {
 	}
 
 	void updateAdapter(EighthBlock[] items) {
-		mAdapter.update(items);
+		if (items == null) {
+			mSwipeRefreshLayout.setRefreshing(false);
+		} else {
+			mAdapter.update(items);
+		}
+	}
+
+	void updateAdapter(EighthActivity[] items) {
+		if (items != null) {
+			mAdapter.update(items);
+		}
 		mSwipeRefreshLayout.setRefreshing(false);
 	}
 }
