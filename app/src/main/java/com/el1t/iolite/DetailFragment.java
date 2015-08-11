@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.el1t.iolite.adapter.DetailCardAdapter;
+import com.el1t.iolite.decoration.CardDecoration;
 import com.el1t.iolite.item.EighthActivity;
 
 /**
@@ -69,6 +70,7 @@ public class DetailFragment extends Fragment {
 		final View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 		final RecyclerView activityList = (RecyclerView) rootView.findViewById(R.id.list);
 		mLayoutManager = new LinearLayoutManager(inflater.getContext());
+		activityList.addItemDecoration(new CardDecoration());
 		activityList.setLayoutManager(mLayoutManager);
 		activityList.setItemAnimator(new DefaultItemAnimator());
 		activityList.setAdapter(mAdapter);

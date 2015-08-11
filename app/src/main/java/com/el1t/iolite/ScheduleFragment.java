@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.el1t.iolite.adapter.ScheduleCardAdapter;
+import com.el1t.iolite.decoration.CardDecoration;
 import com.el1t.iolite.item.Schedule;
 
 /**
@@ -72,6 +73,7 @@ public class ScheduleFragment extends Fragment {
 
 		final RecyclerView scheduleList = (RecyclerView) rootView.findViewById(R.id.list);
 		mLayoutManager = new LinearLayoutManager(inflater.getContext());
+		scheduleList.addItemDecoration(new CardDecoration());
 		scheduleList.setLayoutManager(mLayoutManager);
 		scheduleList.setItemAnimator(new DefaultItemAnimator());
 		scheduleList.setAdapter(mScheduleCardAdapter);

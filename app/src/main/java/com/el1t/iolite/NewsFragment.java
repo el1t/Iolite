@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.el1t.iolite.adapter.NewsCardAdapter;
+import com.el1t.iolite.decoration.CardDecoration;
 import com.el1t.iolite.item.NewsPost;
 
 /**
@@ -75,6 +76,7 @@ public class NewsFragment extends Fragment {
 
 		final RecyclerView newsList = (RecyclerView) rootView.findViewById(R.id.list);
 		mLayoutManager = new LinearLayoutManager(inflater.getContext());
+		newsList.addItemDecoration(new CardDecoration());
 		newsList.setLayoutManager(mLayoutManager);
 		newsList.setItemAnimator(new DefaultItemAnimator());
 		newsList.setAdapter(mNewsCardAdapter);
