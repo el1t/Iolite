@@ -118,7 +118,7 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 			});
 		} else {
 			final float alpha;
-			if (activityItem.getAID() == 999) {
+			if (activityItem.isNull()) {
 				// Hide empty fields
 				viewHolder.sponsors.setVisibility(View.GONE);
 				viewHolder.room.setVisibility(View.GONE);
@@ -228,15 +228,13 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 	}
 
 	public void update(EighthActivity[] items) {
-		// Shrink search space if mItems is assumed sorted
-		int itemIndex = 0;
-		for (EighthActivity item : items) {
-			for (; itemIndex < mItems.length; itemIndex++) {
-				if (mItems[itemIndex].getBID() == item.getBID()) {
-					mItems[itemIndex++].setEighth(item);
+		for (EighthBlock block : mItems) {
+			for (EighthActivity activity : items) {
+				if (block.getBID() == activity.getBID()) {
+					block.setEighth(activity);
 					break;
 				} else {
-					mItems[itemIndex].setEighth(new EighthActivity.EighthActivityBuilder().AID(999).build());
+					block.setEighth(new EighthActivity.EighthActivityBuilder().AID(-1).build());
 				}
 			}
 		}

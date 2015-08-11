@@ -41,6 +41,7 @@ public class EighthActivityJsonParser {
 		return new EighthActivity.EighthActivityBuilder()
 				.AID(activity.getInt("id"))
 				.BID(BID)
+				.SID(activity.getInt("scheduled_activity"))
 				.memberCount(roster.getInt("count"))
 				.capacity(roster.getInt("capacity"))
 				.name(activity.getString("name"))

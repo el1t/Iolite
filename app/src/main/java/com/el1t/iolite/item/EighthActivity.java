@@ -13,6 +13,7 @@ import com.el1t.iolite.utils.Utils;
 public class EighthActivity implements Parcelable, Comparable<EighthActivity> {
 	private int AID;
 	private int BID;
+	private int SID;
 	private int memberCount;
 	private int capacity;
 	private String name;
@@ -31,13 +32,14 @@ public class EighthActivity implements Parcelable, Comparable<EighthActivity> {
 
 	private boolean header;
 
-	public EighthActivity(int AID, int BID, int memberCount, int capacity, String name,
+	public EighthActivity(int AID, int BID, int SID, int memberCount, int capacity, String name,
 	                      String description, String URL, String[] sponsors, String[] rooms,
 	                      boolean restricted, boolean administrative, boolean presign,
 	                      boolean bothblocks, boolean sticky, boolean special, boolean cancelled,
 	                      boolean favorite) {
 		this.AID = AID;
 		this.BID = BID;
+		this.SID = SID;
 		this.memberCount = memberCount;
 		this.capacity = capacity;
 		this.name = name;
@@ -79,6 +81,7 @@ public class EighthActivity implements Parcelable, Comparable<EighthActivity> {
 	public static class EighthActivityBuilder {
 		private int AID;
 		private int BID;
+		private int SID;
 		private int memberCount;
 		private int capacity;
 		private String name;
@@ -110,6 +113,11 @@ public class EighthActivity implements Parcelable, Comparable<EighthActivity> {
 
 		public EighthActivityBuilder BID(int BID) {
 			this.BID = BID;
+			return this;
+		}
+
+		public EighthActivityBuilder SID(int SID) {
+			this.SID = SID;
 			return this;
 		}
 
@@ -194,7 +202,7 @@ public class EighthActivity implements Parcelable, Comparable<EighthActivity> {
 
 		public EighthActivity build() {
 			if (activity == null) {
-				return new EighthActivity(AID, BID, memberCount, capacity, name, description, URL,
+				return new EighthActivity(AID, BID, SID, memberCount, capacity, name, description, URL,
 						sponsors, rooms, restricted, administrative, presign, bothblocks, sticky,
 						special, cancelled, favorite);
 			}
@@ -229,8 +237,24 @@ public class EighthActivity implements Parcelable, Comparable<EighthActivity> {
 		}
 	}
 
+	/**
+	 * Check if activity has been selected
+	 * @return true if activity is not selected
+	 */
+	public boolean isNull() {
+		return AID == -1;
+	}
+
 	public int getAID() {
 		return AID;
+	}
+
+	public int getBID() {
+		return BID;
+	}
+
+	public int getSID() {
+		return SID;
 	}
 
 	public String getName() {
@@ -293,10 +317,6 @@ public class EighthActivity implements Parcelable, Comparable<EighthActivity> {
 		return !(sponsors == null || sponsors.length == 0 || sponsors[0].equals("CANCELLED"));
 	}
 
-	public int getBID() {
-		return BID;
-	}
-
 	public boolean isCancelled() {
 		return cancelled;
 	}
@@ -354,6 +374,7 @@ public class EighthActivity implements Parcelable, Comparable<EighthActivity> {
 	protected EighthActivity(Parcel in) {
 		AID = in.readInt();
 		BID = in.readInt();
+		SID = in.readInt();
 		memberCount = in.readInt();
 		capacity = in.readInt();
 		name = in.readString();
@@ -381,6 +402,7 @@ public class EighthActivity implements Parcelable, Comparable<EighthActivity> {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(AID);
 		dest.writeInt(BID);
+		dest.writeInt(SID);
 		dest.writeInt(memberCount);
 		dest.writeInt(capacity);
 		dest.writeString(name);

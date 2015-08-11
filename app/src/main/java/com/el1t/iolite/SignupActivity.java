@@ -17,6 +17,9 @@ import com.el1t.iolite.parser.EighthActivityJsonParser;
 import com.el1t.iolite.utils.RequestActivity;
 import com.el1t.iolite.utils.Utils;
 
+import org.json.JSONObject;
+
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -141,7 +144,7 @@ public class SignupActivity extends RequestActivity implements SignupFragment.On
 		} else if (item.isRestricted()) {
 			showSnackbar(Response.RESTRICTED);
 		} else {
-			mTasks.add(new SignupRequest(item.getAID(), item.getBID()).execute());
+			mTasks.add(new SignupRequest(item.getAID(), item.getBID(), item.getSID()).execute());
 		}
 	}
 
@@ -250,12 +253,14 @@ public class SignupActivity extends RequestActivity implements SignupFragment.On
 
 	// Request sign-up for specified activity
 	private class SignupRequest extends IonRequest<Boolean> {
-		private final String AID;
-		private final String BID;
+		private final int AID;
+		private final int BID;
+		private final int SID;
 
-		public SignupRequest(int AID, int BID) {
-			this.AID = Integer.toString(AID);
-			this.BID = Integer.toString(BID);
+		public SignupRequest(int AID, int BID, int SID) {
+			this.AID = AID;
+			this.BID = BID;
+			this.SID = SID;
 		}
 
 		@Override
@@ -266,11 +271,23 @@ public class SignupActivity extends RequestActivity implements SignupFragment.On
 		@Override
 		protected Boolean doInBackground(HttpsURLConnection urlConnection) throws Exception {
 			// Add parameters
-			urlConnection.addRequestProperty("block", BID);
-			urlConnection.addRequestProperty("activity", AID);
+			urlConnection.setRequestMethod("POST");
+			urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+			urlConnection.setDoInput(true);
+			final JSONObject request = new JSONObject();
+			request.put("block", BID);
+			request.put("activity", AID);
+			request.put("scheduled_activity", SID);
+			request.put("use_scheduled_activity", true);
+			request.put("force", false);
 
 			// Send request
 			urlConnection.connect();
+			final OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
+			writer.write(request.toString());
+			writer.flush();
+			writer.close();
+
 			urlConnection.getInputStream();
 			return true;
 		}
