@@ -35,7 +35,8 @@
 
 	<string name="transition_news">NEWS_TRANSITION</string>
 
-	<string name="contributors">Thanks to: Timothy Cyrus and Rushi Shah</string>
+	<string name="author">Created by Ellis Tsung, TJ class of 2015</string>
+	<string name="contributors">Additional thanks to: Timothy Cyrus and Rushi Shah</string>
 	<string name="license">VIEW LICENSE</string>
 	<string name="title_activity_news_detail">NewsDetailActivity</string>
 </resources>

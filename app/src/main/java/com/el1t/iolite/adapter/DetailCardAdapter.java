@@ -76,10 +76,14 @@ public class DetailCardAdapter extends RecyclerView.Adapter<DetailCardAdapter.Vi
 				viewHolder.info.setText(mEighthActivity.getDescription());
 				break;
 			case ROOMS:
-				viewHolder.info.setText(mEighthActivity.getRooms());
+				if (mEighthActivity.hasRooms()) {
+					viewHolder.info.setText(mEighthActivity.getRooms());
+				}
 				break;
 			case SPONSORS:
-				viewHolder.info.setText(mEighthActivity.getSponsors());
+				if (mEighthActivity.hasSponsors()) {
+					viewHolder.info.setText(mEighthActivity.getSponsors());
+				}
 				break;
 		}
 	}

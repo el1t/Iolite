@@ -5,8 +5,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	tools:context=".AboutFragment"
-	tools:showIn="@layout/activity_about">
+	tools:context=".AboutFragment">
 	<ImageView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -18,6 +17,14 @@
 		android:layout_height="wrap_content"
 		android:padding="@dimen/activity_horizontal_margin">
 		<TextView
+			android:id="@+id/author"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:paddingBottom="16dp"
+			android:text="@string/author"/>
+		<TextView
+			android:layout_below="@id/author"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerHorizontal="true"
