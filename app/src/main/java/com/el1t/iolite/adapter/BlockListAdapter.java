@@ -2,6 +2,7 @@ package com.el1t.iolite.adapter;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -198,7 +199,7 @@ public class BlockListAdapter extends RecyclerView.Adapter<BlockListAdapter.View
 			}
 		}
 		// Tint icon
-		viewHolder.circle.setColorFilter(mColors[color.ordinal()]);
+		viewHolder.circle.setColorFilter(mColors[color.ordinal()], PorterDuff.Mode.SRC);
 		viewHolder.letter.setText(letter);
 		viewHolder.container.setOnClickListener(new View.OnClickListener() {
 			@Override

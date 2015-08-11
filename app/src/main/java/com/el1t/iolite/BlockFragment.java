@@ -3,6 +3,7 @@ package com.el1t.iolite;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.el1t.iolite.adapter.BlockListAdapter;
+import com.el1t.iolite.decoration.ListDecoration;
 import com.el1t.iolite.item.EighthActivity;
 import com.el1t.iolite.item.EighthBlock;
 
@@ -62,6 +64,7 @@ public class BlockFragment extends Fragment {
 
 		final RecyclerView blockList = (RecyclerView) rootView.findViewById(R.id.list);
 		mLayoutManager = new LinearLayoutManager(inflater.getContext());
+		blockList.addItemDecoration(new ListDecoration(ContextCompat.getDrawable(getActivity(), R.drawable.abc_list_divider_mtrl_alpha)));
 		blockList.setLayoutManager(mLayoutManager);
 		blockList.setItemAnimator(new DefaultItemAnimator());
 		blockList.setAdapter(mAdapter);

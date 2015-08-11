@@ -5,6 +5,7 @@
 	android:layout_height="wrap_content"
 	style="?android:attr/listSeparatorTextViewStyle"
 	android:id="@+id/title"
+	android:background="@color/background"
 	android:ellipsize="end"
 	android:singleLine="true"
 	android:padding="16dp"/>

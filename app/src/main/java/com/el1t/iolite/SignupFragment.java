@@ -3,6 +3,7 @@ package com.el1t.iolite;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.el1t.iolite.adapter.SignupListAdapter;
+import com.el1t.iolite.decoration.ListDecoration;
 import com.el1t.iolite.item.EighthActivity;
 
 /**
@@ -60,6 +62,7 @@ public class SignupFragment extends Fragment {
 		final View rootView = inflater.inflate(R.layout.fragment_signup, container, false);
 		final RecyclerView activityList = (RecyclerView) rootView.findViewById(R.id.list);
 		mLayoutManager = new LinearLayoutManager(inflater.getContext());
+		activityList.addItemDecoration(new ListDecoration(ContextCompat.getDrawable(getActivity(), R.drawable.abc_list_divider_mtrl_alpha)));
 		activityList.setLayoutManager(mLayoutManager);
 		activityList.setItemAnimator(new DefaultItemAnimator());
 		activityList.setAdapter(mAdapter);

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -168,7 +169,7 @@ public class SignupListAdapter extends RecyclerView.Adapter<SignupListAdapter.Vi
 			viewHolder.icon.setImageBitmap(ICON_DONE);
 		}
 		// Tint icon
-		viewHolder.circle.setColorFilter(mColors[color.ordinal()]);
+		viewHolder.circle.setColorFilter(mColors[color.ordinal()], PorterDuff.Mode.SRC);
 		viewHolder.circle.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
