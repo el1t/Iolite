@@ -7,7 +7,7 @@
 	android:orientation="vertical"
 	android:id="@+id/refresh"
 	android:background="@color/background"
-	tools:context=".SignupFragment"
+	tools:context=".ui.SignupFragment"
 	tools:showIn="@layout/activity_signup"
 	app:layout_behavior="@string/appbar_scrolling_view_behavior">
 

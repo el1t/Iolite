@@ -13,7 +13,7 @@
 		android:theme="@style/AppTheme"
 		android:launchMode="singleTop">
 		<activity
-			android:name="com.el1t.iolite.LoginActivity"
+			android:name=".ui.LoginActivity"
 			android:configChanges="orientation|screenSize"
 			android:windowSoftInputMode="adjustPan">
 			<intent-filter>
@@ -33,16 +33,16 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".HomeActivity"
+			android:name=".ui.HomeActivity"
 			android:label="@string/view_home"
-			android:parentActivityName="com.el1t.iolite.LoginActivity"
+			android:parentActivityName=".ui.LoginActivity"
 			android:launchMode="singleTop"
 			android:configChanges="orientation|screenSize"
 			android:windowSoftInputMode="adjustNothing" />
 		<activity
-			android:name="com.el1t.iolite.SignupActivity"
+			android:name=".ui.SignupActivity"
 			android:label="@string/view_activity"
-			android:parentActivityName=".HomeActivity"
+			android:parentActivityName=".ui.HomeActivity"
 			android:launchMode="singleTop"
 			android:configChanges="orientation|screenSize"
 			android:windowSoftInputMode="adjustNothing">
@@ -51,20 +51,20 @@
 				android:resource="@xml/searchable"/>
 		</activity>
 		<activity
-			android:name="com.el1t.iolite.DetailActivity"
+			android:name=".ui.DetailActivity"
 			android:label="@string/view_activity_details"
 			android:launchMode="singleTop"
 			android:configChanges="orientation|screenSize" />
 		<activity
-			android:name="com.el1t.iolite.NewsDetailActivity"
+			android:name=".ui.NewsDetailActivity"
 			android:label="@string/view_news_details"
-			android:parentActivityName=".HomeActivity"
+			android:parentActivityName=".ui.HomeActivity"
 			android:launchMode="singleTop"
 			android:configChanges="orientation|screenSize" />
 		<activity
-			android:name="com.el1t.iolite.AboutActivity"
+			android:name=".ui.AboutActivity"
 			android:label="@string/view_about"
-			android:parentActivityName=".HomeActivity"
+			android:parentActivityName=".ui.HomeActivity"
 			android:launchMode="singleTop"
 			android:configChanges="orientation|screenSize" />
 	</application>

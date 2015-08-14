@@ -6,7 +6,7 @@
 	android:layout_height="fill_parent"
 	android:orientation="vertical"
 	android:id="@+id/refresh"
-	tools:context=".HomeActivity">
+	tools:context=".ui.HomeActivity">
 
 	<android.support.v7.widget.RecyclerView
 		android:layout_width="match_parent"

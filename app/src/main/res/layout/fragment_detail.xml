@@ -9,4 +9,4 @@
 	android:dividerHeight="0dp"
 	android:divider="@null"
 	android:scrollbars="vertical"
-	tools:context=".DetailActivity"/>
+	tools:context=".ui.DetailActivity"/>

@@ -9,7 +9,7 @@
 	android:id="@+id/refresh"
 	app:layout_behavior="@string/appbar_scrolling_view_behavior"
 	android:background="@color/background"
-	tools:context=".HomeActivity">
+	tools:context=".ui.HomeActivity">
 
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/list"
