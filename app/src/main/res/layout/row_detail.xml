@@ -15,7 +15,7 @@
 			android:textSize="@dimen/abc_text_size_title_material"
 			android:textColor="@color/abc_primary_text_material_light"
 			android:paddingBottom="8dp"
-			android:layout_width="fill_parent"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"/>
 		<TextView
 			android:id="@+id/info"

@@ -11,7 +11,7 @@
 			android:checked="true"/>
 		<item
 			android:id="@+id/nav_schedule"
-			android:icon="@drawable/ic_today_black_24dp"
+			android:icon="@drawable/ic_schedule_black_24dp"
 			android:title="@string/nav_schedule"/>
 		<item
 			android:id="@+id/nav_news"
