@@ -46,28 +46,31 @@ public class Utils {
 
 	public static JSONObject inputStreamToJSON(InputStream inputStream) {
 		try {
-			final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-			final StringBuilder sb = new StringBuilder();
-			String line;
-			while ((line = reader.readLine()) != null) {
-				sb.append(line).append("\n");
+			final String temp = inputStreamToBufferedString(inputStream);
+			if (temp == null) {
+				return null;
 			}
-			return new JSONObject(sb.toString());
-		} catch (IOException | JSONException e) {
+			return new JSONObject(temp);
+		} catch (JSONException e) {
 			Log.e(TAG, "Exception", e);
-		} finally {
-			try {
-				if (inputStream != null) {
-					inputStream.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
 		return null;
 	}
 
 	public static JSONArray inputStreamToJSONArray(InputStream inputStream) {
+		try {
+			final String temp = inputStreamToBufferedString(inputStream);
+			if (temp == null) {
+				return null;
+			}
+			return new JSONArray(temp);
+		} catch (JSONException e) {
+			Log.e(TAG, "Exception", e);
+		}
+		return null;
+	}
+
+	private static String inputStreamToBufferedString(InputStream inputStream) {
 		try {
 			final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
 			final StringBuilder sb = new StringBuilder();
@@ -75,8 +78,8 @@ public class Utils {
 			while ((line = reader.readLine()) != null) {
 				sb.append(line).append("\n");
 			}
-			return new JSONArray(sb.toString());
-		} catch (IOException | JSONException e) {
+			return sb.toString();
+		} catch (IOException e) {
 			Log.e(TAG, "Exception", e);
 		} finally {
 			try {
@@ -121,17 +124,17 @@ public class Utils {
 		return null;
 	}
 
-	public static String join(String[] array) {
+	public static <T> String join(T[] array) {
 		return join(array, ", ");
 	}
 
-	public static String join(String[] array, String delim) {
+	public static <T> String join(T[] array, String delim) {
 		final StringBuilder sb = new StringBuilder();
-		for (String s : array) {
+		for (T t : array) {
 			if (sb.length() > 0) {
 				sb.append(delim);
 			}
-			sb.append(s);
+			sb.append(t);
 		}
 		return sb.toString();
 	}
