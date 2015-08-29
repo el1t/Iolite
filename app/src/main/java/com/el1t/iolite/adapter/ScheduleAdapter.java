@@ -92,7 +92,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 		mColors[4] = resources.getColor(R.color.primary_400);
 		mColors[5] = resources.getColor(R.color.red_400);
 		mColors[6] = resources.getColor(R.color.light_blue_400);
-		mColors[7] = resources.getColor(R.color.grey_200);
+		mColors[7] = resources.getColor(R.color.grey_100);
 
 		mLayoutInflater = LayoutInflater.from(context);
 	}

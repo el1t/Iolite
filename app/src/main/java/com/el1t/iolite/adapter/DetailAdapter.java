@@ -71,6 +71,26 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 		viewHolder.title.setText(type.toString());
 		switch (type) {
 			case STATUS:
+				StringBuilder status = new StringBuilder();
+				if (mEighthActivity.isBothblocks()) {
+					status.append("Both-blocks ");
+				}
+				if (mEighthActivity.isCancelled()) {
+					status.append("Cancelled ");
+				}
+				if (mEighthActivity.isPresign()) {
+					status.append("Presign ");
+				}
+				if (mEighthActivity.isRestricted()) {
+					status.append("Restricted ");
+				}
+				if (mEighthActivity.isSpecial()) {
+					status.append("Special ");
+				}
+				if (mEighthActivity.isSticky()) {
+					status.append("Sticky ");
+				}
+				viewHolder.info.setText(status.toString().trim());
 				break;
 			case DESCRIPTION:
 				viewHolder.info.setText(mEighthActivity.getDescription());
