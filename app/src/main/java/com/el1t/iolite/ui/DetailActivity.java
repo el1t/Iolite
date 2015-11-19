@@ -151,6 +151,11 @@ public class DetailActivity extends RequestActivity implements DetailFragment.On
 		}
 
 		@Override
+		protected DetailRequest getNewInstance() {
+			return new DetailRequest(AID);
+		}
+
+		@Override
 		protected EighthActivity doInBackground(HttpsURLConnection urlConnection) throws Exception {
 			urlConnection.connect();
 			return DetailHandler.parse(urlConnection.getInputStream(), mDetailFragment.getEighth());
@@ -170,6 +175,11 @@ public class DetailActivity extends RequestActivity implements DetailFragment.On
 		protected String getURL() {
 			return "https://iodine.tjhsst.edu/eighth/vcp_schedule/favorite/uid/" + AID
 					+ "/bids/1234"; // TODO: switch to ion
+		}
+
+		@Override
+		protected FavoriteRequest getNewInstance() {
+			return new FavoriteRequest();
 		}
 
 		@Override

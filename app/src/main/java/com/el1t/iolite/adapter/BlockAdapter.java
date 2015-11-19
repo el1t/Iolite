@@ -219,11 +219,13 @@ public class BlockAdapter extends RecyclerView.Adapter<BlockAdapter.ViewHolder> 
 	}
 
 	public void update(EighthBlock[] items) {
-		mItems = items;
-		mItemList.clear();
-		mItemList.addAll(Arrays.asList(mItems));
-		addHeaders();
-		notifyDataSetChanged();
+		if (items != null) {
+			mItems = items;
+			mItemList.clear();
+			mItemList.addAll(Arrays.asList(mItems));
+			addHeaders();
+			notifyDataSetChanged();
+		}
 	}
 
 	public void update(EighthActivity[] items) {

@@ -238,6 +238,11 @@ public class SignupActivity extends RequestActivity implements SignupFragment.On
 		}
 
 		@Override
+		protected ActivityListRequest getNewInstance() {
+			return new ActivityListRequest(BID);
+		}
+
+		@Override
 		protected EighthActivity[] doInBackground(HttpsURLConnection urlConnection) throws Exception {
 			urlConnection.connect();
 			// Parse JSON from server
@@ -267,6 +272,11 @@ public class SignupActivity extends RequestActivity implements SignupFragment.On
 		@Override
 		protected String getURL() {
 			return Utils.API.SIGNUP;
+		}
+
+		@Override
+		protected SignupRequest getNewInstance() {
+			return new SignupRequest(AID, BID, SID);
 		}
 
 		@Override

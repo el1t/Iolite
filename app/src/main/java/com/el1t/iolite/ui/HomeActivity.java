@@ -359,6 +359,11 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 
 		@Override
+		protected IonRequest getNewInstance() {
+			return new ProfileRequest();
+		}
+
+		@Override
 		protected User doInBackground(HttpsURLConnection urlConnection) throws Exception {
 			// Begin connection
 			urlConnection.connect();
@@ -385,6 +390,11 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		}
 
 		@Override
+		protected BlockListRequest getNewInstance() {
+			return new BlockListRequest();
+		}
+
+		@Override
 		protected EighthBlock[] doInBackground(HttpsURLConnection urlConnection) throws Exception {
 			// Begin connection
 			urlConnection.connect();
@@ -408,6 +418,12 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			return Utils.API.SIGNUP;
 		}
 
+		@Override
+		protected UserBlockRequest getNewInstance() {
+			return new UserBlockRequest();
+		}
+
+		@Override
 		protected EighthActivity[] doInBackground(HttpsURLConnection urlConnection) throws Exception {
 			urlConnection.connect();
 			return SelectedBlockHandler.parse(urlConnection.getInputStream());
@@ -431,6 +447,11 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		@Override
 		protected String getURL() {
 			return Utils.API.SIGNUP;
+		}
+
+		@Override
+		protected ClearRequest getNewInstance() {
+			return new ClearRequest(Integer.parseInt(this.BID));
 		}
 
 		@Override
@@ -466,9 +487,19 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			mSize = days;
 		}
 
+		public ScheduleRequest(Date startDate, Date endDate) {
+			mStartDate = startDate;
+			mEndDate = endDate;
+		}
+
 		@Override
 		protected String getURL() {
 			return Utils.API.schedule(mPage, mSize);
+		}
+
+		@Override
+		protected ScheduleRequest getNewInstance() {
+			return new ScheduleRequest(mStartDate, mEndDate);
 		}
 
 		@Override
@@ -492,6 +523,12 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			return Utils.API.NEWS;
 		}
 
+		@Override
+		protected NewsRequest getNewInstance() {
+			return new NewsRequest();
+		}
+
+		@Override
 		protected NewsPost[] doInBackground(HttpsURLConnection urlConnection) throws Exception {
 			// Begin connection
 			urlConnection.connect();

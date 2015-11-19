@@ -18,7 +18,6 @@ import android.view.inputmethod.InputMethodManager;
 import com.el1t.iolite.R;
 import com.el1t.iolite.util.Utils;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
@@ -183,15 +182,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 				mConnection.setRequestProperty("Authorization", mAuthKey);
 				mConnection.setUseCaches(false);
 				mConnection.connect();
-				return true;
-			} catch (FileNotFoundException e) {
-				try {
-					if (mConnection.getResponseCode() == 401) {
-						mLoginFragment.showError(LoginFragment.ErrorType.INVALID);
-					}
-				} catch (IOException err) {
-					Log.e(TAG, "Cannot read response code", err);
-				}
+				return mConnection.getResponseCode() != 401;
 			} catch (IOException e) {
 				hideKeyboard();
 				if (isCancelled()) {
@@ -226,6 +217,8 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 			mProgressDialog.dismiss();
 			if (result) {
 				postRequest();
+			} else {
+				mLoginFragment.showError(LoginFragment.ErrorType.INVALID);
 			}
 		}
 

@@ -48,7 +48,7 @@ public class ListDecoration extends RecyclerView.ItemDecoration {
 
 	@Override
 	public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-		if (mDivider == null) {
+		if (mDivider == null || parent.getChildCount() <= 0) {
 			super.onDraw(c, parent, state);
 			return;
 		}

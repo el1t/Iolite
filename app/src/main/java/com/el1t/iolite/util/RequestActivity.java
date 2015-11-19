@@ -48,6 +48,8 @@ public class RequestActivity extends AppCompatActivity {
 		 */
 		protected abstract String getURL();
 
+		protected abstract IonRequest getNewInstance();
+
 		@Override
 		protected T doInBackground(Void... params) {
 			HttpsURLConnection urlConnection = null;
@@ -81,6 +83,7 @@ public class RequestActivity extends AppCompatActivity {
 						.setAction("Retry", new View.OnClickListener() {
 							@Override
 							public void onClick(View v) {
+								getNewInstance().execute();
 								// TODO: create new instance of implemented class and call execute()
 							}
 						}).show();
