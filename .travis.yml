@@ -7,7 +7,7 @@ android:
         - tools
 
         # Build Tools version
-        - build-tools-22.0.1
+        - build-tools-23.0.2
 
         # SDK version
         - android-22
@@ -16,4 +16,4 @@ android:
         - extra-android-support
         - extra-google-m2repository
         - extra-android-m2repository
-        - addon-google_apis-google-19
+        - addon-google_apis-google-22
