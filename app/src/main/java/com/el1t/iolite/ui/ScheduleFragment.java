@@ -78,7 +78,7 @@ public class ScheduleFragment extends Fragment {
 		scheduleList.setLayoutManager(mLayoutManager);
 		scheduleList.setItemAnimator(new DefaultItemAnimator());
 		scheduleList.setAdapter(mAdapter);
-		scheduleList.setOnScrollListener(new RecyclerView.OnScrollListener() {
+		scheduleList.addOnScrollListener(new RecyclerView.OnScrollListener() {
 			@Override
 			public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 				final int lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
