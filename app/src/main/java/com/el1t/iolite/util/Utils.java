@@ -30,7 +30,7 @@ public class Utils {
 		public static final String LOGIN = PREFIX;
 		public static final String PROFILE = PREFIX + "/profile" + POSTFIX;
 		public static final String BLOCKS = BLOCK + POSTFIX;
-		public static final String SCHEDULE = "https://iodine.tjhsst.edu/ajax/dayschedule/json_exp";
+		public static final String SCHEDULE = PREFIX + "/schedule" + POSTFIX;
 		public static final String SIGNUP = PREFIX + "/signups/user" + POSTFIX;
 		public static final String ACTIVITIES = ACTIVITY + POSTFIX;
 		public static final String NEWS = PREFIX + "/announcements" + POSTFIX;
