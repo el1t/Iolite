@@ -18,7 +18,6 @@ import java.util.Date;
 public class ScheduleHandler {
 	private static final String TAG = "ScheduleHandler";
 	private static final DateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd");
-	private static final DateFormat mFormat2 = new SimpleDateFormat("EEE, MMM d");
 
 	public static Schedule[] parseAll(JSONObject schedule) throws JSONException, ParseException {
 		final JSONArray scheduleArray = schedule.getJSONArray("results");
@@ -34,7 +33,6 @@ public class ScheduleHandler {
 		final String[] items = getItems(schedule.getJSONObject("day_type").getJSONArray("blocks"));
 		final Date date = mFormat.parse(schedule.getString("date"));
 		return new Schedule.Builder()
-				.day(mFormat2.format(date))
 				.date(date)
 				.type(schedule.getJSONObject("day_type").getString("name"))
 				.blocks(items[0])

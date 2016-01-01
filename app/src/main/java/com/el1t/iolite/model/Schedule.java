@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -15,6 +17,8 @@ public class Schedule implements Parcelable, Comparable<Schedule> {
 	private String type;
 	private String blocks;
 	private String times;
+
+	private static final DateFormat mFormat = new SimpleDateFormat("EEE, MMM d");
 
 	/**
 	 * @param day       Date (e.g. Monday, February 29)
@@ -37,18 +41,14 @@ public class Schedule implements Parcelable, Comparable<Schedule> {
 		private String blocks;
 		private String times;
 
-		public Builder day(String day) {
-			this.day = day;
-			return this;
-		}
-
 		public Builder date(Date date) {
 			this.date = date;
+			this.day = mFormat.format(date);
 			return this;
 		}
 
 		public Builder type(String type) {
-			this.type = type;
+			this.type = type.replace("<br>", "\n");
 			return this;
 		}
 
