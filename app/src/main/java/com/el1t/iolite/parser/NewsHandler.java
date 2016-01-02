@@ -31,7 +31,7 @@ public class NewsHandler {
 		JSONObject post;
 
 		for (int i = 0; i < results.length(); i++) {
-			post = (JSONObject) results.get(i);
+			post = results.getJSONObject(i);
 			posts[i] = new NewsPost.Builder()
 					.URL(post.getString("url"))
 					.ID(post.getInt("id"))

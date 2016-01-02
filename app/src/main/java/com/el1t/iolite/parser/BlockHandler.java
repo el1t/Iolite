@@ -30,7 +30,7 @@ public class BlockHandler {
 		JSONObject block;
 
 		for (int i = 0; i < results.length(); i++) {
-			block = (JSONObject) results.get(i);
+			block = results.getJSONObject(i);
 			blocks[i] = new EighthBlock.Builder()
 					.date(FORMAT.parse(block.getString("date")))
 					.BID(block.getInt("id"))
