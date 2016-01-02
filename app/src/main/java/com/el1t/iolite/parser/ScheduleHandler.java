@@ -11,13 +11,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by El1t on 12/11/14.
  */
 public class ScheduleHandler {
 	private static final String TAG = "ScheduleHandler";
-	private static final DateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd");
+	private static final DateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
 	public static Schedule[] parseAll(JSONObject schedule) throws JSONException, ParseException {
 		final JSONArray scheduleArray = schedule.getJSONArray("results");

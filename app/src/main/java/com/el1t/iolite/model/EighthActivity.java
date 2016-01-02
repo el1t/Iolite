@@ -99,8 +99,7 @@ public class EighthActivity implements Parcelable, Comparable<EighthActivity> {
 		private boolean favorite;
 		private EighthActivity activity;
 
-		public Builder() {
-		}
+		public Builder() {}
 
 		public Builder(EighthActivity activity) {
 			this.activity = activity;

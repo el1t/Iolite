@@ -8,6 +8,7 @@ import android.text.Spanned;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by El1t on 8/4/15.
@@ -37,7 +38,7 @@ public class NewsPost implements Parcelable {
 	}
 
 	public static class Builder {
-		private static final DateFormat FORMAT = new SimpleDateFormat("M/d/yy");
+		private static final DateFormat FORMAT = new SimpleDateFormat("M/d/yy", Locale.US);
 		private String URL;
 		private int ID;
 		private String title;

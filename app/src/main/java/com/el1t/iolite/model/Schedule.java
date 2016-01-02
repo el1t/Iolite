@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by El1t on 12/11/14.
@@ -18,7 +19,7 @@ public class Schedule implements Parcelable, Comparable<Schedule> {
 	private String blocks;
 	private String times;
 
-	private static final DateFormat mFormat = new SimpleDateFormat("EEE, MMM d");
+	private static final DateFormat mFormat = new SimpleDateFormat("EEE, MMM d", Locale.US);
 
 	/**
 	 * @param day       Date (e.g. Monday, February 29)

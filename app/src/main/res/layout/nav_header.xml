@@ -26,7 +26,8 @@
 		android:layout_margin="8dp"
 		android:scaleType="center"
 		android:elevation="3dp"
-		android:src="@drawable/ic_person_white_48dp"/>
+		android:src="@drawable/ic_person_white_48dp"
+		tools:ignore="ContentDescription" />
 	<!-- Real name -->
 	<TextView
 		android:id="@+id/header_name"
@@ -46,5 +47,4 @@
 		android:textAppearance="@style/TextAppearance.AppCompat.Body1"
 		android:ellipsize="end"
 		android:singleLine="true"/>
-
 </RelativeLayout>

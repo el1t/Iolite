@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
 	<string name="app_name">Iolite</string>
+	<string name="long_app_name">Iolite for Iodine</string>
 	<string name="button_login">LOGIN</string>
 
 	<string name="field_username">Username</string>
