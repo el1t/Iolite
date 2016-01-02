@@ -10,7 +10,7 @@ android:
         - build-tools-23.0.2
 
         # SDK version
-        - android-22
+        - android-23
 
         # Additional components
         - extra-android-support

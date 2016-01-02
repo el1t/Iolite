@@ -1,9 +1,9 @@
 package com.el1t.iolite.adapter;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,17 +72,16 @@ public class BlockAdapter extends RecyclerView.Adapter<BlockAdapter.ViewHolder> 
 		mLayoutInflater = LayoutInflater.from(context);
 
 		// Cache colors
-		final Resources resources = context.getResources();
 		mColors = new int[10];
-		mColors[Colors.INDIGO.ordinal()] = resources.getColor(R.color.primary_400);
-		mColors[Colors.LIGHT_BLUE.ordinal()] = resources.getColor(R.color.accent_400);
+		mColors[Colors.INDIGO.ordinal()] = ContextCompat.getColor(context, R.color.primary_400);
+		mColors[Colors.LIGHT_BLUE.ordinal()] = ContextCompat.getColor(context, R.color.accent_400);
 		for (int i = 2; i < 6; i++) {
-			mColors[i] = resources.getColor(R.color.grey);
+			mColors[i] = ContextCompat.getColor(context, R.color.grey);
 		}
-		mColors[Colors.RED.ordinal()] = resources.getColor(R.color.red_400);
-		mColors[Colors.DARK_RED.ordinal()] = resources.getColor(R.color.red_600);
-		mColors[Colors.BLACK.ordinal()] = resources.getColor(R.color.primary_text_default_material_light);
-		mColors[Colors.TEXT.ordinal()] = resources.getColor(R.color.secondary_text_default_material_light);
+		mColors[Colors.RED.ordinal()] = ContextCompat.getColor(context, R.color.red_400);
+		mColors[Colors.DARK_RED.ordinal()] = ContextCompat.getColor(context, R.color.red_600);
+		mColors[Colors.BLACK.ordinal()] = ContextCompat.getColor(context, R.color.primary_text_default_material_light);
+		mColors[Colors.TEXT.ordinal()] = ContextCompat.getColor(context, R.color.secondary_text_default_material_light);
 	}
 
 	@Override
