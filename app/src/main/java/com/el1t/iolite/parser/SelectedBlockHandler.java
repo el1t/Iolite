@@ -25,9 +25,9 @@ public class SelectedBlockHandler {
 		JSONObject item, block, activity;
 
 		for (int i = 0; i < items.length(); i++) {
-			item = (JSONObject) items.get(i);
-			block = (JSONObject) item.get("block");
-			activity = (JSONObject) item.get("activity");
+			item = items.getJSONObject(i);
+			block = item.getJSONObject("block");
+			activity = item.getJSONObject("activity");
 			activities[i] = new EighthActivity.Builder()
 					.BID(block.getInt("id"))
 					.AID(activity.getInt("id"))

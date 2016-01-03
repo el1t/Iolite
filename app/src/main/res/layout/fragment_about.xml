@@ -11,7 +11,7 @@
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
 		android:src="@drawable/about"
-		android:contentDescription="Iolite for Iodine"/>
+		android:contentDescription="@string/long_app_name"/>
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

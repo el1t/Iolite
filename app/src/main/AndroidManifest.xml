@@ -68,5 +68,4 @@
 			android:launchMode="singleTop"
 			android:configChanges="orientation|screenSize" />
 	</application>
-
 </manifest>

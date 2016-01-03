@@ -1,7 +1,7 @@
 package com.el1t.iolite.adapter;
 
 import android.content.Context;
-import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -83,16 +83,15 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 			mSchedules = new ArrayList<>(Arrays.asList(schedule));
 		}
 
-		final Resources resources = context.getResources();
 		mColors = new int[8];
-		mColors[0] = resources.getColor(R.color.deep_purple_300);
-		mColors[1] = resources.getColor(R.color.primary_300);
-		mColors[2] = resources.getColor(R.color.red_300);
-		mColors[3] = resources.getColor(R.color.light_blue_300);
-		mColors[4] = resources.getColor(R.color.primary_400);
-		mColors[5] = resources.getColor(R.color.red_400);
-		mColors[6] = resources.getColor(R.color.light_blue_400);
-		mColors[7] = resources.getColor(R.color.grey_100);
+		mColors[0] = ContextCompat.getColor(context, R.color.deep_purple_300);
+		mColors[1] = ContextCompat.getColor(context, R.color.primary_300);
+		mColors[2] = ContextCompat.getColor(context, R.color.red_300);
+		mColors[3] = ContextCompat.getColor(context, R.color.light_blue_300);
+		mColors[4] = ContextCompat.getColor(context, R.color.primary_400);
+		mColors[5] = ContextCompat.getColor(context, R.color.red_400);
+		mColors[6] = ContextCompat.getColor(context, R.color.light_blue_400);
+		mColors[7] = ContextCompat.getColor(context, R.color.grey_100);
 
 		mLayoutInflater = LayoutInflater.from(context);
 	}
@@ -106,20 +105,27 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 	@Override
 	public void onBindViewHolder(ViewHolder viewHolder, int i) {
 		final Schedule schedule = mSchedules.get(i);
+
 		// Set fields
 		final int dayType = Days.indexOf(schedule.getType());
-		// Add "No School"
+
+		// Add No School or Custom Message
 		if (dayType == Days.OFF.ordinal()) {
-			viewHolder.title.setText(schedule.getDay() + "\nNo School!");
+			viewHolder.title.setText(schedule.getDay() + "\n" + schedule.getType());
 			viewHolder.blocks.setVisibility(View.GONE);
 			viewHolder.times.setVisibility(View.GONE);
 		} else {
-			viewHolder.title.setText(schedule.getDay());
+			if (dayType == Days.MODIFIED_BLUE.ordinal() || dayType == Days.MODIFIED_RED.ordinal() || dayType == Days.MODIFIED_JLC.ordinal()) {
+				viewHolder.title.setText(schedule.getDay() + "\n" + schedule.getType());
+			} else {
+				viewHolder.title.setText(schedule.getDay());
+			}
 			viewHolder.blocks.setVisibility(View.VISIBLE);
 			viewHolder.blocks.setText(schedule.getBlocks());
 			viewHolder.times.setVisibility(View.VISIBLE);
 			viewHolder.times.setText(schedule.getTimes());
 		}
+
 		// Get the index of the color by day
 		viewHolder.card.setCardBackgroundColor(mColors[dayType]);
 	}

@@ -24,12 +24,6 @@ import com.el1t.iolite.parser.SelectedBlockHandler;
 import com.el1t.iolite.util.AbstractDrawerActivity;
 import com.el1t.iolite.util.Utils;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.net.ssl.HttpsURLConnection;
 
 /**
@@ -263,7 +257,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 							.commit();
 				}
 				setTitle("Schedule");
-				new ScheduleRequest(Calendar.getInstance().getTime(), INITIAL_DAYS_TO_LOAD).execute();
+				new ScheduleRequest(INITIAL_DAYS_TO_LOAD).execute();
 				break;
 			case NEWS:
 				// Set loading fragment, if necessary
@@ -285,7 +279,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 	// Load more posts/days
 	public void load() {
-		new ScheduleRequest(mScheduleFragment.getLastDay().getTomorrow(), DAYS_TO_LOAD).execute();
+		new ScheduleRequest(mScheduleFragment.getPage(), DAYS_TO_LOAD).execute();
 	}
 
 	public void updateUser() {
@@ -452,29 +446,22 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 	private class ScheduleRequest extends IonRequest<Schedule[]> {
 		private static final String TAG = "Schedule Connection";
-		private final DateFormat mFormat = new SimpleDateFormat("yyyyMMdd");
-		private Date mStartDate;
-		private Date mEndDate;
+		private int mPage;
+		private int mSize;
 
-		public ScheduleRequest(Date startDate, int days) {
-			mStartDate = startDate;
-			mEndDate = computeDays(days);
+		public ScheduleRequest(int days) {
+			mPage = 1;
+			mSize = days;
 		}
 
-		public ScheduleRequest(String startDate, int days) {
-			try {
-				mStartDate = mFormat.parse(startDate);
-				mEndDate = computeDays(days);
-			} catch (ParseException e) {
-				Log.e(TAG, "Date Parse Error.", e);
-				mStartDate = null;
-				mEndDate = null;
-			}
+		public ScheduleRequest(int page, int days) {
+			mPage = page + 1;
+			mSize = days;
 		}
 
 		@Override
 		protected String getURL() {
-			return Utils.API.SCHEDULE + "?start=" + mFormat.format(mStartDate) + "&end=" + mFormat.format(mEndDate);
+			return Utils.API.SCHEDULE + "&page=" + mPage + "&page_size=" + mSize;
 		}
 
 		@Override
@@ -483,14 +470,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			urlConnection.connect();
 			// Parse JSON from server
 			return ScheduleHandler.parseAll(Utils.inputStreamToJSON(urlConnection.getInputStream()));
-		}
-
-		private Date computeDays(int daysAfter) {
-			final Calendar c = Calendar.getInstance();
-			c.setTime(mStartDate);
-			// Current day is included, but last day is not included
-			c.add(Calendar.DATE, daysAfter);
-			return c.getTime();
 		}
 
 		@Override

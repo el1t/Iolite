@@ -10,34 +10,32 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Iterator;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by El1t on 12/11/14.
  */
 public class ScheduleHandler {
 	private static final String TAG = "ScheduleHandler";
-	private static final DateFormat mFormat = new SimpleDateFormat("yyyyMMdd");
+	private static final DateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
 	public static Schedule[] parseAll(JSONObject schedule) throws JSONException, ParseException {
-		final Schedule[] schedules = new Schedule[schedule.length()];
-		int index = 0;
-		for (Iterator<String> keys = schedule.keys(); keys.hasNext(); index++) {
-			schedules[index] = parseSchedule(schedule.getJSONObject(keys.next()));
+		final JSONArray scheduleArray = schedule.getJSONArray("results");
+		final Schedule[] schedules = new Schedule[scheduleArray.length()];
+		for (int index = 0; index < scheduleArray.length(); index++) {
+			schedules[index] = parseSchedule(scheduleArray.getJSONObject(index));
 		}
 		Arrays.sort(schedules);
 		return schedules;
 	}
 
 	public static Schedule parseSchedule(JSONObject schedule) throws JSONException, ParseException {
-		final JSONObject date = schedule.getJSONObject("date");
-		final String[] items = getItems(schedule.getJSONObject("schedule").getJSONArray("period"));
+		final String[] items = getItems(schedule.getJSONObject("day_type").getJSONArray("blocks"));
+		final Date date = mFormat.parse(schedule.getString("date"));
 		return new Schedule.Builder()
-				.day(schedule.getString("dayname"))
-				.date(mFormat.parse(date.getString("today")))
-				.type(schedule.getString("summary"))
-				.yesterday(date.getString("yesterday"))
-				.tomorrow(date.getString("tomorrow"))
+				.date(date)
+				.type(schedule.getJSONObject("day_type").getString("name"))
 				.blocks(items[0])
 				.times(items[1])
 				.build();
@@ -49,7 +47,7 @@ public class ScheduleHandler {
 		for (int i = 0; i < blocks.length(); i++) {
 			block = blocks.getJSONObject(i);
 			items[0] += "\n" + block.getString("name");
-			items[1] += "\n" + block.getJSONObject("times").getString("times");
+			items[1] += "\n" + block.getString("start") + " - " + block.getString("end");
 		}
 		return items;
 	}

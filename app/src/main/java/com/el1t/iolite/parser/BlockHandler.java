@@ -11,13 +11,14 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 /**
  * Created by El1t on 7/21/15.
  */
 public class BlockHandler {
 	private static final String TAG = "BlockHandler";
-	private static final DateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd");
+	private static final DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
 	public static EighthBlock[] parse(InputStream in) throws JSONException, ParseException {
 		return parse(Utils.inputStreamToJSON(in));
@@ -29,9 +30,9 @@ public class BlockHandler {
 		JSONObject block;
 
 		for (int i = 0; i < results.length(); i++) {
-			block = (JSONObject) results.get(i);
+			block = results.getJSONObject(i);
 			blocks[i] = new EighthBlock.Builder()
-					.date(mFormat.parse(block.getString("date")))
+					.date(FORMAT.parse(block.getString("date")))
 					.BID(block.getInt("id"))
 					.type(block.getString("block_letter").charAt(0))
 					.locked(block.getBoolean("locked"))

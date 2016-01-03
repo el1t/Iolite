@@ -12,13 +12,14 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by El1t on 8/4/15.
  */
 public class NewsHandler {
 	private static final String TAG = "NewsHandler";
-	private static final DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	private static final DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
 
 	public static NewsPost[] parse(InputStream in) throws JSONException, ParseException {
 		return parse(Utils.inputStreamToJSON(in));
@@ -30,7 +31,7 @@ public class NewsHandler {
 		JSONObject post;
 
 		for (int i = 0; i < results.length(); i++) {
-			post = (JSONObject) results.get(i);
+			post = results.getJSONObject(i);
 			posts[i] = new NewsPost.Builder()
 					.URL(post.getString("url"))
 					.ID(post.getInt("id"))

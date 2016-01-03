@@ -4,7 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by El1t on 12/11/14.
@@ -13,25 +16,21 @@ public class Schedule implements Parcelable, Comparable<Schedule> {
 	private String day;
 	private Date date;
 	private String type;
-	private String yesterday;
-	private String tomorrow;
 	private String blocks;
 	private String times;
+
+	private static final DateFormat mFormat = new SimpleDateFormat("EEE, MMM d", Locale.US);
 
 	/**
 	 * @param day       Date (e.g. Monday, February 29)
 	 * @param type      Day color (e.g. Blue)
-	 * @param yesterday Date code for previous day (e.g. 20150101)
-	 * @param tomorrow  Date code for next day (e.g. 20150103)
 	 * @param blocks    Names of the blocks
 	 * @param times     Time intervals for blocks
 	 */
-	public Schedule(String day, Date date, String type, String yesterday, String tomorrow, String blocks, String times) {
+	public Schedule(String day, Date date, String type, String blocks, String times) {
 		this.day = day;
 		this.date = date;
 		this.type = type;
-		this.yesterday = yesterday;
-		this.tomorrow = tomorrow;
 		this.blocks = blocks;
 		this.times = times;
 	}
@@ -40,33 +39,17 @@ public class Schedule implements Parcelable, Comparable<Schedule> {
 		private String day;
 		private Date date;
 		private String type;
-		private String yesterday;
-		private String tomorrow;
 		private String blocks;
 		private String times;
 
-		public Builder day(String day) {
-			this.day = day;
-			return this;
-		}
-
 		public Builder date(Date date) {
 			this.date = date;
+			this.day = mFormat.format(date);
 			return this;
 		}
 
 		public Builder type(String type) {
-			this.type = type;
-			return this;
-		}
-
-		public Builder yesterday(String yesterday) {
-			this.yesterday = yesterday;
-			return this;
-		}
-
-		public Builder tomorrow(String tomorrow) {
-			this.tomorrow = tomorrow;
+			this.type = type.replace("<br>", "\n");
 			return this;
 		}
 
@@ -81,7 +64,7 @@ public class Schedule implements Parcelable, Comparable<Schedule> {
 		}
 
 		public Schedule build() {
-			return new Schedule(day, date, type, yesterday, tomorrow, blocks, times);
+			return new Schedule(day, date, type, blocks, times);
 		}
 	}
 
@@ -95,14 +78,6 @@ public class Schedule implements Parcelable, Comparable<Schedule> {
 
 	public String getType() {
 		return type;
-	}
-
-	public String getYesterday() {
-		return yesterday;
-	}
-
-	public String getTomorrow() {
-		return tomorrow;
 	}
 
 	public String getBlocks() {
@@ -122,8 +97,6 @@ public class Schedule implements Parcelable, Comparable<Schedule> {
 		day = in.readString();
 		date = new Date(in.readLong());
 		type = in.readString();
-		yesterday = in.readString();
-		tomorrow = in.readString();
 		blocks = in.readString();
 		times = in.readString();
 	}
@@ -138,8 +111,6 @@ public class Schedule implements Parcelable, Comparable<Schedule> {
 		dest.writeString(day);
 		dest.writeLong(date.getTime());
 		dest.writeString(type);
-		dest.writeString(yesterday);
-		dest.writeString(tomorrow);
 		dest.writeString(blocks);
 		dest.writeString(times);
 	}

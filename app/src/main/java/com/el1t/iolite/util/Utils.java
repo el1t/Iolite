@@ -30,7 +30,7 @@ public class Utils {
 		public static final String LOGIN = PREFIX;
 		public static final String PROFILE = PREFIX + "/profile" + POSTFIX;
 		public static final String BLOCKS = BLOCK + POSTFIX;
-		public static final String SCHEDULE = "https://iodine.tjhsst.edu/ajax/dayschedule/json_exp";
+		public static final String SCHEDULE = PREFIX + "/schedule" + POSTFIX;
 		public static final String SIGNUP = PREFIX + "/signups/user" + POSTFIX;
 		public static final String ACTIVITIES = ACTIVITY + POSTFIX;
 		public static final String NEWS = PREFIX + "/announcements" + POSTFIX;
@@ -101,7 +101,7 @@ public class Utils {
 	public static String[] JSONArrayToStringArray(JSONArray array) throws JSONException {
 		final String[] generic = new String[array.length()];
 		for (int i = 0; i < generic.length; i++) {
-			generic[i] = (String) array.get(i);
+			generic[i] = array.getString(i);
 		}
 		return generic;
 	}
@@ -109,14 +109,13 @@ public class Utils {
 	public static boolean[] JSONArrayToBooleanArray(JSONArray array) throws JSONException {
 		final boolean[] generic = new boolean[array.length()];
 		for (int i = 0; i < generic.length; i++) {
-			generic[i] = (boolean) array.get(i);
+			generic[i] = array.getBoolean(i);
 		}
 		return generic;
 	}
 
 	public static String getAuthKey(SharedPreferences preferences) {
-		final String username;
-		final String password;
+		final String username, password;
 		if ((username = preferences.getString("username", null)) != null &&
 				(password = preferences.getString("password", null)) != null) {
 			return "Basic " + Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);

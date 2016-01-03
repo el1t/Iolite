@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,16 +86,16 @@ public class SignupAdapter extends RecyclerView.Adapter<SignupAdapter.ViewHolder
 		mLayoutInflater = LayoutInflater.from(context);
 
 		// Cache colors
-		final Resources resources = context.getResources();
 		mColors = new int[6];
-		mColors[Colors.RED.ordinal()] = resources.getColor(R.color.red_400);
-		mColors[Colors.DEEP_ORANGE.ordinal()] = resources.getColor(R.color.deep_orange_400);
-		mColors[Colors.PINK.ordinal()] = resources.getColor(R.color.pink_400);
-		mColors[Colors.ORANGE.ordinal()] = resources.getColor(R.color.orange_400);
-		mColors[Colors.GREEN.ordinal()] = resources.getColor(R.color.green_400);
-		mColors[Colors.GREY.ordinal()] = resources.getColor(R.color.grey_400);
+		mColors[Colors.RED.ordinal()] = ContextCompat.getColor(context, R.color.red_400);
+		mColors[Colors.DEEP_ORANGE.ordinal()] = ContextCompat.getColor(context, R.color.deep_orange_400);
+		mColors[Colors.PINK.ordinal()] = ContextCompat.getColor(context, R.color.pink_400);
+		mColors[Colors.ORANGE.ordinal()] = ContextCompat.getColor(context, R.color.orange_400);
+		mColors[Colors.GREEN.ordinal()] = ContextCompat.getColor(context, R.color.green_400);
+		mColors[Colors.GREY.ordinal()] = ContextCompat.getColor(context, R.color.grey_400);
 
 		// Cache icons
+		final Resources resources = context.getResources();
 		ICON_DASH = BitmapFactory.decodeResource(resources, R.drawable.ic_remove_white_24dp);
 		ICON_LOCK = BitmapFactory.decodeResource(resources, R.drawable.ic_lock_white_24dp);
 		ICON_STAR = BitmapFactory.decodeResource(resources, R.drawable.ic_star_white_24dp);

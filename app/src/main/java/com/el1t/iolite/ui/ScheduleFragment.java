@@ -1,7 +1,7 @@
 package com.el1t.iolite.ui;
 
-import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -28,6 +28,7 @@ public class ScheduleFragment extends Fragment {
 	private SwipeRefreshLayout mSwipeRefreshLayout;
 	private LinearLayoutManager mLayoutManager;
 	private boolean mLoading;
+	private int mPage;
 
 	public interface OnFragmentInteractionListener {
 		void refresh();
@@ -94,14 +95,14 @@ public class ScheduleFragment extends Fragment {
 	}
 
 	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+	public void onAttach(Context context) {
+		super.onAttach(context);
 		// This makes sure that the container activity has implemented
 		// the callback interface. If not, it throws an exception
 		try {
-			mListener = (OnFragmentInteractionListener) activity;
+			mListener = (OnFragmentInteractionListener) context;
 		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
+			throw new ClassCastException(context.toString()
 					+ " must implement OnFragmentInteractionListener");
 		}
 	}
@@ -116,10 +117,12 @@ public class ScheduleFragment extends Fragment {
 
 	void clear() {
 		mAdapter.clear();
+		mPage = 1;
 	}
 
 	void addSchedules(Schedule[] schedules) {
 		mAdapter.addAll(schedules);
+		mPage++;
 	}
 
 	void setRefreshing(boolean refreshing) {
@@ -127,7 +130,7 @@ public class ScheduleFragment extends Fragment {
 		mSwipeRefreshLayout.setRefreshing(refreshing);
 	}
 
-	Schedule getLastDay() {
-		return mAdapter.getLastItem();
+	int getPage() {
+		return mPage;
 	}
 }

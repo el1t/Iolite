@@ -25,7 +25,7 @@ public class DetailHandler {
 //				.sponsors(Utils.JSONArrayToStringArray(detail.getJSONArray("sponsors")))
 				.description(detail.getString("description"))
 				.administrative(detail.getBoolean("administrative"))
-//				.restricted(detail.getBoolean("restricted_for_user"))
+				.restricted(detail.getBoolean("restricted"))
 				.presign(detail.getBoolean("presign"))
 				.bothblocks(detail.getBoolean("both_blocks"))
 				.sticky(detail.getBoolean("sticky"))

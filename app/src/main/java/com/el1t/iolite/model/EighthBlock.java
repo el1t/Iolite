@@ -10,12 +10,13 @@ import android.text.style.SuperscriptSpan;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by El1t on 10/24/14.
  */
 public class EighthBlock implements Parcelable {
-	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEEE, MMMM d");
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEEE, MMMM d", Locale.US);
 	private EighthActivity activity;
 	private Date date;
 	private int BID;
