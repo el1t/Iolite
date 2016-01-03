@@ -1,6 +1,8 @@
 package com.el1t.iolite.ui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -8,6 +10,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.el1t.iolite.R;
@@ -286,6 +289,11 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		// Set header text
 		((TextView) findViewById(R.id.header_name)).setText(mUser.getShortName());
 		((TextView) findViewById(R.id.header_username)).setText(mUser.getUsername());
+		// Set profile picture
+		if (mUser.getPicture() != null) {
+			findViewById(R.id.header_temp).setVisibility(View.INVISIBLE);
+			((ImageView) findViewById(R.id.header_portrait)).setImageBitmap(mUser.getPicture());
+		}
 	}
 
 	void logout() {
@@ -363,6 +371,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		protected void onPostExecute(User result) {
 			super.onPostExecute(result);
 			if (result != null) {
+				new ProfilePicRequest().execute();
 				mUser = result;
 				updateUser();
 			}
@@ -496,6 +505,37 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		protected void onPostExecute(NewsPost[] result) {
 			super.onPostExecute(result);
 			postNewsRequest(result);
+		}
+	}
+
+	private class ProfilePicRequest extends IonRequest<Bitmap> {
+		@Override
+		protected String getURL() {
+			return "https://ion.tjhsst.edu/api/profile/" + mUser.getUID() + "/picture";
+		}
+
+		protected Bitmap doInBackground(HttpsURLConnection urlConnection) throws Exception {
+			Bitmap Icon = null;
+			// Begin connection
+			urlConnection.connect();
+			// Get Profile Picture from server
+			try {
+				Icon = BitmapFactory.decodeStream(urlConnection.getInputStream());
+			} catch (Exception e) {
+				Log.e(TAG, "Image Decode Error.", e);
+			}
+			return Icon;
+		}
+
+		@Override
+		protected void onPostExecute(Bitmap result) {
+			super.onPostExecute(result);
+			if (result != null) {
+				mUser = new User.Builder(mUser)
+						.picture(result)
+						.build();
+				updateUser();
+			}
 		}
 	}
 }

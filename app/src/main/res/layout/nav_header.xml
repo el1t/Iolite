@@ -13,7 +13,7 @@
 		android:id="@+id/header_portrait"
 		android:layout_width="64dp"
 		android:layout_height="64dp"
-		android:scaleType="centerCrop"
+		android:scaleType="centerInside"
 		android:src="@drawable/circle"
 		android:clickable="true"
 		android:background="?attr/selectableItemBackgroundBorderless"
@@ -21,6 +21,7 @@
 		android:elevation="1dp"
 		tools:ignore="ContentDescription" />
 	<ImageView
+		android:id="@+id/header_temp"
 		android:layout_width="48dp"
 		android:layout_height="48dp"
 		android:layout_margin="8dp"

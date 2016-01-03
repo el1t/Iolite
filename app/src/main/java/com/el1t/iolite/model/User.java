@@ -1,5 +1,6 @@
 package com.el1t.iolite.model;
 
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -17,9 +18,10 @@ public class User implements Parcelable {
 	private String[] mEmails;
 	private String mMobile;
 	private int mGradYear;
+	private Bitmap mPicture;
 
 	public User(String UID, String username, String[] name, Address address, String[] emails,
-	            String mobile, int gradYear) {
+	            String mobile, int gradYear, Bitmap picture) {
 		this.mUID = UID;
 		this.mUsername = username;
 		this.mName = name;
@@ -27,6 +29,7 @@ public class User implements Parcelable {
 		this.mEmails = emails;
 		this.mMobile = mobile;
 		this.mGradYear = gradYear;
+		this.mPicture = picture;
 	}
 
 	public static class Builder {
@@ -37,10 +40,22 @@ public class User implements Parcelable {
 		private String[] emails;
 		private String mobile;
 		private int gradYear;
+		private Bitmap picture;
 
 		public Builder() {
 			this.address = new Address(Locale.ENGLISH);
 			this.name = new String[]{"", "", ""};
+		}
+
+		public Builder(User user) {
+			this.UID = user.getUID();
+			this.username = user.getUsername();
+			this.name = user.getName();
+			this.address = user.getAddress();
+			this.emails = user.getEmails();
+			this.mobile = user.getMobile();
+			this.gradYear = user.getGradYear();
+			this.picture = user.getPicture();
 		}
 
 		public Builder UID(String UID) {
@@ -114,8 +129,13 @@ public class User implements Parcelable {
 			return this;
 		}
 
+		public Builder picture(Bitmap picture) {
+			this.picture = picture;
+			return this;
+		}
+
 		public User build() {
-			return new User(UID, username, name, address, emails, mobile, gradYear);
+			return new User(UID, username, name, address, emails, mobile, gradYear, picture);
 		}
 	}
 
@@ -125,6 +145,10 @@ public class User implements Parcelable {
 
 	public String getUsername() {
 		return mUsername;
+	}
+
+	public String[] getName() {
+		return mName;
 	}
 
 	public String getFullName() {
@@ -160,6 +184,10 @@ public class User implements Parcelable {
 		return mGradYear;
 	}
 
+	public Bitmap getPicture() {
+		return mPicture;
+	}
+
 	protected User(Parcel in) {
 		mUID = in.readString();
 		mUsername = in.readString();
@@ -168,6 +196,7 @@ public class User implements Parcelable {
 		mEmails = in.createStringArray();
 		mMobile = in.readString();
 		mGradYear = in.readInt();
+		mPicture = in.readParcelable(Bitmap.class.getClassLoader());
 	}
 
 	@Override
@@ -184,6 +213,7 @@ public class User implements Parcelable {
 		dest.writeStringArray(mEmails);
 		dest.writeString(mMobile);
 		dest.writeInt(mGradYear);
+		dest.writeValue(mPicture);
 	}
 
 	public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
