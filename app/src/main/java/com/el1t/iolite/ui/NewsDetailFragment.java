@@ -72,7 +72,7 @@ public class NewsDetailFragment extends Fragment {
 		try {
 			((WebView) rootView.findViewById(R.id.web)).loadData("<style>" +
 					Utils.inputStreamToString(getActivity().getAssets().open("styles.css")) + "</style>"
-					+ mNewsPost.getContent(), "text/html", "utf-8");
+					+ mNewsPost.getContent(), "text/html; charset=utf-8", "utf-8");
 		} catch (IOException e) {
 			Log.e(TAG, "Cannot open styles.css", e);
 		}

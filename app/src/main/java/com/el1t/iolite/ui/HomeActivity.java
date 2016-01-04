@@ -455,8 +455,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 	private class ScheduleRequest extends IonRequest<Schedule[]> {
 		private static final String TAG = "Schedule Connection";
-		private int mPage;
-		private int mSize;
+		private int mPage, mSize;
 
 		public ScheduleRequest(int days) {
 			mPage = 1;
@@ -470,7 +469,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 		@Override
 		protected String getURL() {
-			return Utils.API.SCHEDULE + "&page=" + mPage + "&page_size=" + mSize;
+			return Utils.API.schedule(mPage, mSize);
 		}
 
 		@Override
@@ -511,7 +510,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 	private class ProfilePicRequest extends IonRequest<Bitmap> {
 		@Override
 		protected String getURL() {
-			return "https://ion.tjhsst.edu/api/profile/" + mUser.getUID() + "/picture";
+			return Utils.API.profilePic(mUser.getUID());
 		}
 
 		protected Bitmap doInBackground(HttpsURLConnection urlConnection) throws Exception {
