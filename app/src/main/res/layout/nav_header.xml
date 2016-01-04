@@ -10,7 +10,7 @@
 	android:orientation="vertical">
 	<!-- User portrait -->
 	<ImageView
-		android:id="@+id/header_portrait"
+		android:id="@+id/header_portrait_background"
 		android:layout_width="64dp"
 		android:layout_height="64dp"
 		android:scaleType="centerInside"
@@ -21,7 +21,7 @@
 		android:elevation="1dp"
 		tools:ignore="ContentDescription" />
 	<ImageView
-		android:id="@+id/header_temp"
+		android:id="@+id/header_portrait"
 		android:layout_width="48dp"
 		android:layout_height="48dp"
 		android:layout_margin="8dp"

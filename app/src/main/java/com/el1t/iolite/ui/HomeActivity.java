@@ -291,7 +291,6 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		((TextView) findViewById(R.id.header_username)).setText(mUser.getUsername());
 		// Set profile picture
 		if (mUser.getPicture() != null) {
-			findViewById(R.id.header_temp).setVisibility(View.INVISIBLE);
 			((ImageView) findViewById(R.id.header_portrait)).setImageBitmap(mUser.getPicture());
 		}
 	}
@@ -371,8 +370,8 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		protected void onPostExecute(User result) {
 			super.onPostExecute(result);
 			if (result != null) {
-				new ProfilePicRequest().execute();
 				mUser = result;
+				new ProfilePicRequest().execute();
 				updateUser();
 			}
 		}
