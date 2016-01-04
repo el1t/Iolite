@@ -27,7 +27,7 @@ public class ScheduleFragment extends Fragment {
 	private SwipeRefreshLayout mSwipeRefreshLayout;
 	private LinearLayoutManager mLayoutManager;
 	private boolean mLoading;
-	private int mPage;
+	private int mPage = 1;
 
 	public interface OnFragmentInteractionListener {
 		void refresh();

@@ -52,8 +52,9 @@ public class AboutFragment extends Fragment {
 		final View rootView;
 		if (license == null) {
 			rootView = inflater.inflate(R.layout.fragment_about, container, false);
-			((TextView) rootView.findViewById(R.id.version)).setText("Version " +
-					BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")");
+			((TextView) rootView.findViewById(R.id.version)).setText(
+					String.format(getResources().getString(R.string.version),
+							BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE));
 			rootView.findViewById(R.id.license).setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
