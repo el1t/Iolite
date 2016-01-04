@@ -19,7 +19,7 @@ public class Schedule implements Parcelable, Comparable<Schedule> {
 	private String blocks;
 	private String times;
 
-	private static final DateFormat mFormat = new SimpleDateFormat("EEE, MMM d", Locale.US);
+	private static final DateFormat mFormat = new SimpleDateFormat("EEE, MMM. d", Locale.US);
 
 	/**
 	 * @param day       Date (e.g. Monday, February 29)
