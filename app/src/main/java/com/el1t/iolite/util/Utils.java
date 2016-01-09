@@ -42,6 +42,14 @@ public class Utils {
 		public static String block(int block) {
 			return BLOCK + "/" + block + POSTFIX;
 		}
+
+		public static String schedule(int page, int size) {
+			return SCHEDULE + "&page=" + page + "&page_size=" + size;
+		}
+
+		public static String profilePic(String uid) {
+			return PREFIX + "/profile/" + uid + "/picture";
+		}
 	}
 
 	public static JSONObject inputStreamToJSON(InputStream inputStream) {
@@ -78,6 +86,7 @@ public class Utils {
 			while ((line = reader.readLine()) != null) {
 				sb.append(line).append("\n");
 			}
+			reader.close();
 			return sb.toString();
 		} catch (IOException e) {
 			Log.e(TAG, "Exception", e);

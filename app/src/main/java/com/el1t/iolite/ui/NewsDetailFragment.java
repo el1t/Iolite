@@ -1,7 +1,6 @@
 package com.el1t.iolite.ui;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -72,7 +71,7 @@ public class NewsDetailFragment extends Fragment {
 		try {
 			((WebView) rootView.findViewById(R.id.web)).loadData("<style>" +
 					Utils.inputStreamToString(getActivity().getAssets().open("styles.css")) + "</style>"
-					+ mNewsPost.getContent(), "text/html", "utf-8");
+					+ mNewsPost.getContent(), "text/html; charset=utf-8", "utf-8");
 		} catch (IOException e) {
 			Log.e(TAG, "Cannot open styles.css", e);
 		}
@@ -80,12 +79,15 @@ public class NewsDetailFragment extends Fragment {
 	}
 
 	@Override
-	public void onAttach(Context context) {
-		super.onAttach(context);
+	public void onStart() {
+		super.onStart();
+
+		// This makes sure that the container activity has implemented
+		// the callback interface. If not, it throws an exception
 		try {
-			mListener = (OnFragmentInteractionListener) context;
+			mListener = (OnFragmentInteractionListener) getActivity();
 		} catch (ClassCastException e) {
-			throw new ClassCastException(context.toString()
+			throw new ClassCastException(getActivity().toString()
 					+ " must implement OnFragmentInteractionListener");
 		}
 	}

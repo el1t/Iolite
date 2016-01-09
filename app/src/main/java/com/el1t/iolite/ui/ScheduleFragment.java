@@ -1,7 +1,6 @@
 package com.el1t.iolite.ui;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -28,7 +27,7 @@ public class ScheduleFragment extends Fragment {
 	private SwipeRefreshLayout mSwipeRefreshLayout;
 	private LinearLayoutManager mLayoutManager;
 	private boolean mLoading;
-	private int mPage;
+	private int mPage = 1;
 
 	public interface OnFragmentInteractionListener {
 		void refresh();
@@ -95,14 +94,15 @@ public class ScheduleFragment extends Fragment {
 	}
 
 	@Override
-	public void onAttach(Context context) {
-		super.onAttach(context);
+	public void onStart() {
+		super.onStart();
+
 		// This makes sure that the container activity has implemented
 		// the callback interface. If not, it throws an exception
 		try {
-			mListener = (OnFragmentInteractionListener) context;
+			mListener = (OnFragmentInteractionListener) getActivity();
 		} catch (ClassCastException e) {
-			throw new ClassCastException(context.toString()
+			throw new ClassCastException(getActivity().toString()
 					+ " must implement OnFragmentInteractionListener");
 		}
 	}

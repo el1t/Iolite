@@ -10,10 +10,11 @@
 	android:orientation="vertical">
 	<!-- User portrait -->
 	<ImageView
-		android:id="@+id/header_portrait"
+		android:id="@+id/header_portrait_background"
 		android:layout_width="64dp"
 		android:layout_height="64dp"
-		android:scaleType="centerCrop"
+		android:layout_gravity="center"
+		android:scaleType="center"
 		android:src="@drawable/circle"
 		android:clickable="true"
 		android:background="?attr/selectableItemBackgroundBorderless"
@@ -21,10 +22,12 @@
 		android:elevation="1dp"
 		tools:ignore="ContentDescription" />
 	<ImageView
+		android:id="@+id/header_portrait"
 		android:layout_width="48dp"
 		android:layout_height="48dp"
 		android:layout_margin="8dp"
-		android:scaleType="center"
+		android:layout_gravity="center"
+		android:scaleType="fitCenter"
 		android:elevation="3dp"
 		android:src="@drawable/ic_person_white_48dp"
 		tools:ignore="ContentDescription" />

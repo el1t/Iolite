@@ -1,7 +1,6 @@
 package com.el1t.iolite.ui;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,8 +52,9 @@ public class AboutFragment extends Fragment {
 		final View rootView;
 		if (license == null) {
 			rootView = inflater.inflate(R.layout.fragment_about, container, false);
-			((TextView) rootView.findViewById(R.id.version)).setText("Version " +
-					BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")");
+			((TextView) rootView.findViewById(R.id.version)).setText(
+					String.format(getResources().getString(R.string.version),
+							BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE));
 			rootView.findViewById(R.id.license).setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
@@ -70,12 +70,15 @@ public class AboutFragment extends Fragment {
 	}
 
 	@Override
-	public void onAttach(Context context) {
-		super.onAttach(context);
+	public void onStart() {
+		super.onStart();
+
+		// This makes sure that the container activity has implemented
+		// the callback interface. If not, it throws an exception
 		try {
-			mListener = (OnFragmentInteractionListener) context;
+			mListener = (OnFragmentInteractionListener) getActivity();
 		} catch (ClassCastException e) {
-			throw new ClassCastException(context.toString()
+			throw new ClassCastException(getActivity().toString()
 					+ " must implement OnFragmentInteractionListener");
 		}
 	}
