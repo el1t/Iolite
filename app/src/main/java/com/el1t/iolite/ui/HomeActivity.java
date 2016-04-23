@@ -21,11 +21,16 @@ import com.el1t.iolite.model.Schedule;
 import com.el1t.iolite.model.User;
 import com.el1t.iolite.parser.BlockHandler;
 import com.el1t.iolite.parser.NewsHandler;
-import com.el1t.iolite.parser.UserHandler;
 import com.el1t.iolite.parser.ScheduleHandler;
 import com.el1t.iolite.parser.SelectedBlockHandler;
+import com.el1t.iolite.parser.UserHandler;
 import com.el1t.iolite.util.AbstractDrawerActivity;
 import com.el1t.iolite.util.Utils;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -384,9 +389,10 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 	// Get list of blocks
 	private class BlockListRequest extends IonRequest<EighthBlock[]> {
+		private final DateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 		@Override
 		protected String getURL() {
-			return Utils.API.BLOCKS;
+			return Utils.API.BLOCKS + "&start_date=" + mFormat.format(Calendar.getInstance().getTime());
 		}
 
 		@Override
@@ -487,10 +493,10 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 			mSize = days;
 		}
 
-		public ScheduleRequest(Date startDate, Date endDate) {
-			mStartDate = startDate;
-			mEndDate = endDate;
-		}
+//		public ScheduleRequest(Date startDate, Date endDate) {
+//			mStartDate = startDate;
+//			mEndDate = endDate;
+//		}
 
 		@Override
 		protected String getURL() {
@@ -499,7 +505,7 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 
 		@Override
 		protected ScheduleRequest getNewInstance() {
-			return new ScheduleRequest(mStartDate, mEndDate);
+			return new ScheduleRequest(mPage, mSize);
 		}
 
 		@Override
@@ -547,6 +553,11 @@ public class HomeActivity extends AbstractDrawerActivity implements BlockFragmen
 		@Override
 		protected String getURL() {
 			return Utils.API.profilePic(mUser.getUID());
+		}
+
+		@Override
+		protected ProfilePicRequest getNewInstance() {
+			return new ProfilePicRequest();
 		}
 
 		protected Bitmap doInBackground(HttpsURLConnection urlConnection) throws Exception {

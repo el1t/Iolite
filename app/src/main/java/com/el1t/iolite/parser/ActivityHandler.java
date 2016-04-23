@@ -41,7 +41,7 @@ public class ActivityHandler {
 		return new EighthActivity.Builder()
 				.AID(activity.getInt("id"))
 				.BID(BID)
-				.SID(activity.getInt("scheduled_activity"))
+				.SID(activity.getJSONObject("scheduled_activity").getInt("id"))
 				.memberCount(roster.getInt("count"))
 				.capacity(roster.getInt("capacity"))
 				.name(activity.getString("name"))
