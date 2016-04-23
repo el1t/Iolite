@@ -1,5 +1,6 @@
 html {
 	background: #FAFAFA;
+	max-width: 100%;
 	padding: 1rem;
 	font-size: 1rem !important;
 }
@@ -17,4 +18,5 @@ a:focus {
 p {
 	color: black !important;
 	opacity: 0.87;
+	word-wrap: break-word;
 }
